@@ -18,10 +18,14 @@ SOURCES += \
 
 RESOURCES += \
     ChessRobot.qrc
+    chess/
+    logo/
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += \
     qml_files/
+    chess/ # important! ot the images will not displayed!
+    logo/
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =

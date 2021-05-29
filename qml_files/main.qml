@@ -9,11 +9,12 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.3
+// import QtQuick 2.15
 
 Window {
     id: root
 
-    property alias rect1: rect1
+//    property alias rect1: rect1
 
     title: qsTr("Chess Robot Stimulation")
     visible: true
@@ -42,6 +43,8 @@ Window {
         property int textSizeInPixel: 50
         property int textSpaceHeight: 50
         property int textSpaceWidth: 50
+//        property double BAPosX: cubeSizeWidth/2.0
+//        property double BAPosY: cubeSizeHeight * 3.5
 //        property double boundaryWidthWidth: cubeSizeWidth * 0.075
     }
 
@@ -575,4 +578,17 @@ Window {
             ctx.endPath()
         }
     }
+
+    Repeater {
+        model: 2
+        Image {
+            id: ba
+            source: "../chess/black_Advisor.svg"
+            width: field.cubeSizeWidth * 0.5
+            height: width
+            x: field.cubeSizeWidth/2.0 - width/2.0
+            y: field.cubeSizeHeight*(3.5 + index * 2) - height/2.0
+        }
+    }
+
 }
