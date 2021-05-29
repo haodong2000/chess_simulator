@@ -43,13 +43,21 @@ Window {
         property int textSizeInPixel: 50
         property int textSpaceHeight: 50
         property int textSpaceWidth: 50
-        property bool showInitCHessBoard: true
-        property int modelTwo:  (showInitCHessBoard == true) ? 2:0
-        property int modelOne:  (showInitCHessBoard == true) ? 1:0
-        property int modelFive: (showInitCHessBoard == true) ? 5:0
+        property bool showInitCHessBoardRepeat: true
+        property bool showInitCHessBoardSingle: false
+        property int modelTwoRepeat:  (showInitCHessBoardRepeat == true) ? 2:0
+        property int modelOneRepeat:  (showInitCHessBoardRepeat == true) ? 1:0
+        property int modelFiveRepeat: (showInitCHessBoardRepeat == true) ? 5:0
+        property int modelTwoSingle:  (showInitCHessBoardRepeat == true) ? 2:0
+        property int modelOneSingle:  (showInitCHessBoardRepeat == true) ? 1:0
+        property int modelFiveSingle: (showInitCHessBoardRepeat == true) ? 5:0
         property double copyrightX: cubeSizeWidth/10.0
         property double copyrightY: cubeSizeHeight/10.0
         property double chessSize: cubeSizeWidth * 0.45
+        property double b_gen_posX: cubeSizeWidth/2.0 - chessSize/2.0
+        property double b_gen_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double r_gen_posX: cubeSizeWidth * 9.5 - chessSize/2.0
+        property double r_gen_posY: cubeSizeHeight * 4.5 - chessSize/2.0
 //        property double BAPosX: cubeSizeWidth/2.0
 //        property double BAPosY: cubeSizeHeight * 3.5
 //        property double boundaryWidthWidth: cubeSizeWidth * 0.075
@@ -588,7 +596,7 @@ Window {
 
 
     Repeater {
-        model: field.modelOne
+        model: field.modelOneRepeat
         Image {
             id: bg
             source: "../chess/black_General.svg"
@@ -599,7 +607,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelOne
+        model: field.modelOneRepeat
         Image {
             id: rg
             source: "../chess/red_General.svg"
@@ -610,7 +618,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelTwo
+        model: field.modelTwoRepeat
         Image {
             id: ba
             source: "../chess/black_Advisor.svg"
@@ -621,7 +629,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelTwo
+        model: field.modelTwoRepeat
         Image {
             id: ra
             source: "../chess/red_Advisor.svg"
@@ -632,7 +640,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelTwo
+        model: field.modelTwoRepeat
         Image {
             id: be
             source: "../chess/black_Elephant.svg"
@@ -643,7 +651,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelTwo
+        model: field.modelTwoRepeat
         Image {
             id: re
             source: "../chess/red_Elephant.svg"
@@ -654,7 +662,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelTwo
+        model: field.modelTwoRepeat
         Image {
             id: bh
             source: "../chess/black_Horse.svg"
@@ -665,7 +673,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelTwo
+        model: field.modelTwoRepeat
         Image {
             id: rh
             source: "../chess/red_Horse.svg"
@@ -676,7 +684,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelTwo
+        model: field.modelTwoRepeat
         Image {
             id: bc
             source: "../chess/black_Chariot.svg"
@@ -687,7 +695,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelTwo
+        model: field.modelTwoRepeat
         Image {
             id: rc
             source: "../chess/red_Chariot.svg"
@@ -698,7 +706,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelTwo
+        model: field.modelTwoRepeat
         Image {
             id: bC
             source: "../chess/black_Cannon.svg"
@@ -709,7 +717,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelTwo
+        model: field.modelTwoRepeat
         Image {
             id: rC
             source: "../chess/red_Cannon.svg"
@@ -720,7 +728,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelFive
+        model: field.modelFiveRepeat
         Image {
             id: bs
             source: "../chess/black_Soldier.svg"
@@ -731,7 +739,7 @@ Window {
         }
     }
     Repeater {
-        model: field.modelFive
+        model: field.modelFiveRepeat
         Image {
             id: rs
             source: "../chess/red_Soldier.svg"
@@ -740,6 +748,23 @@ Window {
             x: field.cubeSizeWidth * 6.5 - width/2.0
             y: field.cubeSizeHeight*(0.5 + index * 2) - height/2.0
         }
+    }
+
+    Image {
+        id: b_gen
+        source: (field.showInitCHessBoardSingle == true) ? "../chess/black_General.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_gen_posX
+        y: field.b_gen_posY
+    }
+    Image {
+        id: r_gen
+        source: (field.showInitCHessBoardSingle == true) ? "../chess/red_General.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_gen_posX
+        y: field.r_gen_posY
     }
 
 }

@@ -35,4 +35,17 @@ int main(int argc, char *argv[])
    6. avg robot move  ->
    7. (next loop)     -> global vision
 
+  board info:
+    _redNum
+    _BlackNum
+
+  chess info:
+    _isAlive
+    _col
+    _row
+    _canMove
+    _canMovePos
+    _canKill
+    _canKillWho
+
 */
