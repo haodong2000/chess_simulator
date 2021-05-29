@@ -18,3 +18,21 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
+
+/*
+
+  SRTP & SIEMENS
+
+  date: 2021年5月29日
+
+  author: LI Haodong
+
+   1. global vision   ->
+   2. image process   ->
+   3. chess identify  ->
+   4. matrix generate -> game decision algorithm ->
+   5. chess move      ->
+   6. avg robot move  ->
+   7. (next loop)     -> global vision
+
+*/
