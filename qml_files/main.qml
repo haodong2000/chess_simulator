@@ -18,14 +18,14 @@ Window {
 
     title: qsTr("Chess Robot Stimulation")
     visible: true
-    width: Screen.desktopAvailableWidth
-    height: Screen.desktopAvailableHeight
+    width: Screen.desktopAvailableWidth // Screen.width
+    height: Screen.desktopAvailableHeight // Screen.height
     color: "#2f2f35"
 
     Item {
         id: field
-        property double cubeSizeHeight: Screen.desktopAvailableHeight/9.0
-        property double cubeSizeWidth: (Screen.desktopAvailableHeight * 2.0)/15.0
+        property double cubeSizeHeight: Screen.desktopAvailableHeight/9.0 // Screen.width
+        property double cubeSizeWidth: (Screen.desktopAvailableHeight * 2.0)/15.0 // Screen.height
         property double distBetweenBoardAndBoundaryHeight: cubeSizeHeight * 0.1
         property double distBetweenBoardAndBoundaryWidth: cubeSizeWidth * 0.1
         property double distOfSpecialChessPositionHeight: cubeSizeHeight * 0.075

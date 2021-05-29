@@ -15,11 +15,11 @@ class coordinate
 {
 public:
     coordinate();
-//    virtual int transferPosX(double originPosX);
-//    virtual int transferPosY(double originPosY);
-//    virtual SGeoPoint tranPos(double originPosX, double originPosY);
-//    virtual double tranRealPosX(SGeoPoint* Pos);
-//    virtual double tranRealPosY(SGeoPoint* Pos);
+    virtual int transferPosX(double originPosX);
+    virtual int transferPosY(double originPosY);
+    virtual SGeoPoint tranPos(double originPosX, double originPosY);
+    virtual double tranRealPosX(SGeoPoint* Pos);
+    virtual double tranRealPosY(SGeoPoint* Pos);
 };
 
 #endif // COORDINATE_H

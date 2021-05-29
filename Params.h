@@ -8,36 +8,64 @@
 *   Time:     2021/05-29
 * * * * * * * * * * * * * * * * * * * * * */
 
-#include <QScreen>
-#include <QGuiApplication>
+#include <QDesktopWidget>
+#include <QApplication>
 
-namespace globalEnvironment {
-    // get the avaliable geometry space of client screen
-    QRect screenRect = QGuiApplication::primaryScreen()->availableGeometry();
+//class Params : public QApplication {
+//public:
+//    Params(){}
+//};
 
-    // important parameters, never change
-    const double devicePixelRatio  = QGuiApplication::primaryScreen()->devicePixelRatio();
-    const int screenAvaliableWidth  = screenRect.width();
-    const int screenAvaliableHeight = screenRect.height();
-    const double cubeSizeWidth = (screenAvaliableHeight * 2.0)/15.0;
-    const double cubeSizeHeight = screenAvaliableHeight/9.0;
-}
+namespace PARAM {
 
-namespace chessPos {
-    // all the coordinate info of all chesses
-    double chessSize  =  globalEnvironment::cubeSizeWidth * 0.45;
-    namespace black {
-        namespace General {
-            double x = globalEnvironment::cubeSizeWidth/2.0 - chessSize/2.0;
-            double y = globalEnvironment::cubeSizeHeight * 4.5 - chessSize/2.0;
+    namespace globalEnvironment {
+        // get available desktop size
+        QDesktopWidget* desktopWidget = QApplication::desktop();
+        QRect clientRect = desktopWidget->availableGeometry();
+        const double screenWidth = clientRect.width();
+        const double screenHeight = clientRect.height();
+        // important parameters, never change
+        const double devicePixelRatio  = 100;
+        const int screenAvaliableWidth  = (screenHeight *2.0)/15.0;
+        const int screenAvaliableHeight = screenHeight/9.0;
+        const double cubeSizeWidth = (screenAvaliableHeight * 2.0)/15.0;
+        const double cubeSizeHeight = screenAvaliableHeight/9.0;
+    }
+
+    namespace chessPos {
+        // all the coordinate info of all chesses
+        const double chessSize  =  globalEnvironment::cubeSizeWidth * 0.45;
+        namespace black {
+            namespace General {
+                double x = globalEnvironment::cubeSizeWidth/2.0 - chessSize/2.0;
+                double y = globalEnvironment::cubeSizeHeight * 4.5 - chessSize/2.0;
+            }
+            namespace Advisor_1 {
+                double x = globalEnvironment::cubeSizeWidth/2.0 - chessSize/2.0;
+                double y = globalEnvironment::cubeSizeHeight * 3.5 - chessSize/2.0;
+            }
+            namespace Advisor_2 {
+                double x = globalEnvironment::cubeSizeWidth/2.0 - chessSize/2.0;
+                double y = globalEnvironment::cubeSizeHeight * 5.5 - chessSize/2.0;
+            }
+        }
+        namespace red {
+            namespace General {
+                double x = globalEnvironment::cubeSizeWidth * 9.5 - chessSize/2.0;
+                double y = globalEnvironment::cubeSizeWidth * 9.5 - chessSize/2.0;
+            }
+            namespace Advisor_1 {
+                double x = globalEnvironment::cubeSizeWidth * 9.5 - chessSize/2.0;
+                double y = globalEnvironment::cubeSizeHeight * 3.5 - chessSize/2.0;
+            }
+            namespace Advisor_2 {
+                double x = globalEnvironment::cubeSizeWidth * 9.5 - chessSize/2.0;
+                double y = globalEnvironment::cubeSizeHeight * 5.5 - chessSize/2.0;
+            }
         }
     }
-    namespace red {
-        namespace General {
-            double x = globalEnvironment::cubeSizeWidth * 9.5 - chessSize/2.0;
-            double y = globalEnvironment::cubeSizeWidth * 9.5 - chessSize/2.0;
-        }
-    }
+
 }
+
 
 #endif // PARAMS_H

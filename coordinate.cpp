@@ -1,36 +1,38 @@
 #include "coordinate.h"
-//#include "Params.h"
+#include "Params.h"
+#include <QtMath>
 
 coordinate::coordinate()
 {
 
 }
 
-//int coordinate::transferPosX(double originPosX) {
-//    // pre-process
-//    double preX = (originPosX - globalEnvironment::cubeSizeWidth/2.0)/globalEnvironment::cubeSizeWidth;
-//    return qRound(preX);
-//}
+int coordinate::transferPosX(double originPosX) {
+    // PARAM::chessPos::black::General::x = 0; // test
+    // pre-process
+    double preX = (originPosX - PARAM::globalEnvironment::cubeSizeWidth/2.0)/PARAM::globalEnvironment::cubeSizeWidth;
+    return qRound(preX);
+}
 
-//int coordinate::transferPosY(double originPosY) {
-//    double preY = (originPosY - globalEnvironment::cubeSizeHeight/2.0)/globalEnvironment::cubeSizeHeight;
-//    return qRound(preY);
-//}
+int coordinate::transferPosY(double originPosY) {
+    double preY = (originPosY - PARAM::globalEnvironment::cubeSizeHeight/2.0)/PARAM::globalEnvironment::cubeSizeHeight;
+    return qRound(preY);
+}
 
-//SGeoPoint coordinate::tranPos(double originPosX, double originPosY) {
-//    return SGeoPoint(transferPosX(originPosX), transferPosY(originPosY));
-//}
+SGeoPoint coordinate::tranPos(double originPosX, double originPosY) {
+    return SGeoPoint(transferPosX(originPosX), transferPosY(originPosY));
+}
 
-//double coordinate::tranRealPosX(SGeoPoint* Pos) {
-//    int x = Pos->getPosX();
-//    int y = Pos->getPosY();
-//    double retVal = globalEnvironment::cubeSizeWidth * (x + 0.5);
-//    return retVal;
-//}
+double coordinate::tranRealPosX(SGeoPoint* Pos) {
+    int x = Pos->getPosX();
+    int y = Pos->getPosY();
+    double retVal = PARAM::globalEnvironment::cubeSizeWidth * (x + 0.5);
+    return retVal;
+}
 
-//double coordinate::tranRealPosY(SGeoPoint* Pos) {
-//    int x = Pos->getPosX();
-//    int y = Pos->getPosY();
-//    double retVal = globalEnvironment::cubeSizeHeight * (y + 0.5);
-//    return retVal;
-//}
+double coordinate::tranRealPosY(SGeoPoint* Pos) {
+    int x = Pos->getPosX();
+    int y = Pos->getPosY();
+    double retVal = PARAM::globalEnvironment::cubeSizeHeight * (y + 0.5);
+    return retVal;
+}
