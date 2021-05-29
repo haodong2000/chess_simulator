@@ -44,9 +44,9 @@ Window {
         property int textSpaceHeight: 50
         property int textSpaceWidth: 50
         property bool showInitCHessBoard: true
-        property int modelTwo:  2
-        property int modelOne:  1
-        property int modelFive: 5
+        property int modelTwo:  (showInitCHessBoard == true) ? 2:0
+        property int modelOne:  (showInitCHessBoard == true) ? 1:0
+        property int modelFive: (showInitCHessBoard == true) ? 5:0
         property double copyrightX: cubeSizeWidth/10.0
         property double copyrightY: cubeSizeHeight/10.0
         property double chessSize: cubeSizeWidth * 0.45
