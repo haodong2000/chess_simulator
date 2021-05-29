@@ -1,5 +1,5 @@
 #include "coordinate.h"
-#include "Params.h"
+#include "global.h"
 #include <QtMath>
 
 coordinate::coordinate()

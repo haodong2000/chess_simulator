@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     Params.cpp \
+    global.cpp \
         main.cpp \
     SGeoPoint.cpp \
     coordinate.cpp \
@@ -42,4 +43,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     Params.h \
     SGeoPoint.h \
-    coordinate.h \
+    coordinate.h \ \
+    global.h

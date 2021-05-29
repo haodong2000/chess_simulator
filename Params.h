@@ -19,11 +19,16 @@
 namespace PARAM {
 
     namespace globalEnvironment {
+
         // get available desktop size
-        QDesktopWidget* desktopWidget = QApplication::desktop();
-        QRect clientRect = desktopWidget->availableGeometry();
+        const QDesktopWidget* desktopWidget = QApplication::desktop();
+        const QRect clientRect = desktopWidget->availableGeometry();
         const double screenWidth = clientRect.width();
         const double screenHeight = clientRect.height();
+
+//        const double screenWidth = 100;
+//        const double screenHeight = 100;
+
         // important parameters, never change
         const double devicePixelRatio  = 100;
         const int screenAvaliableWidth  = (screenHeight *2.0)/15.0;
