@@ -43,6 +43,13 @@ Window {
         property int textSizeInPixel: 50
         property int textSpaceHeight: 50
         property int textSpaceWidth: 50
+        property bool showInitCHessBoard: true
+        property int modelTwo:  2
+        property int modelOne:  1
+        property int modelFive: 5
+        property double copyrightX: cubeSizeWidth/10.0
+        property double copyrightY: cubeSizeHeight/10.0
+        property double chessSize: cubeSizeWidth * 0.45
 //        property double BAPosX: cubeSizeWidth/2.0
 //        property double BAPosY: cubeSizeHeight * 3.5
 //        property double boundaryWidthWidth: cubeSizeWidth * 0.075
@@ -572,22 +579,166 @@ Window {
             //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
             // copyright
-            ctx.fillText("Stimulation platform of SRTP -> Smart Chess Robot Li", field.beginX, field.beginY - 25)
+            ctx.fillText("Stimulation platform of SRTP -> Smart Chess Robot Li", field.copyrightX, field.copyrightY)
             ctx.strokeStyle = "#fffef9"
             ctx.stroke()
             ctx.endPath()
         }
     }
 
+
     Repeater {
-        model: 2
+        model: field.modelOne
+        Image {
+            id: bg
+            source: "../chess/black_General.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth/2.0 - width/2.0
+            y: field.cubeSizeHeight*(4.5 + index * 2) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelOne
+        Image {
+            id: rg
+            source: "../chess/red_General.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth * 9.5 - width/2.0
+            y: field.cubeSizeHeight*(4.5 + index * 2) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelTwo
         Image {
             id: ba
             source: "../chess/black_Advisor.svg"
-            width: field.cubeSizeWidth * 0.5
+            width: field.chessSize
             height: width
             x: field.cubeSizeWidth/2.0 - width/2.0
             y: field.cubeSizeHeight*(3.5 + index * 2) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelTwo
+        Image {
+            id: ra
+            source: "../chess/red_Advisor.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth * 9.5 - width/2.0
+            y: field.cubeSizeHeight*(3.5 + index * 2) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelTwo
+        Image {
+            id: be
+            source: "../chess/black_Elephant.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth/2.0 - width/2.0
+            y: field.cubeSizeHeight*(2.5 + index * 4) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelTwo
+        Image {
+            id: re
+            source: "../chess/red_Elephant.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth * 9.5 - width/2.0
+            y: field.cubeSizeHeight*(2.5 + index * 4) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelTwo
+        Image {
+            id: bh
+            source: "../chess/black_Horse.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth/2.0 - width/2.0
+            y: field.cubeSizeHeight*(1.5 + index * 6) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelTwo
+        Image {
+            id: rh
+            source: "../chess/red_Horse.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth * 9.5 - width/2.0
+            y: field.cubeSizeHeight*(1.5 + index * 6) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelTwo
+        Image {
+            id: bc
+            source: "../chess/black_Chariot.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth/2.0 - width/2.0
+            y: field.cubeSizeHeight*(0.5 + index * 8) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelTwo
+        Image {
+            id: rc
+            source: "../chess/red_Chariot.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth * 9.5 - width/2.0
+            y: field.cubeSizeHeight*(0.5 + index * 8) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelTwo
+        Image {
+            id: bC
+            source: "../chess/black_Cannon.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth * 2.5 - width/2.0
+            y: field.cubeSizeHeight*(1.5 + index * 6) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelTwo
+        Image {
+            id: rC
+            source: "../chess/red_Cannon.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth * 7.5 - width/2.0
+            y: field.cubeSizeHeight*(1.5 + index * 6) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelFive
+        Image {
+            id: bs
+            source: "../chess/black_Soldier.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth * 3.5 - width/2.0
+            y: field.cubeSizeHeight*(0.5 + index * 2) - height/2.0
+        }
+    }
+    Repeater {
+        model: field.modelFive
+        Image {
+            id: rs
+            source: "../chess/red_Soldier.svg"
+            width: field.chessSize
+            height: width
+            x: field.cubeSizeWidth * 6.5 - width/2.0
+            y: field.cubeSizeHeight*(0.5 + index * 2) - height/2.0
         }
     }
 
