@@ -31,7 +31,13 @@ SOURCES += \
     all_chesses/black_chesses/black_general.cpp \
     all_chesses/black_chesses/black_horse.cpp \
     all_chesses/black_chesses/black_soldier.cpp \
+    all_chesses/red_chesses/red_advisor.cpp \
+    all_chesses/red_chesses/red_cannon.cpp \
+    all_chesses/red_chesses/red_chariot.cpp \
+    all_chesses/red_chesses/red_elephant.cpp \
     all_chesses/red_chesses/red_general.cpp \
+    all_chesses/red_chesses/red_horse.cpp \
+    all_chesses/red_chesses/red_soldier.cpp \
     global.cpp \
         main.cpp \
     SGeoPoint.cpp \
@@ -74,7 +80,13 @@ HEADERS += \
     all_chesses/black_chesses/black_general.h \
     all_chesses/black_chesses/black_horse.h \
     all_chesses/black_chesses/black_soldier.h \
+    all_chesses/red_chesses/red_advisor.h \
+    all_chesses/red_chesses/red_cannon.h \
+    all_chesses/red_chesses/red_chariot.h \
+    all_chesses/red_chesses/red_elephant.h \
     all_chesses/red_chesses/red_general.h \
+    all_chesses/red_chesses/red_horse.h \
+    all_chesses/red_chesses/red_soldier.h \
     coordinate.h \
     global.h \
 
