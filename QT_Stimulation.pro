@@ -24,7 +24,13 @@ SOURCES += \
     all_chesses/General.cpp \
     all_chesses/Horse.cpp \
     all_chesses/Soldier.cpp \
+    all_chesses/black_chesses/black_advisor.cpp \
+    all_chesses/black_chesses/black_cannon.cpp \
+    all_chesses/black_chesses/black_chariot.cpp \
+    all_chesses/black_chesses/black_elephant.cpp \
     all_chesses/black_chesses/black_general.cpp \
+    all_chesses/black_chesses/black_horse.cpp \
+    all_chesses/black_chesses/black_soldier.cpp \
     all_chesses/red_chesses/red_general.cpp \
     global.cpp \
         main.cpp \
@@ -61,7 +67,13 @@ HEADERS += \
     all_chesses/General.h \
     all_chesses/Horse.h \
     all_chesses/Soldier.h \
+    all_chesses/black_chesses/black_advisor.h \
+    all_chesses/black_chesses/black_cannon.h \
+    all_chesses/black_chesses/black_chariot.h \
+    all_chesses/black_chesses/black_elephant.h \
     all_chesses/black_chesses/black_general.h \
+    all_chesses/black_chesses/black_horse.h \
+    all_chesses/black_chesses/black_soldier.h \
     all_chesses/red_chesses/red_general.h \
     coordinate.h \
     global.h \
