@@ -20,8 +20,8 @@ Window {
     visible: true
 //    width: Screen.desktopAvailableWidth // Screen.width
 //    height: Screen.desktopAvailableHeight // Screen.height
-    width: Screen.width // Screen.width
-    height: Screen.height // Screen.height
+    width: Screen.width // 1920
+    height: Screen.height // 1080
     color: "#2f2f35"
 
     Item {
