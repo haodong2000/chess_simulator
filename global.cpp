@@ -1,5 +1,5 @@
-//#include "global.h"
-//#include "Params.h"
+#include "global.h"
+#include "Params.h"
 
 /* * * * * * * * * * * * * * * * * * * * *
 *   File:     global.cpp
