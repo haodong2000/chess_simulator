@@ -14,7 +14,7 @@ class red_elephant: public Elephant
 {
 public:
     red_elephant(int x = 0, int y = 0,
-                 QString name = "Elephant", // empty name is illegal
+                 QString name = "RElephant", // empty name is illegal
                  bool camp = true, // black is default
                  int number = 1, // 0 is an error number, only 1-5 is legal
                  bool alive = true);

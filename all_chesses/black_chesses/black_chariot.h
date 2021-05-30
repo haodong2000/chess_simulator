@@ -14,7 +14,7 @@ class black_chariot: public Chariot
 {
 public:
     black_chariot(int x = 0, int y = 0,
-                  QString name = "Chariot", // empty name is illegal
+                  QString name = "BChariot", // empty name is illegal
                   bool camp = false, // black is default
                   int number = 1, // 0 is an error number, only 1-5 is legal
                   bool alive = true);

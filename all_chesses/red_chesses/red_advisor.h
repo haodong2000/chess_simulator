@@ -14,7 +14,7 @@ class red_advisor: public Advisor
 {
 public:
     red_advisor(int x = 0, int y = 0,
-                QString name = "Advisor", // empty name is illegal
+                QString name = "RAdvisor", // empty name is illegal
                 bool camp = true, // black is default
                 int number = 1, // 0 is an error number, only 1-5 is legal
                 bool alive = true);

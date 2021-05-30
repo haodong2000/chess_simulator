@@ -1,6 +1,7 @@
 #include "global.h"
 #include "Params.h"
-#include "black_chesses/black_general.h"
+#include <unordered_map>
+#include <map>
 
 /* * * * * * * * * * * * * * * * * * * * *
 *   File:     global.cpp
@@ -90,6 +91,23 @@ namespace Global {
         "车",
         "炮",
         "兵",
+    };
+
+    std::unordered_map<QString, int> Chess_Qstr2Int {
+        {"BGeneral",  1},
+        {"BAdvisor",  2},
+        {"BElephant", 3},
+        {"BHorse",    4},
+        {"BChariot",  5},
+        {"BCannon",   6},
+        {"BSoldier",  7},
+        {"RGeneral",  1 + 7},
+        {"RAdvisor",  2 + 7},
+        {"RElephant", 3 + 7},
+        {"RHorse",    4 + 7},
+        {"RChariot",  5 + 7},
+        {"RCannon",   6 + 7},
+        {"RSoldier",  7 + 7},
     };
 }
 
