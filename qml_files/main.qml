@@ -24,7 +24,7 @@ Window {
 
     Item {
         id: field
-        property double cubeSizeHeight: Screen.desktopAvailableHeight/9.0 // Screen.width
+        property double cubeSizeHeight: Screen.desktopAvailableHeight/10.0 // Screen.width
         property double cubeSizeWidth: (Screen.desktopAvailableHeight * 2.0)/15.0 // Screen.height
         property double distBetweenBoardAndBoundaryHeight: cubeSizeHeight * 0.1
         property double distBetweenBoardAndBoundaryWidth: cubeSizeWidth * 0.1
