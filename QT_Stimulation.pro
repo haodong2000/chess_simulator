@@ -25,6 +25,7 @@ SOURCES += \
     all_chesses/Horse.cpp \
     all_chesses/Soldier.cpp \
     all_chesses/black_chesses/black_general.cpp \
+    all_chesses/red_chesses/red_general.cpp \
     global.cpp \
         main.cpp \
     SGeoPoint.cpp \
@@ -61,5 +62,9 @@ HEADERS += \
     all_chesses/Horse.h \
     all_chesses/Soldier.h \
     all_chesses/black_chesses/black_general.h \
+    all_chesses/red_chesses/red_general.h \
     coordinate.h \
     global.h \
+
+INCLUDEPATH += \
+    all_chesses/

@@ -14,7 +14,11 @@
 class Chariot: public Chess
 {
 public:
-    Chariot();
+    Chariot(int x = 0, int y = 0,
+            QString name = "Chariot", // empty name is illegal
+            bool camp = false, // black is default
+            int number = 0, // 0 is an error number, only 1-5 is legal
+            bool alive = true);
 };
 
 #endif // CHARIOT_H

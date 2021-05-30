@@ -14,7 +14,11 @@
 class Cannon: public Chess
 {
 public:
-    Cannon();
+    Cannon(int x = 0, int y = 0,
+           QString name = "Cannon", // empty name is illegal
+           bool camp = false, // black is default
+           int number = 0, // 0 is an error number, only 1-5 is legal
+           bool alive = true);
 };
 
 #endif // CANNON_H

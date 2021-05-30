@@ -14,7 +14,11 @@
 class Elephant: public Chess
 {
 public:
-    Elephant();
+    Elephant(int x = 0, int y = 0,
+             QString name = "Elephant", // empty name is illegal
+             bool camp = false, // black is default
+             int number = 0, // 0 is an error number, only 1-5 is legal
+             bool alive = true);
 };
 
 #endif // ELEPHANT_H
