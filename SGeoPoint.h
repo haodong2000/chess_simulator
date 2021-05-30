@@ -12,10 +12,10 @@ class SGeoPoint
 {
 public:
     SGeoPoint(int x = 0, int y = 0);
-    void setPosX(int PosX);
-    void setPosY(int PosY);
-    int getPosX();
-    int getPosY();
+    virtual void setPosX(int PosX);
+    virtual void setPosY(int PosY);
+    virtual int getPosX();
+    virtual int getPosY();
 
 private:
     int _x;

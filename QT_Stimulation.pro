@@ -15,7 +15,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Chess.cpp \
     Params.cpp \
+    all_chesses/Advisor.cpp \
+    all_chesses/Cannon.cpp \
+    all_chesses/Chariot.cpp \
+    all_chesses/Elephant.cpp \
+    all_chesses/General.cpp \
+    all_chesses/Horse.cpp \
+    all_chesses/Soldier.cpp \
+    all_chesses/black_chesses/black_general.cpp \
     global.cpp \
         main.cpp \
     SGeoPoint.cpp \
@@ -41,7 +50,16 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    Chess.h \
     Params.h \
     SGeoPoint.h \
-    coordinate.h \ \
-    global.h
+    all_chesses/Advisor.h \
+    all_chesses/Cannon.h \
+    all_chesses/Chariot.h \
+    all_chesses/Elephant.h \
+    all_chesses/General.h \
+    all_chesses/Horse.h \
+    all_chesses/Soldier.h \
+    all_chesses/black_chesses/black_general.h \
+    coordinate.h \
+    global.h \
