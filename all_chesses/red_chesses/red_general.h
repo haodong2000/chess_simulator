@@ -14,9 +14,9 @@ class red_general: General
 {
 public:
     red_general(int x = 0, int y = 0,
-                QString name = "RGeneral", // empty name is illegal
-                bool camp = true, // black is default
-                int number = 1, // 0 is an error number, only 1-5 is legal
+                const QString name = "RGeneral", // empty name is illegal
+                const bool camp = true, // black is default
+                const int number = 1, // 0 is an error number, only 1-5 is legal
                 bool alive = true);
 };
 

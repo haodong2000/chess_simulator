@@ -14,9 +14,9 @@ class red_cannon: public Cannon
 {
 public:
     red_cannon(int x = 0, int y = 0,
-               QString name = "RCannon", // empty name is illegal
-               bool camp = true, // black is default
-               int number = 1, // 0 is an error number, only 1-5 is legal
+               const QString name = "RCannon", // empty name is illegal
+               const bool camp = true, // black is default
+               const int number = 1, // 0 is an error number, only 1-5 is legal
                bool alive = true);
 };
 

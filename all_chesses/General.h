@@ -15,9 +15,9 @@ class General: public Chess
 {
 public:
     General(int x = 0, int y = 0,
-            QString name = "General", // empty name is illegal
-            bool camp = false, // black is default
-            int number = 0, // 0 is an error number, only 1-5 is legal
+            const QString name = "General", // empty name is illegal
+            const bool camp = false, // black is default
+            const int number = 0, // 0 is an error number, only 1-5 is legal
             bool alive = true);
 };
 
