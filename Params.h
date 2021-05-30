@@ -23,18 +23,16 @@ namespace PARAM {
         // get available desktop size
         const QDesktopWidget* desktopWidget = QApplication::desktop();
         const QRect clientRect = desktopWidget->availableGeometry();
-        const double screenWidth = clientRect.width();
-        const double screenHeight = clientRect.height();
+        const double screenAvaliableWidth = clientRect.width();
+        const double screenAvaliableHeight = clientRect.height();
 
 //        const double screenWidth = 100;
 //        const double screenHeight = 100;
 
         // important parameters, never change
-        const double devicePixelRatio  = 100;
-        const int screenAvaliableWidth  = (screenHeight *2.0)/15.0;
-        const int screenAvaliableHeight = screenHeight/9.0;
+        // const double devicePixelRatio  = 100;
         const double cubeSizeWidth = (screenAvaliableHeight * 2.0)/15.0;
-        const double cubeSizeHeight = screenAvaliableHeight/9.0;
+        const double cubeSizeHeight = screenAvaliableHeight/10.0;
     }
 
     namespace chessPos {
