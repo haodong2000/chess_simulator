@@ -20,9 +20,13 @@ public:
           const int number = 0, // 0 is an error number, only 1-5 is legal
           bool alive = true);
     bool isAlive();
+    bool canKill();
+    bool canMove();
+    void refersh();
     // SGeoPoint Pos;
 
 private:
+    SGeoPoint Pos;
     const bool _redOrBlack; // true -> red  and  false -> black
     const QString _name;
     const int _number; // sequence

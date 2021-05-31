@@ -13,7 +13,7 @@ Qml_Connection::Qml_Connection()
 }
 
 void Qml_Connection::changeChessPos(int chessName, int number, bool camp, SGeoPoint *Pos) {
-    // number already contain the infomation of camp
+    // number already contain the infomation of camp, chessName also contains
     QString name = GlobalEnvirIn::Instance()->__int2QStrName(chessName) + QString::number(number);
     if(name.isEmpty()) {
         qDebug() << "ERROR! Qml_Connection.cpp changeChessPos() line: 17";

@@ -65,10 +65,10 @@ Window {
 
         property double chessSize: cubeSizeWidth * 0.45
 
-        property double b_gen_posX: cubeSizeWidth/2.0 - chessSize/2.0
-        property double b_gen_posY: cubeSizeHeight * 4.5 - chessSize/2.0
-        property double r_gen_posX: cubeSizeWidth * 9.5 - chessSize/2.0
-        property double r_gen_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double b_gen_1_posX: cubeSizeWidth/2.0 - chessSize/2.0
+        property double b_gen_1_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double r_gen_1_posX: cubeSizeWidth * 9.5 - chessSize/2.0
+        property double r_gen_1_posY: cubeSizeHeight * 4.5 - chessSize/2.0
 
         property double b_adv_1_posX: cubeSizeWidth/2.0 - chessSize/2.0
         property double b_adv_1_posY: cubeSizeHeight * 3.5 - chessSize/2.0
@@ -878,16 +878,16 @@ Window {
         source: (field.showInitCHessBoardSingle == true && field.b_gen_alive) ? "../chess/black_General.svg" : ""
         width: field.chessSize
         height: width
-        x: field.b_gen_posX
-        y: field.b_gen_posY
+        x: field.b_gen_1_posX
+        y: field.b_gen_1_posY
     }
     Image {
         id: r_gen
         source: (field.showInitCHessBoardSingle == true && field.r_gen_alive) ? "../chess/red_General.svg" : ""
         width: field.chessSize
         height: width
-        x: field.r_gen_posX
-        y: field.r_gen_posY
+        x: field.r_gen_1_posX
+        y: field.r_gen_1_posY
     }
     Image {
         id: b_adv_1

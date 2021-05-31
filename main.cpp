@@ -45,8 +45,10 @@ int main(int argc, char *argv[])
     if(!objList.empty()) objectTemp = *objList.begin();
     else qDebug() << "object list is empty!";
     object = objectTemp->findChild<QObject*>("field_root");
-//    SGeoPoint* ppppp = new SGeoPoint(5, 0); // test interface
-//    QmlConnectIn::Instance()->changeChessPos("b_cha_", 1, false, ppppp);
+    SGeoPoint* ppppp = new SGeoPoint(5, 0); // test interface
+    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, ppppp);
+    ppppp->setPosX(7);
+    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, ppppp);
 
 //    if (field) { // test connection
 //        field->setProperty("chessSize", (1080*2.0/15.0) * 0.45);
