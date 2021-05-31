@@ -10,6 +10,7 @@
 * * * * * * * * * * * * * * * * * * * * * */
 
 #include "SGeoPoint.h"
+#include "singleton.h"
 
 class coordinate
 {
@@ -20,6 +21,10 @@ public:
     virtual SGeoPoint tranPos(double originPosX, double originPosY);
     virtual double tranRealPosX(SGeoPoint* Pos);
     virtual double tranRealPosY(SGeoPoint* Pos);
+    virtual double tranRealPosX(int PosX);
+    virtual double tranRealPosY(int PosY);
 };
+
+typedef NormalSingleton< coordinate > coordinateIn;
 
 #endif // COORDINATE_H

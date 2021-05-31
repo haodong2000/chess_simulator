@@ -50,8 +50,10 @@ Window {
         property int textSizeInPixel: 50
         property int textSpaceHeight: 50
         property int textSpaceWidth: 50
-        property bool showInitCHessBoardRepeat: true
-        property bool showInitCHessBoardSingle: false
+
+        property bool showInitCHessBoardRepeat: false
+        property bool showInitCHessBoardSingle: true
+
         property int modelTwoRepeat:  (showInitCHessBoardRepeat == true) ? 2:0
         property int modelOneRepeat:  (showInitCHessBoardRepeat == true) ? 1:0
         property int modelFiveRepeat: (showInitCHessBoardRepeat == true) ? 5:0
@@ -60,19 +62,125 @@ Window {
         property int modelFiveSingle: (showInitCHessBoardRepeat == true) ? 5:0
         property double copyrightX: cubeSizeWidth/10.0
         property double copyrightY: cubeSizeHeight/10.0
+
         property double chessSize: cubeSizeWidth * 0.45
+
         property double b_gen_posX: cubeSizeWidth/2.0 - chessSize/2.0
         property double b_gen_posY: cubeSizeHeight * 4.5 - chessSize/2.0
         property double r_gen_posX: cubeSizeWidth * 9.5 - chessSize/2.0
         property double r_gen_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+
         property double b_adv_1_posX: cubeSizeWidth/2.0 - chessSize/2.0
-        property double b_adv_1_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double b_adv_1_posY: cubeSizeHeight * 3.5 - chessSize/2.0
         property double r_adv_1_posX: cubeSizeWidth * 9.5 - chessSize/2.0
-        property double r_adv_1_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double r_adv_1_posY: cubeSizeHeight * 3.5 - chessSize/2.0
         property double b_adv_2_posX: cubeSizeWidth/2.0 - chessSize/2.0
-        property double b_adv_2_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double b_adv_2_posY: cubeSizeHeight * 5.5 - chessSize/2.0
         property double r_adv_2_posX: cubeSizeWidth * 9.5 - chessSize/2.0
-        property double r_adv_2_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double r_adv_2_posY: cubeSizeHeight * 5.5 - chessSize/2.0
+
+        property double b_ele_1_posX: cubeSizeWidth/2.0 - chessSize/2.0
+        property double b_ele_1_posY: cubeSizeHeight * 2.5 - chessSize/2.0
+        property double r_ele_1_posX: cubeSizeWidth * 9.5 - chessSize/2.0
+        property double r_ele_1_posY: cubeSizeHeight * 2.5 - chessSize/2.0
+        property double b_ele_2_posX: cubeSizeWidth/2.0 - chessSize/2.0
+        property double b_ele_2_posY: cubeSizeHeight * 6.5 - chessSize/2.0
+        property double r_ele_2_posX: cubeSizeWidth * 9.5 - chessSize/2.0
+        property double r_ele_2_posY: cubeSizeHeight * 6.5 - chessSize/2.0
+
+        property double b_hor_1_posX: cubeSizeWidth/2.0 - chessSize/2.0
+        property double b_hor_1_posY: cubeSizeHeight * 1.5 - chessSize/2.0
+        property double r_hor_1_posX: cubeSizeWidth * 9.5 - chessSize/2.0
+        property double r_hor_1_posY: cubeSizeHeight * 1.5 - chessSize/2.0
+        property double b_hor_2_posX: cubeSizeWidth/2.0 - chessSize/2.0
+        property double b_hor_2_posY: cubeSizeHeight * 7.5 - chessSize/2.0
+        property double r_hor_2_posX: cubeSizeWidth * 9.5 - chessSize/2.0
+        property double r_hor_2_posY: cubeSizeHeight * 7.5 - chessSize/2.0
+
+        property double b_cha_1_posX: cubeSizeWidth/2.0 - chessSize/2.0
+        property double b_cha_1_posY: cubeSizeHeight/2.0 - chessSize/2.0
+        property double r_cha_1_posX: cubeSizeWidth * 9.5 - chessSize/2.0
+        property double r_cha_1_posY: cubeSizeHeight/2.0 - chessSize/2.0
+        property double b_cha_2_posX: cubeSizeWidth/2.0 - chessSize/2.0
+        property double b_cha_2_posY: cubeSizeHeight * 8.5 - chessSize/2.0
+        property double r_cha_2_posX: cubeSizeWidth * 9.5 - chessSize/2.0
+        property double r_cha_2_posY: cubeSizeHeight * 8.5 - chessSize/2.0
+
+        property double b_can_1_posX: cubeSizeWidth * 2.5 - chessSize/2.0
+        property double b_can_1_posY: cubeSizeHeight * 1.5 - chessSize/2.0
+        property double r_can_1_posX: cubeSizeWidth * 7.5 - chessSize/2.0
+        property double r_can_1_posY: cubeSizeHeight * 1.5 - chessSize/2.0
+        property double b_can_2_posX: cubeSizeWidth * 2.5 - chessSize/2.0
+        property double b_can_2_posY: cubeSizeHeight * 7.5 - chessSize/2.0
+        property double r_can_2_posX: cubeSizeWidth * 7.5 - chessSize/2.0
+        property double r_can_2_posY: cubeSizeHeight * 7.5 - chessSize/2.0
+
+        property double b_sol_1_posX: cubeSizeWidth * 3.5 - chessSize/2.0
+        property double b_sol_1_posY: cubeSizeHeight/2.0 - chessSize/2.0
+        property double r_sol_1_posX: cubeSizeWidth * 6.5 - chessSize/2.0
+        property double r_sol_1_posY: cubeSizeHeight/2.0 - chessSize/2.0
+        property double b_sol_2_posX: cubeSizeWidth * 3.5 - chessSize/2.0
+        property double b_sol_2_posY: cubeSizeHeight * 2.5 - chessSize/2.0
+        property double r_sol_2_posX: cubeSizeWidth * 6.5 - chessSize/2.0
+        property double r_sol_2_posY: cubeSizeHeight * 2.5 - chessSize/2.0
+        property double b_sol_3_posX: cubeSizeWidth * 3.5 - chessSize/2.0
+        property double b_sol_3_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double r_sol_3_posX: cubeSizeWidth * 6.5 - chessSize/2.0
+        property double r_sol_3_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double b_sol_4_posX: cubeSizeWidth * 3.5 - chessSize/2.0
+        property double b_sol_4_posY: cubeSizeHeight * 6.5 - chessSize/2.0
+        property double r_sol_4_posX: cubeSizeWidth * 6.5 - chessSize/2.0
+        property double r_sol_4_posY: cubeSizeHeight * 6.5 - chessSize/2.0
+        property double b_sol_5_posX: cubeSizeWidth * 3.5 - chessSize/2.0
+        property double b_sol_5_posY: cubeSizeHeight * 8.5 - chessSize/2.0
+        property double r_sol_5_posX: cubeSizeWidth * 6.5 - chessSize/2.0
+        property double r_sol_5_posY: cubeSizeHeight * 8.5 - chessSize/2.0
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        property bool b_gen_alive: true
+        property bool r_gen_alive: true
+
+        property bool isGameStop: !(b_gen_alive && r_gen_alive)
+        property bool isBlackWin: b_gen_alive && !(r_gen_alive)
+        property bool isRedWin:   r_gen_alive && !(b_gen_alive)
+
+        property bool b_adv_1_alive: true
+        property bool r_adv_1_alive: true
+        property bool b_adv_2_alive: true
+        property bool r_adv_2_alive: true
+
+        property bool b_ele_1_alive: true
+        property bool r_ele_1_alive: true
+        property bool b_ele_2_alive: true
+        property bool r_ele_2_alive: true
+
+        property bool b_hor_1_alive: true
+        property bool r_hor_1_alive: true
+        property bool b_hor_2_alive: true
+        property bool r_hor_2_alive: true
+
+        property bool b_cha_1_alive: true
+        property bool r_cha_1_alive: true
+        property bool b_cha_2_alive: true
+        property bool r_cha_2_alive: true
+
+        property bool b_can_1_alive: true
+        property bool r_can_1_alive: true
+        property bool b_can_2_alive: true
+        property bool r_can_2_alive: true
+
+        property bool b_sol_1_alive: true
+        property bool r_sol_1_alive: true
+        property bool b_sol_2_alive: true
+        property bool r_sol_2_alive: true
+        property bool b_sol_3_alive: true
+        property bool r_sol_3_alive: true
+        property bool b_sol_4_alive: true
+        property bool r_sol_4_alive: true
+        property bool b_sol_5_alive: true
+        property bool r_sol_5_alive: true
+
 //        property double BAPosX: cubeSizeWidth/2.0
 //        property double BAPosY: cubeSizeHeight * 3.5
 //        property double boundaryWidthWidth: cubeSizeWidth * 0.075
@@ -90,17 +198,17 @@ Window {
         border.width: field.boundaryWidth
     }
 
-//    Rectangle {
-//        // use for test
-//        id: rect2
-//        x: field.cubeSizeWidth/2.0
-//        y: field.cubeSizeHeight/2.0
-//        width: field.cubeSizeWidth
-//        height: field.cubeSizeHeight
-//        color: "transparent"
-//        border.color: "#fffef9"
-//        border.width: field.chessBoardWidth
-//    }
+/*  Rectangle {
+        // use for test
+        id: rect2
+        x: field.cubeSizeWidth/2.0
+        y: field.cubeSizeHeight/2.0
+        width: field.cubeSizeWidth
+        height: field.cubeSizeHeight
+        color: "transparent"
+        border.color: "#fffef9"
+        border.width: field.chessBoardWidth
+    }*/
 
     Repeater {
         model: 8
@@ -767,7 +875,7 @@ Window {
 
     Image {
         id: b_gen
-        source: (field.showInitCHessBoardSingle == true) ? "../chess/black_General.svg" : ""
+        source: (field.showInitCHessBoardSingle == true && field.b_gen_alive) ? "../chess/black_General.svg" : ""
         width: field.chessSize
         height: width
         x: field.b_gen_posX
@@ -775,11 +883,252 @@ Window {
     }
     Image {
         id: r_gen
-        source: (field.showInitCHessBoardSingle == true) ? "../chess/red_General.svg" : ""
+        source: (field.showInitCHessBoardSingle == true && field.r_gen_alive) ? "../chess/red_General.svg" : ""
         width: field.chessSize
         height: width
         x: field.r_gen_posX
         y: field.r_gen_posY
+    }
+    Image {
+        id: b_adv_1
+        source: (field.showInitCHessBoardSingle == true && field.b_adv_1_alive) ? "../chess/black_Advisor.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_adv_1_posX
+        y: field.b_adv_1_posY
+    }
+    Image {
+        id: r_adv_1
+        source: (field.showInitCHessBoardSingle == true && field.r_adv_1_alive) ? "../chess/red_Advisor.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_adv_1_posX
+        y: field.r_adv_1_posY
+    }
+    Image {
+        id: b_adv_2
+        source: (field.showInitCHessBoardSingle == true && field.b_adv_2_alive) ? "../chess/black_Advisor.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_adv_2_posX
+        y: field.b_adv_2_posY
+    }
+    Image {
+        id: r_adv_2
+        source: (field.showInitCHessBoardSingle == true && field.r_adv_2_alive) ? "../chess/red_Advisor.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_adv_2_posX
+        y: field.r_adv_2_posY
+    }
+    Image {
+        id: b_ele_1
+        source: (field.showInitCHessBoardSingle == true && field.b_ele_1_alive) ? "../chess/black_Elephant.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_ele_1_posX
+        y: field.b_ele_1_posY
+    }
+    Image {
+        id: r_ele_1
+        source: (field.showInitCHessBoardSingle == true && field.r_ele_1_alive) ? "../chess/red_Elephant.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_ele_1_posX
+        y: field.r_ele_1_posY
+    }
+    Image {
+        id: b_ele_2
+        source: (field.showInitCHessBoardSingle == true && field.b_ele_2_alive) ? "../chess/black_Elephant.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_ele_2_posX
+        y: field.b_ele_2_posY
+    }
+    Image {
+        id: r_ele_2
+        source: (field.showInitCHessBoardSingle == true && field.r_ele_2_alive) ? "../chess/red_Elephant.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_ele_2_posX
+        y: field.r_ele_2_posY
+    }
+    Image {
+        id: b_hor_1
+        source: (field.showInitCHessBoardSingle == true && field.b_hor_1_alive) ? "../chess/black_Horse.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_hor_1_posX
+        y: field.b_hor_1_posY
+    }
+    Image {
+        id: r_hor_1
+        source: (field.showInitCHessBoardSingle == true && field.r_hor_1_alive) ? "../chess/red_Horse.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_hor_1_posX
+        y: field.r_hor_1_posY
+    }
+    Image {
+        id: b_hor_2
+        source: (field.showInitCHessBoardSingle == true && field.b_hor_2_alive) ? "../chess/black_Horse.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_hor_2_posX
+        y: field.b_hor_2_posY
+    }
+    Image {
+        id: r_hor_2
+        source: (field.showInitCHessBoardSingle == true && field.r_hor_2_alive) ? "../chess/red_Horse.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_hor_2_posX
+        y: field.r_hor_2_posY
+    }
+    Image {
+        id: b_cha_1
+        source: (field.showInitCHessBoardSingle == true && field.b_cha_1_alive) ? "../chess/black_Chariot.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_cha_1_posX
+        y: field.b_cha_1_posY
+    }
+    Image {
+        id: r_cha_1
+        source: (field.showInitCHessBoardSingle == true && field.r_cha_1_alive) ? "../chess/red_Chariot.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_cha_1_posX
+        y: field.r_cha_1_posY
+    }
+    Image {
+        id: b_cha_2
+        source: (field.showInitCHessBoardSingle == true && field.b_cha_2_alive) ? "../chess/black_Chariot.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_cha_2_posX
+        y: field.b_cha_2_posY
+    }
+    Image {
+        id: r_cha_2
+        source: (field.showInitCHessBoardSingle == true && field.r_cha_2_alive) ? "../chess/red_Chariot.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_cha_2_posX
+        y: field.r_cha_2_posY
+    }
+    Image {
+        id: b_can_1
+        source: (field.showInitCHessBoardSingle == true && field.b_can_1_alive) ? "../chess/black_Cannon.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_can_1_posX
+        y: field.b_can_1_posY
+    }
+    Image {
+        id: r_can_1
+        source: (field.showInitCHessBoardSingle == true && field.r_can_1_alive) ? "../chess/red_Cannon.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_can_1_posX
+        y: field.r_can_1_posY
+    }
+    Image {
+        id: b_can_2
+        source: (field.showInitCHessBoardSingle == true && field.b_can_2_alive) ? "../chess/black_Cannon.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_can_2_posX
+        y: field.b_can_2_posY
+    }
+    Image {
+        id: r_can_2
+        source: (field.showInitCHessBoardSingle == true && field.r_can_2_alive) ? "../chess/red_Cannon.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_can_2_posX
+        y: field.r_can_2_posY
+    }
+
+    Image {
+        id: b_sol_1
+        source: (field.showInitCHessBoardSingle == true && field.b_sol_1_alive) ? "../chess/black_Soldier.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_sol_1_posX
+        y: field.b_sol_1_posY
+    }
+    Image {
+        id: r_sol_1
+        source: (field.showInitCHessBoardSingle == true && field.r_sol_1_alive) ? "../chess/red_Soldier.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_sol_1_posX
+        y: field.r_sol_1_posY
+    }
+    Image {
+        id: b_sol_2
+        source: (field.showInitCHessBoardSingle == true && field.b_sol_2_alive) ? "../chess/black_Soldier.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_sol_2_posX
+        y: field.b_sol_2_posY
+    }
+    Image {
+        id: r_sol_2
+        source: (field.showInitCHessBoardSingle == true && field.r_sol_2_alive) ? "../chess/red_Soldier.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_sol_2_posX
+        y: field.r_sol_2_posY
+    }
+    Image {
+        id: b_sol_3
+        source: (field.showInitCHessBoardSingle == true && field.b_sol_3_alive) ? "../chess/black_Soldier.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_sol_3_posX
+        y: field.b_sol_3_posY
+    }
+    Image {
+        id: r_sol_3
+        source: (field.showInitCHessBoardSingle == true && field.r_sol_3_alive) ? "../chess/red_Soldier.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_sol_3_posX
+        y: field.r_sol_3_posY
+    }
+    Image {
+        id: b_sol_4
+        source: (field.showInitCHessBoardSingle == true && field.b_sol_4_alive) ? "../chess/black_Soldier.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_sol_4_posX
+        y: field.b_sol_4_posY
+    }
+    Image {
+        id: r_sol_4
+        source: (field.showInitCHessBoardSingle == true && field.r_sol_4_alive) ? "../chess/red_Soldier.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_sol_4_posX
+        y: field.r_sol_4_posY
+    }
+    Image {
+        id: b_sol_5
+        source: (field.showInitCHessBoardSingle == true && field.b_sol_5_alive) ? "../chess/black_Soldier.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.b_sol_5_posX
+        y: field.b_sol_5_posY
+    }
+    Image {
+        id: r_sol_5
+        source: (field.showInitCHessBoardSingle == true && field.r_sol_5_alive) ? "../chess/red_Soldier.svg" : ""
+        width: field.chessSize
+        height: width
+        x: field.r_sol_5_posX
+        y: field.r_sol_5_posY
     }
 
 }

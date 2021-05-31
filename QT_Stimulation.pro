@@ -43,6 +43,7 @@ SOURCES += \
         main.cpp \
     SGeoPoint.cpp \
     coordinate.cpp \
+    singleton.cpp  \
 
 RESOURCES += \
     ChessRobot.qrc
@@ -91,6 +92,7 @@ HEADERS += \
     all_chesses/red_chesses/red_soldier.h \
     coordinate.h \
     global.h \
+    singleton.h \
 
 INCLUDEPATH += \
     all_chesses/

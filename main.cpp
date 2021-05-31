@@ -11,6 +11,8 @@
 #include <QDebug>
 #include <iostream>
 
+#include "coordinate.h"
+#include "SGeoPoint.h"
 #include "Qml_Connection.h"
 
 int main(int argc, char *argv[])
@@ -34,7 +36,18 @@ int main(int argc, char *argv[])
     if(!objList.empty()) object = *objList.begin();
     QObject *field = object->findChild<QObject*>("field_root");
     // object->setProperty("width", 999999);
-    if (field) field->setProperty("chessSize", 25);
+    if (field) { // test connection
+        field->setProperty("chessSize", (1080*2.0/15.0) * 0.45);
+        SGeoPoint* b_gen_pos = new SGeoPoint(1, 4);
+        field->setProperty("b_gen_posX", coordinateIn::Instance()->tranRealPosX(b_gen_pos));
+        field->setProperty("b_gen_posY", coordinateIn::Instance()->tranRealPosY(b_gen_pos));
+        field->setProperty("b_hor_2_posX", coordinateIn::Instance()->tranRealPosX(2));
+        field->setProperty("b_hor_2_posY", coordinateIn::Instance()->tranRealPosY(6));
+        field->setProperty("r_adv_2_posX", coordinateIn::Instance()->tranRealPosX(8));
+        field->setProperty("r_adv_2_posY", coordinateIn::Instance()->tranRealPosY(4));
+        field->setProperty("r_sol_2_posX", coordinateIn::Instance()->tranRealPosX(5));
+        field->setProperty("r_sol_2_posY", coordinateIn::Instance()->tranRealPosY(2));
+    }
     else qDebug() << "field_root load error!";
 
 

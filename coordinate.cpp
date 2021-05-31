@@ -26,13 +26,21 @@ SGeoPoint coordinate::tranPos(double originPosX, double originPosY) {
 double coordinate::tranRealPosX(SGeoPoint* Pos) {
     int x = Pos->getPosX();
     int y = Pos->getPosY();
-    double retVal = PARAM::globalEnvironment::cubeSizeWidth * (x + 0.5);
+    double retVal = PARAM::globalEnvironment::cubeSizeWidth * (x + 0.5) - PARAM::chessInitPos::chessSize/2.0;
     return retVal;
 }
 
 double coordinate::tranRealPosY(SGeoPoint* Pos) {
     int x = Pos->getPosX();
     int y = Pos->getPosY();
-    double retVal = PARAM::globalEnvironment::cubeSizeHeight * (y + 0.5);
+    double retVal = PARAM::globalEnvironment::cubeSizeHeight * (y + 0.5) - PARAM::chessInitPos::chessSize/2.0;
     return retVal;
+}
+
+double coordinate::tranRealPosX(int PosX) {
+    return PARAM::globalEnvironment::cubeSizeWidth * (PosX + 0.5) - PARAM::chessInitPos::chessSize/2.0;
+}
+
+double coordinate::tranRealPosY(int PosY) {
+    return PARAM::globalEnvironment::cubeSizeHeight * (PosY + 0.5) - PARAM::chessInitPos::chessSize/2.0;
 }

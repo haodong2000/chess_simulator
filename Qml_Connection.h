@@ -4,7 +4,8 @@
 /*****************************************************************
 *   File:     Qml_Connection.h
 *   Author:   Haodong LI
-*   Usage:    connect with qml file to change the position of chesses
+*   Usage:    connect with qml file to change the position of chesses,
+*             change the position and info of all chess board and update
 *   Time:     2021-05-31 -> 13:59:25
 *****************************************************************/
 
