@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     Chess.cpp \
     Params.cpp \
+    Qml_Connection.cpp \
     all_chesses/Advisor.cpp \
     all_chesses/Cannon.cpp \
     all_chesses/Chariot.cpp \
@@ -65,6 +66,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     Chess.h \
     Params.h \
+    Qml_Connection.h \
     SGeoPoint.h \
     all_chesses/Advisor.h \
     all_chesses/Cannon.h \

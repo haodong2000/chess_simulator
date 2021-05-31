@@ -13,6 +13,7 @@ import QtQuick.Controls.Styles 1.3
 
 Window {
     id: root
+    objectName: "window_root"
 
 //    property alias rect1: rect1
 
@@ -26,6 +27,8 @@ Window {
 
     Item {
         id: field
+        anchors.fill: parent
+        objectName: "field_root"
 //        property double cubeSizeHeight: Screen.desktopAvailableHeight/10.0 // Screen.width
 //        property double cubeSizeWidth: (Screen.desktopAvailableHeight * 2.0)/15.0 // Screen.height
         property double cubeSizeHeight: Screen.height/10.0 // Screen.width
@@ -62,6 +65,14 @@ Window {
         property double b_gen_posY: cubeSizeHeight * 4.5 - chessSize/2.0
         property double r_gen_posX: cubeSizeWidth * 9.5 - chessSize/2.0
         property double r_gen_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double b_adv_1_posX: cubeSizeWidth/2.0 - chessSize/2.0
+        property double b_adv_1_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double r_adv_1_posX: cubeSizeWidth * 9.5 - chessSize/2.0
+        property double r_adv_1_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double b_adv_2_posX: cubeSizeWidth/2.0 - chessSize/2.0
+        property double b_adv_2_posY: cubeSizeHeight * 4.5 - chessSize/2.0
+        property double r_adv_2_posX: cubeSizeWidth * 9.5 - chessSize/2.0
+        property double r_adv_2_posY: cubeSizeHeight * 4.5 - chessSize/2.0
 //        property double BAPosX: cubeSizeWidth/2.0
 //        property double BAPosY: cubeSizeHeight * 3.5
 //        property double boundaryWidthWidth: cubeSizeWidth * 0.075
