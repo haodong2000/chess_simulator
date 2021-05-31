@@ -45,25 +45,12 @@ int main(int argc, char *argv[])
     if(!objList.empty()) objectTemp = *objList.begin();
     else qDebug() << "object list is empty!";
     object = objectTemp->findChild<QObject*>("field_root");
-    SGeoPoint* ppppp = new SGeoPoint(5, 0); // test interface
-    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, ppppp);
-    ppppp->setPosX(7);
-    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, ppppp);
-
-//    if (field) { // test connection
-//        field->setProperty("chessSize", (1080*2.0/15.0) * 0.45);
-//        SGeoPoint* b_gen_pos = new SGeoPoint(1, 4);
-//        field->setProperty("b_gen_posX", coordinateIn::Instance()->tranRealPosX(b_gen_pos));
-//        field->setProperty("b_gen_posY", coordinateIn::Instance()->tranRealPosY(b_gen_pos));
-//        field->setProperty("b_hor_2_posX", coordinateIn::Instance()->tranRealPosX(2));
-//        field->setProperty("b_hor_2_posY", coordinateIn::Instance()->tranRealPosY(6));
-//        field->setProperty("r_adv_2_posX", coordinateIn::Instance()->tranRealPosX(8));
-//        field->setProperty("r_adv_2_posY", coordinateIn::Instance()->tranRealPosY(4));
-//        field->setProperty("r_sol_2_posX", coordinateIn::Instance()->tranRealPosX(5));
-//        field->setProperty("r_sol_2_posY", coordinateIn::Instance()->tranRealPosY(2));
-//    }
-//    else qDebug() << "field_root load error!";
-
+    if(object) std::cout << "field_root loaded successfully!";
+    else qDebug() << "field_root loading failed!";
+//    SGeoPoint* ppppp = new SGeoPoint(5, 0); // test interface
+//    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, ppppp);
+//    ppppp->setPosX(7);
+//    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, ppppp);
 
     // Using QDeclarativeComponent // NO
 //    QQmlEngine engine;

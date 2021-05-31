@@ -233,3 +233,20 @@ int GlobalEnvironment::__QStr2intName(QString name) {
     }
     return Global::Chess_Qstr2Int_simple[name];
 }
+
+Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple) {
+    return 0;
+}
+
+Chess* GlobalEnvironment::__QStrOrInt2Chess(QString chessNameSimple) {
+    int chessNameInt = __QStr2intName(chessNameSimple);
+    if(chessNameInt == -1) {
+        std::unordered_map<QString, int>::iterator it;
+        for(it = Global::Chess_Qstr2Int.begin(); it != Global::Chess_Qstr2Int.end(); it++) {
+            if(it->first == chessNameSimple) break;
+        }
+        if(it == Global::Chess_Qstr2Int.end()) qDebug() << "global.cpp line: 245 __QStrOrInt2Chess(QString chessNameSimple) error: chessNameSimple invalid!";
+        else chessNameInt = Global::Chess_Qstr2Int[chessNameSimple];
+    }
+    return __QStrOrInt2Chess(chessNameInt);// call other function
+}
