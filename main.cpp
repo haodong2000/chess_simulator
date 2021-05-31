@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     // test interface
     SGeoPoint* ppppp = new SGeoPoint(1, 4);
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, ppppp);
-    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, -1, 0);
+    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, -1, 0); // delta!
 
     // Using QDeclarativeComponent // NO
 //    QQmlEngine engine;
