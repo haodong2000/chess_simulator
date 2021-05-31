@@ -36,21 +36,17 @@ int main(int argc, char *argv[])
     QList<QObject*> objList = engine.rootObjects();
     std::cout << "objList.length() = " << objList.length() << std::endl; // 1: only main.qml
 
-//    QObject *object(0); // initialization
-//    if(!objList.empty()) object = *objList.begin();
-//    else qDebug() << "object list is empty!";
-//    QObject *field = object->findChild<QObject*>("field_root");
-
     QObject *objectTemp(0); // initialization
     if(!objList.empty()) objectTemp = *objList.begin();
     else qDebug() << "object list is empty!";
     object = objectTemp->findChild<QObject*>("field_root");
-    if(object) std::cout << "field_root loaded successfully!";
+    if(object) std::cout << "field_root loaded successfully!" << std::endl;
     else qDebug() << "field_root loading failed!";
-//    SGeoPoint* ppppp = new SGeoPoint(5, 0); // test interface
-//    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, ppppp);
-//    ppppp->setPosX(7);
-//    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, ppppp);
+
+    // test interface
+    SGeoPoint* ppppp = new SGeoPoint(1, 4);
+    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, ppppp);
+    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, -1, 0);
 
     // Using QDeclarativeComponent // NO
 //    QQmlEngine engine;
