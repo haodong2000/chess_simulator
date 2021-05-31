@@ -109,6 +109,23 @@ namespace Global {
         {"RCannon",   6 + 7},
         {"RSoldier",  7 + 7},
     };
+
+    std::unordered_map<QString, int> Chess_Qstr2Int_simple {
+        {"b_gen", 1},
+        {"b_adv", 2},
+        {"b_ele", 3},
+        {"b_hor", 4},
+        {"b_cha", 5},
+        {"b_can", 6},
+        {"b_sol", 7},
+        {"r_gen", 1 + 7},
+        {"r_adv", 2 + 7},
+        {"r_ele", 3 + 7},
+        {"r_hor", 4 + 7},
+        {"r_cha", 5 + 7},
+        {"r_can", 6 + 7},
+        {"r_sol", 7 + 7},
+    };
 }
 
 GlobalEnvironment::GlobalEnvironment() {

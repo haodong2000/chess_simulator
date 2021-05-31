@@ -9,16 +9,21 @@
 *   Time:     2021-05-31 -> 13:59:25
 *****************************************************************/
 
-#include <QQuickItem>
-#include <QObject>
-#include <QQuickItem>
-#include <QWidget>
+//#include "singleton.h"
+//#include "Params.h"
+#include "global.h"
+#include "coordinate.h"
 
-class Qml_Connection: public QObject
+class Qml_Connection
 {
-    Q_OBJECT
 public:
     Qml_Connection();
+    virtual void changeChessPos(int chessName, SGeoPoint* Pos) {object->setProperty("b_sol_1_posX", coordinateIn::Instance()->tranRealPosX(7));};
+    virtual void changeChessPos(QString chessName, SGeoPoint* Pos){};
+    virtual void changeChessPos(int chessName, int deltaX, int deltaY){};
+    virtual void changeChessPos(QString chessName, int deltaX, int deltaY){};
 };
+
+typedef NormalSingleton< Qml_Connection > QmlConnectIn;
 
 #endif // QML_CONNECTION_H
