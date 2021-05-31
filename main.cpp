@@ -41,14 +41,12 @@ int main(int argc, char *argv[])
 //    else qDebug() << "object list is empty!";
 //    QObject *field = object->findChild<QObject*>("field_root");
 
-    QObject *objectLLL(0); // initialization
-    if(!objList.empty()) objectLLL = *objList.begin();
+    QObject *objectTemp(0); // initialization
+    if(!objList.empty()) objectTemp = *objList.begin();
     else qDebug() << "object list is empty!";
-    object = objectLLL->findChild<QObject*>("field_root");
-    SGeoPoint* pTest = new SGeoPoint(0, 0);
-    QmlConnectIn::Instance()->changeChessPos(0, pTest);
-//    Qml_Connection a;
-//    a.changeChessPos(0, pTest);
+    object = objectTemp->findChild<QObject*>("field_root");
+//    SGeoPoint* ppppp = new SGeoPoint(5, 0); // test interface
+//    QmlConnectIn::Instance()->changeChessPos("b_cha_", 1, false, ppppp);
 
 //    if (field) { // test connection
 //        field->setProperty("chessSize", (1080*2.0/15.0) * 0.45);
@@ -73,7 +71,7 @@ int main(int argc, char *argv[])
 //    ...
 //    delete object;
 
-    // Using QDeclarativeView // YES
+    // Using QDeclarativeView // YES, and that what we use
 //    QQuickView view;
 //    view.setSource(QUrl::fromLocalFile("../QT_Stimulation/qml_files/main.qml"));
 //    view.show();

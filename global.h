@@ -14,6 +14,7 @@
 #include <QVector>
 #include <iostream>
 #include <string.h>
+#include <string>
 #include <QString>
 #include <QDebug>
 
@@ -24,6 +25,8 @@ public:
     GlobalEnvironment();
     virtual void __refreshBoard();
     virtual void __printBoard();
+    virtual QString __int2QStrName(int name);
+    virtual int __QStr2intName(QString name);
     int ** __board; // result of chess identify, 0-14
                     // 0: empty
                     // 1-7:  black

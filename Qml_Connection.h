@@ -18,11 +18,16 @@ class Qml_Connection
 {
 public:
     Qml_Connection();
-    virtual void changeChessPos(int chessName, SGeoPoint* Pos) {object->setProperty("b_sol_1_posX", coordinateIn::Instance()->tranRealPosX(7));};
-    virtual void changeChessPos(QString chessName, SGeoPoint* Pos){};
-    virtual void changeChessPos(int chessName, int deltaX, int deltaY){};
-    virtual void changeChessPos(QString chessName, int deltaX, int deltaY){};
+    virtual void changeChessPos(int chessName,     int number, bool camp, SGeoPoint* Pos);
+    virtual void changeChessPos(QString chessName, int number, bool camp, SGeoPoint* Pos);
+    virtual void changeChessPos(int chessName,     int number, bool camp, int deltaX, int deltaY);
+    virtual void changeChessPos(QString chessName, int number, bool camp, int deltaX, int deltaY);
+
+private:
+    // static SGeoPoint* pTest;
 };
+
+// SGeoPoint* Qml_Connection::pTest = new SGeoPoint(0, 0);
 
 typedef NormalSingleton< Qml_Connection > QmlConnectIn;
 
