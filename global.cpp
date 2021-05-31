@@ -110,6 +110,23 @@ namespace Global {
         {"RSoldier",  7 + 7},
     };
 
+    std::unordered_map<int, QString> Chess_Int2Qstr {
+        {1,  "BGeneral"},
+        {2,  "BAdvisor"},
+        {3,  "BElephant"},
+        {4,  "BHorse"},
+        {5,  "BChariot"},
+        {6,  "BCannon"},
+        {7,  "BSoldier"},
+        {8,  "RGeneral"},
+        {9,  "RAdvisor"},
+        {10, "RElephant"},
+        {11, "RHorse"},
+        {12, "RChariot"},
+        {13, "RCannon"},
+        {14, "RSoldier"},
+    };
+
     std::unordered_map<QString, int> Chess_Qstr2Int_simple {
         {"b_gen_", 1},
         {"b_adv_", 2},

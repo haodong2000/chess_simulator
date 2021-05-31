@@ -10,10 +10,10 @@
 
 #include "../General.h"
 
-class black_General: public General
+class black_general: public General
 {
 public:
-    black_General(int x = 0, int y = 0,
+    black_general(int x = 0, int y = 0,
                   const QString name = "BGeneral", // empty name is illegal
                   const bool camp = false, // black is default
                   const int number = 1, // 0 is an error number, only 1-5 is legal
