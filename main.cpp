@@ -48,6 +48,8 @@ int main(int argc, char *argv[])
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, ppppp);
     QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, -1, 0); // delta!
 
+    GlobalEnvirIn::Instance()->__printBoard();
+
     // Using QDeclarativeComponent // NO
 //    QQmlEngine engine;
 //    QQmlComponent component(&engine,

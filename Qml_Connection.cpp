@@ -39,8 +39,8 @@ void Qml_Connection::changeChessPos(int chessName, int number, bool camp, int de
         qDebug() << "ERROR! Qml_Connection.cpp changeChessPos() line: 36";
         return;
     }
-    int posX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosX() + deltaX;
-    int posY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosY() + deltaY;
+    int posX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosX() + deltaX; // first call
+    int posY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosY() + deltaY; // second call
     object->setProperty((name + QString("_posX")).toLatin1(), coordinateIn::Instance()->tranRealPosX(posX));
     object->setProperty((name + QString("_posY")).toLatin1(), coordinateIn::Instance()->tranRealPosY(posY));
 }

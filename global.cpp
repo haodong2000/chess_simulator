@@ -79,7 +79,7 @@ namespace Global {
     };
 
     QVector<QString> CHESS_TABLE = {
-        "_",
+        "_", // 0
         "将",
         "士",
         "象",
@@ -197,19 +197,49 @@ void GlobalEnvironment::__refreshBoard() {
     }
     // loop every chess
     // if alive, assign
+    const int chessNameIntMax = 14;
+    const int numberNormal = 2;
+    const int numberSoldier = 5;
+    enum special {
+        S_BLACK_GENERAL = 1,
+        S_BLACK_SOLDIER = 7,
+        S_RED_GENERAL = 8,
+        S_RED_SOLDIER = 14};
+    for(int index = 1; index <= chessNameIntMax; index++) {
+        if(index == special::S_BLACK_GENERAL || index == special::S_RED_GENERAL) {
+            // black_general
+            if(__QStrOrInt2Chess(index, 1)->isAlive())
+                __board[__QStrOrInt2Chess(index, 1)->getPosX()][__QStrOrInt2Chess(index, 1)->getPosY()] = index;
+        }
+        else if(index == special::S_BLACK_SOLDIER || index == special::S_RED_SOLDIER) {
+            for(int i = 1; i <= numberSoldier; i++) {
+                if(__QStrOrInt2Chess(index, i)->isAlive())
+                    __board[__QStrOrInt2Chess(index, i)->getPosX()][__QStrOrInt2Chess(index, i)->getPosY()] = index;
+            }
+        }
+        else {
+            // normal situation
+            for(int i = 1; i <= numberNormal; i++) {
+                if(__QStrOrInt2Chess(index, i)->isAlive())
+                    __board[__QStrOrInt2Chess(index, i)->getPosX()][__QStrOrInt2Chess(index, i)->getPosY()] = index;
+            }
+        }
+    }
 }
 
 void GlobalEnvironment::__printBoard() {
-    for(int i = 0; i < 10; i++) {
+    __refreshBoard();
+    std::cout << "__printBoard() called" << std::endl;
+    for(int i = 0; i < 9; i++) {
         std::cout << "[\t";
         for(int j = 0; j < 10; j++) {
             std::cout << " ";
-            QByteArray QStr2Char(Global::CHESS_TABLE.at(__board[i][j]).toStdString().data());
-            std::cout << QStr2Char.data(); // << Global::CHESS_TABLE.at(__board[i][j]).toStdString().data();
+            // QByteArray QStr2Char(Global::CHESS_TABLE.at(__board[i][j] - 1).toStdString().data());
+            std::cout << Global::CHESS_TABLE.at(__board[j][i]).toStdString();
             if(j != 9) std::cout << ", \t";
             else std::cout << " \t";
         }
-        std::cout << std::endl;
+        std::cout << "]\t" << std::endl << std::endl;
     }
 }
 
@@ -480,7 +510,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
         }
         break;
     default:
-        qDebug() << "global.cpp line: 240 __QStrOrInt2Chess(int chessNameSimple) error: chessNameSimple > 14!";
+        qDebug() << "global.cpp line: 240 __QStrOrInt2Chess() error: chessNameSimple > 14!";
         break;
     }
     return nullptr; // null
@@ -493,7 +523,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(QString chessNameSimple, int number)
         for(it = Global::Chess_Qstr2Int.begin(); it != Global::Chess_Qstr2Int.end(); it++) {
             if(it->first == chessNameSimple) break;
         }
-        if(it == Global::Chess_Qstr2Int.end()) qDebug() << "global.cpp line: 276 __QStrOrInt2Chess(QString chessNameSimple) error: chessNameSimple invalid!";
+        if(it == Global::Chess_Qstr2Int.end()) qDebug() << "global.cpp line: 276 __QStrOrInt2Chess() error: chessNameSimple invalid!";
         else chessNameInt = Global::Chess_Qstr2Int[chessNameSimple];
     }
     return __QStrOrInt2Chess(chessNameInt, number);// call other function
