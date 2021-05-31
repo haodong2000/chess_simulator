@@ -10,7 +10,7 @@
 
 #include "../General.h"
 
-class red_general: General
+class red_general:public General
 {
 public:
     red_general(int x = 0, int y = 0,

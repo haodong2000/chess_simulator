@@ -237,19 +237,264 @@ int GlobalEnvironment::__QStr2intName(QString name) {
     return Global::Chess_Qstr2Int_simple[name];
 }
 
-Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple) {
-    return Ab_gen_1;
+Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
+    // chessNameSimple \in [1, 14], 0 is invalid
+    switch (chessNameSimple) {
+    case 0: // invalid
+        qDebug() << "global.cpp line: 240 __QStrOrInt2Chess(int chessNameSimple) error: chessNameSimple = 0!";
+        break;
+    case 1: // black_general
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ab_gen_1;
+            break;
+        default:
+            qDebug() << "global.cpp line: 248 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 2: // black_advisor
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ab_adv_1;
+            break;
+        case 2:
+            return Ab_adv_2;
+            break;
+        default:
+            qDebug() << "global.cpp line: 261 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 3: // black_elephant
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ab_ele_1;
+            break;
+        case 2:
+            return Ab_ele_2;
+            break;
+        default:
+            qDebug() << "global.cpp line: 277 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 4: // black_horse
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ab_hor_1;
+            break;
+        case 2:
+            return Ab_hor_2;
+            break;
+        default:
+            qDebug() << "global.cpp line: 293 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 5: // black_chariot
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ab_cha_1;
+            break;
+        case 2:
+            return Ab_cha_2;
+            break;
+        default:
+            qDebug() << "global.cpp line: 309 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 6: // black_cannon
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ab_can_1;
+            break;
+        case 2:
+            return Ab_can_2;
+            break;
+        default:
+            qDebug() << "global.cpp line: 325 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 7: // black_soldier
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ab_sol_1;
+            break;
+        case 2:
+            return Ab_sol_2;
+            break;
+        case 3:
+            return Ab_sol_3;
+            break;
+        case 4:
+            return Ab_sol_4;
+            break;
+        case 5:
+            return Ab_sol_5;
+            break;
+        default:
+            qDebug() << "global.cpp line: 341 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 8: // red_general
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ar_gen_1;
+            break;
+        default:
+            qDebug() << "global.cpp line: 366 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 9: // red_advisor
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ar_adv_1;
+            break;
+        case 2:
+            return Ar_adv_2;
+            break;
+        default:
+            qDebug() << "global.cpp line: 379 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 10: // red_elephant
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ar_ele_1;
+            break;
+        case 2:
+            return Ar_ele_2;
+            break;
+        default:
+            qDebug() << "global.cpp line: 395 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 11: // red_horse
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ar_hor_1;
+            break;
+        case 2:
+            return Ar_hor_2;
+            break;
+        default:
+            qDebug() << "global.cpp line: 411 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 12: // red_chariot
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ar_cha_1;
+            break;
+        case 2:
+            return Ar_cha_2;
+            break;
+        default:
+            qDebug() << "global.cpp line: 427 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 13: // red_cannon
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ar_can_1;
+            break;
+        case 2:
+            return Ar_can_2;
+            break;
+        default:
+            qDebug() << "global.cpp line: 443 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    case 14: // red_soldier
+        std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
+        switch (number) {
+        case 1:
+            return Ar_sol_1;
+            break;
+        case 2:
+            return Ar_sol_2;
+            break;
+        case 3:
+            return Ar_sol_3;
+            break;
+        case 4:
+            return Ar_sol_4;
+            break;
+        case 5:
+            return Ar_sol_5;
+            break;
+        default:
+            qDebug() << "global.cpp line: 459 __QStrOrInt2Chess() " +
+                        Global::Chess_Int2Qstr_simple[chessNameSimple] +
+                        " error: number is invalid";
+            break;
+        }
+        break;
+    default:
+        qDebug() << "global.cpp line: 240 __QStrOrInt2Chess(int chessNameSimple) error: chessNameSimple > 14!";
+        break;
+    }
+    return nullptr; // null
 }
 
-Chess* GlobalEnvironment::__QStrOrInt2Chess(QString chessNameSimple) {
+Chess* GlobalEnvironment::__QStrOrInt2Chess(QString chessNameSimple, int number) {
     int chessNameInt = __QStr2intName(chessNameSimple);
     if(chessNameInt == -1) {
         std::unordered_map<QString, int>::iterator it;
         for(it = Global::Chess_Qstr2Int.begin(); it != Global::Chess_Qstr2Int.end(); it++) {
             if(it->first == chessNameSimple) break;
         }
-        if(it == Global::Chess_Qstr2Int.end()) qDebug() << "global.cpp line: 245 __QStrOrInt2Chess(QString chessNameSimple) error: chessNameSimple invalid!";
+        if(it == Global::Chess_Qstr2Int.end()) qDebug() << "global.cpp line: 276 __QStrOrInt2Chess(QString chessNameSimple) error: chessNameSimple invalid!";
         else chessNameInt = Global::Chess_Qstr2Int[chessNameSimple];
     }
-    return __QStrOrInt2Chess(chessNameInt);// call other function
+    return __QStrOrInt2Chess(chessNameInt, number);// call other function
 }
