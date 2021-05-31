@@ -710,7 +710,7 @@ Window {
             //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
             // copyright
-            ctx.fillText("Stimulation platform of SRTP -> Smart Chess Robot Li", field.copyrightX, field.copyrightY)
+            ctx.fillText("Stimulation platform of SRTP-SmartChessRobot by LI", field.copyrightX, field.copyrightY)
             ctx.strokeStyle = "#fffef9"
             ctx.stroke()
             // ctx.endPath()

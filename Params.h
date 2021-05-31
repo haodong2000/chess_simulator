@@ -10,6 +10,7 @@
 
 #include <QDesktopWidget>
 #include <QApplication>
+#include <unordered_map>
 
 //class Params : public QApplication {
 //public:
@@ -35,6 +36,42 @@ namespace PARAM {
         const double screenAvaliableHeight = 1080;
         const double cubeSizeWidth = (screenAvaliableHeight * 2.0)/15.0;
         const double cubeSizeHeight = screenAvaliableHeight/10.0;
+    }
+
+    namespace chessNameMap {
+        const std::unordered_map<QString, int> Chess_Qstr2Int_simple {
+            {"b_gen_", 1},
+            {"b_adv_", 2},
+            {"b_ele_", 3},
+            {"b_hor_", 4},
+            {"b_cha_", 5},
+            {"b_can_", 6},
+            {"b_sol_", 7},
+            {"r_gen_", 1 + 7},
+            {"r_adv_", 2 + 7},
+            {"r_ele_", 3 + 7},
+            {"r_hor_", 4 + 7},
+            {"r_cha_", 5 + 7},
+            {"r_can_", 6 + 7},
+            {"r_sol_", 7 + 7},
+        };
+
+        const std::unordered_map<int, QString> Chess_Int2Qstr_simple {
+            {1,  "b_gen_"},
+            {2,  "b_adv_"},
+            {3,  "b_ele_"},
+            {4,  "b_hor_"},
+            {5,  "b_cha_"},
+            {6,  "b_can_"},
+            {7,  "b_sol_"},
+            {8,  "r_gen_"},
+            {9,  "r_adv_"},
+            {10, "r_ele_"},
+            {11, "r_hor_"},
+            {12, "r_cha_"},
+            {13, "r_can_"},
+            {14, "r_sol_"},
+        };
     }
 
     namespace chessInitPos {
