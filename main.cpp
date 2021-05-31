@@ -14,6 +14,7 @@
 #include "coordinate.h"
 #include "SGeoPoint.h"
 #include "Qml_Connection.h"
+#include "global.h"
 
 int main(int argc, char *argv[])
 {
@@ -36,6 +37,7 @@ int main(int argc, char *argv[])
     if(!objList.empty()) object = *objList.begin();
     QObject *field = object->findChild<QObject*>("field_root");
     // object->setProperty("width", 999999);
+
     if (field) { // test connection
         field->setProperty("chessSize", (1080*2.0/15.0) * 0.45);
         SGeoPoint* b_gen_pos = new SGeoPoint(1, 4);

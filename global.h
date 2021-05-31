@@ -17,6 +17,9 @@
 #include <QString>
 #include <QDebug>
 
+#include "singleton.h"
+#include "Qml_Connection.h"
+
 class GlobalEnvironment {
 public:
     GlobalEnvironment();
@@ -27,6 +30,9 @@ public:
                     // 1-7:  black
                     // 8-14: red
     char * __chessArray; // 0-13
+    Qml_Connection QmlConnect;
 };
+
+typedef NormalSingleton< GlobalEnvironment > GlobalEnvirIn;
 
 #endif // GLOBAL_H
