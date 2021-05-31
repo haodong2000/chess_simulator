@@ -21,6 +21,8 @@ void Qml_Connection::changeChessPos(int chessName, int number, bool camp, SGeoPo
     }
     object->setProperty((name + QString("_posX")).toLatin1(), coordinateIn::Instance()->tranRealPosX(Pos->getPosX()));
     object->setProperty((name + QString("_posY")).toLatin1(), coordinateIn::Instance()->tranRealPosY(Pos->getPosY()));
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(Pos->getPosX());
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(Pos->getPosY());
 }
 
 void Qml_Connection::changeChessPos(QString chessName, int number, bool camp, SGeoPoint *Pos) {
@@ -43,6 +45,8 @@ void Qml_Connection::changeChessPos(int chessName, int number, bool camp, int de
     int posY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosY() + deltaY; // second call
     object->setProperty((name + QString("_posX")).toLatin1(), coordinateIn::Instance()->tranRealPosX(posX));
     object->setProperty((name + QString("_posY")).toLatin1(), coordinateIn::Instance()->tranRealPosY(posY));
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(posX);
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(posY);
 }
 
 void Qml_Connection::changeChessPos(QString chessName, int number, bool camp, int deltaX, int deltaY) {

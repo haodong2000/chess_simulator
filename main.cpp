@@ -48,15 +48,8 @@ int main(int argc, char *argv[])
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, ppppp);
     QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, -1, 0); // delta!
 
+    // test __printBoard
     GlobalEnvirIn::Instance()->__printBoard();
-
-    // Using QDeclarativeComponent // NO
-//    QQmlEngine engine;
-//    QQmlComponent component(&engine,
-//                            QUrl::fromLocalFile("qml_files/main.qml"));
-//    QObject *object = component.create();
-//    ...
-//    delete object;
 
     // Using QDeclarativeView // YES, and that what we use
 //    QQuickView view;

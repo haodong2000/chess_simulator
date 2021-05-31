@@ -79,7 +79,7 @@ namespace Global {
     };
 
     QVector<QString> CHESS_TABLE = {
-        "_", // 0
+        "一", // 0
         "将",
         "士",
         "象",
@@ -231,15 +231,15 @@ void GlobalEnvironment::__printBoard() {
     __refreshBoard();
     std::cout << "__printBoard() called" << std::endl;
     for(int i = 0; i < 9; i++) {
-        std::cout << "[\t";
+        std::cout << "[";
         for(int j = 0; j < 10; j++) {
             std::cout << " ";
             // QByteArray QStr2Char(Global::CHESS_TABLE.at(__board[i][j] - 1).toStdString().data());
             std::cout << Global::CHESS_TABLE.at(__board[j][i]).toStdString();
-            if(j != 9) std::cout << ", \t";
-            else std::cout << " \t";
+            if(j != 4) std::cout << " ";
+            else std::cout << " |";
         }
-        std::cout << "]\t" << std::endl << std::endl;
+        std::cout << "]\t" << std::endl;
     }
 }
 
