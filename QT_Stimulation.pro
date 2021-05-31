@@ -42,6 +42,7 @@ SOURCES += \
     all_chesses/red_chesses/red_soldier.cpp \
     definitionChessSet.cpp \
     global.cpp \
+    globalChesses.cpp \
         main.cpp \
     SGeoPoint.cpp \
     coordinate.cpp \
@@ -96,6 +97,7 @@ HEADERS += \
     coordinate.h \
     definitionChessSet.h \
     global.h \
+    globalChesses.h \
     singleton.h \
 
 INCLUDEPATH += \

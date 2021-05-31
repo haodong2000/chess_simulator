@@ -3,6 +3,9 @@
 #include <unordered_map>
 #include <map>
 
+#include "allBRChessesInclude.h"
+#include "globalChesses.h"
+
 /* * * * * * * * * * * * * * * * * * * * *
 *   File:     global.cpp
 *   Author:   Haodong LI
@@ -235,7 +238,7 @@ int GlobalEnvironment::__QStr2intName(QString name) {
 }
 
 Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple) {
-    return 0;
+    return Ab_gen_1;
 }
 
 Chess* GlobalEnvironment::__QStrOrInt2Chess(QString chessNameSimple) {
