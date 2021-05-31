@@ -107,7 +107,7 @@ Window {
         Rectangle{
             width: field.cubeSizeWidth
             height: field.cubeSizeHeight
-            anchors.top: parent
+            // anchors.top: parent
             x: field.beginX
             y: field.beginY + field.cubeSizeHeight * index
             color: "transparent"
@@ -121,7 +121,7 @@ Window {
         Rectangle{
             width: field.cubeSizeWidth
             height: field.cubeSizeHeight
-            anchors.top: parent
+            // anchors.top: parent
             x: field.beginX + field.cubeSizeWidth
             y: field.beginY + field.cubeSizeHeight * index
             color: "transparent"
@@ -135,7 +135,7 @@ Window {
         Rectangle{
             width: field.cubeSizeWidth
             height: field.cubeSizeHeight
-            anchors.top: parent
+            // anchors.top: parent
             x: field.beginX + field.cubeSizeWidth * 2
             y: field.beginY + field.cubeSizeHeight * index
             color: "transparent"
@@ -149,7 +149,7 @@ Window {
         Rectangle{
             width: field.cubeSizeWidth
             height: field.cubeSizeHeight
-            anchors.top: parent
+            // anchors.top: parent
             x: field.beginX + field.cubeSizeWidth * 3
             y: field.beginY + field.cubeSizeHeight * index
             color: "transparent"
@@ -163,7 +163,7 @@ Window {
         Rectangle{
             width: field.cubeSizeWidth
             height: field.cubeSizeHeight
-            anchors.top: parent
+            // anchors.top: parent
             x: field.beginX + field.cubeSizeWidth * 5
             y: field.beginY + field.cubeSizeHeight * index
             color: "transparent"
@@ -177,7 +177,7 @@ Window {
         Rectangle{
             width: field.cubeSizeWidth
             height: field.cubeSizeHeight
-            anchors.top: parent
+            // anchors.top: parent
             x: field.beginX + field.cubeSizeWidth * 6
             y: field.beginY + field.cubeSizeHeight * index
             color: "transparent"
@@ -191,7 +191,7 @@ Window {
         Rectangle{
             width: field.cubeSizeWidth
             height: field.cubeSizeHeight
-            anchors.top: parent
+            // anchors.top: parent
             x: field.beginX + field.cubeSizeWidth * 7
             y: field.beginY + field.cubeSizeHeight * index
             color: "transparent"
@@ -205,7 +205,7 @@ Window {
         Rectangle{
             width: field.cubeSizeWidth
             height: field.cubeSizeHeight
-            anchors.top: parent
+            // anchors.top: parent
             x: field.beginX + field.cubeSizeWidth * 8
             y: field.beginY + field.cubeSizeHeight * index
             color: "transparent"
@@ -605,7 +605,7 @@ Window {
             ctx.fillText("Stimulation platform of SRTP -> Smart Chess Robot Li", field.copyrightX, field.copyrightY)
             ctx.strokeStyle = "#fffef9"
             ctx.stroke()
-            ctx.endPath()
+            // ctx.endPath()
         }
     }
 

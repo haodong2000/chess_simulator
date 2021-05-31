@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     engine.load(url);
 
     QList<QObject*> objList = engine.rootObjects();
-    std::cout << objList.length() << std::endl;
+    std::cout << "objList.length() = " << objList.length() << std::endl; // 1 only main.qml
     QObject *object(0); // initialization
     if(!objList.empty()) object = *objList.begin();
     QObject *field = object->findChild<QObject*>("field_root");
