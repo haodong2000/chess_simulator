@@ -18,6 +18,7 @@ SOURCES += \
     Chess.cpp \
     Params.cpp \
     Qml_Connection.cpp \
+    allBRChessesInclude.cpp \
     all_chesses/Advisor.cpp \
     all_chesses/Cannon.cpp \
     all_chesses/Chariot.cpp \
@@ -69,6 +70,7 @@ HEADERS += \
     Params.h \
     Qml_Connection.h \
     SGeoPoint.h \
+    allBRChessesInclude.h \
     all_chesses/Advisor.h \
     all_chesses/Cannon.h \
     all_chesses/Chariot.h \
