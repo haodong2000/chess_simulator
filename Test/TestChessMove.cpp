@@ -15,7 +15,7 @@ void TestChessMove::LoopMove(int indexMaxIn) {
     int temp = 1;
     while(index++ < indexMax) {
         GlobalEnvirIn::Instance()->delayMsec(500);
-        QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, true, temp, 0);
+        QmlConnectIn::Instance()->changeChessPos("b_sol_", 1, true, temp, 0);
         temp *= -1;
         GlobalEnvirIn::Instance()->__printBoard();
     }
