@@ -56,12 +56,6 @@ int main(int argc, char *argv[])
 //    // test dynamic
 //    TestChessMoveIn::Instance()->LoopMove(); // default 5
 
-    // Using QDeclarativeView // YES, and that what we use
-//    QQuickView view;
-//    view.setSource(QUrl::fromLocalFile("../QT_Stimulation/qml_files/main.qml"));
-//    view.show();
-//    QObject *object = view.rootObject();
-
     return app.exec();
 }
 
