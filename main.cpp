@@ -45,16 +45,16 @@ int main(int argc, char *argv[])
     if(object) std::cout << "field_root loaded successfully!" << std::endl;
     else qDebug() << "field_root loading failed!";
 
-    // test interface
-    SGeoPoint* ppppp = new SGeoPoint(1, 4);
-    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, ppppp);
-    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, -1, 0); // delta!
+//    // test interface
+//    SGeoPoint* ppppp = new SGeoPoint(1, 4);
+//    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, ppppp);
+//    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, -1, 0); // delta!
 
-    // test __printBoard
-    GlobalEnvirIn::Instance()->__printBoard();
+//    // test __printBoard
+//    GlobalEnvirIn::Instance()->__printBoard();
 
-    // test dynamic
-    TestChessMoveIn::Instance()->LoopMove(20);
+//    // test dynamic
+//    TestChessMoveIn::Instance()->LoopMove(); // default 5
 
     // Using QDeclarativeView // YES, and that what we use
 //    QQuickView view;
