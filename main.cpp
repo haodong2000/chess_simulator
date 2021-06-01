@@ -10,11 +10,13 @@
 #include <QList>
 #include <QDebug>
 #include <iostream>
+#include <QTimer>
 
 #include "coordinate.h"
 #include "SGeoPoint.h"
 #include "Qml_Connection.h"
 #include "global.h"
+#include "Test/TestChessMove.h"
 
 QObject* object;
 
@@ -50,6 +52,9 @@ int main(int argc, char *argv[])
 
     // test __printBoard
     GlobalEnvirIn::Instance()->__printBoard();
+
+    // test dynamic
+    TestChessMoveIn::Instance()->LoopMove(20);
 
     // Using QDeclarativeView // YES, and that what we use
 //    QQuickView view;

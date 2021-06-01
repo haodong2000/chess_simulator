@@ -17,6 +17,8 @@
 #include <string>
 #include <QString>
 #include <QDebug>
+#include <QTimer>
+#include <QTime>
 
 #include "singleton.h"
 #include "Chess.h"
@@ -32,6 +34,7 @@ public:
     virtual int __QStr2intName(QString name);
     virtual Chess* __QStrOrInt2Chess(int chessNameSimple, int number);
     virtual Chess* __QStrOrInt2Chess(QString chessNameSimple, int number);
+    virtual void delayMsec(int Msec);
     int ** __board; // result of chess identify, 0-14
                     // 0: empty
                     // 1-7:  black

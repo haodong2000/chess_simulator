@@ -1,5 +1,6 @@
 QT += quick \
-      widgets
+      widgets \
+      core
 
 CONFIG += c++11
 
@@ -18,6 +19,7 @@ SOURCES += \
     Chess.cpp \
     Params.cpp \
     Qml_Connection.cpp \
+    Test/TestChessMove.cpp \
     allBRChessesInclude.cpp \
     all_chesses/Advisor.cpp \
     all_chesses/Cannon.cpp \
@@ -72,6 +74,7 @@ HEADERS += \
     Params.h \
     Qml_Connection.h \
     SGeoPoint.h \
+    Test/TestChessMove.h \
     allBRChessesInclude.h \
     all_chesses/Advisor.h \
     all_chesses/Cannon.h \
@@ -102,3 +105,4 @@ HEADERS += \
 
 INCLUDEPATH += \
     all_chesses/
+    Test/
