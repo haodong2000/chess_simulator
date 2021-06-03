@@ -19,6 +19,7 @@ SOURCES += \
     Chess.cpp \
     Params.cpp \
     Qml_Connection.cpp \
+    Step.cpp \
     Test/TestChessMove.cpp \
     allBRChessesInclude.cpp \
     all_chesses/Advisor.cpp \
@@ -74,6 +75,7 @@ HEADERS += \
     Params.h \
     Qml_Connection.h \
     SGeoPoint.h \
+    Step.h \
     Test/TestChessMove.h \
     allBRChessesInclude.h \
     all_chesses/Advisor.h \
