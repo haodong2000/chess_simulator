@@ -19,10 +19,11 @@ public:
           const bool camp = false, // black is default
           const int number = 0, // 0 is an error number, only 1-5 is legal
           bool alive = true);
-    bool isAlive();
-    bool canKill();
-    bool canMove();
-    void refersh();
+    virtual bool isAlive();
+    virtual void setAlive(bool isAliveNow);
+    virtual bool canKill();
+    virtual bool canMove();
+    // virtual void refersh();
     // SGeoPoint Pos;
 
 private:

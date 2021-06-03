@@ -18,9 +18,9 @@
 class Step
 {
 public:
-    Step(int ChessNum, bool camp,
+    Step(int ChessNum, int ChessNumber, bool camp,
          int DeltaX, int DeltaY,
-         bool Kill = false, int ChessKilledNum = -1);
+         bool Kill = false, int ChessKilledNum = -1, int ChessKilledNumber = -1);
 
     virtual int getStepX();
     virtual int getStepY();
@@ -38,10 +38,12 @@ private:
     SGeoPoint* __StepMove; // TODO, no use currently
     SGeoPoint* __StepDeltaMove;
     int __ChessNum;
+    int __ChessNumber;
     QString __CHessName;
     bool __ChessCamp; // false is black and true is red
     bool __isKill;
     int __ChessKilledNum; // -1 means no killed
+    int __CHessKilledNumber;
     QString __ChessKilledName;
 };
 

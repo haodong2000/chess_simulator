@@ -10,6 +10,10 @@ bool Chess::isAlive() {
     return _isAlive;
 }
 
+void Chess::setAlive(bool isAliveNow) {
+    _isAlive = isAliveNow;
+}
+
 bool Chess::canKill() {
     return _canKill;
 }
