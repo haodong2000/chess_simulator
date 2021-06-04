@@ -13,6 +13,8 @@
 #include "coordinate.h"
 #include "globalChesses.h"
 
+#include "Qml_Connection.h"
+
 #include <QString>
 
 class Step

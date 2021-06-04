@@ -52,20 +52,13 @@ void Step::setStepDeltaY(int PosDeltaY) {
 }
 
 void Step::executeStep() {
-    object->setProperty(
-                (GlobalEnvirIn::Instance()->__int2QStrName(__ChessNum) +
-                 QString::number(__ChessNumber) +
-                 QString("_posX")).toLatin1(),
-                 coordinateIn::Instance()->tranRealPosX(
-                    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(__ChessNum, __ChessNumber)->getPosX() +
-                    __StepDeltaMove->getPosX()));
-    object->setProperty(
-                (GlobalEnvirIn::Instance()->__int2QStrName(__ChessNum) +
-                 QString::number(__ChessNumber) +
-                 QString("_posY")).toLatin1(),
-                coordinateIn::Instance()->tranRealPosX(
-                    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(__ChessNum, __ChessNumber)->getPosY() +
-                    __StepDeltaMove->getPosY()));
+//  new api
+    QmlConnectIn::Instance()->changeChessPos(__ChessNum, __ChessNumber, __ChessCamp, __StepDeltaMove->getPosX(), __StepDeltaMove->getPosY());
+//  old api
+//    object->setProperty((GlobalEnvirIn::Instance()->__int2QStrName(__ChessNum) + QString::number(__ChessNumber) + QString("_posX")).toLatin1(),
+//                 coordinateIn::Instance()->tranRealPosX(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(__ChessNum, __ChessNumber)->getPosX() + __StepDeltaMove->getPosX()));
+//    object->setProperty((GlobalEnvirIn::Instance()->__int2QStrName(__ChessNum) + QString::number(__ChessNumber) + QString("_posY")).toLatin1(),
+//                coordinateIn::Instance()->tranRealPosX(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(__ChessNum, __ChessNumber)->getPosY() + __StepDeltaMove->getPosY()));
     if(__isKill) {
         object->setProperty(
                     (GlobalEnvirIn::Instance()->__int2QStrName(__ChessKilledNum) +
