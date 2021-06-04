@@ -78,6 +78,13 @@ namespace Global {
         RED_SOLDIER,
     };
 
+    enum WHOLE_BOARD {
+        INIT_BOARD = 1,
+        GOING_BOARD,
+        END_BOARD,
+        FINAL_BOARD
+    };
+
     std::unordered_map<int, int> CHESS_VALUE = {
         {CHESS_TABLE::BLACK_GENERAL , 100},
         {CHESS_TABLE::BLACK_ADVISOR , 15},
@@ -625,4 +632,37 @@ int GlobalEnvironment::__BoardEvaluate() {
     // the fourth is the threat and protection value;
     // the fifth is the dynamic adjustment value.
     return 0;
+}
+
+int GlobalEnvironment::__calculateAlive() {
+    __refreshBoard();
+    int count = 0;
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            // TODO
+            // simply counting is stupid
+            if(__isThereHasChess(j, i)) count++;
+        }
+    }
+    return count;
+}
+
+int GlobalEnvironment::__isWholeBoardEntire() {
+    // function to judge Whole, End, Final
+    // Whole = 1
+    // End = 2
+    // Final = 3
+    int count = __calculateAlive();
+    if(count > PARAM::globalEnvironment::goingChessCount &&
+            count <= PARAM::globalEnvironment::initChessCount) return Global::WHOLE_BOARD::INIT_BOARD;
+    else if(count > PARAM::globalEnvironment::endChessCount &&
+            count <= PARAM::globalEnvironment::goingChessCount) return Global::WHOLE_BOARD::GOING_BOARD;
+    else if(count > PARAM::globalEnvironment::finalChessCount &&
+            count <= PARAM::globalEnvironment::endChessCount) return Global::WHOLE_BOARD::END_BOARD;
+    else if(count >= 0 &&
+            count <= PARAM::globalEnvironment::finalChessCount) return Global::WHOLE_BOARD::FINAL_BOARD;
+    else {
+        qDebug() << "global.cpp  line: 655  error: count = __calculateAlive() is illegal!";
+        return -1;
+    }
 }

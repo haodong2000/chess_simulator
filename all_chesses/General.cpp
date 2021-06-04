@@ -5,3 +5,8 @@ General::General(int x, int y, QString name, bool camp, int number, bool isAlive
 {
 
 }
+
+double General::space_value() {
+    return 0;
+}
+

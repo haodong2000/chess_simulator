@@ -5,3 +5,7 @@ Cannon::Cannon(int x, int y, QString name, bool camp, int number, bool isAlive):
 {
 
 }
+
+double Cannon::space_value() {
+    return 0;
+}

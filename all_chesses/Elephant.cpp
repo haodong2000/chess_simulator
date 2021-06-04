@@ -5,3 +5,8 @@ Elephant::Elephant(int x, int y, QString name, bool camp, int number, bool isAli
 {
 
 }
+
+double Elephant::space_value() {
+    return 0;
+}
+

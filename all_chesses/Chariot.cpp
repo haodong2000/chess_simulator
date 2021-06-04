@@ -5,3 +5,8 @@ Chariot::Chariot(int x, int y, QString name, bool camp, int number, bool isAlive
 {
 
 }
+
+double Chariot::space_value() {
+    return 0;
+}
+

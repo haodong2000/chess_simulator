@@ -36,6 +36,12 @@ namespace PARAM {
         const double screenAvaliableHeight = 1080;
         const double cubeSizeWidth = (screenAvaliableHeight * 2.0)/15.0;
         const double cubeSizeHeight = screenAvaliableHeight/10.0;
+
+        // TODO
+        const int initChessCount = 32;
+        const int goingChessCount = 24;
+        const int endChessCount = 16;
+        const int finalChessCount = 8;
     }
 
     namespace chessNameMap {

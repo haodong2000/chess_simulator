@@ -5,3 +5,8 @@ Horse::Horse(int x, int y, QString name, bool camp, int number, bool isAlive):
 {
 
 }
+
+double Horse::space_value() {
+    return 0;
+}
+
