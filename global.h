@@ -39,6 +39,7 @@ public:
     virtual bool __isThereHasChess(SGeoPoint* Pos);
     virtual bool __isThereHasChess(int PosX, int PosY);
     virtual bool __isChessOnThere(Chess* chess, SGeoPoint* Pos);
+    virtual int __BoardEvaluate();
     int ** __board; // result of chess identify, 0-14
                     // 0: empty
                     // 1-7:  black

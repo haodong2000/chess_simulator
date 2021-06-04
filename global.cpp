@@ -78,6 +78,23 @@ namespace Global {
         RED_SOLDIER,
     };
 
+    std::unordered_map<int, int> CHESS_VALUE = {
+        {CHESS_TABLE::BLACK_GENERAL , 100},
+        {CHESS_TABLE::BLACK_ADVISOR , 15},
+        {CHESS_TABLE::BLACK_ELEPHANT, 15},
+        {CHESS_TABLE::BLACK_HORSE   , 32},
+        {CHESS_TABLE::BLACK_CHARIOT , 65},
+        {CHESS_TABLE::BLACK_CANNON  , 30},
+        {CHESS_TABLE::BLACK_SOLDIER , 10},
+        {CHESS_TABLE::RED_GENERAL , 100},
+        {CHESS_TABLE::RED_ADVISOR , 15},
+        {CHESS_TABLE::RED_ELEPHANT, 15},
+        {CHESS_TABLE::RED_HORSE   , 32},
+        {CHESS_TABLE::RED_CHARIOT , 65},
+        {CHESS_TABLE::RED_CANNON  , 30},
+        {CHESS_TABLE::RED_SOLDIER , 10}
+    };
+
     QVector<QString> CHESS_TABLE = {
         "一", // 0
         "将",
@@ -599,4 +616,13 @@ bool GlobalEnvironment::__isChessOnThere(Chess *chess, SGeoPoint *Pos) {
 bool GlobalEnvironment::__isThereHasChess(int PosX, int PosY) {
     SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
     return __isThereHasChess(Pos);
+}
+
+int GlobalEnvironment::__BoardEvaluate() {
+    // One is the fixed piece strength value;
+    // the other is the position value of the piece;
+    // the third is the flexibility and cooperation value of the piece;
+    // the fourth is the threat and protection value;
+    // the fifth is the dynamic adjustment value.
+    return 0;
 }
