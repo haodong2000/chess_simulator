@@ -44,13 +44,14 @@ int main(int argc, char *argv[])
     object = objectTemp->findChild<QObject*>("field_root");
     if(object) std::cout << "field_root loaded successfully!" << std::endl;
     else qDebug() << "field_root loading failed!";
+    GlobalEnvirIn::Instance()->__refreshBoard();
 
 //    // test interface
 //    SGeoPoint* ppppp = new SGeoPoint(1, 4);
 //    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, ppppp);
 //    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, -1, 0); // delta!
 
-//    // test __printBoard
+//    GlobalEnvirIn::Instance()->__printAlive();
 //    GlobalEnvirIn::Instance()->__printBoard();
 
 //    // test dynamic

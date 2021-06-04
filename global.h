@@ -30,11 +30,15 @@ public:
     GlobalEnvironment();
     virtual void __refreshBoard();
     virtual void __printBoard();
+    virtual void __printAlive();
     virtual QString __int2QStrName(int name);
     virtual int __QStr2intName(QString name);
     virtual Chess* __QStrOrInt2Chess(int chessNameSimple, int number);
     virtual Chess* __QStrOrInt2Chess(QString chessNameSimple, int number);
-    virtual void delayMsec(int Msec);
+    virtual void __delayMsec(int Msec);
+    virtual bool __isThereHasChess(SGeoPoint* Pos);
+    virtual bool __isThereHasChess(int PosX, int PosY);
+    virtual bool __isChessOnThere(Chess* chess, SGeoPoint* Pos);
     int ** __board; // result of chess identify, 0-14
                     // 0: empty
                     // 1-7:  black

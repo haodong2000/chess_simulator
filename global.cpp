@@ -243,6 +243,22 @@ void GlobalEnvironment::__printBoard() {
     }
 }
 
+void GlobalEnvironment::__printAlive() {
+    __refreshBoard();
+    std::cout << "__printAlive() called" << std::endl;
+    for(int i = 0; i < 9; i++) {
+        std::cout << "[";
+        for(int j = 0; j < 10; j++) {
+            std::cout << " ";
+            QString printStr = __isThereHasChess(j, i) ? "X" : " ";
+            std::cout << printStr.toStdString();
+            if(j != 4) std::cout << " ";
+            else std::cout << " |";
+        }
+        std::cout << "]\t" << std::endl;
+    }
+}
+
 QString GlobalEnvironment::__int2QStrName(int name) {
     if(name == 0 || name > 14) {
         qDebug() << "global.cpp __int2QStrName(int name) line: 197 -> error: name(int) invalid!";
@@ -273,7 +289,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
     case 0: // invalid
         qDebug() << "global.cpp line: 240 __QStrOrInt2Chess(int chessNameSimple) error: chessNameSimple = 0!";
         break;
-    case 1: // black_general
+    case Global::CHESS_TABLE::BLACK_GENERAL: // black_general
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -286,7 +302,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 2: // black_advisor
+    case Global::CHESS_TABLE::BLACK_ADVISOR: // black_advisor
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -302,7 +318,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 3: // black_elephant
+    case Global::CHESS_TABLE::BLACK_ELEPHANT: // black_elephant
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -318,7 +334,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 4: // black_horse
+    case Global::CHESS_TABLE::BLACK_HORSE: // black_horse
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -334,7 +350,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 5: // black_chariot
+    case Global::CHESS_TABLE::BLACK_CHARIOT: // black_chariot
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -350,7 +366,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 6: // black_cannon
+    case Global::CHESS_TABLE::BLACK_CANNON: // black_cannon
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -366,7 +382,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 7: // black_soldier
+    case Global::CHESS_TABLE::BLACK_SOLDIER: // black_soldier
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -391,7 +407,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 8: // red_general
+    case Global::CHESS_TABLE::RED_GENERAL: // red_general
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -404,7 +420,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 9: // red_advisor
+    case Global::CHESS_TABLE::RED_ADVISOR: // red_advisor
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -420,7 +436,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 10: // red_elephant
+    case Global::CHESS_TABLE::RED_ELEPHANT: // red_elephant
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -436,7 +452,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 11: // red_horse
+    case Global::CHESS_TABLE::RED_HORSE: // red_horse
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -452,7 +468,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 12: // red_chariot
+    case Global::CHESS_TABLE::RED_CHARIOT: // red_chariot
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -468,7 +484,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 13: // red_cannon
+    case Global::CHESS_TABLE::RED_CANNON: // red_cannon
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -484,7 +500,7 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(int chessNameSimple, int number) {
             break;
         }
         break;
-    case 14: // red_soldier
+    case Global::CHESS_TABLE::RED_SOLDIER: // red_soldier
         // std::cout << Global::Chess_Int2Qstr_simple[chessNameSimple].toStdString() << " with num = " << number << std::endl;
         switch (number) {
         case 1:
@@ -529,8 +545,58 @@ Chess* GlobalEnvironment::__QStrOrInt2Chess(QString chessNameSimple, int number)
     return __QStrOrInt2Chess(chessNameInt, number);// call other function
 }
 
-void GlobalEnvironment::delayMsec(int Msec) {
+void GlobalEnvironment::__delayMsec(int Msec) {
     QTime dieTime = QTime::currentTime().addMSecs(Msec);
     while( QTime::currentTime() < dieTime )
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+}
+
+bool GlobalEnvironment::__isThereHasChess(SGeoPoint *Pos) {
+    const int chessNameIntMax = 14;
+    const int numberNormal = 2;
+    const int numberSoldier = 5;
+
+//    enum special {
+//        S_BLACK_GENERAL = 1,
+//        S_BLACK_SOLDIER = 7,
+//        S_RED_GENERAL = 8,
+//        S_RED_SOLDIER = 14};
+
+    for(int chessIndex = 1; chessIndex <= chessNameIntMax; chessIndex++) {
+        switch (chessIndex) {
+        case Global::CHESS_TABLE::BLACK_GENERAL:
+            if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, 1), Pos)) return true;
+            break;
+        case Global::CHESS_TABLE::RED_GENERAL:
+            if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, 1), Pos)) return true;
+            break;
+        case Global::CHESS_TABLE::BLACK_SOLDIER:
+            for(int index = 1; index <= numberSoldier; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) return true;
+            }
+            break;
+        case Global::CHESS_TABLE::RED_SOLDIER:
+            for(int index = 1; index <= numberSoldier; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) return true;
+            }
+            break;
+        default:
+            for(int index = 1; index <= numberNormal; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool GlobalEnvironment::__isChessOnThere(Chess *chess, SGeoPoint *Pos) {
+    return (chess->isAlive() && // important!
+            chess->getPosX() == Pos->getPosX() &&
+            chess->getPosY() == Pos->getPosY());
+}
+
+bool GlobalEnvironment::__isThereHasChess(int PosX, int PosY) {
+    SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
+    return __isThereHasChess(Pos);
 }
