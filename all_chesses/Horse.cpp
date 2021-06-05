@@ -91,6 +91,9 @@ bool Horse::canHorseMove(SGeoPoint* start, SGeoPoint* end) {
         qDebug() << "Horse.cpp canHorseMove() line:23 error: horse move invalid! 2*1 or 1*2!";
         return false;
     }
+
+    if((!GlobalEnvirIn::Instance()->__isPosInBoard(start)) || (!GlobalEnvirIn::Instance()->__isPosInBoard(end))) return false;
+
     if(abs(start->getPosX() - end->getPosX()) == 2) {
         if(GlobalEnvirIn::Instance()->__isThereHasChess((start->getPosX() + end->getPosX())/2, start->getPosY())) return false;
         else if(GlobalEnvirIn::Instance()->__isThereHasChess(end)) return false;

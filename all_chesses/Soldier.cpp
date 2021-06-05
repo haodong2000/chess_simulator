@@ -18,9 +18,9 @@ double Soldier::space_value() {
     int enemy_delta = chessCamp() ? -1 : 1;
     SGeoPoint* enemy = new SGeoPoint(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber())->getPosX() + enemy_delta,
                                   GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber())->getPosY());
-    if(GlobalEnvirIn::Instance()->__isThereHasChess(up)) return 0.75;
-    if(GlobalEnvirIn::Instance()->__isThereHasChess(down)) return 0.75;
-    if(GlobalEnvirIn::Instance()->__isThereHasChess(enemy)) return 1.25;
+    if(GlobalEnvirIn::Instance()->__isPosInBoard(up) && (!GlobalEnvirIn::Instance()->__isThereHasChess(up))) return 0.75;
+    if(GlobalEnvirIn::Instance()->__isPosInBoard(down) && (!GlobalEnvirIn::Instance()->__isThereHasChess(down))) return 0.75;
+    if(GlobalEnvirIn::Instance()->__isPosInBoard(enemy) && (!GlobalEnvirIn::Instance()->__isThereHasChess(enemy))) return 1.25;
     return 0;
 }
 
@@ -34,9 +34,9 @@ bool Soldier::canChessMove() {
     int enemy_delta = chessCamp() ? -1 : 1;
     SGeoPoint* enemy = new SGeoPoint(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber())->getPosX() + enemy_delta,
                                   GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber())->getPosY());
-    if(GlobalEnvirIn::Instance()->__isThereHasChess(up)) return true;
-    if(GlobalEnvirIn::Instance()->__isThereHasChess(down)) return true;
-    if(GlobalEnvirIn::Instance()->__isThereHasChess(enemy)) return true;
+    if(GlobalEnvirIn::Instance()->__isPosInBoard(up) && (!GlobalEnvirIn::Instance()->__isThereHasChess(up))) return true;
+    if(GlobalEnvirIn::Instance()->__isPosInBoard(down) && (!GlobalEnvirIn::Instance()->__isThereHasChess(down))) return true;
+    if(GlobalEnvirIn::Instance()->__isPosInBoard(enemy) && (!GlobalEnvirIn::Instance()->__isThereHasChess(enemy))) return true;
     return false;
 }
 

@@ -37,6 +37,8 @@ public:
     virtual Chess* __QStrOrInt2Chess(int chessNameSimple, int number);
     virtual Chess* __QStrOrInt2Chess(QString chessNameSimple, int number);
     virtual void __delayMsec(int Msec);
+    virtual bool __isPosInBoard(SGeoPoint* Pos);
+    virtual bool __isPosInBoard(int PosX, int PosY);
     virtual bool __isThereHasChess(SGeoPoint* Pos);
     virtual bool __isThereHasChess(int PosX, int PosY);
     virtual bool __isChessOnThere(Chess* chess, SGeoPoint* Pos);
