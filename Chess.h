@@ -28,6 +28,9 @@ public:
     virtual bool chessCamp();
     virtual QString chessName(); // "b_gen_"
     virtual int chessNumber();
+    virtual void setSpaceValue(double value);
+    virtual double getSpaceValue();
+    virtual double space_value();
 
     std::unordered_map<QString, SGeoPoint> StepList;
 
@@ -42,6 +45,7 @@ private:
     bool _canMove;
     bool _canKill;
     bool _isAlive;
+    double _spaceValue;
 };
 
 #endif // CHESS_H

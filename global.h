@@ -41,6 +41,14 @@ public:
     virtual bool __isThereHasChess(int PosX, int PosY);
     virtual bool __isChessOnThere(Chess* chess, SGeoPoint* Pos);
     virtual int __BoardEvaluate();
+    virtual int __calculateBlackSpaceValue();
+    virtual int __calculateRedSpaceValue();
+    virtual int __calculateBlackChessValue();
+    virtual int __calculateRedChessValue();
+    virtual int __calculateBlackPosValue();
+    virtual int __calculateRedPosValue();
+    virtual int __boardValueBlackUnit(int x, int y);
+    virtual int __boardValueRedUnit(int x, int y);
     virtual int __calculateAlive();
     virtual int __isWholeBoardEntire();
     virtual bool __isOtherChessAround(int chessNum, int chessNumber);
@@ -49,6 +57,8 @@ public:
                     // 0: empty
                     // 1-7:  black
                     // 8-14: red
+    int ** __boardValueBlack;
+    int ** __boardValueRed;
     char * __chessArray; // 0-13
 };
 

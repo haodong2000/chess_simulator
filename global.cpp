@@ -86,20 +86,20 @@ namespace Global {
     };
 
     std::unordered_map<int, int> CHESS_VALUE = {
-        {CHESS_TABLE::BLACK_GENERAL , 100},
-        {CHESS_TABLE::BLACK_ADVISOR , 15},
-        {CHESS_TABLE::BLACK_ELEPHANT, 15},
-        {CHESS_TABLE::BLACK_HORSE   , 32},
-        {CHESS_TABLE::BLACK_CHARIOT , 65},
-        {CHESS_TABLE::BLACK_CANNON  , 30},
-        {CHESS_TABLE::BLACK_SOLDIER , 10},
-        {CHESS_TABLE::RED_GENERAL , 100},
-        {CHESS_TABLE::RED_ADVISOR , 15},
-        {CHESS_TABLE::RED_ELEPHANT, 15},
-        {CHESS_TABLE::RED_HORSE   , 32},
-        {CHESS_TABLE::RED_CHARIOT , 65},
-        {CHESS_TABLE::RED_CANNON  , 30},
-        {CHESS_TABLE::RED_SOLDIER , 10}
+        {CHESS_TABLE::BLACK_GENERAL , 10000},
+        {CHESS_TABLE::BLACK_ADVISOR , 150},
+        {CHESS_TABLE::BLACK_ELEPHANT, 150},
+        {CHESS_TABLE::BLACK_HORSE   , 320},
+        {CHESS_TABLE::BLACK_CHARIOT , 650},
+        {CHESS_TABLE::BLACK_CANNON  , 300},
+        {CHESS_TABLE::BLACK_SOLDIER , 100},
+        {CHESS_TABLE::RED_GENERAL , 10000},
+        {CHESS_TABLE::RED_ADVISOR , 150},
+        {CHESS_TABLE::RED_ELEPHANT, 150},
+        {CHESS_TABLE::RED_HORSE   , 320},
+        {CHESS_TABLE::RED_CHARIOT , 650},
+        {CHESS_TABLE::RED_CANNON  , 300},
+        {CHESS_TABLE::RED_SOLDIER , 100}
     };
 
     QVector<QString> CHESS_TABLE = {
@@ -194,6 +194,29 @@ GlobalEnvironment::GlobalEnvironment() {
     for(int i = 0; i < 10; i++) {
         __board[i] = new int[10];
     }
+
+    __boardValueBlack = new int*[10];
+    for(int i = 0; i < 10; i++) {
+        __boardValueBlack[i] = new int[10];
+    }
+
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            __boardValueBlack[j][i] = __boardValueBlackUnit(j, i);
+        }
+    }
+
+    __boardValueRed = new int*[10];
+    for(int i = 0; i < 10; i++) {
+        __boardValueRed[i] = new int[10];
+    }
+
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            __boardValueRed[j][i] = __boardValueRedUnit(j, i);
+        }
+    }
+
     __chessArray = new char[14];
     __chessArray[0]     = '\0'; // empty
     __chessArray[0 + 1] = 'g'; // black general
@@ -591,8 +614,8 @@ void GlobalEnvironment::__delayMsec(int Msec) {
 }
 
 bool GlobalEnvironment::__isThereHasChess(SGeoPoint *Pos) {
-    if((Pos->getPosX() < 0 || Pos->getPosX() >= PARAM::globalEnvironment::maxAxisOfX) ||
-            (Pos->getPosY() < 0 || Pos->getPosY() >= PARAM::globalEnvironment::maxAxisOfY)) {
+    if((Pos->getPosX() < 0 || Pos->getPosX() > PARAM::globalEnvironment::maxAxisOfX) ||
+            (Pos->getPosY() < 0 || Pos->getPosY() > PARAM::globalEnvironment::maxAxisOfY)) {
         qDebug() << "global.cpp line:594 __isThereHasChess()  error:Pos out of boundary!";
         return true;
     }
@@ -652,6 +675,210 @@ int GlobalEnvironment::__BoardEvaluate() {
     // the third is the flexibility and cooperation value of the piece;
     // the fourth is the threat and protection value;
     // the fifth is the dynamic adjustment value.
+    int blackValue = 0;
+    int redValue = 0;
+    blackValue += __calculateBlackChessValue();
+    redValue += __calculateRedChessValue();
+    blackValue += __calculateBlackPosValue();
+    redValue += __calculateRedPosValue();
+    blackValue += __calculateBlackSpaceValue();
+    redValue += __calculateRedSpaceValue();
+    return blackValue - redValue;
+}
+
+int GlobalEnvironment::__calculateBlackSpaceValue() {
+    int blackSpaceValue = 0;
+    for(int index = 1; index <= 7; index++) {
+        switch (index) {
+        case Global::CHESS_TABLE::BLACK_GENERAL:
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_gen_1->space_value());
+            break;
+        case Global::CHESS_TABLE::BLACK_SOLDIER:
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_sol_1->space_value());
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_sol_2->space_value());
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_sol_3->space_value());
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_sol_4->space_value());
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_sol_5->space_value());
+            break;
+        case Global::CHESS_TABLE::BLACK_ADVISOR:
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_adv_1->space_value());
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_adv_2->space_value());
+            break;
+        case Global::CHESS_TABLE::BLACK_ELEPHANT:
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_ele_1->space_value());
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_ele_2->space_value());
+            break;
+        case Global::CHESS_TABLE::BLACK_HORSE:
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_hor_1->space_value());
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_hor_2->space_value());
+            break;
+        case Global::CHESS_TABLE::BLACK_CHARIOT:
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_cha_1->space_value());
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_cha_2->space_value());
+            break;
+        case Global::CHESS_TABLE::BLACK_CANNON:
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_can_1->space_value());
+            blackSpaceValue += qRound(Global::CHESS_VALUE[index] * Ab_can_2->space_value());
+            break;
+        default:
+            qDebug() << "global.cpp __calculateBlackSpaceValue() line:692 error:invalid chess_num!!!";
+            break;
+        }
+    }
+    std::cout << "__calculateBlackSpaceValue() = " << blackSpaceValue << std::endl;
+    return blackSpaceValue;
+}
+
+int GlobalEnvironment::__calculateRedSpaceValue() {
+    int redSpaceValue = 0;
+    for(int index = 8; index <= 14; index++) {
+        switch (index) {
+        case Global::CHESS_TABLE::RED_GENERAL:
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_gen_1->space_value());
+            break;
+        case Global::CHESS_TABLE::RED_SOLDIER:
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_sol_1->space_value());
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_sol_2->space_value());
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_sol_3->space_value());
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_sol_4->space_value());
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_sol_5->space_value());
+            break;
+        case Global::CHESS_TABLE::RED_ADVISOR:
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_adv_1->space_value());
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_adv_2->space_value());
+            break;
+        case Global::CHESS_TABLE::RED_ELEPHANT:
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_ele_1->space_value());
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_ele_2->space_value());
+            break;
+        case Global::CHESS_TABLE::RED_HORSE:
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_hor_1->space_value());
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_hor_2->space_value());
+            break;
+        case Global::CHESS_TABLE::RED_CHARIOT:
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_cha_1->space_value());
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_cha_2->space_value());
+            break;
+        case Global::CHESS_TABLE::RED_CANNON:
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_can_1->space_value());
+            redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_can_2->space_value());
+            break;
+        default:
+            qDebug() << "global.cpp __calculateBlackSpaceValue() line:692 error:invalid chess_num!!!";
+            break;
+        }
+    }
+    std::cout << "__calculateRedSpaceValue() = " << redSpaceValue << std::endl;
+    return redSpaceValue;
+}
+
+int GlobalEnvironment::__calculateBlackChessValue() {
+    int blackChessValue = 0;
+    for(int index = 1; index <= 7; index++) {
+        switch (index) {
+        case Global::CHESS_TABLE::BLACK_GENERAL:
+            if(__QStrOrInt2Chess(index, 1)->isAlive()) blackChessValue += Global::CHESS_VALUE[index];
+            break;
+        case Global::CHESS_TABLE::BLACK_SOLDIER:
+            for(int number = 1; number <= 5; number++) {
+                if(__QStrOrInt2Chess(index, number)->isAlive()) blackChessValue += Global::CHESS_VALUE[index];
+            }
+            break;
+        default:
+            for(int number = 1; number <= 2; number++) {
+                if(__QStrOrInt2Chess(index, number)->isAlive()) blackChessValue += Global::CHESS_VALUE[index];
+            }
+            break;
+        }
+    }
+    std::cout << "__calculateBlackChessValue() = " << blackChessValue << std::endl;
+    return blackChessValue;
+}
+
+int GlobalEnvironment::__calculateRedChessValue() {
+    int redChessValue = 0;
+    for(int index = 8; index <= 14; index++) {
+        switch (index) {
+        case Global::CHESS_TABLE::RED_GENERAL:
+            if(__QStrOrInt2Chess(index, 1)->isAlive()) redChessValue += Global::CHESS_VALUE[index];
+            break;
+        case Global::CHESS_TABLE::RED_SOLDIER:
+            for(int number = 1; number <= 5; number++) {
+                if(__QStrOrInt2Chess(index, number)->isAlive()) redChessValue += Global::CHESS_VALUE[index];
+            }
+            break;
+        default:
+            for(int number = 1; number <= 2; number++) {
+                if(__QStrOrInt2Chess(index, number)->isAlive()) redChessValue += Global::CHESS_VALUE[index];
+            }
+            break;
+        }
+    }
+    std::cout << "__calculateRedChessValue() = " << redChessValue << std::endl;
+    return redChessValue;
+}
+
+int GlobalEnvironment::__calculateBlackPosValue() {
+    int blackPosValue = 0;
+    for(int index = 1; index <= 7; index++) {
+        switch (index) {
+        case Global::CHESS_TABLE::BLACK_GENERAL:
+            if(__QStrOrInt2Chess(index, 1)->isAlive()) blackPosValue += __boardValueBlack[__QStrOrInt2Chess(index, 1)->getPosX()][__QStrOrInt2Chess(index, 1)->getPosY()];
+            break;
+        case Global::CHESS_TABLE::BLACK_SOLDIER:
+            for(int number = 1; number <= 5; number++) {
+                if(__QStrOrInt2Chess(index, number)->isAlive()) blackPosValue += __boardValueBlack[__QStrOrInt2Chess(index, 1)->getPosX()][__QStrOrInt2Chess(index, 1)->getPosY()];;
+            }
+            break;
+        default:
+            for(int number = 1; number <= 2; number++) {
+                if(__QStrOrInt2Chess(index, number)->isAlive()) blackPosValue += __boardValueBlack[__QStrOrInt2Chess(index, 1)->getPosX()][__QStrOrInt2Chess(index, 1)->getPosY()];
+            }
+            break;
+        }
+    }
+    std::cout << "__calculateBlackPosValue() = " << blackPosValue << std::endl;
+    return blackPosValue;
+}
+
+int GlobalEnvironment::__calculateRedPosValue() {
+    int redPosValue = 0;
+    for(int index = 8; index <= 14; index++) {
+        switch (index) {
+        case Global::CHESS_TABLE::RED_GENERAL:
+            if(__QStrOrInt2Chess(index, 1)->isAlive()) redPosValue += __boardValueRed[__QStrOrInt2Chess(index, 1)->getPosX()][__QStrOrInt2Chess(index, 1)->getPosY()];
+            break;
+        case Global::CHESS_TABLE::RED_SOLDIER:
+            for(int number = 1; number <= 5; number++) {
+                if(__QStrOrInt2Chess(index, number)->isAlive()) redPosValue += __boardValueRed[__QStrOrInt2Chess(index, 1)->getPosX()][__QStrOrInt2Chess(index, 1)->getPosY()];
+            }
+            break;
+        default:
+            for(int number = 1; number <= 2; number++) {
+                if(__QStrOrInt2Chess(index, number)->isAlive()) redPosValue += __boardValueRed[__QStrOrInt2Chess(index, 1)->getPosX()][__QStrOrInt2Chess(index, 1)->getPosY()];
+            }
+            break;
+        }
+    }
+    std::cout << "__calculateRedPosValue() = " << redPosValue << std::endl;
+    return redPosValue;
+}
+
+int GlobalEnvironment::__boardValueBlackUnit(int x, int y) {
+    const int rate = 12 + __isWholeBoardEntire() * 4;
+    const int base = 75;
+    int gen_y = __QStrOrInt2Chess(Global::CHESS_TABLE::RED_GENERAL, 1)->getPosY();
+    int gen_x = __QStrOrInt2Chess(Global::CHESS_TABLE::RED_GENERAL, 1)->getPosX();
+    return base + (PARAM::globalEnvironment::maxAxisOfX - abs(x - gen_x))*(rate - abs(y - gen_y));
+    return 0;
+}
+
+int GlobalEnvironment::__boardValueRedUnit(int x, int y) {
+    const int rate = 12 + __isWholeBoardEntire() * 4;
+    const int base = 75;
+    int gen_y = __QStrOrInt2Chess(Global::CHESS_TABLE::BLACK_GENERAL, 1)->getPosY();
+    int gen_x = __QStrOrInt2Chess(Global::CHESS_TABLE::BLACK_GENERAL, 1)->getPosX();
+    return base + (PARAM::globalEnvironment::maxAxisOfX - abs(x - gen_x))*(rate - abs(y - gen_y));
     return 0;
 }
 

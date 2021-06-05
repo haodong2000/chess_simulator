@@ -52,6 +52,7 @@ int main(int argc, char *argv[])
 //    SGeoPoint* ppppp = new SGeoPoint(1, 4);
 //    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, ppppp);
 //    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, -1, 0); // delta!
+//    std::cout << GlobalEnvirIn::Instance()->__BoardEvaluate() << std::endl;
 
 //    GlobalEnvirIn::Instance()->__printAlive();
 //    GlobalEnvirIn::Instance()->__printBoard();
