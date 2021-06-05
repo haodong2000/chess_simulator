@@ -9,3 +9,7 @@ Soldier::Soldier(int x, int y, QString name, bool camp, int number, bool isAlive
 double Soldier::space_value() {
     return 0;
 }
+
+bool Soldier::canChessMove() {
+    return true;
+}

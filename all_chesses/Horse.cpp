@@ -10,3 +10,6 @@ double Horse::space_value() {
     return 0;
 }
 
+bool Horse::canChessMove() {
+    return true;
+}

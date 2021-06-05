@@ -11,6 +11,6 @@ double Elephant::space_value() {
 }
 
 bool Elephant::canChessMove() {
-
+    return true;
 }
 
