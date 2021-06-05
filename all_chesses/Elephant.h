@@ -21,6 +21,8 @@ public:
              bool alive = true);
     virtual double space_value(); // 0~100%
     virtual bool canChessMove();
+    virtual bool canElephantMove(SGeoPoint* start, SGeoPoint* end);
+    virtual void generateMove();
 };
 
 #endif // ELEPHANT_H

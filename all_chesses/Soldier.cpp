@@ -13,3 +13,7 @@ double Soldier::space_value() {
 bool Soldier::canChessMove() {
     return true;
 }
+
+void Soldier::generateMove() {
+
+}

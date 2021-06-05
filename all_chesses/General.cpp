@@ -17,3 +17,7 @@ bool General::canChessMove() {
     else retMove = true;
     return retMove;
 }
+
+void General::generateMove() {
+
+}

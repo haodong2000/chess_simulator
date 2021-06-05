@@ -10,6 +10,8 @@
 
 #include <QString>
 #include "SGeoPoint.h"
+#include <QVector>
+#include <unordered_map>
 
 class Chess: public SGeoPoint
 {
@@ -26,6 +28,9 @@ public:
     virtual bool chessCamp();
     virtual QString chessName(); // "b_gen_"
     virtual int chessNumber();
+
+    std::unordered_map<QString, SGeoPoint> StepList;
+
     // virtual void refersh();
     // SGeoPoint Pos;
 

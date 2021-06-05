@@ -18,3 +18,7 @@ bool Cannon::canChessMove() {
     else retMove = true;
     return retMove;
 }
+
+void Cannon::generateMove() {
+
+}

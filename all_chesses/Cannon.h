@@ -21,6 +21,7 @@ public:
            bool alive = true);
     virtual double space_value(); // 0~100%
     virtual bool canChessMove();
+    virtual void generateMove();
 };
 
 #endif // CANNON_H

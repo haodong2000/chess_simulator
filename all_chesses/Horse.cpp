@@ -13,3 +13,7 @@ double Horse::space_value() {
 bool Horse::canChessMove() {
     return true;
 }
+
+void Horse::generateMove() {
+
+}

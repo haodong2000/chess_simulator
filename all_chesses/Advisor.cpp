@@ -38,9 +38,10 @@ double Advisor::chessMoveNum() {
         if((getPosX() == AdvisorPos::b_left_x && getPosY() == AdvisorPos::b_up_y) ||
                 (getPosX() == AdvisorPos::b_right_x && getPosY() == AdvisorPos::b_up_y) ||
                 (getPosX() == AdvisorPos::b_left_x && getPosY() == AdvisorPos::b_down_y) ||
-                (getPosX() == AdvisorPos::b_right_x && getPosY() == AdvisorPos::b_down_y))
+                (getPosX() == AdvisorPos::b_right_x && getPosY() == AdvisorPos::b_down_y)) {
             if(!(GlobalEnvirIn::Instance()->__isThereHasChess(AdvisorPos::b_mid_x, AdvisorPos::b_mid_y)))
                 count = 1;
+        }
         else if(getPosX() == AdvisorPos::b_mid_x && getPosY() == AdvisorPos::b_mid_y) {
             if(!(GlobalEnvirIn::Instance()->__isThereHasChess(AdvisorPos::b_left_x, AdvisorPos::b_up_y))) count++;
             if(!(GlobalEnvirIn::Instance()->__isThereHasChess(AdvisorPos::b_right_x, AdvisorPos::b_up_y))) count++;
@@ -53,9 +54,10 @@ double Advisor::chessMoveNum() {
         if((getPosX() == AdvisorPos::r_left_x && getPosY() == AdvisorPos::r_up_y) ||
                 (getPosX() == AdvisorPos::r_right_x && getPosY() == AdvisorPos::r_up_y) ||
                 (getPosX() == AdvisorPos::r_left_x && getPosY() == AdvisorPos::r_down_y) ||
-                (getPosX() == AdvisorPos::r_right_x && getPosY() == AdvisorPos::r_down_y))
+                (getPosX() == AdvisorPos::r_right_x && getPosY() == AdvisorPos::r_down_y)) {
             if(!(GlobalEnvirIn::Instance()->__isThereHasChess(AdvisorPos::r_mid_x, AdvisorPos::r_mid_y)))
                 count = 1;
+        }
         else if(getPosX() == AdvisorPos::r_mid_x && getPosY() == AdvisorPos::r_mid_y) {
             if(!(GlobalEnvirIn::Instance()->__isThereHasChess(AdvisorPos::r_left_x, AdvisorPos::r_up_y))) count++;
             if(!(GlobalEnvirIn::Instance()->__isThereHasChess(AdvisorPos::r_right_x, AdvisorPos::r_up_y))) count++;
@@ -109,4 +111,8 @@ bool Advisor::canChessMove() {
         break;
     }
     return true;
+}
+
+void Advisor::generateMove() {
+
 }

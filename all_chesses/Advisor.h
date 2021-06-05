@@ -22,6 +22,7 @@ public:
     virtual double space_value(); // 0~100%
     virtual bool canChessMove();
     virtual double chessMoveNum();
+    virtual void generateMove();
 };
 
 #endif // ADVISOR_H

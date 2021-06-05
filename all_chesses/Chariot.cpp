@@ -18,3 +18,7 @@ bool Chariot::canChessMove() {
     else retMove = true;
     return retMove;
 }
+
+void Chariot::generateMove() {
+
+}

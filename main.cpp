@@ -18,6 +18,8 @@
 #include "global.h"
 #include "Test/TestChessMove.h"
 
+#include "Step.h"
+
 QObject* object;
 
 int main(int argc, char *argv[])
