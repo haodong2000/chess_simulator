@@ -591,6 +591,12 @@ void GlobalEnvironment::__delayMsec(int Msec) {
 }
 
 bool GlobalEnvironment::__isThereHasChess(SGeoPoint *Pos) {
+    if((Pos->getPosX() < 0 || Pos->getPosX() >= PARAM::globalEnvironment::maxAxisOfX) ||
+            (Pos->getPosY() < 0 || Pos->getPosY() >= PARAM::globalEnvironment::maxAxisOfY)) {
+        qDebug() << "global.cpp line:594 __isThereHasChess()  error:Pos out of boundary!";
+        return true;
+    }
+
     const int chessNameIntMax = 14;
     const int numberNormal = 2;
     const int numberSoldier = 5;

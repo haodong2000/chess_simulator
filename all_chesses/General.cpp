@@ -7,7 +7,8 @@ General::General(int x, int y, QString name, bool camp, int number, bool isAlive
 }
 
 double General::space_value() {
-    return 0;
+    if(!isAlive()) return 0;
+    return 1.0; // is alive, return 100%
 }
 
 bool General::canChessMove() {
