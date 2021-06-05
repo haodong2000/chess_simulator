@@ -7,7 +7,8 @@ Cannon::Cannon(int x, int y, QString name, bool camp, int number, bool isAlive):
 }
 
 double Cannon::space_value() {
-    return 0;
+    return GlobalEnvirIn::Instance()->__countSpaceAround(GlobalEnvirIn::Instance()->__QStr2intName(GlobalEnvirIn::Instance()->__QString2SimpleName(chessName())),
+                                                         chessNumber());
 }
 
 bool Cannon::canChessMove() {
