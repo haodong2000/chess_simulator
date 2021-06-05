@@ -10,3 +10,7 @@ double Elephant::space_value() {
     return 0;
 }
 
+bool Elephant::canChessMove() {
+
+}
+
