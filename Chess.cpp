@@ -21,3 +21,17 @@ bool Chess::canKill() {
 bool Chess::canMove() {
     return _canMove;
 }
+
+bool Chess::chessCamp() {
+    // false is black
+    // true is red
+    return _redOrBlack;
+}
+
+QString Chess::chessName() {
+    return _name;
+}
+
+int Chess::chessNumber() {
+    return _number;
+}

@@ -9,3 +9,11 @@ Cannon::Cannon(int x, int y, QString name, bool camp, int number, bool isAlive):
 double Cannon::space_value() {
     return 0;
 }
+
+bool Cannon::canChessMove() {
+    bool retMove;
+    if(GlobalEnvirIn::Instance()->__isOtherChessAround(GlobalEnvirIn::Instance()->__QStr2intName(GlobalEnvirIn::Instance()->__QString2SimpleName(chessName())),
+                                                       chessNumber())) retMove = false;
+    else retMove = true;
+    return retMove;
+}

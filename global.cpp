@@ -291,6 +291,21 @@ QString GlobalEnvironment::__int2QStrName(int name) {
     return Global::Chess_Int2Qstr_simple[name];
 }
 
+QString GlobalEnvironment::__QString2SimpleName(QString originName) {
+    // "BGeneral" -> "b_gen_"
+    std::unordered_map<QString, int>::iterator it = Global::Chess_Qstr2Int.begin();
+    for(it = Global::Chess_Qstr2Int.begin(); it != Global::Chess_Qstr2Int.end(); it++) {
+        int tempInt = it->second;
+        QString tempStr = it->first;
+        if(originName.compare(tempStr) == 0) break;
+    }
+    if(it == Global::Chess_Qstr2Int.end()) {
+        qDebug() << "global.cpp __QString2SimpleName() line 298 -> error: originName(QString) invalid!";
+        return  "";
+    }
+    return __int2QStrName(Global::Chess_Qstr2Int[originName]);
+}
+
 int GlobalEnvironment::__QStr2intName(QString name) {
     // Global::Chess_Qstr2Int_simple.find(name);
     std::unordered_map<QString, int>::iterator it;
@@ -665,4 +680,72 @@ int GlobalEnvironment::__isWholeBoardEntire() {
         qDebug() << "global.cpp  line: 655  error: count = __calculateAlive() is illegal!";
         return -1;
     }
+}
+
+bool GlobalEnvironment::__isOtherChessAround(int chessNum, int chessNumber) {
+    // if a chess is around in for direction, return true, else return false
+    // for up direction
+    if(__QStrOrInt2Chess(chessNum, chessNumber)->getPosY() - 1 >= 0 &&
+            !(__isThereHasChess(__QStrOrInt2Chess(chessNum, chessNumber)->getPosX(), __QStrOrInt2Chess(chessNum, chessNumber)->getPosY() - 1)))
+        return false;
+    // for down direction
+    if(__QStrOrInt2Chess(chessNum, chessNumber)->getPosY() + 1 <= PARAM::globalEnvironment::maxAxisOfY &&
+            !(__isThereHasChess(__QStrOrInt2Chess(chessNum, chessNumber)->getPosX(), __QStrOrInt2Chess(chessNum, chessNumber)->getPosY() + 1)))
+        return false;
+    // for left direction
+    if(__QStrOrInt2Chess(chessNum, chessNumber)->getPosX() - 1 >= 0 &&
+            !(__isThereHasChess(__QStrOrInt2Chess(chessNum, chessNumber)->getPosX() - 1, __QStrOrInt2Chess(chessNum, chessNumber)->getPosY())))
+        return false;
+    // for right direction
+    if(__QStrOrInt2Chess(chessNum, chessNumber)->getPosX() + 1 <= PARAM::globalEnvironment::maxAxisOfX &&
+            !(__isThereHasChess(__QStrOrInt2Chess(chessNum, chessNumber)->getPosX() + 1, __QStrOrInt2Chess(chessNum, chessNumber)->getPosY())))
+        return false;
+    return true;
+}
+
+double GlobalEnvironment::__countSpaceAround(int chessNum, int chessNumber) {
+    enum direction { // 0, 1, 2, 3
+        up = 0,
+        down,
+        left,
+        right
+    };
+    double count[4] = {0, 0, 0, 0};
+    double maxValue = 0;
+    const double enemyDirection = 1.5;
+    const double moveOnY = 1.0;
+    const double ourDirection = 0.5;
+    const bool redOrBlack = (chessNum >= 8); // true is red and false is black
+
+    maxValue += (PARAM::globalEnvironment::maxAxisOfY - 1) * 1.0 * moveOnY;
+    if (redOrBlack)
+        maxValue += (PARAM::globalEnvironment::maxAxisOfX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber)->getPosX()) * 1.0 * ourDirection +
+                (GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber)->getPosX() - 1) * 1.0 * enemyDirection;
+    else
+        maxValue += (PARAM::globalEnvironment::maxAxisOfX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber)->getPosX()) * 1.0 * enemyDirection +
+                (GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber)->getPosX() - 1) * 1.0 * ourDirection;
+
+    for(int up = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber)->getPosY() - 1; up >= 0; up--) {
+        if(GlobalEnvirIn::Instance()->__isThereHasChess(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber)->getPosX(), up))
+            count[direction::up] += 1.0 * moveOnY;
+        else break;
+    }
+    for(int down = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber)->getPosY() + 1; down <= PARAM::globalEnvironment::maxAxisOfY; down++) {
+        if(GlobalEnvirIn::Instance()->__isThereHasChess(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber)->getPosX(), down))
+            count[direction::down] += 1.0 * moveOnY;
+        else break;
+    }
+    for(int left = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber)->getPosX() - 1; left >= 0; left--) {
+        if(GlobalEnvirIn::Instance()->__isThereHasChess(left, GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber)->getPosY()))
+            count[direction::left] += 1.0 * (redOrBlack ? enemyDirection : ourDirection);
+        else break;
+    }
+    for(int right = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber)->getPosX() + 1; right <= PARAM::globalEnvironment::maxAxisOfX; right++) {
+        if(GlobalEnvirIn::Instance()->__isThereHasChess(right, GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber)->getPosY()))
+            count[direction::right] += 1.0 * (redOrBlack ? ourDirection : enemyDirection);
+        else break;
+    }
+
+    double totalValue = count[direction::up] + count[direction::down] + count[direction::left] + count[direction::right];
+    return totalValue/maxValue; // 0~100%
 }

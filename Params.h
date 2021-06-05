@@ -42,6 +42,13 @@ namespace PARAM {
         const int goingChessCount = 24;
         const int endChessCount = 16;
         const int finalChessCount = 8;
+
+        // board scale
+        const int maxAxisOfX = 9;
+        const int maxAxisOfY = 8;
+
+        // chess move number
+        const double maxAdvisorMove = 4;
     }
 
     namespace chessNameMap {

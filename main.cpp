@@ -60,33 +60,33 @@ int main(int argc, char *argv[])
     return app.exec();
 }
 
+/* * * * * * * * * * * * * * * * * * * * *
+*   File:     main.cpp
+*   Author:   Haodong LI
+*   Usage:    UsageOfFile
+*   Time:     2021-06-05
+* * * * * * * * * * * * * * * * * * * * * */
+
 /*
-
-  SRTP & SIEMENS
-
-  date: 2021年5月29日
-
-  author: LI Haodong
-
-   1. global vision   ->
-   2. image process   ->
-   3. chess identify  ->
-   4. matrix generate -> game decision algorithm ->
-   5. chess move      ->
-   6. avg robot move  ->
-   7. (next loop)     -> global vision
-
-  board info:
-    _redNum
-    _BlackNum
-
-  chess info:
-    _isAlive
-    _col
-    _row
-    _canMove
-    _canMovePos
-    _canKill
-    _canKillWho
-
+*  1. global vision   ->
+*  2. image process   ->
+*  3. chess identify  ->
+*  4. matrix generate -> game decision algorithm ->
+*  5. chess move      ->
+*  6. avg robot move  ->
+*  7. (next loop)     -> global vision
+*
+* board info:
+*   _redNum
+*   _BlackNum
+*
+* chess info:
+*   _isAlive
+*   _col
+*   _row
+*   _canMove
+*   _canMovePos
+*   _canKill
+*   _canKillWho
+*
 */

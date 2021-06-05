@@ -32,6 +32,7 @@ public:
     virtual void __printBoard();
     virtual void __printAlive();
     virtual QString __int2QStrName(int name);
+    virtual QString __QString2SimpleName(QString originName);
     virtual int __QStr2intName(QString name);
     virtual Chess* __QStrOrInt2Chess(int chessNameSimple, int number);
     virtual Chess* __QStrOrInt2Chess(QString chessNameSimple, int number);
@@ -42,6 +43,8 @@ public:
     virtual int __BoardEvaluate();
     virtual int __calculateAlive();
     virtual int __isWholeBoardEntire();
+    virtual bool __isOtherChessAround(int chessNum, int chessNumber);
+    virtual double __countSpaceAround(int chessNum, int chessNumber);
     int ** __board; // result of chess identify, 0-14
                     // 0: empty
                     // 1-7:  black

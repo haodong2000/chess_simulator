@@ -23,11 +23,14 @@ public:
     virtual void setAlive(bool isAliveNow);
     virtual bool canKill();
     virtual bool canMove();
+    virtual bool chessCamp();
+    virtual QString chessName(); // "b_gen_"
+    virtual int chessNumber();
     // virtual void refersh();
     // SGeoPoint Pos;
 
 private:
-    SGeoPoint Pos;
+    SGeoPoint Pos; // no use currently
     const bool _redOrBlack; // true -> red  and  false -> black
     const QString _name;
     const int _number; // sequence
