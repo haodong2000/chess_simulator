@@ -66,3 +66,45 @@ void Step::executeStep() {
                      QString("_alive")).toLatin1(), false);
     }
 }
+
+void Step::setChessNum(int chessNum) {
+    __ChessNum = chessNum;
+    __CHessName = GlobalEnvirIn::Instance()->__int2QStrName(chessNum);
+}
+
+void Step::setChessNumber(int chessNumber) {
+    __ChessNumber = chessNumber;
+}
+
+void Step::setKill(bool kill) {
+    __isKill = kill;
+}
+
+void Step::setChessKilledNum(int chessKilledNum) {
+    __ChessKilledNum = chessKilledNum;
+    __ChessKilledName = GlobalEnvirIn::Instance()->__int2QStrName(chessKilledNum);
+}
+
+void Step::setChessKilledNumber(int chessKilledNumber) {
+    __CHessKilledNumber = chessKilledNumber;
+}
+
+int Step::getChessNum() {
+    return __ChessNum;
+}
+
+int Step::getChessNumber() {
+    return __ChessNumber;
+}
+
+bool Step::getKill() {
+    return __isKill;
+}
+
+int Step::getChessKilledNum() {
+    return __ChessKilledNum;
+}
+
+int Step::getChessKilledNumber() {
+    return __CHessKilledNumber;
+}

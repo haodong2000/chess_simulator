@@ -49,6 +49,7 @@ SOURCES += \
         main.cpp \
     SGeoPoint.cpp \
     coordinate.cpp \
+    singleGame.cpp \
     singleton.cpp  \
 
 RESOURCES += \
@@ -103,6 +104,7 @@ HEADERS += \
     definitionChessSet.h \
     global.h \
     globalChesses.h \
+    singleGame.h \
     singleton.h \
 
 INCLUDEPATH += \

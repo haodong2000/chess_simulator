@@ -36,6 +36,18 @@ public:
 
     virtual void executeStep();
 
+    virtual void setChessNum(int chessNum);
+    virtual void setChessNumber(int chessNumber);
+    virtual void setKill(bool kill);
+    virtual void setChessKilledNum(int chessKilledNum);
+    virtual void setChessKilledNumber(int chessKilledNumber);
+
+    virtual int getChessNum();
+    virtual int getChessNumber();
+    virtual bool getKill();
+    virtual int getChessKilledNum();
+    virtual int getChessKilledNumber();
+
 private:
     SGeoPoint* __StepMove; // TODO, no use currently
     SGeoPoint* __StepDeltaMove;

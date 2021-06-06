@@ -33,6 +33,7 @@ public:
     virtual double space_value();
 
     std::unordered_map<QString, SGeoPoint> StepList;
+    std::unordered_map<QString, QString> StepKillList;
 
     // virtual void refersh();
     // SGeoPoint Pos;
