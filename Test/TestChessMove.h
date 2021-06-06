@@ -18,6 +18,7 @@ class TestChessMove
 public:
     TestChessMove();
     virtual void LoopMove(int indexMaxIn = 5);
+    virtual void turnSwitch(int indexSwitch = 5);
 
 };
 

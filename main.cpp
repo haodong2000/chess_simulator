@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 //    GlobalEnvirIn::Instance()->__printBoard();
 
 //    // test dynamic
-//    TestChessMoveIn::Instance()->LoopMove(20); // default 5
+//    TestChessMoveIn::Instance()->turnSwitch(20); // default 5
 
     return app.exec();
 }

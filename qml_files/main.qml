@@ -184,6 +184,25 @@ Window {
 //        property double BAPosX: cubeSizeWidth/2.0
 //        property double BAPosY: cubeSizeHeight * 3.5
 //        property double boundaryWidthWidth: cubeSizeWidth * 0.075
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        property int turn_cube_x: Screen.width - Screen.width/4.0
+        property int turn_cube_y: Screen.height/7.5
+        property int turn_cube_width: Screen.width/5.0
+        property int turn_cube_height: Screen.height/10.0
+        property int turn_width: boundaryWidth * 2.5
+        property bool ai_turn: true
+        property bool humen_turn: !ai_turn
+        property int turn_text_width: ai_turn ? turn_cube_width/4.5 : turn_cube_width/8.0
+        property int turn_text_height: turn_cube_height/5.0
+
+        property int time_cube_x: turn_cube_x
+        property int time_cube_y: turn_cube_y * 6.0
+        property int time_cube_width: turn_cube_width
+        property int time_text_width: turn_cube_width * 0.125
+        property int time_cube_height: turn_cube_height/2.0
+        property int time_text_height: turn_cube_height/10.0
+        property int time_width: turn_width/2.0
     }
 
     Rectangle {
@@ -196,6 +215,65 @@ Window {
         color: "transparent"
         border.color: "#fffef9"
         border.width: field.boundaryWidth
+    }
+
+    Rectangle {
+        id: rect_turn
+        x: field.turn_cube_x
+        y: field.turn_cube_y
+        width: field.turn_cube_width
+        height: field.turn_cube_height
+        color: "transparent"
+        border.color: field.ai_turn ? "#0eb0c9" : "#d2357d"
+        border.width: field.turn_width
+    }
+
+    Text {
+        id: text_turn
+        text: field.ai_turn ? "AI_TURN" : "YOUR_TURN"
+        font.styleName: ""
+        font.pixelSize: field.textSizeInPixel
+        color: field.ai_turn ? "#0eb0c9" : "#d2357d"
+        x: field.turn_cube_x + field.turn_text_width
+        y: field.turn_cube_y + field.turn_text_height
+    }
+
+    Rectangle {
+        id: rect_time
+        x: field.time_cube_x
+        y: field.time_cube_y
+        width: field.time_cube_width
+        height: field.time_cube_height
+        color: "transparent"
+        border.color: "#55bb8a"
+        border.width: field.time_width
+    }
+
+    Text{
+        id: textDateTime
+        text: currentDateTime();
+        font.styleName: ""
+        font.pixelSize: field.textSizeInPixel/2.0
+        color: "#fffef9"
+        x: field.time_cube_x + field.time_text_width
+        y: field.time_cube_y + field.time_text_height
+    }
+
+    function currentDateTime(){
+        return Qt.formatDateTime(new Date(), " yyyy-MM-dd hh:mm:ss:zzz");
+    }
+
+    Timer{
+        id: timer
+        interval: 1
+        repeat: true
+        onTriggered:{
+            textDateTime.text = currentDateTime();
+        }
+    }
+
+    Component.onCompleted: {
+        timer.start();
     }
 
 /*  Rectangle {

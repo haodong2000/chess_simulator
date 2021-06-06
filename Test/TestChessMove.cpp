@@ -21,3 +21,15 @@ void TestChessMove::LoopMove(int indexMaxIn) {
     }
     return;
 }
+
+void TestChessMove::turnSwitch(int indexSwitch) {
+    std::cout << "TEST_MODE -> turnSwitch()" << std::endl;
+    int index = 0;
+    bool curTurn = false;
+    while(index++ < indexSwitch) {
+        GlobalEnvirIn::Instance()->__delayMsec(500);
+        object->setProperty("ai_turn", curTurn);
+        curTurn = !curTurn;
+    }
+    return;
+}
