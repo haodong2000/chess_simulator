@@ -51,8 +51,7 @@ int main(int argc, char *argv[])
 //    // test interface
 //    std::cout << GlobalEnvirIn::Instance()->__BoardEvaluate() << std::endl;
 
-//    TestChessMoveIn::Instance()->testWhichChessOnThere();
-    TestChessMoveIn::Instance()->testCannonGenerateMove();
+//    TestChessMoveIn::Instance()->testDisplayAllPossibleMoves();
 
     return app.exec();
 }

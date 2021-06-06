@@ -15,6 +15,8 @@
 
 #include "singleton.h"
 
+#include "singleGame.h"
+
 class TestChessMove
 {
 public:
@@ -24,6 +26,7 @@ public:
     virtual void testEvaluate();
     virtual void testIsThereOurChess();
     virtual void testWhichChessOnThere();
+
     virtual void testHorseGenerateMove();
     virtual void testElephantGenerateMove();
     virtual void testGeneralGenerateMove();
@@ -31,6 +34,10 @@ public:
     virtual void testAdvisorGenerateMove();
     virtual void testChariotGenerateMove();
     virtual void testCannonGenerateMove();
+
+    virtual void testQVectorAdding();
+
+    virtual void testDisplayAllPossibleMoves();
 };
 
 typedef NormalSingleton< TestChessMove > TestChessMoveIn;

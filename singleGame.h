@@ -10,7 +10,9 @@
 
 #include "Step.h"
 #include "global.h"
+#include "allBRChessesInclude.h"
 #include "globalChesses.h"
+#include <QVector>
 
 class singleGame
 {
@@ -18,7 +20,16 @@ public:
     singleGame();
     virtual void setLevel(int level);
     virtual int getLevel();
-    Step* chessStep;
+    virtual void generateBlackAllPossibleMoves();
+    virtual void displayBlackAllPossibleMoves();
+    virtual void generateRedAllPossibleMoves();
+    virtual void displayRedAllPossibleMoves();
+    virtual void tranStructToClass();
+    Step* finalChessStep;
+    QVector<Step> chessBlackStepList;
+    QVector<Step> chessRedStepList;
+    QVector<chessStep> originBlackChessStepList;
+    QVector<chessStep> originRedChessStepList;
 
 private:
     int _level;

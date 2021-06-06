@@ -128,7 +128,7 @@ void Advisor::generateMove() {
     const int count = AdvisorPos::FourPoints.size();
     for(int index = 0; index < count; index++) {
         SGeoPoint* end = new SGeoPoint(getPosX() + AdvisorPos::FourPoints.at(index).first, getPosY() + AdvisorPos::FourPoints.at(index).second);
-        if(canAdvisorMove(start, end)) {
+        if(basicAdvisorMoveCondition(start, end) && canAdvisorMove(start, end)) {
             int chessKillNum = -1;
             int chessKillNumber = -1;
             bool kill = GlobalEnvirIn::Instance()->__isThereHasChess(end);
@@ -141,6 +141,24 @@ void Advisor::generateMove() {
             chessStepList.append(tempStep);
         }
     }
+}
+
+bool Advisor::basicAdvisorMoveCondition(SGeoPoint *start, SGeoPoint *end) {
+    if(!(GlobalEnvirIn::Instance()->__isPosInBoard(start) && GlobalEnvirIn::Instance()->__isPosInBoard(end))) {
+        return false;
+    }
+
+    if(chessCamp()) {
+        if(!(isInRedArea(start) && isInRedArea(end))) {
+            return false;
+        }
+    }
+    else {
+        if(!(isInBlackArea(start) && isInBlackArea(end))) {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool Advisor::canAdvisorMove(SGeoPoint *start, SGeoPoint *end) {

@@ -866,7 +866,7 @@ int GlobalEnvironment::__calculateRedSpaceValue() {
             redSpaceValue += qRound(Global::CHESS_VALUE[index] * Ar_can_2->space_value());
             break;
         default:
-            qDebug() << "global.cpp __calculateBlackSpaceValue() line:692 error:invalid chess_num!!!";
+            qDebug() << "global.cpp __calculateRedSpaceValue() line:692 error:invalid chess_num!!!";
             break;
         }
     }

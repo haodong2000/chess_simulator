@@ -137,3 +137,18 @@ void TestChessMove::testCannonGenerateMove() {
     std::cout << "Ar_can_2 -> " << countMove << std::endl;
     Ar_can_2->printStepList();
 }
+
+void TestChessMove::testQVectorAdding() {
+    QVector<int> v1 = {1, 2, 3};
+    QVector<int> v2 = {4, 5, 6};
+//    int a = 999;
+//    v1.insert(v1.size(), a);
+    v1.append(v2);
+    for(int index = 0; index < v1.size(); index++)
+        std::cout << v1.at(index) << " " << std::endl;
+}
+
+void TestChessMove::testDisplayAllPossibleMoves() {
+    singleGameIn::Instance()->displayBlackAllPossibleMoves();
+    singleGameIn::Instance()->displayRedAllPossibleMoves();
+}

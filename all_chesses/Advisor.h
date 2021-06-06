@@ -24,6 +24,7 @@ public:
     virtual double chessMoveNum();
     virtual void generateMove();
     virtual bool canAdvisorMove(SGeoPoint* start, SGeoPoint* end);
+    virtual bool basicAdvisorMoveCondition(SGeoPoint* start, SGeoPoint* end);
     virtual bool advisorRule(SGeoPoint* start, SGeoPoint* end);
     virtual bool isInRedArea(SGeoPoint* Pos);
     virtual bool isInBlackArea(SGeoPoint* Pos);
