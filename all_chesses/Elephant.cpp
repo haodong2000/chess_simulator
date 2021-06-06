@@ -252,6 +252,455 @@ bool Elephant::canElephantMove(SGeoPoint *start, SGeoPoint *end) {
             (!GlobalEnvirIn::Instance()->__isThereHasChess((start->getPosX() + end->getPosX())/2, (start->getPosY() + end->getPosY())/2)));
 }
 
+bool Elephant::canElephantMoveOrKill(SGeoPoint *start, SGeoPoint *end) {
+    const int width = 2;
+    const int height = 2;
+    if((abs(start->getPosX() - end->getPosX()) != width) || (abs(start->getPosY() - end->getPosY()) != height)) {
+        qDebug() << "Elephant.cpp line: 60 canElephantMove() error: invalid move of elephant (2*2)";
+        return false;
+    }
+
+    return (((!GlobalEnvirIn::Instance()->__isThereHasChess(end)) || (!GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), end))) &&
+            (!GlobalEnvirIn::Instance()->__isThereHasChess((start->getPosX() + end->getPosX())/2, (start->getPosY() + end->getPosY())/2)));
+}
+
 void Elephant::generateMove() {
     // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
+    QString chessNameSimple = GlobalEnvirIn::Instance()->__QString2SimpleName(chessName());
+    int Num = GlobalEnvirIn::Instance()->__QStr2intName(chessNameSimple);
+    int Number = chessNumber();
+    bool kill = false;
+    bool redOrBlack = (Num >= 8);
+    if(redOrBlack) {
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::red_mid_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::red_mid_y) {
+            // there are four possible steps
+            if(canElephantMoveOrKill(ElephantPos::red_mid, ElephantPos::red_left_up)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_left_up);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_left_up)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_left_up)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_left_up->getPosX(), ElephantPos::red_left_up->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::red_mid, ElephantPos::red_left_down)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_left_down);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_left_down)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_left_down)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_left_down->getPosX(), ElephantPos::red_left_down->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::red_mid, ElephantPos::red_right_up)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_right_up);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_right_up)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_right_up)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_right_up->getPosX(), ElephantPos::red_right_up->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::red_mid, ElephantPos::red_right_down)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_right_down);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_right_down)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_right_down)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_right_down->getPosX(), ElephantPos::red_right_down->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::red_up_up_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::red_up_up_y) {
+            if(canElephantMoveOrKill(ElephantPos::red_up_up, ElephantPos::red_left_up)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_left_up);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_left_up)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_left_up)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_left_up->getPosX(), ElephantPos::red_left_up->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::red_up_up, ElephantPos::red_right_up)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_right_up);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_right_up)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_right_up)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_right_up->getPosX(), ElephantPos::red_right_up->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::red_down_down_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::red_down_down_y) {
+            if(canElephantMoveOrKill(ElephantPos::red_down_down, ElephantPos::red_left_down)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_left_down);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_left_down)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_left_down)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_left_down->getPosX(), ElephantPos::red_left_down->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::red_down_down, ElephantPos::red_right_down)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_right_down);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_right_down)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_right_down)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_right_down->getPosX(), ElephantPos::red_right_down->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::red_left_up_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::red_left_up_y) {
+            if(canElephantMoveOrKill(ElephantPos::red_left_up, ElephantPos::red_up_up)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_up_up);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_up_up)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_up_up)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_up_up->getPosX(), ElephantPos::red_up_up->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::red_left_up, ElephantPos::red_mid)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_mid);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_mid)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_mid)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_mid->getPosX(), ElephantPos::red_mid->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::red_left_down_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::red_left_down_y) {
+            if(canElephantMoveOrKill(ElephantPos::red_left_down, ElephantPos::red_mid)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_mid);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_mid)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_mid)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_mid->getPosX(), ElephantPos::red_mid->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::red_left_down, ElephantPos::red_down_down)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_down_down);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_down_down)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_down_down)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_down_down->getPosX(), ElephantPos::red_down_down->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::red_right_up_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::red_right_up_y) {
+            if(canElephantMoveOrKill(ElephantPos::red_right_up, ElephantPos::red_up_up)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_up_up);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_up_up)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_up_up)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_up_up->getPosX(), ElephantPos::red_up_up->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::red_right_up, ElephantPos::red_mid)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_mid);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_mid)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_mid)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_mid->getPosX(), ElephantPos::red_mid->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::red_right_down_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::red_right_down_y) {
+            if(canElephantMoveOrKill(ElephantPos::red_right_down, ElephantPos::red_mid)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_mid);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_mid)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_mid)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_mid->getPosX(), ElephantPos::red_mid->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::red_right_down, ElephantPos::red_down_down)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::red_down_down);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_down_down)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::red_down_down)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::red_down_down->getPosX(), ElephantPos::red_down_down->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+    }
+    else {
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::mid_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::mid_y) {
+            // there are four possible steps
+            if(canElephantMoveOrKill(ElephantPos::mid, ElephantPos::left_up)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::left_up);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::left_up)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::left_up)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::left_up->getPosX(), ElephantPos::left_up->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::mid, ElephantPos::left_down)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::left_down);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::left_down)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::left_down)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::left_down->getPosX(), ElephantPos::left_down->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::mid, ElephantPos::right_up)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::right_up);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::right_up)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::right_up)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::right_up->getPosX(), ElephantPos::right_up->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::mid, ElephantPos::right_down)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::right_down);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::right_down)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::right_down)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::right_down->getPosX(), ElephantPos::right_down->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::up_up_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::up_up_y) {
+            if(canElephantMoveOrKill(ElephantPos::up_up, ElephantPos::left_up)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::left_up);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::left_up)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::left_up)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::left_up->getPosX(), ElephantPos::left_up->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::up_up, ElephantPos::right_up)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::right_up);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::right_up)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::right_up)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::right_up->getPosX(), ElephantPos::right_up->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::down_down_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::down_down_y) {
+            if(canElephantMoveOrKill(ElephantPos::down_down, ElephantPos::left_down)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::left_down);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::left_down)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::left_down)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::left_down->getPosX(), ElephantPos::left_down->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::down_down, ElephantPos::right_down)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::right_down);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::right_down)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::right_down)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::right_down->getPosX(), ElephantPos::right_down->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::left_up_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::left_up_y) {
+            if(canElephantMoveOrKill(ElephantPos::left_up, ElephantPos::up_up)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::up_up);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::up_up)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::up_up)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::up_up->getPosX(), ElephantPos::up_up->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::left_up, ElephantPos::mid)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::mid);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::mid)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::mid)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::mid->getPosX(), ElephantPos::mid->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::left_down_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::left_down_y) {
+            if(canElephantMoveOrKill(ElephantPos::left_down, ElephantPos::mid)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::mid);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::mid)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::mid)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::mid->getPosX(), ElephantPos::mid->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::left_down, ElephantPos::down_down)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::down_down);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::down_down)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::down_down)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::down_down->getPosX(), ElephantPos::down_down->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::right_up_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::right_up_y) {
+            if(canElephantMoveOrKill(ElephantPos::right_up, ElephantPos::up_up)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::up_up);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::up_up)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::up_up)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::up_up->getPosX(), ElephantPos::up_up->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::right_up, ElephantPos::mid)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::mid);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::mid)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::mid)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::mid->getPosX(), ElephantPos::mid->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+        if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosX() == ElephantPos::right_down_x &&
+                GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, chessNumber())->getPosY() == ElephantPos::right_down_y) {
+            if(canElephantMoveOrKill(ElephantPos::right_down, ElephantPos::mid)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::mid);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::mid)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::mid)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::mid->getPosX(), ElephantPos::mid->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+            if(canElephantMoveOrKill(ElephantPos::right_down, ElephantPos::down_down)) {
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(ElephantPos::down_down);
+                int killNum = -1;
+                int killNumber = -1;
+                if(kill) {
+                    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::down_down)->chessName());
+                    killNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                    killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(ElephantPos::down_down)->chessNumber();
+                }
+                chessStep tempStep(Num, Number, redOrBlack, ElephantPos::down_down->getPosX(), ElephantPos::down_down->getPosY(), kill, killNum, killNumber);
+                chessStepList.append(tempStep);
+            }
+        }
+    }
 }

@@ -63,3 +63,13 @@ void TestChessMove::testHorseGenerateMove() {
     std::cout << "Ab_hor_1 -> " << countMove << std::endl;
     Ab_hor_1->printStepList();
 }
+
+void TestChessMove::testElephantGenerateMove() {
+    SGeoPoint* Pos = new SGeoPoint(7, 4);
+    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
+    std::cout << "TEST_MODE -> testElephantGenerateMove()" << std::endl;
+    Ar_ele_1->generateMove();
+    int countMove = Ar_ele_1->chessStepList.size();
+    std::cout << "Ar_ele_1 -> " << countMove << std::endl;
+    Ar_ele_1->printStepList();
+}
