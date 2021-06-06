@@ -59,6 +59,7 @@ public:
     virtual int __isWholeBoardEntire();
     virtual bool __isOtherChessAround(int chessNum, int chessNumber);
     virtual double __countSpaceAround(int chessNum, int chessNumber);
+    virtual int __countChessInPath(SGeoPoint* start, SGeoPoint* end);
     int ** __board; // result of chess identify, 0-14
                     // 0: empty
                     // 1-7:  black

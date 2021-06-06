@@ -22,6 +22,7 @@ public:
     virtual double space_value(); // 0~100%
     virtual bool canChessMove();
     virtual void generateMove();
+    virtual bool canCannonMoveOrKill(SGeoPoint* start, SGeoPoint* end);
 };
 
 #endif // CANNON_H

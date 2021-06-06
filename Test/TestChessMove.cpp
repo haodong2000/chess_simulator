@@ -125,3 +125,15 @@ void TestChessMove::testChariotGenerateMove() {
     std::cout << "Ar_cha_2 -> " << countMove << std::endl;
     Ar_cha_2->printStepList();
 }
+
+void TestChessMove::testCannonGenerateMove() {
+//    SGeoPoint* Pos = new SGeoPoint(PARAM::globalEnvironment::middleRed, 4 + 1);
+//    QmlConnectIn::Instance()->changeChessPos("r_cha_", 2, true, Pos);
+//    SGeoPoint* PosTT = new SGeoPoint(PARAM::globalEnvironment::middleRed, PARAM::globalEnvironment::maxAxisOfY);
+//    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, PosTT);
+    std::cout << "TEST_MODE -> testCannonGenerateMove()" << std::endl;
+    Ar_can_2->generateMove();
+    int countMove = Ar_can_2->chessStepList.size();
+    std::cout << "Ar_can_2 -> " << countMove << std::endl;
+    Ar_can_2->printStepList();
+}

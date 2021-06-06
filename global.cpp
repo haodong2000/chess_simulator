@@ -1094,3 +1094,24 @@ double GlobalEnvironment::__countSpaceAround(int chessNum, int chessNumber) {
     double totalValue = count[direction::up] + count[direction::down] + count[direction::left] + count[direction::right];
     return totalValue/maxValue; // 0~100%
 }
+
+int GlobalEnvironment::__countChessInPath(SGeoPoint *start, SGeoPoint *end) {
+    if(!((start->getPosX() == end->getPosX()) || (start->getPosY() == end->getPosY()))) {
+        qDebug() << "global.cpp line:1099 __countChessInPath() error:start and end must be straight line!";
+        return -1;
+    }
+    int count = 0;
+    if(start->getPosX() - end->getPosX() == 0) {
+        for(int index = qMin(start->getPosY(), end->getPosY()) + 1; index < qMax(start->getPosY(), end->getPosY()); index++) {
+            SGeoPoint* middle = new SGeoPoint(start->getPosX(), index);
+            if(GlobalEnvirIn::Instance()->__isThereHasChess(middle)) count++;
+        }
+    }
+    if(start->getPosY() - end->getPosY() == 0) {
+        for(int index = qMin(start->getPosX(), end->getPosX()) + 1; index < qMax(start->getPosX(), end->getPosX()); index++) {
+            SGeoPoint* middle = new SGeoPoint(index, start->getPosY());
+            if(GlobalEnvirIn::Instance()->__isThereHasChess(middle)) count++;
+        }
+    }
+    return count;
+}

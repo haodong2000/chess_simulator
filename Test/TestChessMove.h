@@ -30,7 +30,7 @@ public:
     virtual void testSoldierGenerateMove();
     virtual void testAdvisorGenerateMove();
     virtual void testChariotGenerateMove();
-
+    virtual void testCannonGenerateMove();
 };
 
 typedef NormalSingleton< TestChessMove > TestChessMoveIn;
