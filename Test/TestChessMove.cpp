@@ -55,9 +55,11 @@ void TestChessMove::testWhichChessOnThere() {
 }
 
 void TestChessMove::testHorseGenerateMove() {
+    SGeoPoint* Pos = new SGeoPoint(2, 2);
+    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, false, Pos);
     std::cout << "TEST_MODE -> testHorseGenerateMove()" << std::endl;
     Ab_hor_1->generateMove();
     int countMove = Ab_hor_1->chessStepList.size();
-    std::cout << countMove << std::endl;
+    std::cout << "Ab_hor_1 -> " << countMove << std::endl;
     Ab_hor_1->printStepList();
 }

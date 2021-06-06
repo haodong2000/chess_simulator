@@ -61,14 +61,15 @@ void Chess::printStepList() {
         int PosX = chessStepList.at(i)._deltaX;
         int PosY = chessStepList.at(i)._deltaY;
         bool kill = chessStepList.at(i)._isKill;
+        QString killString = kill ? "True" : "False";
         int killNum = chessStepList.at(i)._chessKilledNum;
         int killNumber = chessStepList.at(i)._chessKilledNumber;
-        std::cout << "Num = \t" << Num << std::endl;
-        std::cout << "Number = \t" << Number << std::endl;
-        std::cout << "PosX = \t" << PosX << std::endl;
-        std::cout << "PosY = \t" << PosY << std::endl;
-        std::cout << "kill = \t" << (kill ? "True" : "False") << std::endl;
-        std::cout << "killNum = \t" << killNum << std::endl;
-        std::cout << "killNumber = \t" << killNumber << std::endl;
+        std::cout << "Num\t = " << Num << std::endl;
+        std::cout << "Number\t = " << Number << std::endl;
+        std::cout << "PosX\t = " << PosX << std::endl;
+        std::cout << "PosY\t = " << PosY << std::endl;
+        std::cout << "kill\t = " << killString.toStdString() << std::endl;
+        std::cout << "k_Num\t = " << killNum << std::endl;
+        std::cout << "k_Number\t = " << killNumber << std::endl;
     }
 }

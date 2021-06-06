@@ -117,12 +117,12 @@ bool Horse::canHorseMoveOrKill(SGeoPoint *start, SGeoPoint *end) {
     if((!GlobalEnvirIn::Instance()->__isPosInBoard(start)) || (!GlobalEnvirIn::Instance()->__isPosInBoard(end))) return false;
 
     if(abs(start->getPosX() - end->getPosX()) == 2) {
-        if(GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), (start->getPosX() + end->getPosX())/2, start->getPosY())) return false;
+        if(GlobalEnvirIn::Instance()->__isThereHasChess((start->getPosX() + end->getPosX())/2, start->getPosY())) return false;
         else if(GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), end)) return false;
         else return true;
     }
     if(abs(start->getPosY() - end->getPosY()) == 2) {
-        if(GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), start->getPosY(), (start->getPosY() + end->getPosY())/2)) return false;
+        if(GlobalEnvirIn::Instance()->__isThereHasChess(start->getPosX(), (start->getPosY() + end->getPosY())/2)) return false;
         else if(GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), end)) return false;
         else return true;
     }
@@ -147,7 +147,7 @@ void Horse::generateMove() {
                 chessKilledNum = GlobalEnvirIn::Instance()->__QStr2intName(chessKilledName);
                 chessKilledNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(finalPos)->chessNumber();
             }
-            chessStep tempStep(chessNum, chessNumber(), chessCamp(), kill, chessKilledNum, chessKilledNumber);
+            chessStep tempStep(chessNum, chessNumber(), chessCamp(), finalPos->getPosX(), finalPos->getPosY(), kill, chessKilledNum, chessKilledNumber);
             chessStepList.append(tempStep);
         }
     }
