@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 //    std::cout << GlobalEnvirIn::Instance()->__BoardEvaluate() << std::endl;
 
 //    TestChessMoveIn::Instance()->testWhichChessOnThere();
-    TestChessMoveIn::Instance()->testAdvisorGenerateMove();
+    TestChessMoveIn::Instance()->testChariotGenerateMove();
 
     return app.exec();
 }

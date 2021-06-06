@@ -29,6 +29,7 @@ public:
     virtual void testGeneralGenerateMove();
     virtual void testSoldierGenerateMove();
     virtual void testAdvisorGenerateMove();
+    virtual void testChariotGenerateMove();
 
 };
 

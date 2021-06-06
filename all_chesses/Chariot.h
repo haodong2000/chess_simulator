@@ -10,6 +10,7 @@
 
 #include "Chess.h"
 #include "global.h"
+#include "QtMath"
 
 class Chariot: public Chess
 {
@@ -22,6 +23,7 @@ public:
     virtual double space_value(); // 0~100%
     virtual bool canChessMove();
     virtual void generateMove();
+    virtual bool canChariotMoveOrKill(SGeoPoint* start, SGeoPoint* end);
 };
 
 #endif // CHARIOT_H
