@@ -11,7 +11,7 @@
 #include "global.h"
 #include "SGeoPoint.h"
 #include "coordinate.h"
-#include "globalChesses.h"
+// #include "globalChesses.h"
 
 #include "Qml_Connection.h"
 

@@ -13,6 +13,43 @@
 #include <QVector>
 #include <unordered_map>
 
+struct chessStep {
+    int _chessNum;
+    int _chessNumber;
+    bool _chessCamp;
+    int _deltaX;
+    int _deltaY;
+    bool _isKill = false;
+    int _chessKilledNum = -1;
+    int _chessKilledNumber = -1;
+    chessStep(int ChessNum, int ChessNumber, bool camp,
+              int DeltaX, int DeltaY,
+              bool Kill = false, int ChessKilledNum = -1, int ChessKilledNumber = -1):_chessNum(ChessNum),
+                                                                    _chessNumber(ChessNumber),
+                                                                    _chessCamp(camp),
+                                                                    _deltaX(DeltaX),
+                                                                    _deltaY(DeltaY),
+                                                                    _isKill(Kill),
+                                                                    _chessKilledNum(ChessKilledNum),
+                                                                    _chessKilledNumber(ChessKilledNumber){};
+    void initChessStep(int ChessNum, int ChessNumber, bool camp,
+                       int DeltaX, int DeltaY,
+                       bool Kill = false, int ChessKilledNum = -1, int ChessKilledNumber = -1) {
+        this->_chessNum = ChessNum;
+        this->_chessNumber = ChessNumber;
+        this->_chessCamp = camp;
+        this->_deltaX = DeltaX;
+        this->_deltaY = DeltaY;
+        this->_isKill = Kill;
+        this->_chessKilledNum = ChessKilledNum;
+        this->_chessKilledNumber = ChessKilledNumber;
+    };
+};
+
+//    Step(int ChessNum, int ChessNumber, bool camp,
+//         int DeltaX, int DeltaY,
+//         bool Kill = false, int ChessKilledNum = -1, int ChessKilledNumber = -1);
+
 class Chess: public SGeoPoint
 {
 public:
@@ -32,8 +69,10 @@ public:
     virtual double getSpaceValue();
     virtual double space_value();
 
-    std::unordered_map<QString, SGeoPoint> StepList;
-    std::unordered_map<QString, QString> StepKillList;
+    QVector<chessStep> chessStepList;
+
+    // std::unordered_map<QString, SGeoPoint> StepList;
+    // std::unordered_map<QString, QString> StepKillList;
 
     // virtual void refersh();
     // SGeoPoint Pos;

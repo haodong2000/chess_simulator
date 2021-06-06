@@ -3,8 +3,9 @@
 Chess::Chess(int x, int y, QString name, bool camp, int number, bool isAlive):
     SGeoPoint(x, y), _name(name), _redOrBlack(camp), _number(number), _isAlive(isAlive)
 {
-    StepList.clear(); // make it empty
-    StepKillList.clear();
+    // StepList.clear(); // make it empty
+    // StepKillList.clear();
+    chessStepList.clear(); // make it empty
     _spaceValue = 0;
 }
 

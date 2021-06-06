@@ -49,6 +49,23 @@ namespace PARAM {
 
         // chess move number
         const double maxAdvisorMove = 4;
+
+        enum CHESS_TABLE {
+            BLACK_GENERAL = 1,
+            BLACK_ADVISOR,
+            BLACK_ELEPHANT,
+            BLACK_HORSE,
+            BLACK_CHARIOT,
+            BLACK_CANNON,
+            BLACK_SOLDIER,
+            RED_GENERAL,
+            RED_ADVISOR,
+            RED_ELEPHANT,
+            RED_HORSE,
+            RED_CHARIOT,
+            RED_CANNON,
+            RED_SOLDIER,
+        };
     }
 
     namespace chessNameMap {

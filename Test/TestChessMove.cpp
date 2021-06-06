@@ -33,3 +33,10 @@ void TestChessMove::turnSwitch(int indexSwitch) {
     }
     return;
 }
+
+void TestChessMove::testEvaluate() {
+    std::cout << "TEST_MODE -> testEvaluate()" << std::endl;
+    object->setProperty("b_gen_alive", false);
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL, 1)->setAlive(false);
+    std::cout << GlobalEnvirIn::Instance()->__BoardEvaluate() << std::endl;
+}
