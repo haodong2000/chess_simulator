@@ -46,6 +46,8 @@ namespace PARAM {
         // board scale
         const int maxAxisOfX = 9;
         const int maxAxisOfY = 8;
+        const int middleBlack = 4;
+        const int middleRed = 5;
 
         // chess move number
         const double maxAdvisorMove = 4;

@@ -27,6 +27,7 @@ public:
     virtual void testHorseGenerateMove();
     virtual void testElephantGenerateMove();
     virtual void testGeneralGenerateMove();
+    virtual void testSoldierGenerateMove();
 
 };
 
