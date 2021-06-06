@@ -101,3 +101,15 @@ void TestChessMove::testSoldierGenerateMove() {
     std::cout << "Ab_sol_3 -> " << countMove << std::endl;
     Ab_sol_3->printStepList();
 }
+
+void TestChessMove::testAdvisorGenerateMove() {
+    SGeoPoint* Pos = new SGeoPoint(1, 4);
+    QmlConnectIn::Instance()->changeChessPos("b_adv_", 2, false, Pos);
+    SGeoPoint* PosTT = new SGeoPoint(2, 3);
+    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, false, PosTT);
+    std::cout << "TEST_MODE -> testAdvisorGenerateMove()" << std::endl;
+    Ab_adv_2->generateMove();
+    int countMove = Ab_adv_2->chessStepList.size();
+    std::cout << "Ab_adv_2 -> " << countMove << std::endl;
+    Ab_adv_2->printStepList();
+}

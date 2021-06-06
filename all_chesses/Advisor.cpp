@@ -14,6 +14,13 @@ namespace AdvisorPos {
     const int b_mid_y = 4;
     const int r_mid_x = 1 + 7;
     const int r_mid_y = 4;
+
+    QVector<QPair<int, int>> FourPoints = {
+        { 1,  1},
+        {-1,  1},
+        { 1, -1},
+        {-1, -1},
+    };
 }
 
 Advisor::Advisor(int x, int y, QString name, bool camp, int number, bool isAlive):
@@ -115,4 +122,74 @@ bool Advisor::canChessMove() {
 
 void Advisor::generateMove() {
     // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
+    QString chessNameSimple = GlobalEnvirIn::Instance()->__QString2SimpleName(chessName());
+    int chessNum = GlobalEnvirIn::Instance()->__QStr2intName(chessNameSimple);
+    SGeoPoint* start = new SGeoPoint(getPosX(), getPosY());
+    const int count = AdvisorPos::FourPoints.size();
+    for(int index = 0; index < count; index++) {
+        SGeoPoint* end = new SGeoPoint(getPosX() + AdvisorPos::FourPoints.at(index).first, getPosY() + AdvisorPos::FourPoints.at(index).second);
+        if(canAdvisorMove(start, end)) {
+            int chessKillNum = -1;
+            int chessKillNumber = -1;
+            bool kill = GlobalEnvirIn::Instance()->__isThereHasChess(end);
+            if(kill) {
+                QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(end)->chessName());
+                chessKillNum = GlobalEnvirIn::Instance()->__QStr2intName(killName);
+                chessKillNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(end)->chessNumber();
+            }
+            chessStep tempStep(chessNum, chessNumber(), chessCamp(), end->getPosX(), end->getPosY(), kill, chessKillNum, chessKillNumber);
+            chessStepList.append(tempStep);
+        }
+    }
+}
+
+bool Advisor::canAdvisorMove(SGeoPoint *start, SGeoPoint *end) {
+    if(!(GlobalEnvirIn::Instance()->__isPosInBoard(start) && GlobalEnvirIn::Instance()->__isPosInBoard(end))) {
+        qDebug() << "Advisor.cpp line:141 canAdvisorMove() error:start or end out of boundary!";
+        return false;
+    }
+
+    if(chessCamp()) {
+        if(!(isInRedArea(start) && isInRedArea(end))) {
+            qDebug() << "Advisor.cpp line:128 canAdvisorMove() error:RED out of 9 Pavilion";
+            return false;
+        }
+    }
+    else {
+        if(!(isInBlackArea(start) && isInBlackArea(end))) {
+            qDebug() << "Advisor.cpp line:128 canAdvisorMove() error:BLACK out of 9 Pavilion";
+            return false;
+        }
+    }
+
+    if(!advisorRule(start, end)) {
+        qDebug() << "Advisor.cpp line:146 canAdvisorMove() error:advisor move must 1*1 1*-1 -1*1 -1*-1 !";
+        return false;
+    }
+
+    return !GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), end);
+}
+
+bool Advisor::advisorRule(SGeoPoint *start, SGeoPoint *end) {
+    return ((abs(start->getPosX() - end->getPosX())) == 1 &&
+            (abs(start->getPosY() - end->getPosY())) == 1);
+}
+
+bool Advisor::isInRedArea(SGeoPoint *Pos) {
+    if((Pos->getPosX() == AdvisorPos::r_mid_x && Pos->getPosY() == AdvisorPos::r_mid_y) ||
+            (Pos->getPosX() == AdvisorPos::r_left_x && Pos->getPosY() == AdvisorPos::r_up_y) ||
+            (Pos->getPosX() == AdvisorPos::r_left_x && Pos->getPosY() == AdvisorPos::r_down_y) ||
+            (Pos->getPosX() == AdvisorPos::r_right_x && Pos->getPosY() == AdvisorPos::r_up_y) ||
+            (Pos->getPosX() == AdvisorPos::r_right_x && Pos->getPosY() == AdvisorPos::r_down_y)) return true;
+    return false;
+}
+
+bool Advisor::isInBlackArea(SGeoPoint *Pos) {
+    if((Pos->getPosX() == AdvisorPos::b_mid_x && Pos->getPosY() == AdvisorPos::b_mid_y) ||
+            (Pos->getPosX() == AdvisorPos::b_left_x && Pos->getPosY() == AdvisorPos::b_up_y) ||
+            (Pos->getPosX() == AdvisorPos::b_left_x && Pos->getPosY() == AdvisorPos::b_down_y) ||
+            (Pos->getPosX() == AdvisorPos::b_right_x && Pos->getPosY() == AdvisorPos::b_up_y) ||
+            (Pos->getPosX() == AdvisorPos::b_right_x && Pos->getPosY() == AdvisorPos::b_down_y)) return true;
+    return false;
+    return false;
 }
