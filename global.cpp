@@ -635,12 +635,6 @@ bool GlobalEnvironment::__isThereHasChess(SGeoPoint *Pos) {
     const int numberNormal = 2;
     const int numberSoldier = 5;
 
-//    enum special {
-//        S_BLACK_GENERAL = 1,
-//        S_BLACK_SOLDIER = 7,
-//        S_RED_GENERAL = 8,
-//        S_RED_SOLDIER = 14};
-
     for(int chessIndex = 1; chessIndex <= chessNameIntMax; chessIndex++) {
         switch (chessIndex) {
         case Global::CHESS_TABLE::BLACK_GENERAL:
@@ -667,6 +661,54 @@ bool GlobalEnvironment::__isThereHasChess(SGeoPoint *Pos) {
     }
 
     return false;
+}
+
+bool GlobalEnvironment::__isThereHasOurChess(bool camp, SGeoPoint *Pos) {
+    if((Pos->getPosX() < 0 || Pos->getPosX() > PARAM::globalEnvironment::maxAxisOfX) ||
+            (Pos->getPosY() < 0 || Pos->getPosY() > PARAM::globalEnvironment::maxAxisOfY)) {
+        qDebug() << "global.cpp line:667 __isThereHasOurChess()  error:Pos out of boundary!";
+        return true;
+    }
+
+    if(!__isThereHasChess(Pos)) return false; // if no chess
+
+    const int numberNormal = 2;
+    const int numberSoldier = 5;
+
+    const int startIndex = camp ? 8 : 1;
+    const int chessNameIntMax = camp ? 14 : 7;
+
+    for(int chessIndex = startIndex; chessIndex <= chessNameIntMax; chessIndex++) {
+        switch (chessIndex) {
+        case Global::CHESS_TABLE::BLACK_GENERAL:
+            if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, 1), Pos)) return true;
+            break;
+        case Global::CHESS_TABLE::RED_GENERAL:
+            if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, 1), Pos)) return true;
+            break;
+        case Global::CHESS_TABLE::BLACK_SOLDIER:
+            for(int index = 1; index <= numberSoldier; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) return true;
+            }
+            break;
+        case Global::CHESS_TABLE::RED_SOLDIER:
+            for(int index = 1; index <= numberSoldier; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) return true;
+            }
+            break;
+        default:
+            for(int index = 1; index <= numberNormal; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool GlobalEnvironment::__isThereHasOurChess(bool camp, int PosX, int PosY) {
+    SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
+    return __isThereHasOurChess(camp, Pos);
 }
 
 bool GlobalEnvironment::__isChessOnThere(Chess *chess, SGeoPoint *Pos) {

@@ -20,6 +20,7 @@ public:
     virtual void LoopMove(int indexMaxIn = 5);
     virtual void turnSwitch(int indexSwitch = 5);
     virtual void testEvaluate();
+    virtual void testIsThereOurChess();
 
 };
 

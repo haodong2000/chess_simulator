@@ -40,3 +40,9 @@ void TestChessMove::testEvaluate() {
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL, 1)->setAlive(false);
     std::cout << GlobalEnvirIn::Instance()->__BoardEvaluate() << std::endl;
 }
+
+void TestChessMove::testIsThereOurChess() {
+    std::cout << "TEST_MODE -> testIsThereOurChess()" << std::endl;
+    bool test = GlobalEnvirIn::Instance()->__isThereHasOurChess(false, 9, 0);
+    if(test) std::cout << "TRUE!!!" << std::endl;
+}

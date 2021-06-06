@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
 
 //    TestChessMoveIn::Instance()->turnSwitch(20); // default 5
 //    TestChessMoveIn::Instance()->testEvaluate();
+
     return app.exec();
 }
 
