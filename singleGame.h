@@ -16,7 +16,12 @@ class singleGame
 {
 public:
     singleGame();
+    virtual void setLevel(int level);
+    virtual int getLevel();
     Step* chessStep;
+
+private:
+    int _level;
 };
 
 typedef NormalSingleton< singleGame > singleGameIn;
