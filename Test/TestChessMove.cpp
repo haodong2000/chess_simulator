@@ -66,10 +66,24 @@ void TestChessMove::testHorseGenerateMove() {
 
 void TestChessMove::testElephantGenerateMove() {
     SGeoPoint* Pos = new SGeoPoint(7, 4);
+    SGeoPoint* PosTest = new SGeoPoint(8, 3);
+    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, false, PosTest);
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
     std::cout << "TEST_MODE -> testElephantGenerateMove()" << std::endl;
     Ar_ele_1->generateMove();
     int countMove = Ar_ele_1->chessStepList.size();
     std::cout << "Ar_ele_1 -> " << countMove << std::endl;
     Ar_ele_1->printStepList();
+}
+
+void TestChessMove::testGeneralGenerateMove() {
+    SGeoPoint* PosTest = new SGeoPoint(8, 4);
+    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, false, PosTest);
+    SGeoPoint* Pos = new SGeoPoint(8, 3);
+    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
+    std::cout << "TEST_MODE -> testGeneralGenerateMove()" << std::endl;
+    Ar_gen_1->generateMove();
+    int countMove = Ar_gen_1->chessStepList.size();
+    std::cout << "Ar_gen_1 -> " << countMove << std::endl;
+    Ar_gen_1->printStepList();
 }
