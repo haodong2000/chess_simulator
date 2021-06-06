@@ -60,6 +60,7 @@ void Step::executeStep() {
 //    object->setProperty((GlobalEnvirIn::Instance()->__int2QStrName(__ChessNum) + QString::number(__ChessNumber) + QString("_posY")).toLatin1(),
 //                coordinateIn::Instance()->tranRealPosX(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(__ChessNum, __ChessNumber)->getPosY() + __StepDeltaMove->getPosY()));
     if(__isKill) {
+        GlobalEnvirIn::Instance()->__QStrOrInt2Chess(__ChessKilledNum, __CHessKilledNumber)->setAlive(false);
         object->setProperty(
                     (GlobalEnvirIn::Instance()->__int2QStrName(__ChessKilledNum) +
                      QString::number(__CHessKilledNumber) +

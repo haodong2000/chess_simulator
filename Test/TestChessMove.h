@@ -11,6 +11,8 @@
 #include <QTimer>
 #include <QObject>
 
+#include "globalChesses.h"
+
 #include "singleton.h"
 
 class TestChessMove
@@ -21,6 +23,8 @@ public:
     virtual void turnSwitch(int indexSwitch = 5);
     virtual void testEvaluate();
     virtual void testIsThereOurChess();
+    virtual void testWhichChessOnThere();
+    virtual void testHorseGenerateMove();
 
 };
 

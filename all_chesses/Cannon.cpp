@@ -20,5 +20,5 @@ bool Cannon::canChessMove() {
 }
 
 void Cannon::generateMove() {
-
+    // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
 }

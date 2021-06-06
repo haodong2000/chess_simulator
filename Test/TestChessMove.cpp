@@ -46,3 +46,18 @@ void TestChessMove::testIsThereOurChess() {
     bool test = GlobalEnvirIn::Instance()->__isThereHasOurChess(false, 9, 0);
     if(test) std::cout << "TRUE!!!" << std::endl;
 }
+
+void TestChessMove::testWhichChessOnThere() {
+    std::cout << "TEST_MODE -> testWhichChessOnThere()" << std::endl;
+    QString chessName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(0, 4)->chessName());
+    int chessNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(0, 4)->chessNumber();
+    std::cout << chessName.toStdString() << chessNumber << std::endl;
+}
+
+void TestChessMove::testHorseGenerateMove() {
+    std::cout << "TEST_MODE -> testHorseGenerateMove()" << std::endl;
+    Ab_hor_1->generateMove();
+    int countMove = Ab_hor_1->chessStepList.size();
+    std::cout << countMove << std::endl;
+    Ab_hor_1->printStepList();
+}

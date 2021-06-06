@@ -43,6 +43,8 @@ public:
     virtual bool __isThereHasChess(int PosX, int PosY);
     virtual bool __isThereHasOurChess(bool camp, SGeoPoint* Pos); // false is black and true is red
     virtual bool __isThereHasOurChess(bool camp, int PosX, int PosY);
+    virtual Chess* __whichChessOnThere(SGeoPoint* Pos);
+    virtual Chess* __whichChessOnThere(int PosX, int PosY);
     virtual bool __isChessOnThere(Chess* chess, SGeoPoint* Pos);
     virtual int __BoardEvaluate();
     virtual int __calculateBlackSpaceValue();

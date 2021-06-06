@@ -107,6 +107,48 @@ bool Horse::canHorseMove(SGeoPoint* start, SGeoPoint* end) {
     return false;
 }
 
-void Horse::generateMove() {
+bool Horse::canHorseMoveOrKill(SGeoPoint *start, SGeoPoint *end) {
+    if(!((abs(start->getPosX() - end->getPosX()) == 2 && abs(start->getPosY() - end->getPosY()) == 1) ||
+            (abs(start->getPosX() - end->getPosX()) == 1 && abs(start->getPosY() - end->getPosY()) == 2))) {
+        qDebug() << "Horse.cpp canHorseMove() line:23 error: horse move invalid! 2*1 or 1*2!";
+        return false;
+    }
 
+    if((!GlobalEnvirIn::Instance()->__isPosInBoard(start)) || (!GlobalEnvirIn::Instance()->__isPosInBoard(end))) return false;
+
+    if(abs(start->getPosX() - end->getPosX()) == 2) {
+        if(GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), (start->getPosX() + end->getPosX())/2, start->getPosY())) return false;
+        else if(GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), end)) return false;
+        else return true;
+    }
+    if(abs(start->getPosY() - end->getPosY()) == 2) {
+        if(GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), start->getPosY(), (start->getPosY() + end->getPosY())/2)) return false;
+        else if(GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), end)) return false;
+        else return true;
+    }
+    return false;
+}
+
+void Horse::generateMove() {
+    // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
+    QString chessNameSimple = GlobalEnvirIn::Instance()->__QString2SimpleName(chessName());
+    int chessNum = GlobalEnvirIn::Instance()->__QStr2intName(chessNameSimple);
+    const int indexNumber = HorsePos::EightPoints.size();
+    SGeoPoint* curPos = new SGeoPoint(getPosX(), getPosY());
+    for(int index = 0; index < indexNumber; index++) {
+        SGeoPoint* finalPos = new SGeoPoint(curPos->getPosX() + HorsePos::EightPoints.at(index).first,
+                                            curPos->getPosY() + HorsePos::EightPoints.at(index).second);
+        if(canHorseMoveOrKill(curPos, finalPos)) { // append new step
+            bool kill = GlobalEnvirIn::Instance()->__isThereHasChess(finalPos);
+            int chessKilledNum = -1;
+            int chessKilledNumber = -1;
+            if(kill) {
+                QString chessKilledName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(finalPos)->chessName());
+                chessKilledNum = GlobalEnvirIn::Instance()->__QStr2intName(chessKilledName);
+                chessKilledNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(finalPos)->chessNumber();
+            }
+            chessStep tempStep(chessNum, chessNumber(), chessCamp(), kill, chessKilledNum, chessKilledNumber);
+            chessStepList.append(tempStep);
+        }
+    }
 }

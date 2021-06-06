@@ -20,5 +20,5 @@ bool Chariot::canChessMove() {
 }
 
 void Chariot::generateMove() {
-
+    // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
 }

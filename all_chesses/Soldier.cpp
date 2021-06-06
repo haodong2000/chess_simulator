@@ -41,5 +41,5 @@ bool Soldier::canChessMove() {
 }
 
 void Soldier::generateMove() {
-
+    // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
 }

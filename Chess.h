@@ -12,6 +12,10 @@
 #include "SGeoPoint.h"
 #include <QVector>
 #include <unordered_map>
+#include <QDebug>
+#include <iostream>
+
+#include "singleton.h"
 
 struct chessStep {
     int _chessNum;
@@ -63,11 +67,11 @@ public:
     virtual bool canKill();
     virtual bool canMove();
     virtual bool chessCamp();
-    virtual QString chessName(); // "b_gen_"
+    virtual QString chessName(); // "BGeneral"
     virtual int chessNumber();
     virtual void setSpaceValue(double value);
     virtual double getSpaceValue();
-    virtual double space_value();
+    virtual void printStepList();
 
     QVector<chessStep> chessStepList;
 
@@ -87,5 +91,7 @@ private:
     bool _isAlive;
     double _spaceValue;
 };
+
+typedef NormalSingleton< Chess > ChessIn;
 
 #endif // CHESS_H

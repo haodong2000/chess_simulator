@@ -663,6 +663,54 @@ bool GlobalEnvironment::__isThereHasChess(SGeoPoint *Pos) {
     return false;
 }
 
+Chess* GlobalEnvironment::__whichChessOnThere(SGeoPoint *Pos) {
+    if(!__isThereHasChess(Pos)) {
+        qDebug() << "global.cpp __whichChessOnThere() line:666 error:no chess on Pos!!!";
+        return 0;
+    }
+
+    if((Pos->getPosX() < 0 || Pos->getPosX() > PARAM::globalEnvironment::maxAxisOfX) ||
+            (Pos->getPosY() < 0 || Pos->getPosY() > PARAM::globalEnvironment::maxAxisOfY)) {
+        qDebug() << "global.cpp line:666 __whichChessOnThere()  error:Pos out of boundary!";
+        return 0;
+    }
+
+    const int chessNameIntMax = 14;
+    const int numberNormal = 2;
+    const int numberSoldier = 5;
+
+    for(int chessIndex = 1; chessIndex <= chessNameIntMax; chessIndex++) {
+        switch (chessIndex) {
+        case Global::CHESS_TABLE::BLACK_GENERAL:
+            if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, 1), Pos)) return GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessIndex, 1);
+            break;
+        case Global::CHESS_TABLE::RED_GENERAL:
+            if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, 1), Pos)) return GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessIndex, 1);
+            break;
+        case Global::CHESS_TABLE::BLACK_SOLDIER:
+            for(int index = 1; index <= numberSoldier; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) return GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessIndex, index);
+            }
+            break;
+        case Global::CHESS_TABLE::RED_SOLDIER:
+            for(int index = 1; index <= numberSoldier; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) return GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessIndex, index);
+            }
+            break;
+        default:
+            for(int index = 1; index <= numberNormal; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) return GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessIndex, index);
+            }
+        }
+    }
+    return 0;
+}
+
+Chess* GlobalEnvironment::__whichChessOnThere(int PosX, int PosY) {
+    SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
+    return __whichChessOnThere(Pos);
+}
+
 bool GlobalEnvironment::__isThereHasOurChess(bool camp, SGeoPoint *Pos) {
     if((Pos->getPosX() < 0 || Pos->getPosX() > PARAM::globalEnvironment::maxAxisOfX) ||
             (Pos->getPosY() < 0 || Pos->getPosY() > PARAM::globalEnvironment::maxAxisOfY)) {

@@ -47,6 +47,28 @@ double Chess::getSpaceValue() {
     return _spaceValue;
 }
 
-double Chess::space_value() {
-
+void Chess::printStepList() {
+    const int countStep = chessStepList.size();
+    if(countStep == 0) {
+        qDebug() << "Chess.cpp printStepList() line:50 error:chessStepList is EMPTY!!!";
+        return;
+    }
+    // print every element of the list
+    for(int i = 0; i < countStep; i++) {
+        std::cout << "=================== <" << i << "> ===================" << std::endl;
+        int Num = chessStepList.at(i)._chessNum;
+        int Number = chessStepList.at(i)._chessNumber;
+        int PosX = chessStepList.at(i)._deltaX;
+        int PosY = chessStepList.at(i)._deltaY;
+        bool kill = chessStepList.at(i)._isKill;
+        int killNum = chessStepList.at(i)._chessKilledNum;
+        int killNumber = chessStepList.at(i)._chessKilledNumber;
+        std::cout << "Num = \t" << Num << std::endl;
+        std::cout << "Number = \t" << Number << std::endl;
+        std::cout << "PosX = \t" << PosX << std::endl;
+        std::cout << "PosY = \t" << PosY << std::endl;
+        std::cout << "kill = \t" << (kill ? "True" : "False") << std::endl;
+        std::cout << "killNum = \t" << killNum << std::endl;
+        std::cout << "killNumber = \t" << killNumber << std::endl;
+    }
 }
