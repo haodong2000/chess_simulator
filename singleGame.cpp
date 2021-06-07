@@ -217,7 +217,7 @@ void singleGame::testChessing(int maxCount) {
     bool redOrBlack = false;
     int count = 0;
     while(gameIsOn && (count++) < maxCount) {
-        std::cout << "count = " << count << std::endl;
+        std::cout << "count -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
         GlobalEnvirIn::Instance()->__delayMsec(1000);
 
@@ -230,58 +230,12 @@ void singleGame::testChessing(int maxCount) {
         if(redOrBlack && (!originRedChessStepList.empty())) {
             int size   = originRedChessStepList.size();
             int sizeIndex = generateRandomNumber(size);
-            int Num    = originRedChessStepList.at(sizeIndex)._chessNum;
-            int Number = originRedChessStepList.at(sizeIndex)._chessNumber;
-            int PosX   = originRedChessStepList.at(sizeIndex)._deltaX;
-            int PosY   = originRedChessStepList.at(sizeIndex)._deltaY;
-            bool camp  = originRedChessStepList.at(sizeIndex)._chessCamp;
-            QString campString = camp ? "Red" : "Black";
-            bool kill  = originRedChessStepList.at(sizeIndex)._isKill;
-            QString killString = kill ? "True" : "False";
-            int killNum    = originRedChessStepList.at(sizeIndex)._chessKilledNum;
-            int killNumber = originRedChessStepList.at(sizeIndex)._chessKilledNumber;
-            std::cout << "Num\t = " << Num << std::endl;
-            std::cout << "Number\t = " << Number << std::endl;
-            std::cout << "Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(Num).toStdString() << std::endl;
-            std::cout << "Camp\t = " << campString.toStdString() << std::endl;
-            std::cout << "PosX\t = " << PosX << std::endl;
-            std::cout << "PosY\t = " << PosY << std::endl;
-            std::cout << "kill\t = " << killString.toStdString() << std::endl;
-            if(kill) {
-                std::cout << "k_Num\t = " << killNum << std::endl;
-                std::cout << "k_Number\t = " << killNumber << std::endl;
-                std::cout << "k_Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(killNum).toStdString() << std::endl;
-                GlobalEnvirIn::Instance()->__killThisChess(killNum, killNumber);
-            }
-            QmlConnectIn::Instance()->changeChessPos(Num, Number, camp, PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(), PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
+            realMove(originRedChessStepList.at(sizeIndex));
         }
         if(!redOrBlack && (!originBlackChessStepList.empty())) {
             int size   = originBlackChessStepList.size();
             int sizeIndex = generateRandomNumber(size);
-            int Num    = originBlackChessStepList.at(sizeIndex)._chessNum;
-            int Number = originBlackChessStepList.at(sizeIndex)._chessNumber;
-            int PosX   = originBlackChessStepList.at(sizeIndex)._deltaX;
-            int PosY   = originBlackChessStepList.at(sizeIndex)._deltaY;
-            bool camp  = originBlackChessStepList.at(sizeIndex)._chessCamp;
-            QString campString = camp ? "Red" : "Black";
-            bool kill  = originBlackChessStepList.at(sizeIndex)._isKill;
-            QString killString = kill ? "True" : "False";
-            int killNum    = originBlackChessStepList.at(sizeIndex)._chessKilledNum;
-            int killNumber = originBlackChessStepList.at(sizeIndex)._chessKilledNumber;
-            std::cout << "Num\t = " << Num << std::endl;
-            std::cout << "Number\t = " << Number << std::endl;
-            std::cout << "Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(Num).toStdString() << std::endl;
-            std::cout << "Camp\t = " << campString.toStdString() << std::endl;
-            std::cout << "PosX\t = " << PosX << std::endl;
-            std::cout << "PosY\t = " << PosY << std::endl;
-            std::cout << "kill\t = " << killString.toStdString() << std::endl;
-            if(kill) {
-                std::cout << "k_Num\t = " << killNum << std::endl;
-                std::cout << "k_Number\t = " << killNumber << std::endl;
-                std::cout << "k_Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(killNum).toStdString() << std::endl;
-                GlobalEnvirIn::Instance()->__killThisChess(killNum, killNumber);
-            }
-            QmlConnectIn::Instance()->changeChessPos(Num, Number, camp, PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(), PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
+            realMove(originBlackChessStepList.at(sizeIndex));
         }
 
         gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
@@ -290,6 +244,61 @@ void singleGame::testChessing(int maxCount) {
             else std::cout << "Red Win!" << std::endl;
         }
         redOrBlack = !redOrBlack;
+    }
+}
+
+void singleGame::testFakeChessing(int maxCount) {
+    bool gameIsOn = true;
+    bool redOrBlack = false;
+    int count = 0;
+    while(gameIsOn && (count++) < maxCount) {
+        std::cout << "count -> " << count << std::endl;
+        int value = GlobalEnvirIn::Instance()->__BoardEvaluate();
+        std::cout << "value -> " << value << std::endl;
+        GlobalEnvirIn::Instance()->__printBoard();
+        GlobalEnvirIn::Instance()->__delayMsec(1000);
+
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
+
+        GlobalEnvirIn::Instance()->__delayMsec(1000);
+        generateRedAllPossibleMoves();
+        generateBlackAllPossibleMoves();
+        if(redOrBlack && (!originRedChessStepList.empty())) {
+            int size   = originRedChessStepList.size();
+            int sizeIndex = generateRandomNumber(size);
+            fakeMove(originRedChessStepList.at(sizeIndex));
+        }
+        if(!redOrBlack && (!originBlackChessStepList.empty())) {
+            int size   = originBlackChessStepList.size();
+            int sizeIndex = generateRandomNumber(size);
+            fakeMove(originBlackChessStepList.at(sizeIndex));
+        }
+
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        if(gameIsOn == false) {
+            if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+        }
+        redOrBlack = !redOrBlack;
+    }
+}
+
+void singleGame::testFakeBackMove() {
+    std::cout << "init " << GlobalEnvirIn::Instance()->__BoardEvaluate() << std::endl;
+    generateRedAllPossibleMoves();
+    chessStep step = originRedChessStepList.at(0);
+    int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(step._chessNum, step._chessNumber)->getPosX();
+    int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(step._chessNum, step._chessNumber)->getPosY();
+    while(true){
+       fakeMove(step);
+       GlobalEnvirIn::Instance()->__delayMsec(500);
+       GlobalEnvirIn::Instance()->__printBoard();
+       std::cout << "fake " << GlobalEnvirIn::Instance()->__BoardEvaluate() << std::endl;
+       fakeBackMove(step, lastPosX, lastPosY);
+       GlobalEnvirIn::Instance()->__delayMsec(500);
+       GlobalEnvirIn::Instance()->__printBoard();
+       std::cout << "back " << GlobalEnvirIn::Instance()->__BoardEvaluate() << std::endl;
     }
 }
 
@@ -345,4 +354,200 @@ void singleGame::testStepClass() {
     std::cout << "step" << test->getStepX() << std::endl;
     SGeoPoint* t = new SGeoPoint(0, 0);
     std::cout << t->getPosX() << std::endl;
+}
+
+void singleGame::oneLevelChessing(int maxCount = 999) {
+    // one level test, AI is black
+    bool gameIsOn = true;
+    bool redOrBlack = true;
+    int count = 0;
+    const int delayMs = 500;
+    while(gameIsOn && (count++) < maxCount) {
+        std::cout << "count chess moves -> " << count << std::endl;
+        GlobalEnvirIn::Instance()->__printBoard();
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
+
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+        generateRedAllPossibleMoves();
+        generateBlackAllPossibleMoves();
+        if(redOrBlack && (!originRedChessStepList.empty())) {
+            int sizeIndex = oneLevelStepIndex(redOrBlack);
+            realMove(originRedChessStepList.at(sizeIndex));
+        }
+        else if(!redOrBlack && (!originBlackChessStepList.empty())) {
+            int sizeIndex = oneLevelStepIndex(redOrBlack);
+            realMove(originBlackChessStepList.at(sizeIndex));
+        }
+        else {
+            qDebug() << "singleGame.cpp line:399 oneLevelChessing() error: originRedChessStepList or originBlackChessStepList is EMPTY!!!!!";
+            return;
+        }
+
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        if(gameIsOn == false) {
+            if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+        }
+        redOrBlack = !redOrBlack;
+    }
+}
+
+int singleGame::oneLevelStepIndex(bool redOrBlack) {
+    // 1. fakeMove()
+    //      1. if level = L, then L numbers could represent all possible moves
+    //      2. a state tree
+    //          1. root
+    //          2.
+    // 2. selectBest()
+    // https://blog.csdn.net/weixin_43867940/article/details/111881002?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&spm=1001.2101.3001.4242
+    int size = 0;
+    int maxValue = 0;
+    int sizeIndex = 0;
+    int currentValue = 0;
+    if(redOrBlack) {
+        size = originRedChessStepList.size();
+        for(int index = 0; index < size; index++) {
+            // init
+            currentValue = 0;
+            // fakemove
+            int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(originRedChessStepList.at(index)._chessNum, originRedChessStepList.at(index)._chessNumber)->getPosX();
+            int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(originRedChessStepList.at(index)._chessNum, originRedChessStepList.at(index)._chessNumber)->getPosY();
+            fakeMove(originRedChessStepList.at(index));
+            // evaluate
+            currentValue += GlobalEnvirIn::Instance()->__calculateRedChessValue();
+            currentValue += GlobalEnvirIn::Instance()->__calculateRedSpaceValue();
+            currentValue += GlobalEnvirIn::Instance()->__calculateRedPosValue();
+//            GlobalEnvirIn::Instance()->__printBoard();
+//            std::cout << index << " " << currentValue << " " << maxValue << " " << sizeIndex << std::endl;
+            // compare
+            if(currentValue > maxValue) {
+                maxValue = currentValue;
+                sizeIndex = index;
+            }
+            // restore
+            fakeBackMove(originRedChessStepList.at(index), lastPosX, lastPosY);
+        }
+        // return the best
+        return sizeIndex;
+    }
+    else {
+        size = originBlackChessStepList.size();
+        for(int index = 0; index < size; index++) {
+            // init
+            currentValue = 0;
+            // fakemove
+            int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(originBlackChessStepList.at(index)._chessNum, originBlackChessStepList.at(index)._chessNumber)->getPosX();
+            int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(originBlackChessStepList.at(index)._chessNum, originBlackChessStepList.at(index)._chessNumber)->getPosY();
+            fakeMove(originBlackChessStepList.at(index));
+            // evaluate
+            currentValue += GlobalEnvirIn::Instance()->__calculateBlackChessValue();
+            currentValue += GlobalEnvirIn::Instance()->__calculateBlackSpaceValue();
+            currentValue += GlobalEnvirIn::Instance()->__calculateBlackPosValue();
+            // compare
+            if(currentValue > maxValue) {
+                maxValue = currentValue;
+                sizeIndex = index;
+            }
+            // restore
+            fakeBackMove(originBlackChessStepList.at(index), lastPosX, lastPosY);
+        }
+        // return the best
+        return sizeIndex;
+    }
+    qDebug() << "singleGame.cpp oneLevelStepIndex() line:456";
+    return 0;
+}
+
+void singleGame::normalPlay(int maxCount) {
+
+}
+
+void singleGame::realMove(chessStep step) {
+    int Num    = step._chessNum;
+    int Number = step._chessNumber;
+    int PosX   = step._deltaX;
+    int PosY   = step._deltaY;
+    bool camp  = step._chessCamp;
+    QString campString = camp ? "Red" : "Black";
+    bool kill  = step._isKill;
+    QString killString = kill ? "True" : "False";
+    int killNum    = step._chessKilledNum;
+    int killNumber = step._chessKilledNumber;
+    std::cout << "Num   \t = " << Num << std::endl;
+    std::cout << "Number\t = " << Number << std::endl;
+    std::cout << "Name  \t = " << GlobalEnvirIn::Instance()->__int2QStrName(Num).toStdString() << std::endl;
+    std::cout << "Camp  \t = " << campString.toStdString() << std::endl;
+    std::cout << "PosX  \t = " << PosX << std::endl;
+    std::cout << "PosY  \t = " << PosY << std::endl;
+    std::cout << "kill  \t = " << killString.toStdString() << std::endl;
+    if(kill) {
+        std::cout << "k_Num   \t = " << killNum << std::endl;
+        std::cout << "k_Number\t = " << killNumber << std::endl;
+        std::cout << "k_Name  \t = " << GlobalEnvirIn::Instance()->__int2QStrName(killNum).toStdString() << std::endl;
+        GlobalEnvirIn::Instance()->__killThisChess(killNum, killNumber);
+    }
+    QmlConnectIn::Instance()->changeChessPos(Num, Number, camp, PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(), PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
+}
+
+void singleGame::fakeMove(chessStep step) {
+    int Num    = step._chessNum;
+    int Number = step._chessNumber;
+    int PosX   = step._deltaX;
+    int PosY   = step._deltaY;
+    bool camp  = step._chessCamp;
+    QString campString = camp ? "Red" : "Black";
+    bool kill  = step._isKill;
+    QString killString = kill ? "True" : "False";
+    int killNum    = step._chessKilledNum;
+    int killNumber = step._chessKilledNumber;
+//    std::cout << "Num   \t = " << Num << std::endl;
+//    std::cout << "Number\t = " << Number << std::endl;
+//    std::cout << "Name  \t = " << GlobalEnvirIn::Instance()->__int2QStrName(Num).toStdString() << std::endl;
+//    std::cout << "Camp  \t = " << campString.toStdString() << std::endl;
+//    std::cout << "PosX  \t = " << PosX << std::endl;
+//    std::cout << "PosY  \t = " << PosY << std::endl;
+//    std::cout << "kill  \t = " << killString.toStdString() << std::endl;
+    if(kill) {
+//        std::cout << "k_Num   \t = " << killNum << std::endl;
+//        std::cout << "k_Number\t = " << killNumber << std::endl;
+//        std::cout << "k_Name  \t = " << GlobalEnvirIn::Instance()->__int2QStrName(killNum).toStdString() << std::endl;
+        GlobalEnvirIn::Instance()->__fakeKillThisChess(killNum, killNumber);
+    }
+    QmlConnectIn::Instance()->fakeChangeChessPos(Num, Number, camp, PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(), PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
+}
+
+void singleGame::realBackMove(chessStep step) {
+    std::cout << "realBackMove() called" << std::endl;
+}
+
+void singleGame::fakeBackMove(chessStep step, int lastPosX, int lastPosY) {
+    int Num    = step._chessNum;
+    int Number = step._chessNumber;
+    int PosX   = lastPosX;
+    int PosY   = lastPosY;
+    bool camp  = step._chessCamp;
+    QString campString = camp ? "Red" : "Black";
+    bool kill  = step._isKill;
+    QString killString = kill ? "True" : "False";
+    int killNum    = step._chessKilledNum;
+    int killNumber = step._chessKilledNumber;
+//    std::cout << "Num   \t = " << Num << std::endl;
+//    std::cout << "Number\t = " << Number << std::endl;
+//    std::cout << "Name  \t = " << GlobalEnvirIn::Instance()->__int2QStrName(Num).toStdString() << std::endl;
+//    std::cout << "Camp  \t = " << campString.toStdString() << std::endl;
+//    std::cout << "PosX  \t = " << PosX << std::endl;
+//    std::cout << "PosY  \t = " << PosY << std::endl;
+//    std::cout << "kill  \t = " << killString.toStdString() << std::endl;
+//    if(kill) {
+//        std::cout << "k_Num   \t = " << killNum << std::endl;
+//        std::cout << "k_Number\t = " << killNumber << std::endl;
+//        std::cout << "k_Name  \t = " << GlobalEnvirIn::Instance()->__int2QStrName(killNum).toStdString() << std::endl;
+//    }
+    if(kill) GlobalEnvirIn::Instance()->__QStrOrInt2Chess(killNum, killNumber)->setAlive(true);
+    QmlConnectIn::Instance()->fakeBackChangeChessPos(Num, Number, camp,
+                                                 PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(),
+                                                 PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
 }

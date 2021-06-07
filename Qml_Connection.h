@@ -27,6 +27,19 @@ public:
     virtual void killThisChess(SGeoPoint* Pos);
     virtual void killThisChess(int PosX, int PosY);
 
+    virtual void fakeChangeChessPos(int chessName,     int number, bool camp, SGeoPoint* Pos);
+    virtual void fakeChangeChessPos(QString chessName, int number, bool camp, SGeoPoint* Pos);
+    virtual void fakeChangeChessPos(int chessName,     int number, bool camp, int deltaX, int deltaY);
+    virtual void fakeChangeChessPos(QString chessName, int number, bool camp, int deltaX, int deltaY);
+
+//    virtual void fakeBackChangeChessPos(int chessName,     int number, bool camp, SGeoPoint* Pos);
+//    virtual void fakeBackChangeChessPos(QString chessName, int number, bool camp, SGeoPoint* Pos);
+    virtual void fakeBackChangeChessPos(int chessName,     int number, bool camp, int deltaX, int deltaY);
+    virtual void fakeBackChangeChessPos(QString chessName, int number, bool camp, int deltaX, int deltaY);
+
+    virtual void fakeKillThisChess(SGeoPoint* Pos);
+    virtual void fakeKillThisChess(int PosX, int PosY);
+
 private:
     // static SGeoPoint* pTest;
 };

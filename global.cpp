@@ -86,14 +86,14 @@ namespace Global {
     };
 
     std::unordered_map<int, int> CHESS_VALUE = {
-        {CHESS_TABLE::BLACK_GENERAL , 10000},
+        {CHESS_TABLE::BLACK_GENERAL , 1000},
         {CHESS_TABLE::BLACK_ADVISOR , 150},
         {CHESS_TABLE::BLACK_ELEPHANT, 150},
         {CHESS_TABLE::BLACK_HORSE   , 320},
         {CHESS_TABLE::BLACK_CHARIOT , 650},
         {CHESS_TABLE::BLACK_CANNON  , 300},
         {CHESS_TABLE::BLACK_SOLDIER , 100},
-        {CHESS_TABLE::RED_GENERAL , 10000},
+        {CHESS_TABLE::RED_GENERAL , 1000},
         {CHESS_TABLE::RED_ADVISOR , 150},
         {CHESS_TABLE::RED_ELEPHANT, 150},
         {CHESS_TABLE::RED_HORSE   , 320},
@@ -778,6 +778,10 @@ void GlobalEnvironment::__killThisChess(int killNum, int killNumber) {
                  QString("_alive")).toLatin1(), false);
 }
 
+void GlobalEnvironment::__fakeKillThisChess(int killNum, int killNumber) {
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(killNum, killNumber)->setAlive(false);
+}
+
 void GlobalEnvironment::__setGameTurn(bool whosTurn) {
     // true: ai_turn, black
     // false: humen_turn, red
@@ -785,6 +789,8 @@ void GlobalEnvironment::__setGameTurn(bool whosTurn) {
 }
 
 int GlobalEnvironment::__BoardEvaluate() {
+    if(Ab_gen_1->isAlive() == false) return -99999;
+    if(Ar_gen_1->isAlive() == false) return 99999;
     // One is the fixed piece strength value;
     // the other is the position value of the piece;
     // the third is the flexibility and cooperation value of the piece;
@@ -841,8 +847,8 @@ int GlobalEnvironment::__calculateBlackSpaceValue() {
         }
     }
     blackSpaceValue = qRound(blackSpaceValue/5.0);
-    std::cout << "__calculateBlackSpaceValue() = " << blackSpaceValue << std::endl;
-    return blackSpaceValue;
+//    std::cout << "__calculateBlackSpaceValue() = " << blackSpaceValue << std::endl;
+    return blackSpaceValue*2;
 }
 
 int GlobalEnvironment::__calculateRedSpaceValue() {
@@ -885,8 +891,8 @@ int GlobalEnvironment::__calculateRedSpaceValue() {
         }
     }
     redSpaceValue = qRound(redSpaceValue/5.0);
-    std::cout << "__calculateRedSpaceValue() = " << redSpaceValue << std::endl;
-    return redSpaceValue;
+//    std::cout << "__calculateRedSpaceValue() = " << redSpaceValue << std::endl;
+    return redSpaceValue*2;
 }
 
 int GlobalEnvironment::__calculateBlackChessValue() {
@@ -908,7 +914,7 @@ int GlobalEnvironment::__calculateBlackChessValue() {
             break;
         }
     }
-    std::cout << "__calculateBlackChessValue() = " << blackChessValue << std::endl;
+//    std::cout << "__calculateBlackChessValue() = " << blackChessValue << std::endl;
     return blackChessValue;
 }
 
@@ -931,7 +937,7 @@ int GlobalEnvironment::__calculateRedChessValue() {
             break;
         }
     }
-    std::cout << "__calculateRedChessValue() = " << redChessValue << std::endl;
+//    std::cout << "__calculateRedChessValue() = " << redChessValue << std::endl;
     return redChessValue;
 }
 
@@ -954,7 +960,7 @@ int GlobalEnvironment::__calculateBlackPosValue() {
             break;
         }
     }
-    std::cout << "__calculateBlackPosValue() = " << blackPosValue << std::endl;
+//    std::cout << "__calculateBlackPosValue() = " << blackPosValue << std::endl;
     return blackPosValue;
 }
 
@@ -977,25 +983,25 @@ int GlobalEnvironment::__calculateRedPosValue() {
             break;
         }
     }
-    std::cout << "__calculateRedPosValue() = " << redPosValue << std::endl;
+//    std::cout << "__calculateRedPosValue() = " << redPosValue << std::endl;
     return redPosValue;
 }
 
 int GlobalEnvironment::__boardValueBlackUnit(int x, int y) {
-    const int rate = 12 + __isWholeBoardEntire() * 4;
+    const int rate = (12 + __isWholeBoardEntire() * 4)*4;
     const int base = 75;
     int gen_y = __QStrOrInt2Chess(Global::CHESS_TABLE::RED_GENERAL, 1)->getPosY();
     int gen_x = __QStrOrInt2Chess(Global::CHESS_TABLE::RED_GENERAL, 1)->getPosX();
-    return base + (PARAM::globalEnvironment::maxAxisOfX - abs(x - gen_x))*(rate - abs(y - gen_y));
+    return base + (PARAM::globalEnvironment::maxAxisOfX - abs(x - gen_x) + 4)*(rate - abs(y - gen_y));
     return 0;
 }
 
 int GlobalEnvironment::__boardValueRedUnit(int x, int y) {
-    const int rate = 12 + __isWholeBoardEntire() * 4;
+    const int rate = (12 + __isWholeBoardEntire() * 4)*4;
     const int base = 75;
     int gen_y = __QStrOrInt2Chess(Global::CHESS_TABLE::BLACK_GENERAL, 1)->getPosY();
     int gen_x = __QStrOrInt2Chess(Global::CHESS_TABLE::BLACK_GENERAL, 1)->getPosX();
-    return base + (PARAM::globalEnvironment::maxAxisOfX - abs(x - gen_x))*(rate - abs(y - gen_y));
+    return base + (PARAM::globalEnvironment::maxAxisOfX - abs(x - gen_x) + 4)*(rate - abs(y - gen_y));
     return 0;
 }
 

@@ -27,8 +27,21 @@ public:
     virtual void displayRedAllPossibleMoves();
     virtual void tranStructToClass();
     virtual void testChessing(int maxCount = 5);
+    virtual void testFakeChessing(int maxCount = 5);
     virtual void testStepClass();
+    virtual void testFakeBackMove();
     virtual int generateRandomNumber(int maxInt);
+
+    // real play
+    virtual void oneLevelChessing(int maxCount);
+    virtual int oneLevelStepIndex(bool redOrBlack);
+    virtual void normalPlay(int maxCount);
+
+    // interface
+    virtual void realMove(chessStep step);
+    virtual void fakeMove(chessStep step);
+    virtual void realBackMove(chessStep step);
+    virtual void fakeBackMove(chessStep step, int lastPosX, int lastPosY);
 
     Step* finalChessStep;
     QVector<Step*> chessBlackStepList;

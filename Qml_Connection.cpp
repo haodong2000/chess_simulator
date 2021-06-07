@@ -83,3 +83,93 @@ void Qml_Connection::killThisChess(int PosX, int PosY) {
     SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
     killThisChess(Pos);
 }
+
+void Qml_Connection::fakeChangeChessPos(int chessName, int number, bool camp, SGeoPoint *Pos) {
+    // number already contain the infomation of camp, chessName also contains
+    QString name = GlobalEnvirIn::Instance()->__int2QStrName(chessName) + QString::number(number);
+    if(name.isEmpty()) {
+        qDebug() << "ERROR! Qml_Connection.cpp fakeChangeChessPos() line: 87";
+        return;
+    }
+
+    if(GlobalEnvirIn::Instance()->__isThereHasChess(Pos)) {
+        fakeKillThisChess(Pos);
+    }
+
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(Pos->getPosX());
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(Pos->getPosY());
+}
+
+void Qml_Connection::fakeChangeChessPos(QString chessName, int number, bool camp, SGeoPoint *Pos) {
+    int chessNameInt = GlobalEnvirIn::Instance()->__QStr2intName(chessName);
+    if(chessNameInt == -1) {
+        qDebug() << "ERROR! Qml_Connection.cpp fakeChangeChessPos() line: 104";
+        return;
+    }
+    fakeChangeChessPos(chessNameInt, number, camp, Pos); // call other function
+}
+
+void Qml_Connection::fakeChangeChessPos(int chessName, int number, bool camp, int deltaX, int deltaY) {
+    // chessName like b_gen_, r_adv_
+    QString name = GlobalEnvirIn::Instance()->__int2QStrName(chessName) + QString::number(number);
+    if(name.isEmpty()) {
+        qDebug() << "ERROR! Qml_Connection.cpp fakeChangeChessPos() line: 113";
+        return;
+    }
+    int posX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosX() + deltaX; // first call
+    int posY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosY() + deltaY; // second call
+
+    if(GlobalEnvirIn::Instance()->__isThereHasChess(posX, posY)) {
+        fakeKillThisChess(posX, posY);
+    }
+
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(posX);
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(posY);
+}
+
+void Qml_Connection::fakeChangeChessPos(QString chessName, int number, bool camp, int deltaX, int deltaY) {
+    int chessNameInt = GlobalEnvirIn::Instance()->__QStr2intName(chessName);
+    if(chessNameInt == -1) {
+        qDebug() << "ERROR! Qml_Connection.cpp fakeChangeChessPos() line: 44";
+        return;
+    }
+    fakeChangeChessPos(chessNameInt, number, camp, deltaX ,deltaY); // call other function
+}
+
+void Qml_Connection::fakeKillThisChess(SGeoPoint *Pos) {
+    GlobalEnvirIn::Instance()->__whichChessOnThere(Pos)->setAlive(false);
+}
+
+void Qml_Connection::fakeKillThisChess(int PosX, int PosY) {
+    SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
+    fakeKillThisChess(Pos);
+}
+
+void Qml_Connection::fakeBackChangeChessPos(int chessName, int number, bool camp, int deltaX, int deltaY) {
+    // chessName like b_gen_, r_adv_
+    QString name = GlobalEnvirIn::Instance()->__int2QStrName(chessName) + QString::number(number);
+    if(name.isEmpty()) {
+        qDebug() << "ERROR! Qml_Connection.cpp fakeBackChangeChessPos() line: 177";
+        return;
+    }
+    int posX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosX() + deltaX; // first call
+    int posY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosY() + deltaY; // second call
+
+    if(GlobalEnvirIn::Instance()->__isThereHasChess(posX, posY)) {
+        qDebug() << "ERROR! Qml_Connection.cpp fakeBackChangeChessPos() line: 185  Back Pos Has Chess!";
+        return;
+    }
+
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(posX);
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(posY);
+}
+
+void Qml_Connection::fakeBackChangeChessPos(QString chessName, int number, bool camp, int deltaX, int deltaY) {
+    int chessNameInt = GlobalEnvirIn::Instance()->__QStr2intName(chessName);
+    if(chessNameInt == -1) {
+        qDebug() << "ERROR! Qml_Connection.cpp fakeBackChangeChessPos() line: 195";
+        return;
+    }
+    fakeBackChangeChessPos(chessNameInt, number, camp, deltaX ,deltaY); // call other function
+}
+

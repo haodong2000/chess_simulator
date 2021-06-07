@@ -47,6 +47,7 @@ public:
     virtual Chess* __whichChessOnThere(int PosX, int PosY);
     virtual bool __isChessOnThere(Chess* chess, SGeoPoint* Pos);
     virtual void __killThisChess(int killNum, int killNumber);
+    virtual void __fakeKillThisChess(int killNum, int killNumber);
     virtual void __setGameTurn(bool whosTurn);
     virtual int __BoardEvaluate();
     virtual int __calculateBlackSpaceValue();
