@@ -38,6 +38,9 @@ public:
     virtual void testQVectorAdding();
 
     virtual void testDisplayAllPossibleMoves();
+
+    virtual void testChessing();
+    virtual void testChessingNew();
 };
 
 typedef NormalSingleton< TestChessMove > TestChessMoveIn;

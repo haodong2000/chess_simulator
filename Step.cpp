@@ -77,6 +77,10 @@ void Step::setChessNumber(int chessNumber) {
     __ChessNumber = chessNumber;
 }
 
+bool Step::getChessCamp() {
+    return __ChessCamp;
+}
+
 void Step::setKill(bool kill) {
     __isKill = kill;
 }
@@ -108,4 +112,31 @@ int Step::getChessKilledNum() {
 
 int Step::getChessKilledNumber() {
     return __CHessKilledNumber;
+}
+
+void Step::displayStep() {
+    // QmlConnectIn::Instance()->changeChessPos(__ChessNum, __ChessNumber, __ChessCamp, __StepDeltaMove->getPosX(), __StepDeltaMove->getPosY());
+    int Num = this->getChessNum();
+    int Number = this->getChessNumber();
+    int PosX =  this->getStepDeltaX();
+    int PosY =  this->getStepDeltaY();
+    bool kill = this->getKill();
+    QString killString = kill ? "True" : "False";
+    int killNum = -1;
+    int killNumber = -1;
+    if(kill) {
+        killNum = this->getChessKilledNum();
+        killNumber = this->getChessKilledNumber();
+    }
+    std::cout << "Num\t = " << Num << std::endl;
+    std::cout << "Number\t = " << Number << std::endl;
+    std::cout << "Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(Num).toStdString() << std::endl;
+    std::cout << "PosX\t = " << PosX << std::endl;
+    std::cout << "PosY\t = " << PosY << std::endl;
+    std::cout << "kill\t = " << killString.toStdString() << std::endl;
+    if(kill) {
+        std::cout << "k_Num\t = " << killNum << std::endl;
+        std::cout << "k_Number\t = " << killNumber << std::endl;
+        std::cout << "k_Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(killNum).toStdString() << std::endl;
+    }
 }

@@ -10,8 +10,9 @@
 
 #include "global.h"
 #include "SGeoPoint.h"
-#include "coordinate.h"
+// #include "coordinate.h"
 // #include "globalChesses.h"
+// #include "singleton.h"
 
 #include "Qml_Connection.h"
 
@@ -38,6 +39,7 @@ public:
 
     virtual void setChessNum(int chessNum);
     virtual void setChessNumber(int chessNumber);
+    virtual bool getChessCamp();
     virtual void setKill(bool kill);
     virtual void setChessKilledNum(int chessKilledNum);
     virtual void setChessKilledNumber(int chessKilledNumber);
@@ -47,6 +49,8 @@ public:
     virtual bool getKill();
     virtual int getChessKilledNum();
     virtual int getChessKilledNumber();
+
+    virtual void displayStep();
 
 private:
     SGeoPoint* __StepMove; // TODO, no use currently
@@ -61,6 +65,6 @@ private:
     QString __ChessKilledName;
 };
 
-typedef NormalSingleton< Step > StepIn;
+//typedef NormalSingleton< Step > StepIn;
 
 #endif // STEP_H

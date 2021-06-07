@@ -152,3 +152,22 @@ void TestChessMove::testDisplayAllPossibleMoves() {
     singleGameIn::Instance()->displayBlackAllPossibleMoves();
     singleGameIn::Instance()->displayRedAllPossibleMoves();
 }
+
+void TestChessMove::testChessing() { // can not use!
+    bool gameIsOn = true;
+    bool redOrBlack = false;
+    while(gameIsOn) {
+        testDisplayAllPossibleMoves();
+        Step* red = singleGameIn::Instance()->chessRedStepList.at(singleGameIn::Instance()->chessRedStepList.size()/2);
+        Step* black = singleGameIn::Instance()->chessBlackStepList.at(singleGameIn::Instance()->chessBlackStepList.size()/2);
+        if(redOrBlack) red->executeStep();
+        else black->executeStep();
+        GlobalEnvirIn::Instance()->__delayMsec(1000);
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        redOrBlack = !redOrBlack;
+    }
+}
+
+void TestChessMove::testChessingNew() {
+    singleGameIn::Instance()->testChessing();
+}

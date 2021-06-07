@@ -19,6 +19,7 @@
 #include "Test/TestChessMove.h"
 
 #include "Step.h"
+#include "singleGame.h"
 
 QObject* object;
 
@@ -51,7 +52,7 @@ int main(int argc, char *argv[])
 //    // test interface
 //    std::cout << GlobalEnvirIn::Instance()->__BoardEvaluate() << std::endl;
 
-//    TestChessMoveIn::Instance()->testDisplayAllPossibleMoves();
+//    singleGameIn::Instance()->testChessing(50);
 
     return app.exec();
 }

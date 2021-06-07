@@ -39,6 +39,8 @@ void singleGame::generateBlackAllPossibleMoves() {
 
     Ab_gen_1->generateMove();
 
+    originBlackChessStepList.clear();
+
     originBlackChessStepList.append(Ab_hor_1->chessStepList);
     originBlackChessStepList.append(Ab_can_1->chessStepList);
     originBlackChessStepList.append(Ab_adv_1->chessStepList);
@@ -78,6 +80,8 @@ void singleGame::generateRedAllPossibleMoves() {
     Ar_sol_5->generateMove();
 
     Ar_gen_1->generateMove();
+
+    originRedChessStepList.clear();
 
     originRedChessStepList.append(Ar_hor_1->chessStepList);
     originRedChessStepList.append(Ar_can_1->chessStepList);
@@ -183,7 +187,8 @@ void singleGame::tranStructToClass() {
         QString killString = kill ? "True" : "False";
         int killNum = originBlackChessStepList.at(i)._chessKilledNum;
         int killNumber = originBlackChessStepList.at(i)._chessKilledNumber;
-        chessBlackStepList.append(Step(Num, Number, camp, PosX, PosY, kill, killNum, killNumber));
+        Step* tempStep = new Step(Num, Number, camp, PosX, PosY, kill, killNum, killNumber);
+        chessBlackStepList.append(tempStep);
     }
 
     if(originRedChessStepList.size() == 0) {
@@ -202,6 +207,124 @@ void singleGame::tranStructToClass() {
         QString killString = kill ? "True" : "False";
         int killNum = originRedChessStepList.at(i)._chessKilledNum;
         int killNumber = originRedChessStepList.at(i)._chessKilledNumber;
-        chessRedStepList.append(Step(Num, Number, camp, PosX, PosY, kill, killNum, killNumber));
+        Step* tempStep = new Step(Num, Number, camp, PosX, PosY, kill, killNum, killNumber);
+        chessRedStepList.append(tempStep);
     }
+}
+
+void singleGame::testChessing(int maxCount) {
+    bool gameIsOn = true;
+    bool redOrBlack = false;
+    int count = 0;
+    while(gameIsOn && (count++) < maxCount) {
+//        if(redOrBlack) displayRedAllPossibleMoves();
+//        else displayBlackAllPossibleMoves();
+        std::cout << "count = " << count << std::endl;
+        GlobalEnvirIn::Instance()->__printBoard();
+
+        generateRedAllPossibleMoves();
+        generateBlackAllPossibleMoves();
+        if(redOrBlack && (!originRedChessStepList.empty())) {
+            int Num = originRedChessStepList.at(0)._chessNum;
+            int Number = originRedChessStepList.at(0)._chessNumber;
+            int PosX = originRedChessStepList.at(0)._deltaX;
+            int PosY = originRedChessStepList.at(0)._deltaY;
+            bool camp = originRedChessStepList.at(0)._chessCamp;
+            QString campString = camp ? "Red" : "Black";
+            bool kill = originRedChessStepList.at(0)._isKill;
+            QString killString = kill ? "True" : "False";
+            int killNum = originRedChessStepList.at(0)._chessKilledNum;
+            int killNumber = originRedChessStepList.at(0)._chessKilledNumber;
+            std::cout << "Num\t = " << Num << std::endl;
+            std::cout << "Number\t = " << Number << std::endl;
+            std::cout << "Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(Num).toStdString() << std::endl;
+            std::cout << "Camp\t = " << campString.toStdString() << std::endl;
+            std::cout << "PosX\t = " << PosX << std::endl;
+            std::cout << "PosY\t = " << PosY << std::endl;
+            std::cout << "kill\t = " << killString.toStdString() << std::endl;
+            if(kill) {
+                std::cout << "k_Num\t = " << killNum << std::endl;
+                std::cout << "k_Number\t = " << killNumber << std::endl;
+                std::cout << "k_Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(killNum).toStdString() << std::endl;
+            }
+            QmlConnectIn::Instance()->changeChessPos(Num, Number, camp, PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(), PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
+        }
+        if(!redOrBlack && (!originBlackChessStepList.empty())) {
+            int Num = originBlackChessStepList.at(0)._chessNum;
+            int Number = originBlackChessStepList.at(0)._chessNumber;
+            int PosX = originBlackChessStepList.at(0)._deltaX;
+            int PosY = originBlackChessStepList.at(0)._deltaY;
+            bool camp = originBlackChessStepList.at(0)._chessCamp;
+            QString campString = camp ? "Red" : "Black";
+            bool kill = originBlackChessStepList.at(0)._isKill;
+            QString killString = kill ? "True" : "False";
+            int killNum = originBlackChessStepList.at(0)._chessKilledNum;
+            int killNumber = originBlackChessStepList.at(0)._chessKilledNumber;
+            std::cout << "Num\t = " << Num << std::endl;
+            std::cout << "Number\t = " << Number << std::endl;
+            std::cout << "Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(Num).toStdString() << std::endl;
+            std::cout << "Camp\t = " << campString.toStdString() << std::endl;
+            std::cout << "PosX\t = " << PosX << std::endl;
+            std::cout << "PosY\t = " << PosY << std::endl;
+            std::cout << "kill\t = " << killString.toStdString() << std::endl;
+            if(kill) {
+                std::cout << "k_Num\t = " << killNum << std::endl;
+                std::cout << "k_Number\t = " << killNumber << std::endl;
+                std::cout << "k_Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(killNum).toStdString() << std::endl;
+            }
+            QmlConnectIn::Instance()->changeChessPos(Num, Number, camp, PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(), PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
+        }
+
+        GlobalEnvirIn::Instance()->__delayMsec(250);
+
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        redOrBlack = !redOrBlack;
+    }
+}
+
+void singleGame::testStepClass() {
+    std::cout << "LALALA" << std::endl;
+    QmlConnectIn::Instance()->changeChessPos(1, 1, false, 1, 0);
+    GlobalEnvirIn::Instance()->__delayMsec(1000);
+    QmlConnectIn::Instance()->changeChessPos(1, 1, false, -1, 0);
+    GlobalEnvirIn::Instance()->__delayMsec(1000);
+
+    int index = 0;
+    while(index++ < 10)
+    {
+        generateRedAllPossibleMoves();
+        if(!originRedChessStepList.empty()) {
+            int Num = originRedChessStepList.at(0)._chessNum;
+            int Number = originRedChessStepList.at(0)._chessNumber;
+            int PosX = originRedChessStepList.at(0)._deltaX;
+            int PosY = originRedChessStepList.at(0)._deltaY;
+            bool camp = originRedChessStepList.at(0)._chessCamp;
+            QString campString = camp ? "Red" : "Black";
+            bool kill = originRedChessStepList.at(0)._isKill;
+            QString killString = kill ? "True" : "False";
+            int killNum = originRedChessStepList.at(0)._chessKilledNum;
+            int killNumber = originRedChessStepList.at(0)._chessKilledNumber;
+            std::cout << "index\t = " << index << std::endl;
+            std::cout << "Num\t = " << Num << std::endl;
+            std::cout << "Number\t = " << Number << std::endl;
+            std::cout << "Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(Num).toStdString() << std::endl;
+            std::cout << "Camp\t = " << campString.toStdString() << std::endl;
+            std::cout << "PosX\t = " << PosX << std::endl;
+            std::cout << "PosY\t = " << PosY << std::endl;
+            std::cout << "kill\t = " << killString.toStdString() << std::endl;
+            if(kill) {
+                std::cout << "k_Num\t = " << killNum << std::endl;
+                std::cout << "k_Number\t = " << killNumber << std::endl;
+                std::cout << "k_Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(killNum).toStdString() << std::endl;
+            }
+            QmlConnectIn::Instance()->changeChessPos(Num, Number, camp, PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(), PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        GlobalEnvirIn::Instance()->__delayMsec(1000);
+    }
+
+    Step* test = new Step(1, 1, false, 0, 0);
+    std::cout << "step" << test->getStepX() << std::endl;
+    SGeoPoint* t = new SGeoPoint(0, 0);
+    std::cout << t->getPosX() << std::endl;
 }

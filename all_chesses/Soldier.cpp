@@ -83,7 +83,7 @@ bool Soldier::canSoldierMoveOrKill(SGeoPoint *start, SGeoPoint *end) {
 }
 
 void Soldier::generateMove() {
-    // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
+    chessStepList.clear();  // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
     QString chessNameSimple = GlobalEnvirIn::Instance()->__QString2SimpleName(chessName());
     int chessNum = GlobalEnvirIn::Instance()->__QStr2intName(chessNameSimple);
     bool redOrBlack = (chessNum >= 8); // true is red and false is black

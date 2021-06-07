@@ -265,7 +265,7 @@ bool Elephant::canElephantMoveOrKill(SGeoPoint *start, SGeoPoint *end) {
 }
 
 void Elephant::generateMove() {
-    // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
+    chessStepList.clear();  // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
     QString chessNameSimple = GlobalEnvirIn::Instance()->__QString2SimpleName(chessName());
     int Num = GlobalEnvirIn::Instance()->__QStr2intName(chessNameSimple);
     int Number = chessNumber();

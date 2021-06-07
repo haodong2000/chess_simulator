@@ -25,9 +25,12 @@ public:
     virtual void generateRedAllPossibleMoves();
     virtual void displayRedAllPossibleMoves();
     virtual void tranStructToClass();
+    virtual void testChessing(int maxCount = 5);
+    virtual void testStepClass();
+
     Step* finalChessStep;
-    QVector<Step> chessBlackStepList;
-    QVector<Step> chessRedStepList;
+    QVector<Step*> chessBlackStepList;
+    QVector<Step*> chessRedStepList;
     QVector<chessStep> originBlackChessStepList;
     QVector<chessStep> originRedChessStepList;
 

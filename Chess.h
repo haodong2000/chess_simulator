@@ -15,7 +15,7 @@
 #include <QDebug>
 #include <iostream>
 
-#include "singleton.h"
+//#include "singleton.h"
 
 struct chessStep {
     int _chessNum;
@@ -92,6 +92,6 @@ private:
     double _spaceValue;
 };
 
-typedef NormalSingleton< Chess > ChessIn;
+//typedef NormalSingleton< Chess > ChessIn;
 
 #endif // CHESS_H

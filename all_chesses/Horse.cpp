@@ -130,7 +130,7 @@ bool Horse::canHorseMoveOrKill(SGeoPoint *start, SGeoPoint *end) {
 }
 
 void Horse::generateMove() {
-    // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
+    chessStepList.clear();  // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
     QString chessNameSimple = GlobalEnvirIn::Instance()->__QString2SimpleName(chessName());
     int chessNum = GlobalEnvirIn::Instance()->__QStr2intName(chessNameSimple);
     const int indexNumber = HorsePos::EightPoints.size();
