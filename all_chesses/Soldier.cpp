@@ -113,7 +113,7 @@ void Soldier::generateMove() {
             int count = SoldierPos::redEnemy.size();
             for(int index = 0; index < count; index++) {
                 SGeoPoint* end = new SGeoPoint(start->getPosX() + SoldierPos::redEnemy.at(index).first, start->getPosY() + SoldierPos::redEnemy.at(index).second);
-                if(canSoldierMoveOrKill(start, end)) {
+                if(GlobalEnvirIn::Instance()->__isPosInBoard(end) && canSoldierMoveOrKill(start, end)) {
                     int chessKillNum = -1;
                     int chessKillNumber = -1;
                     bool kill = GlobalEnvirIn::Instance()->__isThereHasChess(end);
@@ -133,7 +133,7 @@ void Soldier::generateMove() {
             int count = SoldierPos::Our.size();
             for(int index = 0; index < count; index++) {
                 SGeoPoint* end = new SGeoPoint(start->getPosX() + SoldierPos::Our.at(index).first, start->getPosY() + SoldierPos::Our.at(index).second);
-                if(canSoldierMoveOrKill(start, end)) {
+                if(GlobalEnvirIn::Instance()->__isPosInBoard(end) && canSoldierMoveOrKill(start, end)) {
                     int chessKillNum = -1;
                     int chessKillNumber = -1;
                     bool kill = GlobalEnvirIn::Instance()->__isThereHasChess(end);
@@ -151,7 +151,7 @@ void Soldier::generateMove() {
             int count = SoldierPos::Enemy.size();
             for(int index = 0; index < count; index++) {
                 SGeoPoint* end = new SGeoPoint(start->getPosX() + SoldierPos::Enemy.at(index).first, start->getPosY() + SoldierPos::Enemy.at(index).second);
-                if(canSoldierMoveOrKill(start, end)) {
+                if(GlobalEnvirIn::Instance()->__isPosInBoard(end) && canSoldierMoveOrKill(start, end)) {
                     int chessKillNum = -1;
                     int chessKillNumber = -1;
                     bool kill = GlobalEnvirIn::Instance()->__isThereHasChess(end);
