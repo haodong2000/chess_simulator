@@ -13,6 +13,7 @@
 #include "allBRChessesInclude.h"
 #include "globalChesses.h"
 #include <QVector>
+#include <QtGlobal>
 
 class singleGame
 {
@@ -27,6 +28,7 @@ public:
     virtual void tranStructToClass();
     virtual void testChessing(int maxCount = 5);
     virtual void testStepClass();
+    virtual int generateRandomNumber(int maxInt);
 
     Step* finalChessStep;
     QVector<Step*> chessBlackStepList;

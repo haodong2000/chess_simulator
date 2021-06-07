@@ -18,10 +18,14 @@ class Qml_Connection
 {
 public:
     Qml_Connection();
+
     virtual void changeChessPos(int chessName,     int number, bool camp, SGeoPoint* Pos);
     virtual void changeChessPos(QString chessName, int number, bool camp, SGeoPoint* Pos);
     virtual void changeChessPos(int chessName,     int number, bool camp, int deltaX, int deltaY);
     virtual void changeChessPos(QString chessName, int number, bool camp, int deltaX, int deltaY);
+
+    virtual void killThisChess(SGeoPoint* Pos);
+    virtual void killThisChess(int PosX, int PosY);
 
 private:
     // static SGeoPoint* pTest;

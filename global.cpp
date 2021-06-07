@@ -112,8 +112,8 @@ namespace Global {
         "炮",
         "卒",
         "帅",
-        "相",
         "仕",
+        "相",
         "马",
         "车",
         "炮",
@@ -768,6 +768,20 @@ bool GlobalEnvironment::__isChessOnThere(Chess *chess, SGeoPoint *Pos) {
 bool GlobalEnvironment::__isThereHasChess(int PosX, int PosY) {
     SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
     return __isThereHasChess(Pos);
+}
+
+void GlobalEnvironment::__killThisChess(int killNum, int killNumber) {
+    GlobalEnvirIn::Instance()->__QStrOrInt2Chess(killNum, killNumber)->setAlive(false);
+    object->setProperty(
+                (GlobalEnvirIn::Instance()->__int2QStrName(killNum) +
+                 QString::number(killNumber) +
+                 QString("_alive")).toLatin1(), false);
+}
+
+void GlobalEnvironment::__setGameTurn(bool whosTurn) {
+    // true: ai_turn
+    // false: humen_turn
+    object->setProperty("ai_turn", whosTurn);
 }
 
 int GlobalEnvironment::__BoardEvaluate() {

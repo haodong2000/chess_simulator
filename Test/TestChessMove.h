@@ -41,6 +41,8 @@ public:
 
     virtual void testChessing();
     virtual void testChessingNew();
+
+    virtual void testWin();
 };
 
 typedef NormalSingleton< TestChessMove > TestChessMoveIn;

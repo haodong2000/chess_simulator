@@ -122,6 +122,7 @@ bool Advisor::canChessMove() {
 
 void Advisor::generateMove() {
     chessStepList.clear();  // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
+    if(!isAlive()) return;
     QString chessNameSimple = GlobalEnvirIn::Instance()->__QString2SimpleName(chessName());
     int chessNum = GlobalEnvirIn::Instance()->__QStr2intName(chessNameSimple);
     SGeoPoint* start = new SGeoPoint(getPosX(), getPosY());

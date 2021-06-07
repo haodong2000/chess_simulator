@@ -138,12 +138,12 @@ Window {
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        property bool b_gen_alive: true
-        property bool r_gen_alive: true
+        property bool b_gen_1_alive: true
+        property bool r_gen_1_alive: true
 
-        property bool isGameStop: !(b_gen_alive && r_gen_alive)
-        property bool isBlackWin: b_gen_alive && !(r_gen_alive)
-        property bool isRedWin:   r_gen_alive && !(b_gen_alive)
+        property bool isGameStop: !(b_gen_1_alive && r_gen_1_alive)
+        property bool isBlackWin: b_gen_1_alive && !(r_gen_1_alive)
+        property bool isRedWin:   r_gen_1_alive && !(b_gen_1_alive)
 
         property bool b_adv_1_alive: true
         property bool r_adv_1_alive: true
@@ -203,6 +203,13 @@ Window {
         property int time_cube_height: turn_cube_height/2.0
         property int time_text_height: turn_cube_height/10.0
         property int time_width: turn_width/2.0
+
+        property int rule_text_size: 20
+        property int rule_text_x: turn_cube_x
+        property int rule_text_y: turn_cube_y * 3
+
+        property int win_text_x: turn_cube_x
+        property int win_text_y: turn_cube_y * 4
     }
 
     Rectangle {
@@ -454,6 +461,39 @@ Window {
         color: "#fffef9"
         x: rect2.x + rect2.width/2.0 - field.textSpaceWidth/2.0
         y: rect2.y + rect2.height/2.0 - field.textSpaceHeight + field.cubeSizeHeight * 3
+    }
+
+    Text {
+        id: text_rule
+        text: "Human \t< Red > \tPlay chess by clicking icon\n\nAI \t<Black> \tFully automatically"
+        font.styleName: ""
+        rotation: 0
+        font.pixelSize: field.rule_text_size
+        color: "#fffef9"
+        x: field.rule_text_x
+        y: field.rule_text_y
+    }
+
+    Text {
+        id: black_win
+        text: field.isBlackWin ? " AI \nWin!" : ""
+        font.styleName: ""
+        rotation: 0
+        font.pixelSize: field.textSizeInPixel * 2
+        color: "#0eb0c9"
+        x: field.win_text_x + field.cubeSizeWidth*0.5
+        y: field.win_text_y
+    }
+
+    Text {
+        id: red_win
+        text: field.isRedWin ? "Human\n  Win!" : ""
+        font.styleName: ""
+        rotation: 0
+        font.pixelSize: field.textSizeInPixel * 2
+        color: "#d2357d"
+        x: field.win_text_x
+        y: field.win_text_y
     }
 
     Canvas{
@@ -953,7 +993,7 @@ Window {
 
     Image {
         id: b_gen
-        source: (field.showInitCHessBoardSingle == true && field.b_gen_alive) ? "../chess/black_General.svg" : ""
+        source: (field.showInitCHessBoardSingle == true && field.b_gen_1_alive) ? "../chess/black_General.svg" : ""
         width: field.chessSize
         height: width
         x: field.b_gen_1_posX
@@ -961,7 +1001,7 @@ Window {
     }
     Image {
         id: r_gen
-        source: (field.showInitCHessBoardSingle == true && field.r_gen_alive) ? "../chess/red_General.svg" : ""
+        source: (field.showInitCHessBoardSingle == true && field.r_gen_1_alive) ? "../chess/red_General.svg" : ""
         width: field.chessSize
         height: width
         x: field.r_gen_1_posX

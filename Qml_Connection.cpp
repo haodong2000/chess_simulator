@@ -19,6 +19,11 @@ void Qml_Connection::changeChessPos(int chessName, int number, bool camp, SGeoPo
         qDebug() << "ERROR! Qml_Connection.cpp changeChessPos() line: 17";
         return;
     }
+
+    if(GlobalEnvirIn::Instance()->__isThereHasChess(Pos)) {
+        killThisChess(Pos);
+    }
+
     object->setProperty((name + QString("_posX")).toLatin1(), coordinateIn::Instance()->tranRealPosX(Pos->getPosX()));
     object->setProperty((name + QString("_posY")).toLatin1(), coordinateIn::Instance()->tranRealPosY(Pos->getPosY()));
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(Pos->getPosX());
@@ -43,6 +48,11 @@ void Qml_Connection::changeChessPos(int chessName, int number, bool camp, int de
     }
     int posX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosX() + deltaX; // first call
     int posY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosY() + deltaY; // second call
+
+    if(GlobalEnvirIn::Instance()->__isThereHasChess(posX, posY)) {
+        killThisChess(posX, posY);
+    }
+
     object->setProperty((name + QString("_posX")).toLatin1(), coordinateIn::Instance()->tranRealPosX(posX));
     object->setProperty((name + QString("_posY")).toLatin1(), coordinateIn::Instance()->tranRealPosY(posY));
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(posX);
@@ -56,4 +66,20 @@ void Qml_Connection::changeChessPos(QString chessName, int number, bool camp, in
         return;
     }
     changeChessPos(chessNameInt, number, camp, deltaX ,deltaY); // call other function
+}
+
+void Qml_Connection::killThisChess(SGeoPoint *Pos) {
+    QString killName = GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(Pos)->chessName());
+    int killNum =  GlobalEnvirIn::Instance()->__QStr2intName(killName);
+    int killNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(Pos)->chessNumber();
+    GlobalEnvirIn::Instance()->__whichChessOnThere(Pos)->setAlive(false);
+    object->setProperty(
+                (GlobalEnvirIn::Instance()->__int2QStrName(killNum) +
+                 QString::number(killNumber) +
+                 QString("_alive")).toLatin1(), false);
+}
+
+void Qml_Connection::killThisChess(int PosX, int PosY) {
+    SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
+    killThisChess(Pos);
 }

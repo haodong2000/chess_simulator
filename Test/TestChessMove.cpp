@@ -36,7 +36,7 @@ void TestChessMove::turnSwitch(int indexSwitch) {
 
 void TestChessMove::testEvaluate() {
     std::cout << "TEST_MODE -> testEvaluate()" << std::endl;
-    object->setProperty("b_gen_alive", false);
+    object->setProperty("b_gen_1_alive", false);
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL, 1)->setAlive(false);
     std::cout << GlobalEnvirIn::Instance()->__BoardEvaluate() << std::endl;
 }
@@ -139,6 +139,7 @@ void TestChessMove::testCannonGenerateMove() {
 }
 
 void TestChessMove::testQVectorAdding() {
+    std::cout << "TEST_MODE -> testQVectorAdding()" << std::endl;
     QVector<int> v1 = {1, 2, 3};
     QVector<int> v2 = {4, 5, 6};
 //    int a = 999;
@@ -149,11 +150,13 @@ void TestChessMove::testQVectorAdding() {
 }
 
 void TestChessMove::testDisplayAllPossibleMoves() {
+    std::cout << "TEST_MODE -> testDisplayAllPossibleMoves()" << std::endl;
     singleGameIn::Instance()->displayBlackAllPossibleMoves();
     singleGameIn::Instance()->displayRedAllPossibleMoves();
 }
 
 void TestChessMove::testChessing() { // can not use!
+    std::cout << "TEST_MODE -> testChessing()" << std::endl;
     bool gameIsOn = true;
     bool redOrBlack = false;
     while(gameIsOn) {
@@ -169,5 +172,16 @@ void TestChessMove::testChessing() { // can not use!
 }
 
 void TestChessMove::testChessingNew() {
+    std::cout << "TEST_MODE -> testChessingNew()" << std::endl;
     singleGameIn::Instance()->testChessing();
+}
+
+void TestChessMove::testWin() {
+//    GlobalEnvirIn::Instance()->__delayMsec(2000);
+    std::cout << "TEST_MODE -> testWin()" << std::endl;
+//    GlobalEnvirIn::Instance()->__killThisChess(8, 1);
+    int DeltaX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(8, 1)->getPosX() - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(1, 1)->getPosX();
+    int DeltaY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(8, 1)->getPosY() - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(1, 1)->getPosY();
+    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, DeltaX, DeltaY);
+    GlobalEnvirIn::Instance()->__printBoard();
 }
