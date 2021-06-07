@@ -23,6 +23,7 @@ public:
     virtual bool canChessMove();
     virtual void generateMove();
     virtual bool canGeneralMoveOrKill(SGeoPoint* start, SGeoPoint* end);
+    virtual bool generalInPavilion(SGeoPoint* Pos);
 };
 
 #endif // GENERAL_H

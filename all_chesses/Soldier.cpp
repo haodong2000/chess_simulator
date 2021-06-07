@@ -95,7 +95,7 @@ void Soldier::generateMove() {
             int count = SoldierPos::redOur.size();
             for(int index = 0; index < count; index++) {
                 SGeoPoint* end = new SGeoPoint(start->getPosX() + SoldierPos::redOur.at(index).first, start->getPosY() + SoldierPos::redOur.at(index).second);
-                if(canSoldierMoveOrKill(start, end)) {
+                if(GlobalEnvirIn::Instance()->__isPosInBoard(end) && canSoldierMoveOrKill(start, end)) {
                     int chessKillNum = -1;
                     int chessKillNumber = -1;
                     bool kill = GlobalEnvirIn::Instance()->__isThereHasChess(end);

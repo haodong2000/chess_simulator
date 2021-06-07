@@ -77,9 +77,9 @@ void TestChessMove::testElephantGenerateMove() {
 }
 
 void TestChessMove::testGeneralGenerateMove() {
-    SGeoPoint* PosTest = new SGeoPoint(8, 4);
+    SGeoPoint* PosTest = new SGeoPoint(7, 5);
     QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, PosTest);
-    SGeoPoint* Pos = new SGeoPoint(8, 3);
+    SGeoPoint* Pos = new SGeoPoint(8, 5);
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
     std::cout << "TEST_MODE -> testGeneralGenerateMove()" << std::endl;
     Ar_gen_1->generateMove();

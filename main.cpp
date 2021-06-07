@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 //    // test interface
 //    std::cout << GlobalEnvirIn::Instance()->__BoardEvaluate() << std::endl;
 
-//    singleGameIn::Instance()->testChessing(50);
+    singleGameIn::Instance()->testChessing(999);
 
     return app.exec();
 }

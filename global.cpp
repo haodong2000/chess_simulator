@@ -779,8 +779,8 @@ void GlobalEnvironment::__killThisChess(int killNum, int killNumber) {
 }
 
 void GlobalEnvironment::__setGameTurn(bool whosTurn) {
-    // true: ai_turn
-    // false: humen_turn
+    // true: ai_turn, black
+    // false: humen_turn, red
     object->setProperty("ai_turn", whosTurn);
 }
 

@@ -219,11 +219,12 @@ void singleGame::testChessing(int maxCount) {
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count = " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
-        GlobalEnvirIn::Instance()->__delayMsec(2000);
+        GlobalEnvirIn::Instance()->__delayMsec(1000);
 
-        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(true);
-        else GlobalEnvirIn::Instance()->__setGameTurn(false);
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
 
+        GlobalEnvirIn::Instance()->__delayMsec(1000);
         generateRedAllPossibleMoves();
         generateBlackAllPossibleMoves();
         if(redOrBlack && (!originRedChessStepList.empty())) {
