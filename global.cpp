@@ -187,6 +187,8 @@ namespace Global {
         {13, "r_can_"},
         {14, "r_sol_"},
     };
+
+    const int randomRange = 750;
 }
 
 GlobalEnvironment::GlobalEnvironment() {
@@ -804,6 +806,12 @@ int GlobalEnvironment::__BoardEvaluate() {
     redValue += __calculateRedPosValue();
     blackValue += __calculateBlackSpaceValue();
     redValue += __calculateRedSpaceValue();
+//    std::cout << "blackValue = " << blackValue << std::endl;
+//    std::cout << "redValue   = " << redValue << std::endl;
+    int randomRangeBlack = blackValue/Global::randomRange;
+    int randomRangeRed = redValue/Global::randomRange;
+    blackValue -= __generateRandomNumber(randomRangeBlack);
+    redValue -= __generateRandomNumber(randomRangeRed);
     return blackValue - redValue;
 }
 
@@ -1138,4 +1146,10 @@ int GlobalEnvironment::__countChessInPath(SGeoPoint *start, SGeoPoint *end) {
         }
     }
     return count;
+}
+
+int GlobalEnvironment::__generateRandomNumber(int maxNumber) {
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    int ret = qrand()%maxNumber;
+    return ret;
 }

@@ -31,6 +31,7 @@ public:
     virtual void testStepClass();
     virtual void testFakeBackMove();
     virtual int generateRandomNumber(int maxInt);
+    virtual bool compareSteps(chessStep last, chessStep current);
 
     // real play
     virtual void oneLevelChessing(int maxCount);
@@ -51,6 +52,10 @@ public:
     QVector<Step*> chessRedStepList;
     QVector<chessStep> originBlackChessStepList;
     QVector<chessStep> originRedChessStepList;
+    chessStep redCurStep;
+    chessStep redLastStep;
+    chessStep blackCurStep;
+    chessStep blackLastStep;
 
 private:
     int _level;

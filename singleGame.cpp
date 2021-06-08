@@ -1,8 +1,16 @@
 #include "singleGame.h"
 
-singleGame::singleGame()
+singleGame::singleGame():
+    redCurStep (chessStep(-1, -1, false, 0, 0)),
+    redLastStep(chessStep(-1, -1, false, 0, 0)),
+    blackCurStep (chessStep(-1, -1, false, 0, 0)),
+    blackLastStep(chessStep(-1, -1, false, 0, 0))
 {
     finalChessStep = new Step(-1, -1, false, 0, 0, false);
+//    redCurStep    = chessStep(-1, -1, false, 0, 0);
+//    redLastStep   = chessStep(-1, -1, false, 0, 0);
+//    blackCurStep  = chessStep(-1, -1, false, 0, 0);
+//    blackLastStep = chessStep(-1, -1, false, 0, 0);
     chessBlackStepList.clear();
     originBlackChessStepList.clear();
     chessRedStepList.clear();
@@ -469,6 +477,8 @@ void singleGame::twoLevelChessing(int maxCount) {
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
+        int value = GlobalEnvirIn::Instance()->__BoardEvaluate();
+        std::cout << "current value     -> " << value << std::endl;
         GlobalEnvirIn::Instance()->__delayMsec(delayMs);
 
         if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
@@ -674,6 +684,20 @@ void singleGame::normalPlay(int maxCount) {
 
 int singleGame::normalPlayIndex(bool redOrBlack) {
 
+}
+
+bool singleGame::compareSteps(chessStep last, chessStep current) {
+    if(last._chessNum == current._chessNum &&
+            last._chessNumber == current._chessNumber &&
+            last._chessCamp == current._chessCamp &&
+            last._deltaX == current._deltaX) {
+        if(last._isKill == true && current._isKill == true) {
+            if(last._chessKilledNum == current._chessKilledNumber &&
+                    last._chessKilledNumber == current._chessKilledNumber) return true;
+        }
+        if(last._isKill == false && current._isKill == false) return true;
+    }
+    return false;
 }
 
 void singleGame::realMove(chessStep step) {
