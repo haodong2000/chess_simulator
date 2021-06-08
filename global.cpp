@@ -87,19 +87,19 @@ namespace Global {
 
     std::unordered_map<int, int> CHESS_VALUE = {
         {CHESS_TABLE::BLACK_GENERAL , 2*1000},
-        {CHESS_TABLE::BLACK_ADVISOR , 2*150},
-        {CHESS_TABLE::BLACK_ELEPHANT, 2*150},
-        {CHESS_TABLE::BLACK_HORSE   , 2*320},
-        {CHESS_TABLE::BLACK_CHARIOT , 2*650},
-        {CHESS_TABLE::BLACK_CANNON  , 2*300},
-        {CHESS_TABLE::BLACK_SOLDIER , 2*100},
+        {CHESS_TABLE::BLACK_ADVISOR , 2*200},
+        {CHESS_TABLE::BLACK_ELEPHANT, 2*175},
+        {CHESS_TABLE::BLACK_HORSE   , 2*400},
+        {CHESS_TABLE::BLACK_CHARIOT , 2*600},
+        {CHESS_TABLE::BLACK_CANNON  , 2*350},
+        {CHESS_TABLE::BLACK_SOLDIER , 2*150},
         {CHESS_TABLE::RED_GENERAL , 2*1000},
-        {CHESS_TABLE::RED_ADVISOR , 2*150},
-        {CHESS_TABLE::RED_ELEPHANT, 2*150},
-        {CHESS_TABLE::RED_HORSE   , 2*320},
-        {CHESS_TABLE::RED_CHARIOT , 2*650},
-        {CHESS_TABLE::RED_CANNON  , 2*300},
-        {CHESS_TABLE::RED_SOLDIER , 2*100}
+        {CHESS_TABLE::RED_ADVISOR , 2*200},
+        {CHESS_TABLE::RED_ELEPHANT, 2*175},
+        {CHESS_TABLE::RED_HORSE   , 2*400},
+        {CHESS_TABLE::RED_CHARIOT , 2*600},
+        {CHESS_TABLE::RED_CANNON  , 2*350},
+        {CHESS_TABLE::RED_SOLDIER , 2*150}
     };
 
     QVector<QString> CHESS_TABLE = {
@@ -188,7 +188,7 @@ namespace Global {
         {14, "r_sol_"},
     };
 
-    const int randomRange = 750;
+    const int randomRange = 250;
 }
 
 GlobalEnvironment::GlobalEnvironment() {

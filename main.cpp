@@ -49,9 +49,6 @@ int main(int argc, char *argv[])
     else qDebug() << "field_root loading failed!";
     GlobalEnvirIn::Instance()->__refreshBoard();
 
-//    // test interface
-//    std::cout << GlobalEnvirIn::Instance()->__BoardEvaluate() << std::endl;
-
     singleGameIn::Instance()->twoLevelChessing(999);
 
     return app.exec();

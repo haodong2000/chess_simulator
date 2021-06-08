@@ -40,6 +40,7 @@ public:
     virtual int twoLevelStepIndex(bool redOrBlack);
     virtual void normalPlay(int maxCount);
     virtual int normalPlayIndex(bool redOrBlack);
+    virtual int alpha_beta(int depth, int alpha, int beta, bool redOfBlack);
 
     // interface
     virtual void realMove(chessStep step);
@@ -52,6 +53,7 @@ public:
     QVector<Step*> chessRedStepList;
     QVector<chessStep> originBlackChessStepList;
     QVector<chessStep> originRedChessStepList;
+//    QVector<chessStep> allRedAndBlackStepList;
     chessStep redCurStep;
     chessStep redLastStep;
     chessStep blackCurStep;
