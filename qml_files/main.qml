@@ -191,7 +191,7 @@ Window {
         property int turn_cube_width: Screen.width/5.0
         property int turn_cube_height: Screen.height/10.0
         property int turn_width: boundaryWidth * 2.5
-        property bool ai_turn: true
+        property bool ai_turn: false
         property bool humen_turn: !ai_turn
         property int turn_text_width: ai_turn ? turn_cube_width/4.5 : turn_cube_width/8.0
         property int turn_text_height: turn_cube_height/5.0

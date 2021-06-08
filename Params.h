@@ -19,6 +19,8 @@
 
 namespace PARAM {
 
+    const int NINE_NINE_NINE = 999;
+
     namespace globalEnvironment {
 
         // get available desktop size

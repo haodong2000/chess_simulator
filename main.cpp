@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     else qDebug() << "field_root loading failed!";
     GlobalEnvirIn::Instance()->__refreshBoard();
 
-    singleGameIn::Instance()->twoLevelChessing(999);
+    singleGameIn::Instance()->normalPlay(PARAM::NINE_NINE_NINE);
 
     return app.exec();
 }

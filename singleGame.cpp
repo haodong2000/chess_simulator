@@ -650,7 +650,7 @@ void singleGame::normalPlay(int maxCount) {
     bool gameIsOn = true;
     bool redOrBlack = true;
     int count = 0;
-    const int delayMs = 500;
+    const int delayMs = 10;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
@@ -701,7 +701,8 @@ int singleGame::normalPlayIndex(bool redOrBlack) {
     int allSize = allRedAndBlackStepList.size();
 
     int curValue = 0;
-    int bestValue = 0;
+    int bestValueRed = 999;
+    int bestValueBlack = -999;
     int retIndex = 0;
     int initAlpha = -99999;
     int initBeta = 99999;
@@ -710,22 +711,24 @@ int singleGame::normalPlayIndex(bool redOrBlack) {
         int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRedAndBlackStepList.at(index)._chessNum, allRedAndBlackStepList.at(index)._chessNumber)->getPosX();
         int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRedAndBlackStepList.at(index)._chessNum, allRedAndBlackStepList.at(index)._chessNumber)->getPosY();
         fakeMove(allRedAndBlackStepList.at(index));
+//        std::cout << "INDEX ***********************************************************" << std::endl;
 //        GlobalEnvirIn::Instance()->__printBoard();
 //        GlobalEnvirIn::Instance()->__delayMsec(1000);
         // alpha-beta
         // curValue = alpha_beta(_level, initAlpha, initBeta, redOrBlack);
-        curValue = alpha_beta(1, initAlpha, initBeta, redOrBlack);
+        curValue = alpha_beta(_level, initAlpha, initBeta, redOrBlack);
         fakeBackMove(allRedAndBlackStepList.at(index), lastPosX, lastPosY);
+//        std::cout << "BACK ***********************************************************" << std::endl;
 //        GlobalEnvirIn::Instance()->__printBoard();
 //        GlobalEnvirIn::Instance()->__delayMsec(1000);
         // compare
         if(redOrBlack) { // MIN
-            retIndex = (curValue < bestValue) ?  index : retIndex;
-            bestValue = (curValue < bestValue) ? curValue : bestValue;
+            retIndex = (curValue < bestValueRed) ?  index : retIndex;
+            bestValueRed = (curValue < bestValueRed) ? curValue : bestValueRed;
         }
         else {
-            retIndex = (curValue > bestValue) ?  index : retIndex;
-            bestValue = (curValue > bestValue) ? curValue : bestValue;
+            retIndex = (curValue > bestValueBlack) ?  (index - redSize) : retIndex;
+            bestValueBlack = (curValue > bestValueBlack) ? curValue : bestValueBlack;
         }
     }
     // return best
@@ -764,14 +767,21 @@ int singleGame::alpha_beta(int depth, int alpha, int beta, bool redOrBlack) {
     int allSize = allRedAndBlackStepList.size();
 
     for(int index = (redOrBlack ? 0 : redSize); index < (redOrBlack ? redSize : allSize); index++) {
-        int lastPosX = allRedAndBlackStepList.at(index)._deltaX;
-        int lastPosY = allRedAndBlackStepList.at(index)._deltaY;
+        int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRedAndBlackStepList.at(index)._chessNum, allRedAndBlackStepList.at(index)._chessNumber)->getPosX();
+        int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRedAndBlackStepList.at(index)._chessNum, allRedAndBlackStepList.at(index)._chessNumber)->getPosY();
         fakeMove(allRedAndBlackStepList.at(index));
+//        GlobalEnvirIn::Instance()->__printBoard();
+//        GlobalEnvirIn::Instance()->__delayMsec(1000);
         retValue = alpha_beta(depth - 1, alpha, beta, !redOrBlack);
         fakeBackMove(allRedAndBlackStepList.at(index), lastPosX, lastPosY);
+//        GlobalEnvirIn::Instance()->__printBoard();
+//        GlobalEnvirIn::Instance()->__delayMsec(1000);
         if(MAX) alpha = qMax(alpha, retValue);
         if(MIN) beta = qMin(beta, retValue);
-        if(beta <= alpha) return ((MAX) ? alpha : beta);
+//        std::cout << alpha << " " << beta << std::endl;
+        if(alpha >= beta) return (MAX ? alpha : beta);
+//        if(MAX && (beta >= alpha)) return ((MAX) ? alpha : beta);
+//        if(MIN && (beta <= alpha)) return ((MAX) ? alpha : beta);
     }
 
     return ((MAX) ? alpha : beta);
