@@ -39,6 +39,8 @@ public:
 
     virtual void testDisplayAllPossibleMoves();
 
+    virtual void test_Ar_hor_2_isAlive();
+
     virtual void testChessing();
     virtual void testChessingNew();
 

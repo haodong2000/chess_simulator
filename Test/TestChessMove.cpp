@@ -185,3 +185,8 @@ void TestChessMove::testWin() {
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, DeltaX, DeltaY);
     GlobalEnvirIn::Instance()->__printBoard();
 }
+
+void TestChessMove::test_Ar_hor_2_isAlive() {
+    GlobalEnvirIn::Instance()->__fakeKillThisChess(11, 2);
+    std::cout << (Ar_hor_2->isAlive() ? "Yes" : "No") << std::endl;
+}

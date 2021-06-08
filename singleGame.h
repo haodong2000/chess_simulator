@@ -35,7 +35,10 @@ public:
     // real play
     virtual void oneLevelChessing(int maxCount);
     virtual int oneLevelStepIndex(bool redOrBlack);
+    virtual void twoLevelChessing(int maxCount);
+    virtual int twoLevelStepIndex(bool redOrBlack);
     virtual void normalPlay(int maxCount);
+    virtual int normalPlayIndex(bool redOrBlack);
 
     // interface
     virtual void realMove(chessStep step);

@@ -86,20 +86,20 @@ namespace Global {
     };
 
     std::unordered_map<int, int> CHESS_VALUE = {
-        {CHESS_TABLE::BLACK_GENERAL , 1000},
-        {CHESS_TABLE::BLACK_ADVISOR , 150},
-        {CHESS_TABLE::BLACK_ELEPHANT, 150},
-        {CHESS_TABLE::BLACK_HORSE   , 320},
-        {CHESS_TABLE::BLACK_CHARIOT , 650},
-        {CHESS_TABLE::BLACK_CANNON  , 300},
-        {CHESS_TABLE::BLACK_SOLDIER , 100},
-        {CHESS_TABLE::RED_GENERAL , 1000},
-        {CHESS_TABLE::RED_ADVISOR , 150},
-        {CHESS_TABLE::RED_ELEPHANT, 150},
-        {CHESS_TABLE::RED_HORSE   , 320},
-        {CHESS_TABLE::RED_CHARIOT , 650},
-        {CHESS_TABLE::RED_CANNON  , 300},
-        {CHESS_TABLE::RED_SOLDIER , 100}
+        {CHESS_TABLE::BLACK_GENERAL , 2*1000},
+        {CHESS_TABLE::BLACK_ADVISOR , 2*150},
+        {CHESS_TABLE::BLACK_ELEPHANT, 2*150},
+        {CHESS_TABLE::BLACK_HORSE   , 2*320},
+        {CHESS_TABLE::BLACK_CHARIOT , 2*650},
+        {CHESS_TABLE::BLACK_CANNON  , 2*300},
+        {CHESS_TABLE::BLACK_SOLDIER , 2*100},
+        {CHESS_TABLE::RED_GENERAL , 2*1000},
+        {CHESS_TABLE::RED_ADVISOR , 2*150},
+        {CHESS_TABLE::RED_ELEPHANT, 2*150},
+        {CHESS_TABLE::RED_HORSE   , 2*320},
+        {CHESS_TABLE::RED_CHARIOT , 2*650},
+        {CHESS_TABLE::RED_CANNON  , 2*300},
+        {CHESS_TABLE::RED_SOLDIER , 2*100}
     };
 
     QVector<QString> CHESS_TABLE = {
@@ -896,6 +896,8 @@ int GlobalEnvironment::__calculateRedSpaceValue() {
 }
 
 int GlobalEnvironment::__calculateBlackChessValue() {
+    if(Ar_gen_1->isAlive() == false && Ab_gen_1->isAlive()) return 99999;
+    if(Ab_gen_1->isAlive() == false) return -99999;
     int blackChessValue = 0;
     for(int index = 1; index <= 7; index++) {
         switch (index) {
@@ -919,6 +921,8 @@ int GlobalEnvironment::__calculateBlackChessValue() {
 }
 
 int GlobalEnvironment::__calculateRedChessValue() {
+    if(Ab_gen_1->isAlive() == false && Ar_gen_1->isAlive()) return 99999;
+    if(Ar_gen_1->isAlive() == false) return -99999;
     int redChessValue = 0;
     for(int index = 8; index <= 14; index++) {
         switch (index) {

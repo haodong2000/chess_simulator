@@ -156,7 +156,7 @@ void Qml_Connection::fakeBackChangeChessPos(int chessName, int number, bool camp
     int posY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosY() + deltaY; // second call
 
     if(GlobalEnvirIn::Instance()->__isThereHasChess(posX, posY)) {
-        qDebug() << "ERROR! Qml_Connection.cpp fakeBackChangeChessPos() line: 185  Back Pos Has Chess!";
+        qDebug() << "ERROR! Qml_Connection.cpp fakeBackChangeChessPos() line: 185  Back Pos Has Chess! " << posX << "," << posY << " " << chessName << number;
         return;
     }
 
