@@ -650,7 +650,7 @@ void singleGame::normalPlay(int maxCount) {
     bool gameIsOn = true;
     bool redOrBlack = true;
     int count = 0;
-    const int delayMs = 10;
+    const int delayMs = 250;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
