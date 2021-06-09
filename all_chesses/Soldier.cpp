@@ -83,6 +83,7 @@ bool Soldier::canSoldierMoveOrKill(SGeoPoint *start, SGeoPoint *end) {
 }
 
 void Soldier::generateMove() {
+    SchessStepList.clear();
     chessStepList.clear();  // api: chessStepList.append(chessStep(1, 1, false, 0 ,0));
     if(!isAlive()) return;
     QString chessNameSimple = GlobalEnvirIn::Instance()->__QString2SimpleName(chessName());

@@ -87,7 +87,7 @@ void Chess::tranStarStepList() {
     const int countStep = chessStepList.size();
     SchessStepList.clear(); // init
     if(countStep == 0) {
-        qDebug() << "Chess.cpp tranStarStepList() line:89 error:chessStepList is EMPTY!!!";
+        qDebug() << "Chess.cpp tranStarStepList() line:89 error:chessStepList is EMPTY!!! " << chessName() << " " << chessNumber();
         return;
     }
     // print every element of the list

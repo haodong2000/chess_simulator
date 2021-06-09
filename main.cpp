@@ -22,7 +22,7 @@
 #include "singleGame.h"
 
 QObject* object;
-const int CHESS_PLAY_NODE = 3; // one level, two level, three level, four level
+const int CHESS_PLAY_NODE = 2; // one level, two level, three level, four level
 
 int main(int argc, char *argv[])
 {
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
         singleGameIn::Instance()->oneLevelChessing(PARAM::NINE_NINE_NINE);
         break;
     case 2:
-        singleGameIn::Instance()->twoLevelChessing(PARAM::NINE_NINE_NINE);
+        singleGameIn::Instance()->S_twoLevelChessing(PARAM::NINE_NINE_NINE);
         break;
     case 3:
         singleGameIn::Instance()->threeLevelChessing(PARAM::NINE_NINE_NINE);
