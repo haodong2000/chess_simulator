@@ -82,6 +82,7 @@ void Qml_Connection::killThisChess(SGeoPoint *Pos) {
 void Qml_Connection::killThisChess(int PosX, int PosY) {
     SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
     killThisChess(Pos);
+    delete Pos;
 }
 
 void Qml_Connection::fakeChangeChessPos(int chessName, int number, bool camp, SGeoPoint *Pos) {
@@ -143,6 +144,7 @@ void Qml_Connection::fakeKillThisChess(SGeoPoint *Pos) {
 void Qml_Connection::fakeKillThisChess(int PosX, int PosY) {
     SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
     fakeKillThisChess(Pos);
+    delete Pos;
 }
 
 void Qml_Connection::fakeBackChangeChessPos(int chessName, int number, bool camp, int deltaX, int deltaY) {

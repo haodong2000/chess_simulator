@@ -110,7 +110,9 @@ void Chess::tranStarStepList() {
         }
         chessStep* curStep = new chessStep(Num, Number, chessStepList.at(i)._chessCamp, PosX, PosY, kill, killNum, killNumber);
         SchessStepList.append(curStep);
+        delete curStep;
     }
+    // chessStepList.clear();
 }
 
 void Chess::printStepList() {

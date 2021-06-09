@@ -56,11 +56,24 @@ void TestChessMove::testWhichChessOnThere() {
 
 void TestChessMove::testMemory() {
     std::cout << "TEST_MODE -> testMemory()" << std::endl;
+    QVector<chessStep*> test;
+    test.clear();
+    while(true) {
+        chessStep* temp = new chessStep(-1, -1, false, -1, -1, false, -1, -1);
+        test.append(temp);
+        delete temp;
+        test.clear();
+    }
+}
+
+void TestChessMove::testDBG() {
+    GlobalEnvirIn::Instance()->__isThereHasChess(NULL);
 }
 
 void TestChessMove::testHorseGenerateMove() {
     SGeoPoint* Pos = new SGeoPoint(2, 2);
     QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, Pos);
+    delete Pos;
     std::cout << "TEST_MODE -> testHorseGenerateMove()" << std::endl;
     Ab_hor_1->generateMove();
     int countMove = Ab_hor_1->chessStepList.size();
@@ -73,6 +86,8 @@ void TestChessMove::testElephantGenerateMove() {
     SGeoPoint* PosTest = new SGeoPoint(8, 3);
     QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, PosTest);
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
+    delete Pos;
+    delete PosTest;
     std::cout << "TEST_MODE -> testElephantGenerateMove()" << std::endl;
     Ar_ele_1->generateMove();
     int countMove = Ar_ele_1->chessStepList.size();
@@ -85,6 +100,8 @@ void TestChessMove::testGeneralGenerateMove() {
     QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, PosTest);
     SGeoPoint* Pos = new SGeoPoint(8, 5);
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
+    delete Pos;
+    delete PosTest;
     std::cout << "TEST_MODE -> testGeneralGenerateMove()" << std::endl;
     Ar_gen_1->generateMove();
     int countMove = Ar_gen_1->chessStepList.size();
@@ -99,6 +116,8 @@ void TestChessMove::testSoldierGenerateMove() {
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
     SGeoPoint* PosTT = new SGeoPoint(5, 4);
     QmlConnectIn::Instance()->changeChessPos("b_sol_", 3, false, PosTT);
+    delete Pos;
+    delete PosTT;
     std::cout << "TEST_MODE -> testGeneralGenerateMove()" << std::endl;
     Ab_sol_3->generateMove();
     int countMove = Ab_sol_3->chessStepList.size();
@@ -111,6 +130,8 @@ void TestChessMove::testAdvisorGenerateMove() {
     QmlConnectIn::Instance()->changeChessPos("b_adv_", 2, false, Pos);
     SGeoPoint* PosTT = new SGeoPoint(2, 3);
     QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, PosTT);
+    delete Pos;
+    delete PosTT;
     std::cout << "TEST_MODE -> testAdvisorGenerateMove()" << std::endl;
     Ab_adv_2->generateMove();
     int countMove = Ab_adv_2->chessStepList.size();
@@ -123,6 +144,8 @@ void TestChessMove::testChariotGenerateMove() {
     QmlConnectIn::Instance()->changeChessPos("r_cha_", 2, true, Pos);
     SGeoPoint* PosTT = new SGeoPoint(PARAM::globalEnvironment::middleRed, PARAM::globalEnvironment::maxAxisOfY);
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, PosTT);
+    delete Pos;
+    delete PosTT;
     std::cout << "TEST_MODE -> testChariotGenerateMove()" << std::endl;
     Ar_cha_2->generateMove();
     int countMove = Ar_cha_2->chessStepList.size();
@@ -145,6 +168,7 @@ void TestChessMove::testCannonGenerateMove() {
 void TestChessMove::S_HorseGenerateMove() {
     SGeoPoint* Pos = new SGeoPoint(2, 2);
     QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, Pos);
+    delete Pos;
     std::cout << "TEST_MODE -> S_HorseGenerateMove()" << std::endl;
     Ab_hor_1->generateMove();
     int countMove = Ab_hor_1->SchessStepList.size();
@@ -157,6 +181,8 @@ void TestChessMove::S_ElephantGenerateMove() {
     SGeoPoint* PosTest = new SGeoPoint(8, 3);
     QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, PosTest);
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
+    delete Pos;
+    delete PosTest;
     std::cout << "TEST_MODE -> S_ElephantGenerateMove()" << std::endl;
     Ar_ele_1->generateMove();
     int countMove = Ar_ele_1->SchessStepList.size();
@@ -169,6 +195,8 @@ void TestChessMove::S_GeneralGenerateMove() {
     QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, PosTest);
     SGeoPoint* Pos = new SGeoPoint(8, 5);
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
+    delete Pos;
+    delete PosTest;
     std::cout << "TEST_MODE -> S_GeneralGenerateMove()" << std::endl;
     Ar_gen_1->generateMove();
     int countMove = Ar_gen_1->SchessStepList.size();
@@ -183,6 +211,8 @@ void TestChessMove::S_SoldierGenerateMove() {
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
     SGeoPoint* PosTT = new SGeoPoint(5, 4);
     QmlConnectIn::Instance()->changeChessPos("b_sol_", 3, false, PosTT);
+    delete Pos;
+    delete PosTT;
     std::cout << "TEST_MODE -> S_SoldierGenerateMove()" << std::endl;
     Ab_sol_3->generateMove();
     int countMove = Ab_sol_3->SchessStepList.size();
@@ -195,6 +225,8 @@ void TestChessMove::S_AdvisorGenerateMove() {
     QmlConnectIn::Instance()->changeChessPos("b_adv_", 2, false, Pos);
     SGeoPoint* PosTT = new SGeoPoint(2, 3);
     QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, PosTT);
+    delete Pos;
+    delete PosTT;
     std::cout << "TEST_MODE -> S_AdvisorGenerateMove()" << std::endl;
     Ab_adv_2->generateMove();
     int countMove = Ab_adv_2->SchessStepList.size();
@@ -207,6 +239,8 @@ void TestChessMove::S_ChariotGenerateMove() {
     QmlConnectIn::Instance()->changeChessPos("r_cha_", 2, true, Pos);
     SGeoPoint* PosTT = new SGeoPoint(PARAM::globalEnvironment::middleRed, PARAM::globalEnvironment::maxAxisOfY);
     QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, PosTT);
+    delete Pos;
+    delete PosTT;
     std::cout << "TEST_MODE -> S_ChariotGenerateMove()" << std::endl;
     Ar_cha_2->generateMove();
     int countMove = Ar_cha_2->SchessStepList.size();

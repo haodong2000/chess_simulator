@@ -12,6 +12,7 @@ class SGeoPoint
 {
 public:
     SGeoPoint(int x = 0, int y = 0);
+    virtual ~SGeoPoint() {};
     virtual void setPosX(int PosX);
     virtual void setPosY(int PosY);
     virtual int getPosX();
