@@ -475,6 +475,8 @@ void singleGame::twoLevelChessing(int maxCount) {
     bool redOrBlack = true;
     int count = 0;
     const int delayMs = 500;
+    QVector<chessStep> curStepList; // memory
+    curStepList.clear();
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
@@ -488,7 +490,7 @@ void singleGame::twoLevelChessing(int maxCount) {
         GlobalEnvirIn::Instance()->__delayMsec(delayMs);
         generateRedAllPossibleMoves();
         generateBlackAllPossibleMoves();
-        QVector<chessStep> curStepList; // memory
+//        QVector<chessStep> curStepList; // memory
         curStepList.clear();
         if(redOrBlack) curStepList.append(originRedChessStepList);
         else curStepList.append(originBlackChessStepList);
@@ -522,7 +524,11 @@ int singleGame::twoLevelStepIndex(bool redOrBlack) {
     int sizeIndex = 0;
     int currentValue = 0;
     QVector<chessStep> levelOneStepList;
+    QVector<chessStep> levelTwoList;
+    QVector<chessStep> levelTwoEnemy;
     levelOneStepList.clear();
+    levelTwoList.clear();
+    levelTwoEnemy.clear();
     if(redOrBlack) {
         levelOneStepList.clear();
         levelOneStepList.append(originRedChessStepList);
@@ -539,7 +545,7 @@ int singleGame::twoLevelStepIndex(bool redOrBlack) {
 
             // into level 2
             generateBlackAllPossibleMoves();
-            QVector<chessStep> levelTwoList;
+//            QVector<chessStep> levelTwoList;
             levelTwoList.clear();
             levelTwoList.append(originBlackChessStepList);
             // execute black
@@ -550,7 +556,7 @@ int singleGame::twoLevelStepIndex(bool redOrBlack) {
 //            GlobalEnvirIn::Instance()->__printBoard();
 //            GlobalEnvirIn::Instance()->__delayMsec(1000);
             generateRedAllPossibleMoves(); // generate red step list after black fakeMove!!!!!
-            QVector<chessStep> levelTwoEnemy;
+//            QVector<chessStep> levelTwoEnemy;
             levelTwoEnemy.clear();
             levelTwoEnemy.append(originRedChessStepList);
             int sizeTwo = levelTwoEnemy.size();
@@ -591,6 +597,9 @@ int singleGame::twoLevelStepIndex(bool redOrBlack) {
             fakeBackMove(levelOneStepList.at(index), lastPosX, lastPosY);
 //            GlobalEnvirIn::Instance()->__printBoard();
         }
+        levelOneStepList.clear();
+        levelTwoList.clear();
+        levelTwoEnemy.clear();
         // return the best
         return sizeIndex;
     }
@@ -608,7 +617,7 @@ int singleGame::twoLevelStepIndex(bool redOrBlack) {
 
             // into level 2
             generateRedAllPossibleMoves();
-            QVector<chessStep> levelTwoList;
+//            QVector<chessStep> levelTwoList;
             levelTwoList.clear();
             levelTwoList.append(originRedChessStepList);
             // execute red
@@ -617,7 +626,7 @@ int singleGame::twoLevelStepIndex(bool redOrBlack) {
             int lastRedY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelTwoList.at(redIndex)._chessNum, levelTwoList.at(redIndex)._chessNumber)->getPosY();
             fakeMove(levelTwoList.at(redIndex));
             generateBlackAllPossibleMoves(); // generate black after red fakeMove!!!!
-            QVector<chessStep> levelTwoEnemy;
+//            QVector<chessStep> levelTwoEnemy;
             levelTwoEnemy.clear();
             levelTwoEnemy.append(originBlackChessStepList);
             int sizeTwo = levelTwoEnemy.size();
@@ -651,6 +660,9 @@ int singleGame::twoLevelStepIndex(bool redOrBlack) {
             // restore
             fakeBackMove(levelOneStepList.at(index), lastPosX, lastPosY);
         }
+        levelOneStepList.clear();
+        levelTwoList.clear();
+        levelTwoEnemy.clear();
         // return the best
         return sizeIndex;
     }
@@ -862,6 +874,11 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
 //            GlobalEnvirIn::Instance()->__printBoard();
 //            GlobalEnvirIn::Instance()->__delayMsec(500);
         }
+        levelOneStepList.clear();
+        levelTwoStepList.clear();
+        levelThreeStepList.clear();
+        levelFourStepList.clear();
+        levelFiveStepList.clear();
         // return the best
         return sizeIndex;
     }
@@ -989,6 +1006,11 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
 //            GlobalEnvirIn::Instance()->__printBoard();
 //            GlobalEnvirIn::Instance()->__delayMsec(500);
         }
+        levelOneStepList.clear();
+        levelTwoStepList.clear();
+        levelThreeStepList.clear();
+        levelFourStepList.clear();
+        levelFiveStepList.clear();
         // return the best
         return sizeIndex;
     }

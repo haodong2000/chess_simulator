@@ -27,6 +27,8 @@ public:
     virtual void testIsThereOurChess();
     virtual void testWhichChessOnThere();
 
+    virtual void testMemory();
+
     virtual void testHorseGenerateMove();
     virtual void testElephantGenerateMove();
     virtual void testGeneralGenerateMove();

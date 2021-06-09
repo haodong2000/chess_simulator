@@ -74,6 +74,7 @@ public:
     virtual void printStepList();
 
     QVector<chessStep> chessStepList;
+    QVector<chessStep*> SchessStepList;
 
     // std::unordered_map<QString, SGeoPoint> StepList;
     // std::unordered_map<QString, QString> StepKillList;

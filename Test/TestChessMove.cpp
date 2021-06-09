@@ -54,6 +54,10 @@ void TestChessMove::testWhichChessOnThere() {
     std::cout << chessName.toStdString() << chessNumber << std::endl;
 }
 
+void TestChessMove::testMemory() {
+    std::cout << "TEST_MODE -> testMemory()" << std::endl;
+}
+
 void TestChessMove::testHorseGenerateMove() {
     SGeoPoint* Pos = new SGeoPoint(2, 2);
     QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, Pos);

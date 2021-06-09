@@ -41,6 +41,7 @@ Chess::Chess(int x, int y, QString name, bool camp, int number, bool isAlive):
     // StepList.clear(); // make it empty
     // StepKillList.clear();
     chessStepList.clear(); // make it empty
+    SchessStepList.clear();
     _spaceValue = 0;
 }
 
