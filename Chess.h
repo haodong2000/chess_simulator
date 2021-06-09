@@ -72,6 +72,8 @@ public:
     virtual void setSpaceValue(double value);
     virtual double getSpaceValue();
     virtual void printStepList();
+    virtual void SprintStepList();
+    virtual void tranStarStepList();
 
     QVector<chessStep> chessStepList;
     QVector<chessStep*> SchessStepList;

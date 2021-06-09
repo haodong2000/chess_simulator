@@ -83,6 +83,36 @@ double Chess::getSpaceValue() {
     return _spaceValue;
 }
 
+void Chess::tranStarStepList() {
+    const int countStep = chessStepList.size();
+    SchessStepList.clear(); // init
+    if(countStep == 0) {
+        qDebug() << "Chess.cpp tranStarStepList() line:89 error:chessStepList is EMPTY!!!";
+        return;
+    }
+    // print every element of the list
+    for(int i = 0; i < countStep; i++) {
+        int Num = chessStepList.at(i)._chessNum;
+        int Number = chessStepList.at(i)._chessNumber;
+        int PosX = chessStepList.at(i)._deltaX;
+        int PosY = chessStepList.at(i)._deltaY;
+        bool kill = chessStepList.at(i)._isKill;
+        QString killString = kill ? "True" : "False";
+        int killNum = chessStepList.at(i)._chessKilledNum;
+        int killNumber = chessStepList.at(i)._chessKilledNumber;
+        if(kill == false && (killNum != -1 || killNumber != -1)) {
+            qDebug() << "Chess.cpp tranStarStepList() line:104 error:Kill is false but killNum or killNumber is not -1 !!!";
+            return;
+        }
+        if(chessStepList.at(i)._chessCamp != chessCamp()){
+            qDebug() << "Chess.cpp tranStarStepList() line:108 error:chessStepList.at(i)._chessCamp != chessCamp() !!!";
+            return;
+        }
+        chessStep* curStep = new chessStep(Num, Number, chessStepList.at(i)._chessCamp, PosX, PosY, kill, killNum, killNumber);
+        SchessStepList.append(curStep);
+    }
+}
+
 void Chess::printStepList() {
     const int countStep = chessStepList.size();
     if(countStep == 0) {
@@ -100,6 +130,37 @@ void Chess::printStepList() {
         QString killString = kill ? "True" : "False";
         int killNum = chessStepList.at(i)._chessKilledNum;
         int killNumber = chessStepList.at(i)._chessKilledNumber;
+        std::cout << "Num\t = " << Num << std::endl;
+        std::cout << "Number\t = " << Number << std::endl;
+        std::cout << "Name\t = " << ChessTable::Chess_Int2Qstr_simple[Num].toStdString() << std::endl;
+        std::cout << "PosX\t = " << PosX << std::endl;
+        std::cout << "PosY\t = " << PosY << std::endl;
+        std::cout << "kill\t = " << killString.toStdString() << std::endl;
+        if(kill) {
+            std::cout << "k_Num\t = " << killNum << std::endl;
+            std::cout << "k_Number\t = " << killNumber << std::endl;
+            std::cout << "k_Name\t = " << ChessTable::Chess_Int2Qstr_simple[killNum].toStdString() << std::endl;
+        }
+    }
+}
+
+void Chess::SprintStepList() {
+    const int countStep = SchessStepList.size();
+    if(countStep == 0) {
+        qDebug() << "Chess.cpp SprintStepList() line:120 error:SchessStepList is EMPTY!!!";
+        return;
+    }
+    // print every element of the list
+    for(int i = 0; i < countStep; i++) {
+        std::cout << "=================== <" << i << "> ===================" << std::endl;
+        int Num = SchessStepList.at(i)->_chessNum;
+        int Number = SchessStepList.at(i)->_chessNumber;
+        int PosX = SchessStepList.at(i)->_deltaX;
+        int PosY = SchessStepList.at(i)->_deltaY;
+        bool kill = SchessStepList.at(i)->_isKill;
+        QString killString = kill ? "True" : "False";
+        int killNum = SchessStepList.at(i)->_chessKilledNum;
+        int killNumber = SchessStepList.at(i)->_chessKilledNumber;
         std::cout << "Num\t = " << Num << std::endl;
         std::cout << "Number\t = " << Number << std::endl;
         std::cout << "Name\t = " << ChessTable::Chess_Int2Qstr_simple[Num].toStdString() << std::endl;
