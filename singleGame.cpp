@@ -15,6 +15,8 @@ singleGame::singleGame():
     originBlackChessStepList.clear();
     chessRedStepList.clear();
     originRedChessStepList.clear();
+    SoriginRedChessStepList.clear();
+    SoriginBlackChessStepList.clear();
 //    allRedAndBlackStepList.clear();
 
     _level = 3; // initialization, actuall level is 4
@@ -49,6 +51,7 @@ void singleGame::generateBlackAllPossibleMoves() {
     Ab_gen_1->generateMove();
 
     originBlackChessStepList.clear();
+    SoriginBlackChessStepList.clear();
 
     originBlackChessStepList.append(Ab_hor_1->chessStepList);
     originBlackChessStepList.append(Ab_can_1->chessStepList);
@@ -68,6 +71,25 @@ void singleGame::generateBlackAllPossibleMoves() {
     originBlackChessStepList.append(Ab_sol_5->chessStepList);
 
     originBlackChessStepList.append(Ab_gen_1->chessStepList);
+
+    SoriginBlackChessStepList.append(Ab_hor_1->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_can_1->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_adv_1->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_cha_1->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_ele_1->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_hor_2->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_can_2->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_adv_2->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_cha_2->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_ele_2->SchessStepList);
+
+    SoriginBlackChessStepList.append(Ab_sol_1->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_sol_2->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_sol_3->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_sol_4->SchessStepList);
+    SoriginBlackChessStepList.append(Ab_sol_5->SchessStepList);
+
+    SoriginBlackChessStepList.append(Ab_gen_1->SchessStepList);
 }
 
 void singleGame::generateRedAllPossibleMoves() {
@@ -91,6 +113,7 @@ void singleGame::generateRedAllPossibleMoves() {
     Ar_gen_1->generateMove();
 
     originRedChessStepList.clear();
+    SoriginRedChessStepList.clear();
 
     originRedChessStepList.append(Ar_hor_1->chessStepList);
     originRedChessStepList.append(Ar_can_1->chessStepList);
@@ -110,6 +133,25 @@ void singleGame::generateRedAllPossibleMoves() {
     originRedChessStepList.append(Ar_sol_5->chessStepList);
 
     originRedChessStepList.append(Ar_gen_1->chessStepList);
+
+    SoriginRedChessStepList.append(Ar_hor_1->SchessStepList);
+    SoriginRedChessStepList.append(Ar_can_1->SchessStepList);
+    SoriginRedChessStepList.append(Ar_adv_1->SchessStepList);
+    SoriginRedChessStepList.append(Ar_cha_1->SchessStepList);
+    SoriginRedChessStepList.append(Ar_ele_1->SchessStepList);
+    SoriginRedChessStepList.append(Ar_hor_2->SchessStepList);
+    SoriginRedChessStepList.append(Ar_can_2->SchessStepList);
+    SoriginRedChessStepList.append(Ar_adv_2->SchessStepList);
+    SoriginRedChessStepList.append(Ar_cha_2->SchessStepList);
+    SoriginRedChessStepList.append(Ar_ele_2->SchessStepList);
+
+    SoriginRedChessStepList.append(Ar_sol_1->SchessStepList);
+    SoriginRedChessStepList.append(Ar_sol_2->SchessStepList);
+    SoriginRedChessStepList.append(Ar_sol_3->SchessStepList);
+    SoriginRedChessStepList.append(Ar_sol_4->SchessStepList);
+    SoriginRedChessStepList.append(Ar_sol_5->SchessStepList);
+
+    SoriginRedChessStepList.append(Ar_gen_1->SchessStepList);
 }
 
 void singleGame::displayBlackAllPossibleMoves() {
@@ -145,7 +187,6 @@ void singleGame::displayBlackAllPossibleMoves() {
     }
 }
 
-
 void singleGame::displayRedAllPossibleMoves() {
     generateRedAllPossibleMoves();
 
@@ -178,6 +219,73 @@ void singleGame::displayRedAllPossibleMoves() {
         }
     }
 }
+
+void singleGame::SdisplayBlackAllPossibleMoves() {
+    generateBlackAllPossibleMoves();
+
+    if(SoriginBlackChessStepList.size() == 0) {
+        qDebug() << "singleGame.cpp line:227 SdisplayBlackAllPossibleMoves() error: SoriginBlackChessStepList is EMPTY!!!!!";
+        return;
+    }
+
+    int size = SoriginBlackChessStepList.size();
+    for(int i = 0; i < size; i++) {
+        std::cout << "=================== <" << i << "> ===================" << std::endl;
+        int Num = SoriginBlackChessStepList.at(i)->_chessNum;
+        int Number = SoriginBlackChessStepList.at(i)->_chessNumber;
+        int PosX = SoriginBlackChessStepList.at(i)->_deltaX;
+        int PosY = SoriginBlackChessStepList.at(i)->_deltaY;
+        bool kill = SoriginBlackChessStepList.at(i)->_isKill;
+        QString killString = kill ? "True" : "False";
+        int killNum = SoriginBlackChessStepList.at(i)->_chessKilledNum;
+        int killNumber = SoriginBlackChessStepList.at(i)->_chessKilledNumber;
+        std::cout << "B_Num\t = " << Num << std::endl;
+        std::cout << "B_Number\t = " << Number << std::endl;
+        std::cout << "B_Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(Num).toStdString() << std::endl;
+        std::cout << "B_PosX\t = " << PosX << std::endl;
+        std::cout << "B_PosY\t = " << PosY << std::endl;
+        std::cout << "B_kill\t = " << killString.toStdString() << std::endl;
+        if(kill) {
+            std::cout << "B_k_Num\t = " << killNum << std::endl;
+            std::cout << "B_k_Number\t = " << killNumber << std::endl;
+            std::cout << "B_k_Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(killNum).toStdString() << std::endl;
+        }
+    }
+}
+
+void singleGame::SdisplayRedAllPossibleMoves() {
+    generateRedAllPossibleMoves();
+
+    if(SoriginRedChessStepList.size() == 0) {
+        qDebug() << "singleGame.cpp line:260 SdisplayRedAllPossibleMoves() error: SoriginRedChessStepList is EMPTY!!!!!";
+        return;
+    }
+
+    int size = SoriginRedChessStepList.size();
+    for(int i = 0; i < size; i++) {
+        std::cout << "=================== <" << i << "> ===================" << std::endl;
+        int Num = SoriginRedChessStepList.at(i)->_chessNum;
+        int Number = SoriginRedChessStepList.at(i)->_chessNumber;
+        int PosX = SoriginRedChessStepList.at(i)->_deltaX;
+        int PosY = SoriginRedChessStepList.at(i)->_deltaY;
+        bool kill = SoriginRedChessStepList.at(i)->_isKill;
+        QString killString = kill ? "True" : "False";
+        int killNum = SoriginRedChessStepList.at(i)->_chessKilledNum;
+        int killNumber = SoriginRedChessStepList.at(i)->_chessKilledNumber;
+        std::cout << "R_Num\t = " << Num << std::endl;
+        std::cout << "R_Number\t = " << Number << std::endl;
+        std::cout << "R_Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(Num).toStdString() << std::endl;
+        std::cout << "R_PosX\t = " << PosX << std::endl;
+        std::cout << "R_PosY\t = " << PosY << std::endl;
+        std::cout << "R_kill\t = " << killString.toStdString() << std::endl;
+        if(kill) {
+            std::cout << "R_k_Num\t = " << killNum << std::endl;
+            std::cout << "R_k_Number\t = " << killNumber << std::endl;
+            std::cout << "R_k_Name\t = " << GlobalEnvirIn::Instance()->__int2QStrName(killNum).toStdString() << std::endl;
+        }
+    }
+}
+
 
 void singleGame::tranStructToClass() {
     if(originBlackChessStepList.size() == 0) {

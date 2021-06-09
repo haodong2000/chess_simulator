@@ -704,4 +704,5 @@ void Elephant::generateMove() {
             }
         }
     }
+    tranStarStepList();
 }

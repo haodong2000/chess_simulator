@@ -142,6 +142,91 @@ void TestChessMove::testCannonGenerateMove() {
     Ar_can_2->printStepList();
 }
 
+void TestChessMove::S_HorseGenerateMove() {
+    SGeoPoint* Pos = new SGeoPoint(2, 2);
+    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, Pos);
+    std::cout << "TEST_MODE -> S_HorseGenerateMove()" << std::endl;
+    Ab_hor_1->generateMove();
+    int countMove = Ab_hor_1->SchessStepList.size();
+    std::cout << "Ab_hor_1 -> " << countMove << std::endl;
+    Ab_hor_1->SprintStepList();
+}
+
+void TestChessMove::S_ElephantGenerateMove() {
+    SGeoPoint* Pos = new SGeoPoint(7, 4);
+    SGeoPoint* PosTest = new SGeoPoint(8, 3);
+    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, PosTest);
+    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
+    std::cout << "TEST_MODE -> S_ElephantGenerateMove()" << std::endl;
+    Ar_ele_1->generateMove();
+    int countMove = Ar_ele_1->SchessStepList.size();
+    std::cout << "Ar_ele_1 -> " << countMove << std::endl;
+    Ar_ele_1->SprintStepList();
+}
+
+void TestChessMove::S_GeneralGenerateMove() {
+    SGeoPoint* PosTest = new SGeoPoint(7, 5);
+    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, PosTest);
+    SGeoPoint* Pos = new SGeoPoint(8, 5);
+    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
+    std::cout << "TEST_MODE -> S_GeneralGenerateMove()" << std::endl;
+    Ar_gen_1->generateMove();
+    int countMove = Ar_gen_1->SchessStepList.size();
+    std::cout << "Ar_gen_1 -> " << countMove << std::endl;
+    Ar_gen_1->SprintStepList();
+}
+
+void TestChessMove::S_SoldierGenerateMove() {
+//    SGeoPoint* PosTest = new SGeoPoint(5, 3);
+//    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, false, PosTest);
+    SGeoPoint* Pos = new SGeoPoint(5, 5);
+    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, Pos);
+    SGeoPoint* PosTT = new SGeoPoint(5, 4);
+    QmlConnectIn::Instance()->changeChessPos("b_sol_", 3, false, PosTT);
+    std::cout << "TEST_MODE -> S_SoldierGenerateMove()" << std::endl;
+    Ab_sol_3->generateMove();
+    int countMove = Ab_sol_3->SchessStepList.size();
+    std::cout << "Ab_sol_3 -> " << countMove << std::endl;
+    Ab_sol_3->SprintStepList();
+}
+
+void TestChessMove::S_AdvisorGenerateMove() {
+    SGeoPoint* Pos = new SGeoPoint(1, 4);
+    QmlConnectIn::Instance()->changeChessPos("b_adv_", 2, false, Pos);
+    SGeoPoint* PosTT = new SGeoPoint(2, 3);
+    QmlConnectIn::Instance()->changeChessPos("r_gen_", 1, true, PosTT);
+    std::cout << "TEST_MODE -> S_AdvisorGenerateMove()" << std::endl;
+    Ab_adv_2->generateMove();
+    int countMove = Ab_adv_2->SchessStepList.size();
+    std::cout << "Ab_adv_2 -> " << countMove << std::endl;
+    Ab_adv_2->SprintStepList();
+}
+
+void TestChessMove::S_ChariotGenerateMove() {
+    SGeoPoint* Pos = new SGeoPoint(PARAM::globalEnvironment::middleRed, 4 + 1);
+    QmlConnectIn::Instance()->changeChessPos("r_cha_", 2, true, Pos);
+    SGeoPoint* PosTT = new SGeoPoint(PARAM::globalEnvironment::middleRed, PARAM::globalEnvironment::maxAxisOfY);
+    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, PosTT);
+    std::cout << "TEST_MODE -> S_ChariotGenerateMove()" << std::endl;
+    Ar_cha_2->generateMove();
+    int countMove = Ar_cha_2->SchessStepList.size();
+    std::cout << "Ar_cha_2 -> " << countMove << std::endl;
+    Ar_cha_2->SprintStepList();
+}
+
+void TestChessMove::S_CannonGenerateMove() {
+//    SGeoPoint* Pos = new SGeoPoint(PARAM::globalEnvironment::middleRed, 4 + 1);
+//    QmlConnectIn::Instance()->changeChessPos("r_cha_", 2, true, Pos);
+//    SGeoPoint* PosTT = new SGeoPoint(PARAM::globalEnvironment::middleRed, PARAM::globalEnvironment::maxAxisOfY);
+//    QmlConnectIn::Instance()->changeChessPos("b_gen_", 1, false, PosTT);
+    std::cout << "TEST_MODE -> S_CannonGenerateMove()" << std::endl;
+    Ar_can_2->generateMove();
+    int countMove = Ar_can_2->SchessStepList.size();
+    std::cout << "Ar_can_2 -> " << countMove << std::endl;
+    Ar_can_2->SprintStepList();
+}
+
+
 void TestChessMove::testQVectorAdding() {
     std::cout << "TEST_MODE -> testQVectorAdding()" << std::endl;
     QVector<int> v1 = {1, 2, 3};
@@ -157,6 +242,12 @@ void TestChessMove::testDisplayAllPossibleMoves() {
     std::cout << "TEST_MODE -> testDisplayAllPossibleMoves()" << std::endl;
     singleGameIn::Instance()->displayBlackAllPossibleMoves();
     singleGameIn::Instance()->displayRedAllPossibleMoves();
+}
+
+void TestChessMove::S_DisplayAllPossibleMoves() {
+    std::cout << "TEST_MODE -> S_DisplayAllPossibleMoves()" << std::endl;
+    singleGameIn::Instance()->SdisplayBlackAllPossibleMoves();
+    singleGameIn::Instance()->SdisplayRedAllPossibleMoves();
 }
 
 void TestChessMove::testChessing() { // can not use!

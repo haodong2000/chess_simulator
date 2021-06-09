@@ -59,6 +59,7 @@ void Chariot::generateMove() {
             chessStepList.append(tempStep);
         }
     }
+    tranStarStepList();
 }
 
 bool Chariot::canChariotMoveOrKill(SGeoPoint *start, SGeoPoint *end) {

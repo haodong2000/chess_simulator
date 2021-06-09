@@ -142,6 +142,7 @@ void Advisor::generateMove() {
             chessStepList.append(tempStep);
         }
     }
+    tranStarStepList();
 }
 
 bool Advisor::basicAdvisorMoveCondition(SGeoPoint *start, SGeoPoint *end) {

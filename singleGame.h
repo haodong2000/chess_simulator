@@ -23,8 +23,10 @@ public:
     virtual int getLevel();
     virtual void generateBlackAllPossibleMoves();
     virtual void displayBlackAllPossibleMoves();
+    virtual void SdisplayBlackAllPossibleMoves();
     virtual void generateRedAllPossibleMoves();
     virtual void displayRedAllPossibleMoves();
+    virtual void SdisplayRedAllPossibleMoves();
     virtual void tranStructToClass();
     virtual void testChessing(int maxCount = 5);
     virtual void testFakeChessing(int maxCount = 5);
@@ -59,6 +61,8 @@ public:
     QVector<Step*> chessRedStepList;
     QVector<chessStep> originBlackChessStepList;
     QVector<chessStep> originRedChessStepList;
+    QVector<chessStep*> SoriginBlackChessStepList;
+    QVector<chessStep*> SoriginRedChessStepList;
 //    QVector<chessStep> allRedAndBlackStepList;
     chessStep redCurStep;
     chessStep redLastStep;

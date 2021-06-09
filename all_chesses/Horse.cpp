@@ -152,4 +152,5 @@ void Horse::generateMove() {
             chessStepList.append(tempStep);
         }
     }
+    tranStarStepList();
 }

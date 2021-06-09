@@ -166,4 +166,5 @@ void Soldier::generateMove() {
             }
         }
     }
+    tranStarStepList();
 }

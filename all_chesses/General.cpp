@@ -61,6 +61,7 @@ void General::generateMove() {
             chessStepList.append(tempStep);
         }
     }
+    tranStarStepList();
 }
 
 bool General::canGeneralMoveOrKill(SGeoPoint *start, SGeoPoint *end) {

@@ -59,6 +59,7 @@ void Cannon::generateMove() {
             chessStepList.append(tempStep);
         }
     }
+    tranStarStepList();
 }
 
 bool Cannon::canCannonMoveOrKill(SGeoPoint* start, SGeoPoint* end) {

@@ -37,9 +37,18 @@ public:
     virtual void testChariotGenerateMove();
     virtual void testCannonGenerateMove();
 
+    virtual void S_HorseGenerateMove(); // NO TEST
+    virtual void S_ElephantGenerateMove(); // NO TEST
+    virtual void S_GeneralGenerateMove(); // NO TEST
+    virtual void S_SoldierGenerateMove(); // NO TEST
+    virtual void S_AdvisorGenerateMove(); // NO TEST
+    virtual void S_ChariotGenerateMove(); // NO TEST
+    virtual void S_CannonGenerateMove(); // NO TEST
+
     virtual void testQVectorAdding();
 
     virtual void testDisplayAllPossibleMoves();
+    virtual void S_DisplayAllPossibleMoves();
 
     virtual void test_Ar_hor_2_isAlive();
 

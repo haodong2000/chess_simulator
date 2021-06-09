@@ -145,6 +145,7 @@ void Chess::printStepList() {
 }
 
 void Chess::SprintStepList() {
+    // tranStarStepList();
     const int countStep = SchessStepList.size();
     if(countStep == 0) {
         qDebug() << "Chess.cpp SprintStepList() line:120 error:SchessStepList is EMPTY!!!";
