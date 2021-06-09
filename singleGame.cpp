@@ -664,6 +664,8 @@ void singleGame::threeLevelChessing(int maxCount) {
     bool redOrBlack = true;
     int count = 0;
     const int delayMs = 50;
+    QVector<chessStep> curStepList;
+    curStepList.clear();
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
@@ -675,7 +677,7 @@ void singleGame::threeLevelChessing(int maxCount) {
         else GlobalEnvirIn::Instance()->__setGameTurn(true);
 
         GlobalEnvirIn::Instance()->__delayMsec(delayMs);
-        QVector<chessStep> curStepList; // memory
+//        QVector<chessStep> curStepList; // memory
         curStepList.clear();
         if(redOrBlack) {
             generateRedAllPossibleMoves();
@@ -714,7 +716,15 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
     int sizeIndex = 0;
     int currentValue = 0;
     QVector<chessStep> levelOneStepList;
+    QVector<chessStep> levelTwoStepList;
+    QVector<chessStep> levelThreeStepList;
+    QVector<chessStep> levelFourStepList;
+    QVector<chessStep> levelFiveStepList;
     levelOneStepList.clear();
+    levelTwoStepList.clear();
+    levelThreeStepList.clear();
+    levelFourStepList.clear();
+    levelFiveStepList.clear();
     if(redOrBlack) {
         levelOneStepList.clear();
         levelOneStepList.append(originRedChessStepList);
@@ -726,14 +736,14 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
             int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelOneStepList.at(index)._chessNum, levelOneStepList.at(index)._chessNumber)->getPosX();
             int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelOneStepList.at(index)._chessNum, levelOneStepList.at(index)._chessNumber)->getPosY();
             fakeMove(levelOneStepList.at(index));
-            std::cout << "level = " << 1 << "  index = " << index << "  camp: red" << std::endl;
+            std::cout << "level = " << 1 << " \tindex = " << index << " \tcamp: red" << std::endl;
             GlobalEnvirIn::Instance()->__delayMsec(1);
 //            GlobalEnvirIn::Instance()->__printBoard();
 //            GlobalEnvirIn::Instance()->__delayMsec(500);
 
             // into level 2
             generateBlackAllPossibleMoves();
-            QVector<chessStep> levelTwoStepList;
+//            QVector<chessStep> levelTwoStepList;
             levelTwoStepList.clear();
             levelTwoStepList.append(originBlackChessStepList);
             int indexTwo = twoLevelStepIndex(false);
@@ -749,7 +759,7 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
 
             // into level 3
             generateRedAllPossibleMoves();
-            QVector<chessStep> levelThreeStepList;
+//            QVector<chessStep> levelThreeStepList;
             levelThreeStepList.clear();
             levelThreeStepList.append(originRedChessStepList);
             int levelThreeeSize = levelThreeStepList.size();
@@ -766,7 +776,7 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
 
                 // into level 4
                 generateBlackAllPossibleMoves();
-                QVector<chessStep> levelFourStepList;
+//                QVector<chessStep> levelFourStepList;
                 levelFourStepList.clear();
                 levelFourStepList.append(originBlackChessStepList);
                 int indexFour = oneLevelStepIndex(false);
@@ -776,7 +786,7 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
 
                 // into level 5
                 generateRedAllPossibleMoves();
-                QVector<chessStep> levelFiveStepList;
+//                QVector<chessStep> levelFiveStepList;
                 levelFiveStepList.clear();
                 levelFiveStepList.append(originRedChessStepList);
                 int levelFiveSize = levelFiveStepList.size();
@@ -867,14 +877,14 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
             int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelOneStepList.at(index)._chessNum, levelOneStepList.at(index)._chessNumber)->getPosY();
             fakeMove(levelOneStepList.at(index));
 
-            std::cout << "level = " << 1 << "  index = " << index << "  camp: black" << std::endl;
+            std::cout << "level = " << 1 << " \tindex = " << index << " \tcamp: black" << std::endl;
             GlobalEnvirIn::Instance()->__delayMsec(1);
 //            GlobalEnvirIn::Instance()->__printBoard();
 //            GlobalEnvirIn::Instance()->__delayMsec(500);
 
             // into level 2
             generateRedAllPossibleMoves();
-            QVector<chessStep> levelTwoStepList;
+//            QVector<chessStep> levelTwoStepList;
             levelTwoStepList.clear();
             levelTwoStepList.append(originRedChessStepList);
             int indexTwo = twoLevelStepIndex(true);
@@ -886,7 +896,7 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
 
             // into level 3
             generateBlackAllPossibleMoves();
-            QVector<chessStep> levelThreeStepList;
+//            QVector<chessStep> levelThreeStepList;
             levelThreeStepList.clear();
             levelThreeStepList.append(originBlackChessStepList);
             int levelThreeeSize = levelThreeStepList.size();
@@ -900,7 +910,7 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
 
                 // into level 4
                 generateRedAllPossibleMoves();
-                QVector<chessStep> levelFourStepList;
+//                QVector<chessStep> levelFourStepList;
                 levelFourStepList.clear();
                 levelFourStepList.append(originRedChessStepList);
                 int indexFour = oneLevelStepIndex(true);
@@ -910,7 +920,7 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
 
                 // into level 5
                 generateBlackAllPossibleMoves();
-                QVector<chessStep> levelFiveStepList;
+//                QVector<chessStep> levelFiveStepList;
                 levelFiveStepList.clear();
                 levelFiveStepList.append(originBlackChessStepList);
                 int levelFiveSize = levelFiveStepList.size();
