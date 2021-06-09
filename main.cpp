@@ -22,7 +22,7 @@
 #include "singleGame.h"
 
 QObject* object;
-const int CHESS_PLAY_NODE = 3; // one level, two level, three level, four level
+const int CHESS_PLAY_NODE = 2; // one level, two level, three level, four level
 
 int main(int argc, char *argv[])
 {

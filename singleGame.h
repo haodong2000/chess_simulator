@@ -47,8 +47,12 @@ public:
     // interface
     virtual void realMove(chessStep step);
     virtual void fakeMove(chessStep step);
-    virtual void realBackMove(chessStep step);
+    virtual void realBackMove(chessStep step, int lastPosX, int lastPosY);
     virtual void fakeBackMove(chessStep step, int lastPosX, int lastPosY);
+    virtual void realMove(chessStep* step);
+    virtual void fakeMove(chessStep* step);
+    virtual void realBackMove(chessStep* step, int lastPosX, int lastPosY);
+    virtual void fakeBackMove(chessStep* step, int lastPosX, int lastPosY);
 
     Step* finalChessStep;
     QVector<Step*> chessBlackStepList;

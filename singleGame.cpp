@@ -1206,7 +1206,7 @@ void singleGame::fakeMove(chessStep step) {
     QmlConnectIn::Instance()->fakeChangeChessPos(Num, Number, camp, PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(), PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
 }
 
-void singleGame::realBackMove(chessStep step) {
+void singleGame::realBackMove(chessStep step, int lastPosX, int lastPosY) {
     std::cout << "realBackMove() called" << std::endl;
 }
 
@@ -1237,4 +1237,24 @@ void singleGame::fakeBackMove(chessStep step, int lastPosX, int lastPosY) {
     QmlConnectIn::Instance()->fakeBackChangeChessPos(Num, Number, camp,
                                                  PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(),
                                                  PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
+}
+
+void singleGame::realMove(chessStep *step) {
+    chessStep Step(step->_chessNum, step->_chessNumber, step->_chessCamp, step->_deltaX, step->_deltaY, step->_isKill, step->_chessKilledNum, step->_chessKilledNumber);
+    realMove(Step);
+}
+
+void singleGame::fakeMove(chessStep *step) {
+    chessStep Step(step->_chessNum, step->_chessNumber, step->_chessCamp, step->_deltaX, step->_deltaY, step->_isKill, step->_chessKilledNum, step->_chessKilledNumber);
+    fakeMove(Step);
+}
+
+void singleGame::realBackMove(chessStep* step, int lastPosX, int lastPosY) {
+    chessStep Step(step->_chessNum, step->_chessNumber, step->_chessCamp, step->_deltaX, step->_deltaY, step->_isKill, step->_chessKilledNum, step->_chessKilledNumber);
+    realBackMove(Step, lastPosX, lastPosY);
+}
+
+void singleGame::fakeBackMove(chessStep *step, int lastPosX, int lastPosY) {
+    chessStep Step(step->_chessNum, step->_chessNumber, step->_chessCamp, step->_deltaX, step->_deltaY, step->_isKill, step->_chessKilledNum, step->_chessKilledNumber);
+    fakeBackMove(Step, lastPosX, lastPosY);
 }
