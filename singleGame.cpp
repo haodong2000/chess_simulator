@@ -17,7 +17,7 @@ singleGame::singleGame():
     originRedChessStepList.clear();
 //    allRedAndBlackStepList.clear();
 
-    _level = 4; // initialization
+    _level = 3; // initialization, actuall level is 4
 }
 
 void singleGame::setLevel(int level) {
