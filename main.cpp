@@ -22,7 +22,7 @@
 #include "singleGame.h"
 
 QObject* object;
-const int CHESS_PLAY_NODE = 4; // one level, two level, three level, four level
+const int CHESS_PLAY_MODE = 4; // one level, two level, three level, four level
 const bool TEST_MODE = false;
 
 int main(int argc, char *argv[])
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
         TestChessMoveIn::Instance()->testMemory();
     }
     else {
-        switch (CHESS_PLAY_NODE) {
+        switch (CHESS_PLAY_MODE) {
         case 1:
             singleGameIn::Instance()->oneLevelChessing(PARAM::NINE_NINE_NINE);
             break;
