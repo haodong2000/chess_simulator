@@ -16,22 +16,5 @@
         <file>chess/red_Horse.svg</file>
         <file>chess/red_Soldier.svg</file>
         <file>chess/test.png</file>
-        <file>logo/star/k.png</file>
-        <file>logo/star/m.png</file>
-        <file>logo/star/n.png</file>
-        <file>logo/star/r.png</file>
-        <file>logo/star/s.png</file>
-        <file>logo/team/barcelona.png</file>
-        <file>logo/team/liverpool.png</file>
-        <file>logo/team/mancity.png</file>
-        <file>logo/team/manunited.png</file>
-        <file>logo/team/realmadrid.png</file>
-        <file>logo/1.png</file>
-        <file>logo/2.png</file>
-        <file>logo/james.png</file>
-        <file>logo/messi1.png</file>
-        <file>logo/mikasa1.png</file>
-        <file>logo/robot.png</file>
-        <file>logo/zju_eagle.png</file>
     </qresource>
 </RCC>
