@@ -37,9 +37,24 @@ double Soldier::space_value() {
     int enemy_delta = chessCamp() ? -1 : 1;
     SGeoPoint* enemy = new SGeoPoint(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber())->getPosX() + enemy_delta,
                                   GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber())->getPosY());
-    if(GlobalEnvirIn::Instance()->__isPosInBoard(up) && (!GlobalEnvirIn::Instance()->__isThereHasChess(up))) return 0.75;
-    if(GlobalEnvirIn::Instance()->__isPosInBoard(down) && (!GlobalEnvirIn::Instance()->__isThereHasChess(down))) return 0.75;
-    if(GlobalEnvirIn::Instance()->__isPosInBoard(enemy) && (!GlobalEnvirIn::Instance()->__isThereHasChess(enemy))) return 1.25;
+    if(GlobalEnvirIn::Instance()->__isPosInBoard(up) && (!GlobalEnvirIn::Instance()->__isThereHasChess(up))) {
+        delete up;
+        delete down;
+        delete enemy;
+        return 0.75;
+    }
+    if(GlobalEnvirIn::Instance()->__isPosInBoard(down) && (!GlobalEnvirIn::Instance()->__isThereHasChess(down))) {
+        delete up;
+        delete down;
+        delete enemy;
+        return 0.75;
+    }
+    if(GlobalEnvirIn::Instance()->__isPosInBoard(enemy) && (!GlobalEnvirIn::Instance()->__isThereHasChess(enemy))) {
+        delete up;
+        delete down;
+        delete enemy;
+        return 1.25;
+    }
     return 0;
 }
 
@@ -53,9 +68,27 @@ bool Soldier::canChessMove() {
     int enemy_delta = chessCamp() ? -1 : 1;
     SGeoPoint* enemy = new SGeoPoint(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber())->getPosX() + enemy_delta,
                                   GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessNum, chessNumber())->getPosY());
-    if(GlobalEnvirIn::Instance()->__isPosInBoard(up) && (!GlobalEnvirIn::Instance()->__isThereHasChess(up))) return true;
-    if(GlobalEnvirIn::Instance()->__isPosInBoard(down) && (!GlobalEnvirIn::Instance()->__isThereHasChess(down))) return true;
-    if(GlobalEnvirIn::Instance()->__isPosInBoard(enemy) && (!GlobalEnvirIn::Instance()->__isThereHasChess(enemy))) return true;
+    if(GlobalEnvirIn::Instance()->__isPosInBoard(up) && (!GlobalEnvirIn::Instance()->__isThereHasChess(up))) {
+        delete up;
+        delete down;
+        delete enemy;
+        return true;
+    }
+    if(GlobalEnvirIn::Instance()->__isPosInBoard(down) && (!GlobalEnvirIn::Instance()->__isThereHasChess(down))) {
+        delete up;
+        delete down;
+        delete enemy;
+        return true;
+    }
+    if(GlobalEnvirIn::Instance()->__isPosInBoard(enemy) && (!GlobalEnvirIn::Instance()->__isThereHasChess(enemy))) {
+        delete up;
+        delete down;
+        delete enemy;
+        return true;
+    }
+    delete up;
+    delete down;
+    delete enemy;
     return false;
 }
 
@@ -78,7 +111,9 @@ bool Soldier::canSoldierMoveOrKill(SGeoPoint *start, SGeoPoint *end) {
         return false;
     }
 
-    if(!GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), end)) return true;
+    if(!GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), end)) {
+        return true;
+    }
     return false;
 }
 
@@ -108,6 +143,7 @@ void Soldier::generateMove() {
                     chessStep tempStep(chessNum, chessNumber(), chessCamp(), getPosX() + SoldierPos::redOur.at(index).first, getPosY() + SoldierPos::redOur.at(index).second, kill, chessKillNum, chessKillNumber);
                     chessStepList.append(tempStep);
                 }
+                delete end;
             }
         }
         else {
@@ -126,6 +162,7 @@ void Soldier::generateMove() {
                     chessStep tempStep(chessNum, chessNumber(), chessCamp(), getPosX() + SoldierPos::redEnemy.at(index).first, getPosY() + SoldierPos::redEnemy.at(index).second, kill, chessKillNum, chessKillNumber);
                     chessStepList.append(tempStep);
                 }
+                delete end;
             }
         }
     }
@@ -146,6 +183,7 @@ void Soldier::generateMove() {
                     chessStep tempStep(chessNum, chessNumber(), chessCamp(), getPosX() + SoldierPos::Our.at(index).first, getPosY() + SoldierPos::Our.at(index).second, kill, chessKillNum, chessKillNumber);
                     chessStepList.append(tempStep);
                 }
+                delete end;
             }
         }
         else {
@@ -164,8 +202,10 @@ void Soldier::generateMove() {
                     chessStep tempStep(chessNum, chessNumber(), chessCamp(), getPosX() + SoldierPos::Enemy.at(index).first, getPosY() + SoldierPos::Enemy.at(index).second, kill, chessKillNum, chessKillNumber);
                     chessStepList.append(tempStep);
                 }
+                delete end;
             }
         }
     }
+    delete start;
     tranStarStepList();
 }

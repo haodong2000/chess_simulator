@@ -142,7 +142,9 @@ void Advisor::generateMove() {
             chessStep tempStep(chessNum, chessNumber(), chessCamp(), end->getPosX(), end->getPosY(), kill, chessKillNum, chessKillNumber);
             chessStepList.append(tempStep);
         }
+        delete end;
     }
+    delete start;
     tranStarStepList();
 }
 
@@ -211,6 +213,5 @@ bool Advisor::isInBlackArea(SGeoPoint *Pos) {
             (Pos->getPosX() == AdvisorPos::b_left_x && Pos->getPosY() == AdvisorPos::b_down_y) ||
             (Pos->getPosX() == AdvisorPos::b_right_x && Pos->getPosY() == AdvisorPos::b_up_y) ||
             (Pos->getPosX() == AdvisorPos::b_right_x && Pos->getPosY() == AdvisorPos::b_down_y)) return true;
-    return false;
     return false;
 }

@@ -42,6 +42,7 @@ void Chariot::generateMove() {
             chessStep tempStep(chessNum, chessNumber(), chessCamp(), end->getPosX(), end->getPosY(), kill, chessKillNum, chessKillNumber);
             chessStepList.append(tempStep);
         }
+        delete end;
     }
     // height scale
     for(int index = 0; index <= PARAM::globalEnvironment::maxAxisOfY; index++) {
@@ -59,7 +60,9 @@ void Chariot::generateMove() {
             chessStep tempStep(chessNum, chessNumber(), chessCamp(), end->getPosX(), end->getPosY(), kill, chessKillNum, chessKillNumber);
             chessStepList.append(tempStep);
         }
+        delete end;
     }
+    delete start;
     tranStarStepList();
 }
 
@@ -77,13 +80,21 @@ bool Chariot::canChariotMoveOrKill(SGeoPoint *start, SGeoPoint *end) {
     if(start->getPosX() - end->getPosX() == 0) {
         for(int index = qMin(start->getPosY(), end->getPosY()) + 1; index < qMax(start->getPosY(), end->getPosY()); index++) {
             SGeoPoint* middle = new SGeoPoint(start->getPosX(), index);
-            if(GlobalEnvirIn::Instance()->__isThereHasChess(middle)) return false;
+            if(GlobalEnvirIn::Instance()->__isThereHasChess(middle)) {
+                delete middle;
+                return false;
+            }
+            delete middle;
         }
     }
     if(start->getPosY() - end->getPosY() == 0) {
         for(int index = qMin(start->getPosX(), end->getPosX()) + 1; index < qMax(start->getPosX(), end->getPosX()); index++) {
             SGeoPoint* middle = new SGeoPoint(index, start->getPosY());
-            if(GlobalEnvirIn::Instance()->__isThereHasChess(middle)) return false;
+            if(GlobalEnvirIn::Instance()->__isThereHasChess(middle)) {
+                delete middle;
+                return false;
+            }
+            delete middle;
         }
     }
     return !GlobalEnvirIn::Instance()->__isThereHasOurChess(chessCamp(), end);

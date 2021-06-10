@@ -659,6 +659,7 @@ bool GlobalEnvironment::__isThereHasChess(SGeoPoint *Pos) {
             for(int index = 1; index <= numberNormal; index++) {
                 if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) return true;
             }
+            break;
         }
     }
 
@@ -1137,12 +1138,14 @@ int GlobalEnvironment::__countChessInPath(SGeoPoint *start, SGeoPoint *end) {
         for(int index = qMin(start->getPosY(), end->getPosY()) + 1; index < qMax(start->getPosY(), end->getPosY()); index++) {
             SGeoPoint* middle = new SGeoPoint(start->getPosX(), index);
             if(GlobalEnvirIn::Instance()->__isThereHasChess(middle)) count++;
+            delete middle;
         }
     }
     if(start->getPosY() - end->getPosY() == 0) {
         for(int index = qMin(start->getPosX(), end->getPosX()) + 1; index < qMax(start->getPosX(), end->getPosX()); index++) {
             SGeoPoint* middle = new SGeoPoint(index, start->getPosY());
             if(GlobalEnvirIn::Instance()->__isThereHasChess(middle)) count++;
+            delete middle;
         }
     }
     return count;

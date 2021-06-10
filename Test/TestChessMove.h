@@ -28,6 +28,7 @@ public:
     virtual void testWhichChessOnThere();
 
     virtual void testMemory();
+    virtual void testDBG();
 
     virtual void testHorseGenerateMove();
     virtual void testElephantGenerateMove();

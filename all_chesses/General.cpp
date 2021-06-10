@@ -48,7 +48,10 @@ void General::generateMove() {
     SGeoPoint* start = new SGeoPoint(getPosX(), getPosY());
     for(int index = 0; index < FourDirection; index++) {
         SGeoPoint* end = new SGeoPoint(getPosX() + GeneralPos::FourPoints.at(index).first, getPosY() + GeneralPos::FourPoints.at(index).second);
-        if(!GlobalEnvirIn::Instance()->__isPosInBoard(end)) continue;
+        if(!GlobalEnvirIn::Instance()->__isPosInBoard(end)) {
+            delete end;
+            continue;
+        }
         if((generalInPavilion(start) && generalInPavilion(end)) && canGeneralMoveOrKill(start, end)) {
             int chessKillNum = -1;
             int chessKillNumber = -1;
@@ -61,7 +64,9 @@ void General::generateMove() {
             chessStep tempStep(chessNum, chessNumber(), chessCamp(), getPosX() + GeneralPos::FourPoints.at(index).first, getPosY() + GeneralPos::FourPoints.at(index).second, kill, chessKillNum, chessKillNumber);
             chessStepList.append(tempStep);
         }
+        delete end;
     }
+    delete start;
     tranStarStepList();
 }
 

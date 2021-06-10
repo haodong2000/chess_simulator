@@ -46,6 +46,8 @@ public:
     virtual int S_twoLevelStepIndex(bool redOrBlack);
     virtual void threeLevelChessing(int maxCount);
     virtual int threeLevelStepIndex(bool redOrBlack);
+    virtual void S_threeLevelChessing(int maxCount);
+    virtual int S_threeLevelStepIndex(bool redOrBlack);
     virtual void normalPlay(int maxCount);
     virtual int normalPlayIndex(bool redOrBlack);
     virtual int alpha_beta(int depth, int alpha, int beta, bool redOfBlack);

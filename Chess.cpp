@@ -87,7 +87,7 @@ void Chess::tranStarStepList() {
     const int countStep = chessStepList.size();
     SchessStepList.clear(); // init
     if(countStep == 0) {
-        qDebug() << "Chess.cpp tranStarStepList() line:89 error:chessStepList is EMPTY!!! " << chessName() << " " << chessNumber();
+        // qDebug() << "Chess.cpp tranStarStepList() line:89 error:chessStepList is EMPTY!!! " << chessName() << " " << chessNumber();
         return;
     }
     // print every element of the list
@@ -110,7 +110,9 @@ void Chess::tranStarStepList() {
         }
         chessStep* curStep = new chessStep(Num, Number, chessStepList.at(i)._chessCamp, PosX, PosY, kill, killNum, killNumber);
         SchessStepList.append(curStep);
+        // delete curStep;
     }
+    // chessStepList.clear();
 }
 
 void Chess::printStepList() {

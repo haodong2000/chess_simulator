@@ -65,10 +65,14 @@ double Horse::space_value() {
             }
             else {
                 qDebug() << "Horse.cpp space_value() line:45  error: Horse move invalid! first must 1, -1, 2, -2!";
+                delete curPos;
+                delete finalPos;
                 return 0;
             }
         }
+        delete finalPos;
     }
+    delete curPos;
     return totalValue/maxValue;
 }
 
@@ -80,8 +84,13 @@ bool Horse::canChessMove() {
     for(int index = 0; index < 8; index++) {
         SGeoPoint* finalPos = new SGeoPoint(curPos->getPosX() + HorsePos::EightPoints.at(index).first,
                                             curPos->getPosY() + HorsePos::EightPoints.at(index).second);
-        if(canHorseMove(curPos, finalPos)) return true;
+        if(canHorseMove(curPos, finalPos)) {
+            delete curPos;
+            delete finalPos;
+            return true;
+        }
     }
+    delete curPos;
     return false;
 }
 
@@ -152,6 +161,8 @@ void Horse::generateMove() {
             chessStep tempStep(chessNum, chessNumber(), chessCamp(), finalPos->getPosX(), finalPos->getPosY(), kill, chessKilledNum, chessKilledNumber);
             chessStepList.append(tempStep);
         }
+        delete finalPos;
     }
+    delete curPos;
     tranStarStepList();
 }

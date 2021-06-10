@@ -42,6 +42,7 @@ void Cannon::generateMove() {
             chessStep tempStep(chessNum, chessNumber(), chessCamp(), end->getPosX(), end->getPosY(), kill, chessKillNum, chessKillNumber);
             chessStepList.append(tempStep);
         }
+        delete end;
     }
     // height scale
     for(int index = 0; index <= PARAM::globalEnvironment::maxAxisOfY; index++) {
@@ -59,7 +60,9 @@ void Cannon::generateMove() {
             chessStep tempStep(chessNum, chessNumber(), chessCamp(), end->getPosX(), end->getPosY(), kill, chessKillNum, chessKillNumber);
             chessStepList.append(tempStep);
         }
+        delete end;
     }
+    delete start;
     tranStarStepList();
 }
 
