@@ -623,7 +623,17 @@ bool GlobalEnvironment::__isPosInBoard(SGeoPoint *Pos) {
 
 bool GlobalEnvironment::__isPosInBoard(int PosX, int PosY) {
     SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
-    return __isPosInBoard(Pos);
+//    return __isPosInBoard(Pos);
+    if(Pos->getPosX() < 0 || Pos->getPosX() > PARAM::globalEnvironment::maxAxisOfX) {
+        delete Pos;
+        return false;
+    }
+    if(Pos->getPosY() < 0 || Pos->getPosY() > PARAM::globalEnvironment::maxAxisOfY) {
+        delete Pos;
+        return false;
+    }
+    delete Pos;
+    return true;
 }
 
 bool GlobalEnvironment::__isThereHasChess(SGeoPoint *Pos) {
@@ -759,7 +769,68 @@ bool GlobalEnvironment::__isThereHasOurChess(bool camp, SGeoPoint *Pos) {
 
 bool GlobalEnvironment::__isThereHasOurChess(bool camp, int PosX, int PosY) {
     SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
-    return __isThereHasOurChess(camp, Pos);
+
+    if((Pos->getPosX() < 0 || Pos->getPosX() > PARAM::globalEnvironment::maxAxisOfX) ||
+            (Pos->getPosY() < 0 || Pos->getPosY() > PARAM::globalEnvironment::maxAxisOfY)) {
+        qDebug() << "global.cpp line:667 __isThereHasOurChess()  error:Pos out of boundary!";
+        delete Pos;
+        return true;
+    }
+
+    if(!__isThereHasChess(Pos)) {
+        delete Pos;
+        return false; // if no chess
+    }
+
+    const int numberNormal = 2;
+    const int numberSoldier = 5;
+
+    const int startIndex = camp ? 8 : 1;
+    const int chessNameIntMax = camp ? 14 : 7;
+
+    for(int chessIndex = startIndex; chessIndex <= chessNameIntMax; chessIndex++) {
+        switch (chessIndex) {
+        case Global::CHESS_TABLE::BLACK_GENERAL:
+            if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, 1), Pos)) {
+                delete Pos;
+                return true;
+            }
+            break;
+        case Global::CHESS_TABLE::RED_GENERAL:
+            if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, 1), Pos)) {
+                delete Pos;
+                return true;
+            }
+            break;
+        case Global::CHESS_TABLE::BLACK_SOLDIER:
+            for(int index = 1; index <= numberSoldier; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) {
+                    delete Pos;
+                    return true;
+                }
+            }
+            break;
+        case Global::CHESS_TABLE::RED_SOLDIER:
+            for(int index = 1; index <= numberSoldier; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) {
+                    delete Pos;
+                    return true;
+                }
+            }
+            break;
+        default:
+            for(int index = 1; index <= numberNormal; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) {
+                    delete Pos;
+                    return true;
+                }
+            }
+        }
+    }
+
+    delete Pos;
+    return false;
+    // return __isThereHasOurChess(camp, Pos);
 }
 
 bool GlobalEnvironment::__isChessOnThere(Chess *chess, SGeoPoint *Pos) {
@@ -770,7 +841,62 @@ bool GlobalEnvironment::__isChessOnThere(Chess *chess, SGeoPoint *Pos) {
 
 bool GlobalEnvironment::__isThereHasChess(int PosX, int PosY) {
     SGeoPoint* Pos = new SGeoPoint(PosX, PosY);
-    return __isThereHasChess(Pos);
+
+    if((Pos->getPosX() < 0 || Pos->getPosX() > PARAM::globalEnvironment::maxAxisOfX) ||
+            (Pos->getPosY() < 0 || Pos->getPosY() > PARAM::globalEnvironment::maxAxisOfY)) {
+        qDebug() << "global.cpp line:785 __isThereHasChess()  error:Pos out of boundary!";
+        delete Pos;
+        return true;
+    }
+
+    const int chessNameIntMax = 14;
+    const int numberNormal = 2;
+    const int numberSoldier = 5;
+
+    for(int chessIndex = 1; chessIndex <= chessNameIntMax; chessIndex++) {
+        switch (chessIndex) {
+        case Global::CHESS_TABLE::BLACK_GENERAL:
+            if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, 1), Pos)) {
+                delete Pos;
+                return true;
+            }
+            break;
+        case Global::CHESS_TABLE::RED_GENERAL:
+            if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, 1), Pos)) {
+                delete Pos;
+                return true;
+            }
+            break;
+        case Global::CHESS_TABLE::BLACK_SOLDIER:
+            for(int index = 1; index <= numberSoldier; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) {
+                    delete Pos;
+                    return true;
+                }
+            }
+            break;
+        case Global::CHESS_TABLE::RED_SOLDIER:
+            for(int index = 1; index <= numberSoldier; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) {
+                    delete Pos;
+                    return true;
+                }
+            }
+            break;
+        default:
+            for(int index = 1; index <= numberNormal; index++) {
+                if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) {
+                    delete Pos;
+                    return true;
+                }
+            }
+            break;
+        }
+    }
+
+    delete Pos;
+    return false;
+    // return __isThereHasChess(Pos);
 }
 
 void GlobalEnvironment::__killThisChess(int killNum, int killNumber) {
@@ -959,7 +1085,7 @@ int GlobalEnvironment::__calculateBlackPosValue() {
     for(int index = 1; index <= 7; index++) {
         switch (index) {
         case Global::CHESS_TABLE::BLACK_GENERAL:
-            if(__QStrOrInt2Chess(index, 1)->isAlive()) blackPosValue += __boardValueBlack[__QStrOrInt2Chess(index, 1)->getPosX()][__QStrOrInt2Chess(index, 1)->getPosY()];
+            if(__QStrOrInt2Chess(index, 1)->isAlive()) blackPosValue -= 0.5 * __boardValueBlack[__QStrOrInt2Chess(index, 1)->getPosX()][__QStrOrInt2Chess(index, 1)->getPosY()];
             break;
         case Global::CHESS_TABLE::BLACK_SOLDIER:
             for(int number = 1; number <= 5; number++) {
@@ -982,7 +1108,7 @@ int GlobalEnvironment::__calculateRedPosValue() {
     for(int index = 8; index <= 14; index++) {
         switch (index) {
         case Global::CHESS_TABLE::RED_GENERAL:
-            if(__QStrOrInt2Chess(index, 1)->isAlive()) redPosValue += __boardValueRed[__QStrOrInt2Chess(index, 1)->getPosX()][__QStrOrInt2Chess(index, 1)->getPosY()];
+            if(__QStrOrInt2Chess(index, 1)->isAlive()) redPosValue -= 0.5 * __boardValueRed[__QStrOrInt2Chess(index, 1)->getPosX()][__QStrOrInt2Chess(index, 1)->getPosY()];
             break;
         case Global::CHESS_TABLE::RED_SOLDIER:
             for(int number = 1; number <= 5; number++) {

@@ -63,7 +63,7 @@ void Cannon::generateMove() {
         delete end;
     }
     delete start;
-    tranStarStepList();
+    // tranStarStepList();
 }
 
 bool Cannon::canCannonMoveOrKill(SGeoPoint* start, SGeoPoint* end) {

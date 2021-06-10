@@ -22,6 +22,11 @@ Horse::Horse(int x, int y, QString name, bool camp, int number, bool isAlive):
 
 }
 
+Horse::~Horse() {
+    delete HorsePos::one_two;
+    delete HorsePos::two_one;
+}
+
 double Horse::space_value() {
     if(!isAlive()) return 0;
     if(!canChessMove()) return 0;
@@ -144,7 +149,7 @@ void Horse::generateMove() {
     if(!isAlive()) return;
     QString chessNameSimple = GlobalEnvirIn::Instance()->__QString2SimpleName(chessName());
     int chessNum = GlobalEnvirIn::Instance()->__QStr2intName(chessNameSimple);
-    const int indexNumber = HorsePos::EightPoints.size();
+    int indexNumber = HorsePos::EightPoints.size();
     SGeoPoint* curPos = new SGeoPoint(getPosX(), getPosY());
     for(int index = 0; index < indexNumber; index++) {
         SGeoPoint* finalPos = new SGeoPoint(curPos->getPosX() + HorsePos::EightPoints.at(index).first,
@@ -164,5 +169,5 @@ void Horse::generateMove() {
         delete finalPos;
     }
     delete curPos;
-    tranStarStepList();
+    // tranStarStepList();
 }

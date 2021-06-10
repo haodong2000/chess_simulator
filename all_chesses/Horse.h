@@ -19,6 +19,7 @@ public:
           const bool camp = false, // black is default
           const int number = 0, // 0 is an error number, only 1-5 is legal
           bool alive = true);
+    virtual ~Horse();
     virtual double space_value(); // 0~100%
     virtual bool canChessMove();
     virtual bool canHorseMove(SGeoPoint* start, SGeoPoint* end);

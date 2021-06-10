@@ -207,5 +207,5 @@ void Soldier::generateMove() {
         }
     }
     delete start;
-    tranStarStepList();
+    // tranStarStepList();
 }

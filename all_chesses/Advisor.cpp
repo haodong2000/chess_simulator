@@ -145,7 +145,7 @@ void Advisor::generateMove() {
         delete end;
     }
     delete start;
-    tranStarStepList();
+    // tranStarStepList();
 }
 
 bool Advisor::basicAdvisorMoveCondition(SGeoPoint *start, SGeoPoint *end) {

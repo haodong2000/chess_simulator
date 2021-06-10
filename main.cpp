@@ -22,7 +22,7 @@
 #include "singleGame.h"
 
 QObject* object;
-const int CHESS_PLAY_NODE = 3; // one level, two level, three level, four level
+const int CHESS_PLAY_NODE = 4; // one level, two level, three level, four level
 const bool TEST_MODE = false;
 
 int main(int argc, char *argv[])
@@ -51,14 +51,16 @@ int main(int argc, char *argv[])
     else qDebug() << "field_root loading failed!";
     GlobalEnvirIn::Instance()->__refreshBoard();
 
-    if(TEST_MODE) TestChessMoveIn::Instance()->testMemory();
-    else
+    if(TEST_MODE) {
+        TestChessMoveIn::Instance()->testMemory();
+    }
+    else {
         switch (CHESS_PLAY_NODE) {
         case 1:
-            singleGameIn::Instance()->S_oneLevelChessing(PARAM::NINE_NINE_NINE);
+            singleGameIn::Instance()->oneLevelChessing(PARAM::NINE_NINE_NINE);
             break;
         case 2:
-            singleGameIn::Instance()->S_twoLevelChessing(PARAM::NINE_NINE_NINE);
+            singleGameIn::Instance()->twoLevelChessing(PARAM::NINE_NINE_NINE);
             break;
         case 3:
             singleGameIn::Instance()->threeLevelChessing(PARAM::NINE_NINE_NINE);
@@ -70,6 +72,7 @@ int main(int argc, char *argv[])
             qDebug() << "main.cpp line:67 CHESS_PLAY_MODE inValid!!!";
             break;
         }
+    }
 
     return app.exec();
 }

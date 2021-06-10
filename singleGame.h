@@ -49,8 +49,13 @@ public:
     virtual void S_threeLevelChessing(int maxCount);
     virtual int S_threeLevelStepIndex(bool redOrBlack);
     virtual void normalPlay(int maxCount);
-    virtual int normalPlayIndex(bool redOrBlack);
-    virtual int alpha_beta(int depth, int alpha, int beta, bool redOfBlack);
+    virtual int alpha_beta_black(int depth);
+    virtual int alpha_beta_red(int depth);
+    virtual int alpha_beta_getMin(int depth, int curMin);
+    virtual int alpha_beta_getMax(int depth, int curMax);
+    virtual int  alpha_beta_try(int depth, int alpha, int beta, bool redOrBlack);
+    virtual int normalPlayIndex_old(bool redOrBlack);
+    virtual int alpha_beta_old(int depth, int alpha, int beta, bool redOfBlack);
 
     // interface
     virtual void realMove(chessStep step);

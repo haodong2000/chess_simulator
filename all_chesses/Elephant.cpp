@@ -705,5 +705,5 @@ void Elephant::generateMove() {
             }
         }
     }
-    tranStarStepList();
+    // tranStarStepList();
 }

@@ -19,7 +19,7 @@ singleGame::singleGame():
     SoriginBlackChessStepList.clear();
 //    allRedAndBlackStepList.clear();
 
-    _level = 3; // initialization, actuall level is 4
+    _level = 4; // initialization, actuall level is 4
 }
 
 void singleGame::setLevel(int level) {
@@ -1881,12 +1881,12 @@ void singleGame::normalPlay(int maxCount) {
         if(redOrBlack) curStepList.append(originRedChessStepList);
         else curStepList.append(originBlackChessStepList);
         if(redOrBlack && (!curStepList.empty())) {
-            int sizeIndex = normalPlayIndex(redOrBlack);
+            int sizeIndex = alpha_beta_red(_level);
             realMove(curStepList.at(sizeIndex));
         }
         else if(!redOrBlack && (!curStepList.empty())) {
             curStepList.append(originBlackChessStepList);
-            int sizeIndex = normalPlayIndex(redOrBlack);
+            int sizeIndex = alpha_beta_black(_level);
             realMove(curStepList.at(sizeIndex));
         }
         else {
@@ -1902,7 +1902,307 @@ void singleGame::normalPlay(int maxCount) {
     }
 }
 
-int singleGame::normalPlayIndex(bool redOrBlack) {
+int singleGame::alpha_beta_red(int depth) {
+    int retIndex = 0;
+
+    QVector<chessStep> allRed;
+    allRed.clear();
+    allRed.append(originRedChessStepList);
+    int sizeRed = allRed.size();
+
+    int minInMax = 987654321;
+
+    for(int index = 0; index < sizeRed; index++) {
+        int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRed.at(index)._chessNum, allRed.at(index)._chessNumber)->getPosX();
+        int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRed.at(index)._chessNum, allRed.at(index)._chessNumber)->getPosY();
+
+        fakeMove(allRed.at(index));
+        int maxScore = alpha_beta_getMax(depth - 1, minInMax);
+        fakeBackMove(allRed.at(index), lastPosX, lastPosY);
+
+        if(maxScore < minInMax) {
+            retIndex = index;
+            minInMax = maxScore;
+        }
+    }
+
+    return retIndex;
+}
+
+int singleGame::alpha_beta_black(int depth) {
+    int retIndex = 0;
+
+    // generateBlackAllPossibleMoves();
+    QVector<chessStep> allBlack;
+    allBlack.clear();
+    allBlack.append(originBlackChessStepList);
+    int sizeBlack = allBlack.size();
+
+    int maxInMin = -987654321;
+
+    for(int index = 0; index < sizeBlack; index++) {
+        int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlack.at(index)._chessNum, allBlack.at(index)._chessNumber)->getPosX();
+        int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlack.at(index)._chessNum, allBlack.at(index)._chessNumber)->getPosY();
+
+        fakeMove(allBlack.at(index));
+        int minScore = alpha_beta_getMin(depth - 1, maxInMin);
+        fakeBackMove(allBlack.at(index), lastPosX, lastPosY);
+
+        if(minScore > maxInMin) {
+            retIndex = index;
+            maxInMin = minScore;
+        }
+    }
+
+    return retIndex;
+
+    /*Step* ret = NULL;
+    QVector<Step*> steps;
+    getAllPossibleMove(steps);
+    int maxInAllMinScore = -300000;
+
+    while(steps.count())
+    {
+        Step* step = steps.last();
+        steps.removeLast();
+
+        fakeMove(step);
+        int minScore = getMinScore(this->_level-1, maxInAllMinScore);
+        unfakeMove(step);
+
+        if(minScore > maxInAllMinScore)
+        {
+            if(ret) delete ret;
+
+            ret = step;
+            maxInAllMinScore = minScore;
+        }
+        else
+        {
+            delete step;
+        }
+    }
+    return ret;*/
+}
+
+int singleGame::alpha_beta_getMin(int depth, int curMin) {
+    if(depth == 0) return GlobalEnvirIn::Instance()->__BoardEvaluate();
+
+    int minInMax = 987654321;
+
+    generateRedAllPossibleMoves();
+    QVector<chessStep> allRedMin;
+    allRedMin.clear();
+    allRedMin.append(originRedChessStepList);
+    int sizeAllRed = allRedMin.size();
+
+    for(int index = 0; index < sizeAllRed; index++) {
+        int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRedMin.at(index)._chessNum, allRedMin.at(index)._chessNumber)->getPosX();
+        int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRedMin.at(index)._chessNum, allRedMin.at(index)._chessNumber)->getPosY();
+
+        fakeMove(allRedMin.at(index));
+        int maxScore = alpha_beta_getMax(depth - 1, minInMax);
+        fakeBackMove(allRedMin.at(index), lastPosX, lastPosY);
+
+        if(maxScore <= curMin) {
+            return maxScore;
+        }
+
+        if(maxScore < minInMax) {
+            minInMax = maxScore;
+        }
+    }
+
+    return minInMax;
+
+}
+
+int singleGame::alpha_beta_getMax(int depth, int curMax) {
+    if(depth == 0) return GlobalEnvirIn::Instance()->__BoardEvaluate();
+
+    int maxInMin = -987654321;
+
+    generateBlackAllPossibleMoves();
+    QVector<chessStep> allBlackMax;
+    allBlackMax.clear();
+    allBlackMax.append(originBlackChessStepList);
+    int sizeAllBlack = allBlackMax.size();
+
+    for(int index = 0; index < sizeAllBlack; index++) {
+        int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlackMax.at(index)._chessNum, allBlackMax.at(index)._chessNumber)->getPosX();
+        int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlackMax.at(index)._chessNum, allBlackMax.at(index)._chessNumber)->getPosY();
+
+        fakeMove(allBlackMax.at(index));
+        int minScore = alpha_beta_getMin(depth - 1, maxInMin);
+        fakeBackMove(allBlackMax.at(index), lastPosX, lastPosY);
+
+        if(minScore >= curMax) {
+            return minScore;
+        }
+        if(minScore > maxInMin) {
+            maxInMin = minScore;
+        }
+    }
+
+    return maxInMin;
+
+}
+
+int singleGame::alpha_beta_try(int depth, int alpha, int beta, bool redOrBlack) {
+    if(depth == 1) return oneLevelStepIndex(redOrBlack); // simply compare board value
+    int size = 0;
+    int maxValue = -99999;
+    int minValue = 99999;
+    int sizeIndex = 0;
+    int currentValue = 0;
+    QVector<chessStep> levelOneStepList;
+    QVector<chessStep> levelTwoList;
+    QVector<chessStep> levelTwoEnemy;
+    levelOneStepList.clear();
+    levelTwoList.clear();
+    levelTwoEnemy.clear();
+    if(redOrBlack) {
+        levelOneStepList.clear();
+        levelOneStepList.append(originRedChessStepList);
+        size = levelOneStepList.size();
+        for(int index = 0; index < size; index++) {
+            // init
+            currentValue = 0;
+            // fakemove
+            int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelOneStepList.at(index)._chessNum, levelOneStepList.at(index)._chessNumber)->getPosX();
+            int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelOneStepList.at(index)._chessNum, levelOneStepList.at(index)._chessNumber)->getPosY();
+            fakeMove(levelOneStepList.at(index));
+//            GlobalEnvirIn::Instance()->__printBoard();
+//            GlobalEnvirIn::Instance()->__delayMsec(1000);
+
+            // into level 2
+            generateBlackAllPossibleMoves();
+//            QVector<chessStep> levelTwoList;
+            levelTwoList.clear();
+            levelTwoList.append(originBlackChessStepList);
+            // execute black
+            int blackIndex = alpha_beta_try(depth - 1, alpha, beta, false);
+            int lastBlackX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelTwoList.at(blackIndex)._chessNum, levelTwoList.at(blackIndex)._chessNumber)->getPosX();
+            int lastBlackY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelTwoList.at(blackIndex)._chessNum, levelTwoList.at(blackIndex)._chessNumber)->getPosY();
+            fakeMove(levelTwoList.at(blackIndex));
+//            GlobalEnvirIn::Instance()->__printBoard();
+//            GlobalEnvirIn::Instance()->__delayMsec(1000);
+            generateRedAllPossibleMoves(); // generate red step list after black fakeMove!!!!!
+//            QVector<chessStep> levelTwoEnemy;
+            levelTwoEnemy.clear();
+            levelTwoEnemy.append(originRedChessStepList);
+            int sizeTwo = levelTwoEnemy.size();
+            for(int indexTwo = 0; indexTwo < sizeTwo; indexTwo++) {
+                // init
+                currentValue = 0;
+                // fakemove
+                int lastPosXTwo = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelTwoEnemy.at(indexTwo)._chessNum, levelTwoEnemy.at(indexTwo)._chessNumber)->getPosX();
+                int lastPosYTwo = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelTwoEnemy.at(indexTwo)._chessNum, levelTwoEnemy.at(indexTwo)._chessNumber)->getPosY();
+                fakeMove(levelTwoEnemy.at(indexTwo));
+//                GlobalEnvirIn::Instance()->__printBoard();
+//                std::cout << originRedChessStepList.at(indexTwo)._chessNum << " " << originRedChessStepList.at(indexTwo)._chessNumber << " " << lastPosX << " " << lastPosY << std::endl;
+//                GlobalEnvirIn::Instance()->__delayMsec(1000);
+                // evaluate
+                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                // compare
+                if(currentValue < minValue) {
+                    minValue = currentValue;
+                    sizeIndex = index;
+                }
+                // restore
+                fakeBackMove(levelTwoEnemy.at(indexTwo), lastPosXTwo, lastPosYTwo);
+//                GlobalEnvirIn::Instance()->__printBoard();
+//                GlobalEnvirIn::Instance()->__delayMsec(1000);
+            }
+            // restore black
+            fakeBackMove(levelTwoList.at(blackIndex), lastBlackX, lastBlackY);
+//            GlobalEnvirIn::Instance()->__printBoard();
+
+            // evaluate
+            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            // compare
+            if(currentValue < minValue) {
+                minValue = currentValue;
+                sizeIndex = index;
+            }
+            // restore
+            fakeBackMove(levelOneStepList.at(index), lastPosX, lastPosY);
+//            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        levelOneStepList.clear();
+        levelTwoList.clear();
+        levelTwoEnemy.clear();
+        // return the best
+        return sizeIndex;
+    }
+    else {
+        levelOneStepList.clear();
+        levelOneStepList.append(originBlackChessStepList);
+        size = levelOneStepList.size();
+        for(int index = 0; index < size; index++) {
+            // init
+            currentValue = 0;
+            // fakemove
+            int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelOneStepList.at(index)._chessNum, levelOneStepList.at(index)._chessNumber)->getPosX();
+            int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelOneStepList.at(index)._chessNum, levelOneStepList.at(index)._chessNumber)->getPosY();
+            fakeMove(levelOneStepList.at(index));
+
+            // into level 2
+            generateRedAllPossibleMoves();
+//            QVector<chessStep> levelTwoList;
+            levelTwoList.clear();
+            levelTwoList.append(originRedChessStepList);
+            // execute red
+            int redIndex = alpha_beta_try(depth - 1, alpha, beta, true);
+            int lastRedX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelTwoList.at(redIndex)._chessNum, levelTwoList.at(redIndex)._chessNumber)->getPosX();
+            int lastRedY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelTwoList.at(redIndex)._chessNum, levelTwoList.at(redIndex)._chessNumber)->getPosY();
+            fakeMove(levelTwoList.at(redIndex));
+            generateBlackAllPossibleMoves(); // generate black after red fakeMove!!!!
+//            QVector<chessStep> levelTwoEnemy;
+            levelTwoEnemy.clear();
+            levelTwoEnemy.append(originBlackChessStepList);
+            int sizeTwo = levelTwoEnemy.size();
+            for(int indexTwo = 0; indexTwo < sizeTwo; indexTwo++) {
+                // init
+                currentValue = 0;
+                // fakemove
+                int lastPosXTwo = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelTwoEnemy.at(indexTwo)._chessNum, levelTwoEnemy.at(indexTwo)._chessNumber)->getPosX();
+                int lastPosYTwo = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelTwoEnemy.at(indexTwo)._chessNum, levelTwoEnemy.at(indexTwo)._chessNumber)->getPosY();
+                fakeMove(levelTwoEnemy.at(indexTwo));
+                // evaluate
+                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                // compare
+                if(currentValue > maxValue) {
+                    maxValue = currentValue;
+                    sizeIndex = index;
+                }
+                // restore
+                fakeBackMove(levelTwoEnemy.at(indexTwo), lastPosXTwo, lastPosYTwo);
+            }
+            // restore red
+            fakeBackMove(levelTwoList.at(redIndex), lastRedX, lastRedY);
+
+            // evaluate
+            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            // compare
+            if(currentValue > maxValue) {
+                maxValue = currentValue;
+                sizeIndex = index;
+            }
+            // restore
+            fakeBackMove(levelOneStepList.at(index), lastPosX, lastPosY);
+        }
+        levelOneStepList.clear();
+        levelTwoList.clear();
+        levelTwoEnemy.clear();
+        // return the best
+        return sizeIndex;
+    }
+    qDebug() << "singleGame.cpp alpha_beta_try() line:2055";
+    return 0;
+}
+
+int singleGame::normalPlayIndex_old(bool redOrBlack) {
     QVector<chessStep> allRedAndBlackStepList;
     generateRedAllPossibleMoves(); // refresh
     generateBlackAllPossibleMoves();
@@ -1930,7 +2230,7 @@ int singleGame::normalPlayIndex(bool redOrBlack) {
 //        GlobalEnvirIn::Instance()->__delayMsec(1000);
         // alpha-beta
         // curValue = alpha_beta(_level, initAlpha, initBeta, redOrBlack);
-        curValue = alpha_beta(2, initAlpha, initBeta, redOrBlack);
+        curValue = alpha_beta_old(2, initAlpha, initBeta, redOrBlack);
         fakeBackMove(allRedAndBlackStepList.at(index), lastPosX, lastPosY);
 //        std::cout << "BACK ***********************************************************" << std::endl;
 //        GlobalEnvirIn::Instance()->__printBoard();
@@ -1951,7 +2251,7 @@ int singleGame::normalPlayIndex(bool redOrBlack) {
     return 0;
 }
 
-int singleGame::alpha_beta(int depth, int alpha, int beta, bool redOrBlack) {
+int singleGame::alpha_beta_old(int depth, int alpha, int beta, bool redOrBlack) {
     /*function alpha-beta(depth, alpha, beta) {
         for every moves:
             fakeMove();
@@ -1986,7 +2286,7 @@ int singleGame::alpha_beta(int depth, int alpha, int beta, bool redOrBlack) {
         fakeMove(allRedAndBlackStepList.at(index));
 //        GlobalEnvirIn::Instance()->__printBoard();
 //        GlobalEnvirIn::Instance()->__delayMsec(1000);
-        retValue = alpha_beta(depth - 1, alpha, beta, !redOrBlack);
+        retValue = alpha_beta_old(depth - 1, alpha, beta, !redOrBlack);
         fakeBackMove(allRedAndBlackStepList.at(index), lastPosX, lastPosY);
 //        GlobalEnvirIn::Instance()->__printBoard();
 //        GlobalEnvirIn::Instance()->__delayMsec(1000);

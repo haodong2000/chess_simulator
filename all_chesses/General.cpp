@@ -67,7 +67,7 @@ void General::generateMove() {
         delete end;
     }
     delete start;
-    tranStarStepList();
+    // tranStarStepList();
 }
 
 bool General::canGeneralMoveOrKill(SGeoPoint *start, SGeoPoint *end) {

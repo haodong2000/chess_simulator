@@ -61,9 +61,11 @@ void TestChessMove::testMemory() {
     while(true) {
 //        singleGameIn::Instance()->generateRedAllPossibleMoves();
 //        singleGameIn::Instance()->generateBlackAllPossibleMoves();
+        QString chessNameSimple = GlobalEnvirIn::Instance()->__QString2SimpleName(Ab_gen_1->chessName());
+        int chessNum = GlobalEnvirIn::Instance()->__QStr2intName(chessNameSimple);
         Ab_gen_1->generateMove();
         Ab_adv_1->generateMove();
-        Ab_ele_1->generateMove();
+        Ab_ele_1->generateMove(); ////////////////////////////
         Ab_hor_1->generateMove();
         Ab_cha_1->generateMove();
         Ab_can_1->generateMove();

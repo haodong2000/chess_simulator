@@ -63,7 +63,7 @@ void Chariot::generateMove() {
         delete end;
     }
     delete start;
-    tranStarStepList();
+    // tranStarStepList();
 }
 
 bool Chariot::canChariotMoveOrKill(SGeoPoint *start, SGeoPoint *end) {
