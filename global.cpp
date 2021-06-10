@@ -91,14 +91,14 @@ namespace Global {
         {CHESS_TABLE::BLACK_ELEPHANT, 2*175},
         {CHESS_TABLE::BLACK_HORSE   , 2*400},
         {CHESS_TABLE::BLACK_CHARIOT , 2*600},
-        {CHESS_TABLE::BLACK_CANNON  , 2*350},
+        {CHESS_TABLE::BLACK_CANNON  , 2*400},
         {CHESS_TABLE::BLACK_SOLDIER , 2*150},
         {CHESS_TABLE::RED_GENERAL , 2*1000},
         {CHESS_TABLE::RED_ADVISOR , 2*200},
         {CHESS_TABLE::RED_ELEPHANT, 2*175},
         {CHESS_TABLE::RED_HORSE   , 2*400},
         {CHESS_TABLE::RED_CHARIOT , 2*600},
-        {CHESS_TABLE::RED_CANNON  , 2*350},
+        {CHESS_TABLE::RED_CANNON  , 2*400},
         {CHESS_TABLE::RED_SOLDIER , 2*150}
     };
 
@@ -917,6 +917,19 @@ void GlobalEnvironment::__setGameTurn(bool whosTurn) {
     object->setProperty("ai_turn", whosTurn);
 }
 
+void GlobalEnvironment::__refershPosValueUnit() {
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            __boardValueBlack[j][i] = __boardValueBlackUnit(j, i);
+        }
+    }
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            __boardValueRed[j][i] = __boardValueRedUnit(j, i);
+        }
+    }
+}
+
 int GlobalEnvironment::__BoardEvaluate() {
     if(Ab_gen_1->isAlive() == false) return -99999;
     if(Ar_gen_1->isAlive() == false) return 99999;
@@ -925,6 +938,7 @@ int GlobalEnvironment::__BoardEvaluate() {
     // the third is the flexibility and cooperation value of the piece;
     // the fourth is the threat and protection value;
     // the fifth is the dynamic adjustment value.
+//    __refershPosValueUnit();
     int blackValue = 0;
     int redValue = 0;
     blackValue += __calculateBlackChessValue();
@@ -1127,7 +1141,7 @@ int GlobalEnvironment::__calculateRedPosValue() {
 }
 
 int GlobalEnvironment::__boardValueBlackUnit(int x, int y) {
-    const int rate = (12 + __isWholeBoardEntire() * 4)*4;
+    const int rate = 12 + __isWholeBoardEntire() * 4;
     const int base = 75;
     int gen_y = __QStrOrInt2Chess(Global::CHESS_TABLE::RED_GENERAL, 1)->getPosY();
     int gen_x = __QStrOrInt2Chess(Global::CHESS_TABLE::RED_GENERAL, 1)->getPosX();
@@ -1136,7 +1150,7 @@ int GlobalEnvironment::__boardValueBlackUnit(int x, int y) {
 }
 
 int GlobalEnvironment::__boardValueRedUnit(int x, int y) {
-    const int rate = (12 + __isWholeBoardEntire() * 4)*4;
+    const int rate = 12 + __isWholeBoardEntire() * 4;
     const int base = 75;
     int gen_y = __QStrOrInt2Chess(Global::CHESS_TABLE::BLACK_GENERAL, 1)->getPosY();
     int gen_x = __QStrOrInt2Chess(Global::CHESS_TABLE::BLACK_GENERAL, 1)->getPosX();

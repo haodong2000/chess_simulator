@@ -50,6 +50,7 @@ public:
     virtual void __killThisChess(int killNum, int killNumber);
     virtual void __fakeKillThisChess(int killNum, int killNumber);
     virtual void __setGameTurn(bool whosTurn);
+    virtual void __refershPosValueUnit();
     virtual int __BoardEvaluate();
     virtual int __calculateBlackSpaceValue();
     virtual int __calculateRedSpaceValue();

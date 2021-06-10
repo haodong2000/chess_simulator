@@ -28,6 +28,10 @@ void Qml_Connection::changeChessPos(int chessName, int number, bool camp, SGeoPo
     object->setProperty((name + QString("_posY")).toLatin1(), coordinateIn::Instance()->tranRealPosY(Pos->getPosY()));
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(Pos->getPosX());
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(Pos->getPosY());
+
+    if(chessName == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL || chessName == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL) {
+        GlobalEnvirIn::Instance()->__refershPosValueUnit();
+    }
 }
 
 void Qml_Connection::changeChessPos(QString chessName, int number, bool camp, SGeoPoint *Pos) {
@@ -57,6 +61,10 @@ void Qml_Connection::changeChessPos(int chessName, int number, bool camp, int de
     object->setProperty((name + QString("_posY")).toLatin1(), coordinateIn::Instance()->tranRealPosY(posY));
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(posX);
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(posY);
+
+    if(chessName == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL || chessName == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL) {
+        GlobalEnvirIn::Instance()->__refershPosValueUnit();
+    }
 }
 
 void Qml_Connection::changeChessPos(QString chessName, int number, bool camp, int deltaX, int deltaY) {
@@ -99,6 +107,10 @@ void Qml_Connection::fakeChangeChessPos(int chessName, int number, bool camp, SG
 
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(Pos->getPosX());
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(Pos->getPosY());
+
+    if(chessName == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL || chessName == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL) {
+        GlobalEnvirIn::Instance()->__refershPosValueUnit();
+    }
 }
 
 void Qml_Connection::fakeChangeChessPos(QString chessName, int number, bool camp, SGeoPoint *Pos) {
@@ -126,6 +138,10 @@ void Qml_Connection::fakeChangeChessPos(int chessName, int number, bool camp, in
 
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(posX);
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(posY);
+
+    if(chessName == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL || chessName == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL) {
+        GlobalEnvirIn::Instance()->__refershPosValueUnit();
+    }
 }
 
 void Qml_Connection::fakeChangeChessPos(QString chessName, int number, bool camp, int deltaX, int deltaY) {
@@ -164,6 +180,10 @@ void Qml_Connection::fakeBackChangeChessPos(int chessName, int number, bool camp
 
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(posX);
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(posY);
+
+    if(chessName == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL || chessName == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL) {
+        GlobalEnvirIn::Instance()->__refershPosValueUnit();
+    }
 }
 
 void Qml_Connection::fakeBackChangeChessPos(QString chessName, int number, bool camp, int deltaX, int deltaY) {

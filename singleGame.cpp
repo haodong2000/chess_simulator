@@ -1917,8 +1917,12 @@ int singleGame::alpha_beta_red(int depth) {
         int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRed.at(index)._chessNum, allRed.at(index)._chessNumber)->getPosY();
 
         fakeMove(allRed.at(index));
+//        GlobalEnvirIn::Instance()->__printBoard();
+//        GlobalEnvirIn::Instance()->__delayMsec(500);
         int maxScore = alpha_beta_getMax(depth - 1, minInMax);
         fakeBackMove(allRed.at(index), lastPosX, lastPosY);
+//        GlobalEnvirIn::Instance()->__printBoard();
+//        GlobalEnvirIn::Instance()->__delayMsec(500);
 
         if(maxScore < minInMax) {
             retIndex = index;
