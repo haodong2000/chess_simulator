@@ -22,8 +22,8 @@
 #include "singleGame.h"
 
 QObject* object;
-const int CHESS_PLAY_MODE = 4; // one level, two level, three level, four level
-const bool TEST_MODE = false;
+static const int CHESS_PLAY_MODE = 4; // one level, two level, three level, four level of stimulation
+static const bool TEST_MODE = false;
 
 int main(int argc, char *argv[])
 {

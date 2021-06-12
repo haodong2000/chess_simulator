@@ -49,6 +49,8 @@ public:
     virtual void S_threeLevelChessing(int maxCount);
     virtual int S_threeLevelStepIndex(bool redOrBlack);
     virtual void normalPlay(int maxCount);
+    virtual void normalPlay_HumanVSAI(int maxCount);
+    virtual void normalPlay_HumanVSAI_CIMC(int maxCount);
     virtual int alpha_beta_black(int depth);
     virtual int alpha_beta_red(int depth);
     virtual int alpha_beta_getMin(int depth, int curMin);

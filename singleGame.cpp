@@ -581,6 +581,7 @@ void singleGame::oneLevelChessing(int maxCount) {
         if(gameIsOn == false) {
             if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
             else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
     }
@@ -794,6 +795,7 @@ void singleGame::twoLevelChessing(int maxCount) {
         if(gameIsOn == false) {
             if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
             else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
     }
@@ -1209,6 +1211,7 @@ void singleGame::threeLevelChessing(int maxCount) {
         if(gameIsOn == false) {
             if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
             else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
     }
@@ -1859,6 +1862,102 @@ int singleGame::S_threeLevelStepIndex(bool redOrBlack) {
     return 0;
 }
 
+void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
+    // alpha-beta
+    // human: red
+    // AI: black
+    bool gameIsOn = true;
+    bool redOrBlack = true;
+    int count = 0;
+    const int delayMs = 25;
+    while(gameIsOn && (count++) < maxCount) {
+        std::cout << "count chess moves -> " << count << std::endl;
+        GlobalEnvirIn::Instance()->__printBoard();
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
+
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+        generateRedAllPossibleMoves(); // no use
+        generateBlackAllPossibleMoves();
+        QVector<chessStep> curStepList; // memory
+        curStepList.clear();
+        if(redOrBlack) curStepList.append(originRedChessStepList); // no use
+        else curStepList.append(originBlackChessStepList);
+        if(redOrBlack && (!curStepList.empty())) {
+            // @TODO
+            // just refersh the bosrd once the human has finished his turn
+            // if the board unchanged(from vision), remain
+            // once changed(from vision), break
+        }
+        else if(!redOrBlack && (!curStepList.empty())) {
+            curStepList.append(originBlackChessStepList);
+            int sizeIndex = alpha_beta_black(_level);
+            realMove(curStepList.at(sizeIndex));
+        }
+        else {
+            qDebug() << "singleGame.cpp line:499 normalPlay() error: curStepList is EMPTY!!!!!";
+            return;
+        }
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        if(gameIsOn == false) {
+            if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        redOrBlack = !redOrBlack;
+    }
+}
+
+void singleGame::normalPlay_HumanVSAI(int maxCount) {
+    // alpha-beta
+    // human: red
+    // AI: black
+    bool gameIsOn = true;
+    bool redOrBlack = true;
+    int count = 0;
+    const int delayMs = 25;
+    while(gameIsOn && (count++) < maxCount) {
+        std::cout << "count chess moves -> " << count << std::endl;
+        GlobalEnvirIn::Instance()->__printBoard();
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
+
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+        generateRedAllPossibleMoves(); // no use
+        generateBlackAllPossibleMoves();
+        QVector<chessStep> curStepList; // memory
+        curStepList.clear();
+        if(redOrBlack) curStepList.append(originRedChessStepList); // no use
+        else curStepList.append(originBlackChessStepList);
+        if(redOrBlack && (!curStepList.empty())) {
+            // @TODO
+            // just refersh the bosrd once the human has finished his turn
+            // if the board unchanged(from mousearea), remain
+            // once changed(from mousearea), break
+        }
+        else if(!redOrBlack && (!curStepList.empty())) {
+            curStepList.append(originBlackChessStepList);
+            int sizeIndex = alpha_beta_black(_level);
+            realMove(curStepList.at(sizeIndex));
+        }
+        else {
+            qDebug() << "singleGame.cpp line:499 normalPlay() error: curStepList is EMPTY!!!!!";
+            return;
+        }
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        if(gameIsOn == false) {
+            if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        redOrBlack = !redOrBlack;
+    }
+}
+
 void singleGame::normalPlay(int maxCount) {
     // alpha-beta
     bool gameIsOn = true;
@@ -1897,6 +1996,7 @@ void singleGame::normalPlay(int maxCount) {
         if(gameIsOn == false) {
             if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
             else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
     }
