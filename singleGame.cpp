@@ -587,6 +587,45 @@ void singleGame::oneLevelChessing(int maxCount) {
     }
 }
 
+void singleGame::oneLevelChessing_HumanVSAI(int maxCount) {
+    // one level test, AI is black
+    bool gameIsOn = true;
+    bool redOrBlack = true;
+    int count = 0;
+    const int delayMs = 500;
+    while(gameIsOn && (count++) < maxCount) {
+        std::cout << "count chess moves -> " << count << std::endl;
+        GlobalEnvirIn::Instance()->__printBoard();
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
+
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+        generateRedAllPossibleMoves();
+        generateBlackAllPossibleMoves();
+        if(redOrBlack && (!originRedChessStepList.empty())) {
+            while(!humanMove());
+        }
+        else if(!redOrBlack && (!originBlackChessStepList.empty())) {
+            int sizeIndex = oneLevelStepIndex(redOrBlack);
+            realMove(originBlackChessStepList.at(sizeIndex));
+        }
+        else {
+            qDebug() << "singleGame.cpp line:616 oneLevelChessing_HumanVSAI() error: originRedChessStepList or originBlackChessStepList is EMPTY!!!!!";
+            return;
+        }
+
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        if(gameIsOn == false) {
+            if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        redOrBlack = !redOrBlack;
+    }
+}
+
 void singleGame::S_oneLevelChessing(int maxCount) {
     // one level test, AI is black
     bool gameIsOn = true;
@@ -649,7 +688,7 @@ int singleGame::oneLevelStepIndex(bool redOrBlack) {
             int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(originRedChessStepList.at(index)._chessNum, originRedChessStepList.at(index)._chessNumber)->getPosY();
             fakeMove(originRedChessStepList.at(index));
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue < minValue) {
                 minValue = currentValue;
@@ -673,7 +712,7 @@ int singleGame::oneLevelStepIndex(bool redOrBlack) {
             int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(originBlackChessStepList.at(index)._chessNum, originBlackChessStepList.at(index)._chessNumber)->getPosY();
             fakeMove(originBlackChessStepList.at(index));
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue > maxValue) {
                 maxValue = currentValue;
@@ -709,7 +748,7 @@ int singleGame::S_oneLevelStepIndex(bool redOrBlack) {
 //            GlobalEnvirIn::Instance()->__printBoard();
 //            GlobalEnvirIn::Instance()->__delayMsec(500);
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue < minValue) {
                 minValue = currentValue;
@@ -735,7 +774,7 @@ int singleGame::S_oneLevelStepIndex(bool redOrBlack) {
             int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(SoriginBlackChessStepList.at(index)->_chessNum, SoriginBlackChessStepList.at(index)->_chessNumber)->getPosY();
             fakeMove(SoriginBlackChessStepList.at(index));
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue > maxValue) {
                 maxValue = currentValue;
@@ -788,6 +827,53 @@ void singleGame::twoLevelChessing(int maxCount) {
         }
         else {
             qDebug() << "singleGame.cpp line:499 twoLevelChessing() error: originRedChessStepList or originBlackChessStepList is EMPTY!!!!!";
+            return;
+        }
+
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        if(gameIsOn == false) {
+            if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        redOrBlack = !redOrBlack;
+    }
+}
+
+void singleGame::twoLevelChessing_HumanVSAI(int maxCount) {
+    // two level test, AI is black
+    bool gameIsOn = true;
+    bool redOrBlack = true;
+    int count = 0;
+    const int delayMs = 500;
+    QVector<chessStep> curStepList; // memory
+    curStepList.clear();
+    while(gameIsOn && (count++) < maxCount) {
+        std::cout << "count chess moves -> " << count << std::endl;
+        GlobalEnvirIn::Instance()->__printBoard();
+        int value = GlobalEnvirIn::Instance()->__BoardEvaluate();
+        std::cout << "current value     -> " << value << std::endl;
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
+
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+        generateRedAllPossibleMoves();
+        generateBlackAllPossibleMoves();
+//        QVector<chessStep> curStepList; // memory
+        curStepList.clear();
+        if(redOrBlack) curStepList.append(originRedChessStepList);
+        else curStepList.append(originBlackChessStepList);
+        if(redOrBlack && (!curStepList.empty())) {
+            while(!humanMove());
+        }
+        else if(!redOrBlack && (!curStepList.empty())) {
+            int sizeIndex = twoLevelStepIndex(redOrBlack);
+            realMove(curStepList.at(sizeIndex));
+        }
+        else {
+            qDebug() << "singleGame.cpp line:877 twoLevelChessing_HumanVSAI() error: originRedChessStepList or originBlackChessStepList is EMPTY!!!!!";
             return;
         }
 
@@ -905,7 +991,7 @@ int singleGame::S_twoLevelStepIndex(bool redOrBlack) {
 //                GlobalEnvirIn::Instance()->__printBoard();
 //                GlobalEnvirIn::Instance()->__delayMsec(1000);
                 // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                 // compare
                 if(currentValue < minValue) {
                     minValue = currentValue;
@@ -922,7 +1008,7 @@ int singleGame::S_twoLevelStepIndex(bool redOrBlack) {
 //            GlobalEnvirIn::Instance()->__delayMsec(1000);
 
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue < minValue) {
                 minValue = currentValue;
@@ -977,7 +1063,7 @@ int singleGame::S_twoLevelStepIndex(bool redOrBlack) {
                 int lastPosYTwo = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelTwoEnemy.at(indexTwo)->_chessNum, levelTwoEnemy.at(indexTwo)->_chessNumber)->getPosY();
                 fakeMove(levelTwoEnemy.at(indexTwo));
                 // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                 // compare
                 if(currentValue > maxValue) {
                     maxValue = currentValue;
@@ -990,7 +1076,7 @@ int singleGame::S_twoLevelStepIndex(bool redOrBlack) {
             fakeBackMove(levelTwoList.at(redIndex), lastRedX, lastRedY);
 
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue > maxValue) {
                 maxValue = currentValue;
@@ -1066,7 +1152,7 @@ int singleGame::twoLevelStepIndex(bool redOrBlack) {
 //                std::cout << originRedChessStepList.at(indexTwo)._chessNum << " " << originRedChessStepList.at(indexTwo)._chessNumber << " " << lastPosX << " " << lastPosY << std::endl;
 //                GlobalEnvirIn::Instance()->__delayMsec(1000);
                 // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                 // compare
                 if(currentValue < minValue) {
                     minValue = currentValue;
@@ -1082,7 +1168,7 @@ int singleGame::twoLevelStepIndex(bool redOrBlack) {
 //            GlobalEnvirIn::Instance()->__printBoard();
 
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue < minValue) {
                 minValue = currentValue;
@@ -1133,7 +1219,7 @@ int singleGame::twoLevelStepIndex(bool redOrBlack) {
                 int lastPosYTwo = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelTwoEnemy.at(indexTwo)._chessNum, levelTwoEnemy.at(indexTwo)._chessNumber)->getPosY();
                 fakeMove(levelTwoEnemy.at(indexTwo));
                 // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                 // compare
                 if(currentValue > maxValue) {
                     maxValue = currentValue;
@@ -1146,7 +1232,7 @@ int singleGame::twoLevelStepIndex(bool redOrBlack) {
             fakeBackMove(levelTwoList.at(redIndex), lastRedX, lastRedY);
 
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue > maxValue) {
                 maxValue = currentValue;
@@ -1204,6 +1290,57 @@ void singleGame::threeLevelChessing(int maxCount) {
         }
         else {
             qDebug() << "singleGame.cpp line:499 threeLevelChessing() error: originRedChessStepList or originBlackChessStepList is EMPTY!!!!!";
+            return;
+        }
+
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        if(gameIsOn == false) {
+            if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        redOrBlack = !redOrBlack;
+    }
+}
+
+void singleGame::threeLevelChessing_HumanVSAI(int maxCount) {
+    // three level test, AI is black
+    bool gameIsOn = true;
+    bool redOrBlack = true;
+    int count = 0;
+    const int delayMs = 50;
+    QVector<chessStep> curStepList;
+    curStepList.clear();
+    while(gameIsOn && (count++) < maxCount) {
+        std::cout << "count chess moves -> " << count << std::endl;
+        GlobalEnvirIn::Instance()->__printBoard();
+        int value = GlobalEnvirIn::Instance()->__BoardEvaluate();
+        std::cout << "current value     -> " << value << std::endl;
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
+
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+//        QVector<chessStep> curStepList; // memory
+        curStepList.clear();
+        if(redOrBlack) {
+            generateRedAllPossibleMoves();
+            curStepList.append(originRedChessStepList);
+        }
+        else {
+            generateBlackAllPossibleMoves();
+            curStepList.append(originBlackChessStepList);
+        }
+        if(redOrBlack && (!curStepList.empty())) {
+            while(!humanMove());
+        }
+        else if(!redOrBlack && (!curStepList.empty())) {
+            int sizeIndex = threeLevelStepIndex(redOrBlack);
+            realMove(curStepList.at(sizeIndex));
+        }
+        else {
+            qDebug() << "singleGame.cpp line:1343 threeLevelChessing_HumanVSAI() error: originRedChessStepList or originBlackChessStepList is EMPTY!!!!!";
             return;
         }
 
@@ -1361,7 +1498,7 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
 //                            GlobalEnvirIn::Instance()->__delayMsec(500);
 
                     // evaluate
-                    currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                    currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                     // compare
                     if(currentValue < minValue) {
                         minValue = currentValue;
@@ -1373,18 +1510,18 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
 //                            GlobalEnvirIn::Instance()->__delayMsec(500);
                 }
 
-                // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
-                // compare
-                if(currentValue < minValue) {
-                    minValue = currentValue;
-                    sizeIndex = index;
-                }
+//                // evaluate
+//                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+//                // compare
+//                if(currentValue < minValue) {
+//                    minValue = currentValue;
+//                    sizeIndex = index;
+//                }
                 // restore
                 fakeBackMove(levelFourStepList.at(indexFour), lastFourPosX, lastFourPosY);
 
                 // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                 // compare
                 if(currentValue < minValue) {
                     minValue = currentValue;
@@ -1397,20 +1534,20 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
             }
 
 
-            // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
-            // compare
-            if(currentValue < minValue) {
-                minValue = currentValue;
-                sizeIndex = index;
-            }
+//            // evaluate
+//            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+//            // compare
+//            if(currentValue < minValue) {
+//                minValue = currentValue;
+//                sizeIndex = index;
+//            }
             // restore
             fakeBackMove(levelTwoStepList.at(indexTwo), lastTwoPosX, lastTwoPosY);
 //            GlobalEnvirIn::Instance()->__printBoard();
 //            GlobalEnvirIn::Instance()->__delayMsec(500);
 
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue < minValue) {
                 minValue = currentValue;
@@ -1497,7 +1634,7 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
                     int lastFivePosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelFiveStepList.at(indexFive)._chessNum, levelFiveStepList.at(indexFive)._chessNumber)->getPosY();
                     fakeMove(levelFiveStepList.at(indexFive));
                     // evaluate
-                    currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                    currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                     // compare
                     if(currentValue > maxValue) {
                         maxValue = currentValue;
@@ -1507,18 +1644,18 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
                     fakeBackMove(levelFiveStepList.at(indexFive), lastFivePosX, lastFivePosY);
                 }
 
-                // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
-                // compare
-                if(currentValue > maxValue) {
-                    maxValue = currentValue;
-                    sizeIndex = index;
-                }
+//                // evaluate
+//                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+//                // compare
+//                if(currentValue > maxValue) {
+//                    maxValue = currentValue;
+//                    sizeIndex = index;
+//                }
                 // restore
                 fakeBackMove(levelFourStepList.at(indexFour), lastFourPosX, lastFourPosY);
 
                 // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                 // compare
                 if(currentValue > maxValue) {
                     maxValue = currentValue;
@@ -1529,19 +1666,19 @@ int singleGame::threeLevelStepIndex(bool redOrBlack) {
             }
 
 
-            // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
-            // compare
-            if(currentValue > maxValue) {
-                maxValue = currentValue;
-                sizeIndex = index;
-            }
+//            // evaluate
+//            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+//            // compare
+//            if(currentValue > maxValue) {
+//                maxValue = currentValue;
+//                sizeIndex = index;
+//            }
             // restore
             fakeBackMove(levelTwoStepList.at(indexTwo), lastTwoPosX, lastTwoPosY);
 
 
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue > maxValue) {
                 maxValue = currentValue;
@@ -1658,7 +1795,7 @@ int singleGame::S_threeLevelStepIndex(bool redOrBlack) {
 //                            GlobalEnvirIn::Instance()->__delayMsec(500);
 
                     // evaluate
-                    currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                    currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                     // compare
                     if(currentValue < minValue) {
                         minValue = currentValue;
@@ -1671,7 +1808,7 @@ int singleGame::S_threeLevelStepIndex(bool redOrBlack) {
                 }
 
                 // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                 // compare
                 if(currentValue < minValue) {
                     minValue = currentValue;
@@ -1681,7 +1818,7 @@ int singleGame::S_threeLevelStepIndex(bool redOrBlack) {
                 fakeBackMove(levelFourStepList.at(indexFour), lastFourPosX, lastFourPosY);
 
                 // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                 // compare
                 if(currentValue < minValue) {
                     minValue = currentValue;
@@ -1695,7 +1832,7 @@ int singleGame::S_threeLevelStepIndex(bool redOrBlack) {
 
 
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue < minValue) {
                 minValue = currentValue;
@@ -1707,7 +1844,7 @@ int singleGame::S_threeLevelStepIndex(bool redOrBlack) {
 //            GlobalEnvirIn::Instance()->__delayMsec(500);
 
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue < minValue) {
                 minValue = currentValue;
@@ -1794,7 +1931,7 @@ int singleGame::S_threeLevelStepIndex(bool redOrBlack) {
                     int lastFivePosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelFiveStepList.at(indexFive)->_chessNum, levelFiveStepList.at(indexFive)->_chessNumber)->getPosY();
                     fakeMove(levelFiveStepList.at(indexFive));
                     // evaluate
-                    currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                    currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                     // compare
                     if(currentValue > maxValue) {
                         maxValue = currentValue;
@@ -1805,7 +1942,7 @@ int singleGame::S_threeLevelStepIndex(bool redOrBlack) {
                 }
 
                 // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                 // compare
                 if(currentValue > maxValue) {
                     maxValue = currentValue;
@@ -1815,7 +1952,7 @@ int singleGame::S_threeLevelStepIndex(bool redOrBlack) {
                 fakeBackMove(levelFourStepList.at(indexFour), lastFourPosX, lastFourPosY);
 
                 // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                 // compare
                 if(currentValue > maxValue) {
                     maxValue = currentValue;
@@ -1827,7 +1964,7 @@ int singleGame::S_threeLevelStepIndex(bool redOrBlack) {
 
 
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue > maxValue) {
                 maxValue = currentValue;
@@ -1838,7 +1975,7 @@ int singleGame::S_threeLevelStepIndex(bool redOrBlack) {
 
 
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue > maxValue) {
                 maxValue = currentValue;
@@ -2208,7 +2345,7 @@ int singleGame::alpha_beta_try(int depth, int alpha, int beta, bool redOrBlack) 
 //                std::cout << originRedChessStepList.at(indexTwo)._chessNum << " " << originRedChessStepList.at(indexTwo)._chessNumber << " " << lastPosX << " " << lastPosY << std::endl;
 //                GlobalEnvirIn::Instance()->__delayMsec(1000);
                 // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                 // compare
                 if(currentValue < minValue) {
                     minValue = currentValue;
@@ -2224,7 +2361,7 @@ int singleGame::alpha_beta_try(int depth, int alpha, int beta, bool redOrBlack) 
 //            GlobalEnvirIn::Instance()->__printBoard();
 
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue < minValue) {
                 minValue = currentValue;
@@ -2275,7 +2412,7 @@ int singleGame::alpha_beta_try(int depth, int alpha, int beta, bool redOrBlack) 
                 int lastPosYTwo = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(levelTwoEnemy.at(indexTwo)._chessNum, levelTwoEnemy.at(indexTwo)._chessNumber)->getPosY();
                 fakeMove(levelTwoEnemy.at(indexTwo));
                 // evaluate
-                currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+                currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
                 // compare
                 if(currentValue > maxValue) {
                     maxValue = currentValue;
@@ -2288,7 +2425,7 @@ int singleGame::alpha_beta_try(int depth, int alpha, int beta, bool redOrBlack) 
             fakeBackMove(levelTwoList.at(redIndex), lastRedX, lastRedY);
 
             // evaluate
-            currentValue += GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
+            currentValue = GlobalEnvirIn::Instance()->__BoardEvaluate(); // black - red
             // compare
             if(currentValue > maxValue) {
                 maxValue = currentValue;

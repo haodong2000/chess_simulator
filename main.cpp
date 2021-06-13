@@ -57,13 +57,13 @@ int main(int argc, char *argv[])
     else {
         switch (CHESS_PLAY_MODE) {
         case 1:
-            singleGameIn::Instance()->oneLevelChessing(PARAM::NINE_NINE_NINE);
+            singleGameIn::Instance()->oneLevelChessing_HumanVSAI(PARAM::NINE_NINE_NINE);
             break;
         case 2:
-            singleGameIn::Instance()->twoLevelChessing(PARAM::NINE_NINE_NINE);
+            singleGameIn::Instance()->twoLevelChessing_HumanVSAI(PARAM::NINE_NINE_NINE);
             break;
         case 3:
-            singleGameIn::Instance()->threeLevelChessing(PARAM::NINE_NINE_NINE);
+            singleGameIn::Instance()->threeLevelChessing_HumanVSAI(PARAM::NINE_NINE_NINE); // bug
             break;
         case 4:
             singleGameIn::Instance()->normalPlay_HumanVSAI(PARAM::NINE_NINE_NINE);

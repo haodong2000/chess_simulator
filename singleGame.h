@@ -37,14 +37,17 @@ public:
 
     // real play
     virtual void oneLevelChessing(int maxCount);
+    virtual void oneLevelChessing_HumanVSAI(int maxCount);
     virtual void S_oneLevelChessing(int maxCount);
     virtual int oneLevelStepIndex(bool redOrBlack);
     virtual int S_oneLevelStepIndex(bool redOrBlack);
     virtual void twoLevelChessing(int maxCount);
+    virtual void twoLevelChessing_HumanVSAI(int maxCount);
     virtual void S_twoLevelChessing(int maxCount);
     virtual int twoLevelStepIndex(bool redOrBlack);
     virtual int S_twoLevelStepIndex(bool redOrBlack);
     virtual void threeLevelChessing(int maxCount);
+    virtual void threeLevelChessing_HumanVSAI(int maxCount);
     virtual int threeLevelStepIndex(bool redOrBlack);
     virtual void S_threeLevelChessing(int maxCount);
     virtual int S_threeLevelStepIndex(bool redOrBlack);
