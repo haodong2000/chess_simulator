@@ -330,3 +330,42 @@ void TestChessMove::test_Ar_hor_2_isAlive() {
     GlobalEnvirIn::Instance()->__fakeKillThisChess(11, 2);
     std::cout << (Ar_hor_2->isAlive() ? "Yes" : "No") << std::endl;
 }
+
+void TestChessMove::testMouseMoveChess() {
+    std::cout << "TEST_MODE -> testMouseMoveChess()" << std::endl;
+    int lastPosX = 9999;
+    int lastPosY = 9999;
+    int posx = 0;
+    int posy = 0;
+    while(true) {
+        QVariant x = object->property("lastMousePosX");
+        QVariant y = object->property("lastMousePosY");
+        if(lastPosX == 9999 && lastPosY == 9999) {
+            lastPosX = x.toInt();
+            lastPosY = y.toInt();
+            posx = coordinateIn::Instance()->transferPosX(lastPosX);
+            posy = coordinateIn::Instance()->transferPosY(lastPosY);
+            std::cout << "x = " << x.toInt() << "   y = " << y.toInt() << std::endl;
+            std::cout << "posx = " << posx << "   posy = " << posy << std::endl;
+            // std::cout << GlobalEnvirIn::Instance()->__whichChessOnThere(posx, posy)->chessName().toStdString() << " " << GlobalEnvirIn::Instance()->__whichChessOnThere(posx, posy)->chessNumber() << std::endl;
+        }
+        if(lastPosX != x.toInt() || lastPosY != y.toInt()) {
+            lastPosX = x.toInt();
+            lastPosY = y.toInt();
+            posx = coordinateIn::Instance()->transferPosX(lastPosX);
+            posy = coordinateIn::Instance()->transferPosY(lastPosY);
+            object->setProperty("selectChessX", coordinateIn::Instance()->tranRealPosX(posx));
+            object->setProperty("selectChessY", coordinateIn::Instance()->tranRealPosY(posy));
+            std::cout << "x = " << x.toInt() << "   y = " << y.toInt() << std::endl;
+            std::cout << "posx = " << posx << "   posy = " << posy << std::endl;
+            // std::cout << GlobalEnvirIn::Instance()->__whichChessOnThere(posx, posy)->chessName().toStdString() << " " << GlobalEnvirIn::Instance()->__whichChessOnThere(posx, posy)->chessNumber() << std::endl;
+        }
+        GlobalEnvirIn::Instance()->__delayMsec(100);
+    }
+}
+
+void TestChessMove::testHumanMove() {
+    std::cout << "TEST_MODE -> testHumanMove()" << std::endl;
+    singleGameIn::Instance()->generateRedAllPossibleMoves();
+    while(!singleGameIn::Instance()->humanMove());
+}

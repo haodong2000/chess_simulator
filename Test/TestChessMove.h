@@ -57,6 +57,9 @@ public:
     virtual void testChessingNew();
 
     virtual void testWin();
+
+    virtual void testMouseMoveChess();
+    virtual void testHumanMove();
 };
 
 typedef NormalSingleton< TestChessMove > TestChessMoveIn;

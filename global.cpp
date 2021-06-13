@@ -772,7 +772,7 @@ bool GlobalEnvironment::__isThereHasOurChess(bool camp, int PosX, int PosY) {
 
     if((Pos->getPosX() < 0 || Pos->getPosX() > PARAM::globalEnvironment::maxAxisOfX) ||
             (Pos->getPosY() < 0 || Pos->getPosY() > PARAM::globalEnvironment::maxAxisOfY)) {
-        qDebug() << "global.cpp line:667 __isThereHasOurChess()  error:Pos out of boundary!";
+        qDebug() << "global.cpp line:775 __isThereHasOurChess()  error:Pos out of boundary!";
         delete Pos;
         return true;
     }
@@ -915,6 +915,10 @@ void GlobalEnvironment::__setGameTurn(bool whosTurn) {
     // true: ai_turn, black
     // false: humen_turn, red
     object->setProperty("ai_turn", whosTurn);
+}
+
+bool GlobalEnvironment::__isHumanStepValid(chessStep step) {
+    return false; // no use
 }
 
 void GlobalEnvironment::__refershPosValueUnit() {

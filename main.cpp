@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     GlobalEnvirIn::Instance()->__refreshBoard();
 
     if(TEST_MODE) {
-        TestChessMoveIn::Instance()->testMemory();
+        TestChessMoveIn::Instance()->testHumanMove();
     }
     else {
         switch (CHESS_PLAY_MODE) {
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
             singleGameIn::Instance()->threeLevelChessing(PARAM::NINE_NINE_NINE);
             break;
         case 4:
-            singleGameIn::Instance()->normalPlay(PARAM::NINE_NINE_NINE);
+            singleGameIn::Instance()->normalPlay_HumanVSAI(PARAM::NINE_NINE_NINE);
             break;
         default:
             qDebug() << "main.cpp line:67 CHESS_PLAY_MODE inValid!!!";

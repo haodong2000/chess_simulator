@@ -1938,6 +1938,7 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
             // just refersh the bosrd once the human has finished his turn
             // if the board unchanged(from mousearea), remain
             // once changed(from mousearea), break
+            while(!humanMove());
         }
         else if(!redOrBlack && (!curStepList.empty())) {
             curStepList.append(originBlackChessStepList);
@@ -2409,9 +2410,10 @@ bool singleGame::compareSteps(chessStep last, chessStep current) {
     if(last._chessNum == current._chessNum &&
             last._chessNumber == current._chessNumber &&
             last._chessCamp == current._chessCamp &&
-            last._deltaX == current._deltaX) {
+            last._deltaX == current._deltaX &&
+            last._deltaY == current._deltaY) {
         if(last._isKill == true && current._isKill == true) {
-            if(last._chessKilledNum == current._chessKilledNumber &&
+            if(last._chessKilledNum == current._chessKilledNum &&
                     last._chessKilledNumber == current._chessKilledNumber) return true;
         }
         if(last._isKill == false && current._isKill == false) return true;
@@ -2529,4 +2531,110 @@ void singleGame::fakeBackMove(chessStep *step, int lastPosX, int lastPosY) {
 void singleGame::deleteStepList(QVector<chessStep *> &stepList) {
     int size = stepList.size();
     for(int index = 0; index < size; index++) delete stepList.at(index);
+}
+
+bool singleGame::humanMove() {
+    // the first point
+    // if isThereHasOurChess()
+    // the second point
+    // if isThereNoOurChess() generate move
+    // else isThereHasOurChess() back to first point
+    int lastPosX = -999; // must -1
+    int lastPosY = -999;
+    int curPosX = -1;
+    int curPosY = -1;
+    bool isHumanMoving = true;
+    int Num = 0;
+    int Number = 0;
+    bool camp = true;
+    int movePosX = -1;
+    int movePosY = -1;
+    bool kill = false;
+    int kNum = 0;
+    int kNumber = 0;
+    while(isHumanMoving) {
+        GlobalEnvirIn::Instance()->__delayMsec(10);
+        QVariant x = object->property("lastMousePosX");
+        QVariant y = object->property("lastMousePosY");
+        curPosX = x.toInt();
+        curPosY = y.toInt();
+        if(!GlobalEnvirIn::Instance()->__isPosInBoard(coordinateIn::Instance()->transferPosX(curPosX),
+                                                      coordinateIn::Instance()->transferPosY(curPosY))) continue;
+        object->setProperty("selectChessX", coordinateIn::Instance()->tranRealPosX(coordinateIn::Instance()->transferPosX(curPosX)));
+        object->setProperty("selectChessY", coordinateIn::Instance()->tranRealPosY(coordinateIn::Instance()->transferPosY(curPosY)));
+//        std::cout << "X = " << curPosX << "    Y = " << curPosY << std::endl;
+        if(lastPosX == -999 && lastPosY == -999 && curPosX != lastPosX && curPosY != lastPosY &&
+                GlobalEnvirIn::Instance()->__isThereHasChess(coordinateIn::Instance()->transferPosX(curPosX),
+                                                             coordinateIn::Instance()->transferPosY(curPosY)) &&
+                GlobalEnvirIn::Instance()->__isThereHasOurChess(true,
+                                                                coordinateIn::Instance()->transferPosX(curPosX),
+                                                                coordinateIn::Instance()->transferPosY(curPosY))) {
+            lastPosX = curPosX;
+            lastPosY = curPosY;
+            // object->setProperty("selectChessX", coordinateIn::Instance()->tranRealPosX(coordinateIn::Instance()->transferPosX(lastPosX)));
+            // object->setProperty("selectChessY", coordinateIn::Instance()->tranRealPosY(coordinateIn::Instance()->transferPosY(lastPosY)));
+            continue;
+        }
+        if(lastPosX != -999 && lastPosY != -999 &&
+                (coordinateIn::Instance()->transferPosX(lastPosX) != coordinateIn::Instance()->transferPosX(curPosX) ||
+                 coordinateIn::Instance()->transferPosY(lastPosY) != coordinateIn::Instance()->transferPosY(curPosY))) {
+            // means there is a new point
+            if(GlobalEnvirIn::Instance()->__isThereHasOurChess(true,
+                                                               coordinateIn::Instance()->transferPosX(lastPosX),
+                                                               coordinateIn::Instance()->transferPosY(lastPosY)) &&
+                    !GlobalEnvirIn::Instance()->__isThereHasOurChess(true,
+                                                                     coordinateIn::Instance()->transferPosX(curPosX),
+                                                                     coordinateIn::Instance()->transferPosY(curPosY))) {
+//                std::cout << "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL " << coordinateIn::Instance()->transferPosX(curPosX) << " " << coordinateIn::Instance()->transferPosY(curPosY) << std::endl;
+                // object->setProperty("selectChessX", coordinateIn::Instance()->tranRealPosX(coordinateIn::Instance()->transferPosX(curPosX)));
+                // object->setProperty("selectChessY", coordinateIn::Instance()->tranRealPosY(coordinateIn::Instance()->transferPosY(curPosY)));
+                Num = GlobalEnvirIn::Instance()->__QStr2intName(
+                            GlobalEnvirIn::Instance()->__QString2SimpleName(
+                                GlobalEnvirIn::Instance()->__whichChessOnThere(coordinateIn::Instance()->transferPosX(lastPosX),
+                                                                               coordinateIn::Instance()->transferPosY(lastPosY))->chessName()));
+                Number = GlobalEnvirIn::Instance()->__whichChessOnThere(coordinateIn::Instance()->transferPosX(lastPosX),
+                                                                        coordinateIn::Instance()->transferPosY(lastPosY))->chessNumber();
+                movePosX = coordinateIn::Instance()->transferPosX(curPosX);
+                movePosY = coordinateIn::Instance()->transferPosY(curPosY);
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(movePosX, movePosY);
+                if(kill) {
+                    kNum = GlobalEnvirIn::Instance()->__QStr2intName(
+                                GlobalEnvirIn::Instance()->__QString2SimpleName(
+                                    GlobalEnvirIn::Instance()->__whichChessOnThere(movePosX, movePosY)->chessName()));
+                    kNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(movePosX, movePosY)->chessNumber();
+//                    std::cout  << " kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk " << Num << " " << Number << " " << kNum << " " << kNumber << std::endl;
+                }
+                break;
+            }
+            lastPosX = curPosX;
+            lastPosY = curPosY;
+            // std::cout << ";;;;;;;;;;;LLLLLLLLLLLLLLLLL;;;;;;;;;;;;;;;"  << " " << coordinateIn::Instance()->transferPosX(curPosX) << " " << coordinateIn::Instance()->transferPosX(curPosX) << std::endl;
+            // if(GlobalEnvirIn::Instance()->__isThereHasOurChess(true,
+            //                                                    coordinateIn::Instance()->transferPosX(curPosX),
+            //                                                    coordinateIn::Instance()->transferPosY(curPosY))) {
+            // object->setProperty("selectChessX", coordinateIn::Instance()->tranRealPosX(coordinateIn::Instance()->transferPosX(curPosX)));
+            // object->setProperty("selectChessY", coordinateIn::Instance()->tranRealPosY(coordinateIn::Instance()->transferPosY(curPosY)));
+            // }
+        }
+    }
+    chessStep humanStep(Num, Number, camp, movePosX, movePosY, kill, kNum, kNumber);
+    if(isHumanStepValid(humanStep)) {
+        realMove(humanStep);
+        return true;
+    }
+    return false;
+}
+
+bool singleGame::isHumanStepValid(chessStep step) {
+    generateRedAllPossibleMoves();
+    QVector<chessStep> allPossible;
+    allPossible.clear();
+    allPossible.append(originRedChessStepList);
+    int size = allPossible.size();
+    // displayRedAllPossibleMoves();
+    for(int index = 0; index < size; index++) {
+        if(compareSteps(allPossible.at(index), step)) return true;
+    }
+    qDebug() << "singleGame.cpp isHumanStepValid() line:2604 human move invalid!!!";
+    return false;
 }

@@ -68,6 +68,8 @@ public:
     virtual void fakeMove(chessStep* step);
     virtual void realBackMove(chessStep* step, int lastPosX, int lastPosY);
     virtual void fakeBackMove(chessStep* step, int lastPosX, int lastPosY);
+    virtual bool humanMove();
+    virtual bool isHumanStepValid(chessStep step);
 
     virtual void deleteStepList(QVector<chessStep*>& stepList);
 

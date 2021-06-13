@@ -63,7 +63,7 @@ Window {
         property double copyrightX: cubeSizeWidth/10.0
         property double copyrightY: cubeSizeHeight/10.0
 
-        property double chessSize: cubeSizeWidth * 0.45
+        property double chessSize: cubeSizeWidth * 0.5
 
         property double b_gen_1_posX: cubeSizeWidth/2.0 - chessSize/2.0
         property double b_gen_1_posY: cubeSizeHeight * 4.5 - chessSize/2.0
@@ -210,6 +210,18 @@ Window {
 
         property int win_text_x: turn_cube_x
         property int win_text_y: turn_cube_y * 4
+
+        property var lastMousePosX: -999
+        property var lastMousePosY: -999
+        property var curMousePosX: -1
+        property var curMousePosY: -1
+
+        property var selectChessX: -9999
+        property var selectChessY: -9999
+        property var selectChessSize: chessSize * 1.5
+        property var selectChessWidth: turn_width/3.0
+
+        property bool selectChessShow: true
     }
 
     Rectangle {
@@ -833,8 +845,30 @@ Window {
             ctx.stroke()
             // ctx.endPath()
         }
+
     }
 
+    MouseArea{
+        anchors.fill: parent
+        onClicked: {
+            field.lastMousePosX = mouseX
+            field.lastMousePosY = mouseY
+//            console.log("MouseX -> ", mouseX, "   MouseY -> ", mouseY)
+//            console.log("lastMousePosX -> ", field.lastMousePosX, "   lastMousePosY -> ", field.lastMousePosY)
+        }
+    }
+
+    Rectangle {
+            // use for test
+            id: rect_select
+            x: field.selectChessX + field.chessSize/2.0 - field.selectChessSize/2.0
+            y: field.selectChessY + field.chessSize/2.0 - field.selectChessSize/2.0
+            width: field.selectChessSize
+            height: field.selectChessSize
+            color: "transparent"
+            border.color: field.selectChessShow ? "#f8d86a" : "transparent"
+            border.width: field.selectChessWidth
+        }
 
     Repeater {
         model: field.modelOneRepeat

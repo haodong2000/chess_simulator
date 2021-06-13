@@ -110,7 +110,7 @@ namespace PARAM {
 
     namespace chessInitPos {
         // all the coordinate info of all chesses
-        const double chessSize  =  globalEnvironment::cubeSizeWidth * 0.45;
+        const double chessSize  =  globalEnvironment::cubeSizeWidth * 0.5;
         namespace black {
             namespace General {
                 const double x = globalEnvironment::cubeSizeWidth/2.0 - chessSize/2.0;
