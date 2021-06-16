@@ -935,8 +935,8 @@ void GlobalEnvironment::__refershPosValueUnit() {
 }
 
 int GlobalEnvironment::__BoardEvaluate() {
-    if(Ab_gen_1->isAlive() == false) return -99999;
-    if(Ar_gen_1->isAlive() == false) return 99999;
+    if(Ab_gen_1->isAlive() == false) return -9999999;
+    if(Ar_gen_1->isAlive() == false) return 9999999;
     // One is the fixed piece strength value;
     // the other is the position value of the piece;
     // the third is the flexibility and cooperation value of the piece;
