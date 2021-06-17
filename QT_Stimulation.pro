@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     Chess.cpp \
     Params.cpp \
+    PythonMudule.cpp \
     Qml_Connection.cpp \
     Step.cpp \
     Test/TestChessMove.cpp \
@@ -72,6 +73,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     Chess.h \
     Params.h \
+    PythonMudule.h \
     Qml_Connection.h \
     SGeoPoint.h \
     Step.h \
