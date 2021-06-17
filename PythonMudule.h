@@ -42,6 +42,7 @@ private:
     QString step_str;
     bool isValid;
     QTcpSocket* client = new QTcpSocket();
+    int count;
 };
 
 typedef NormalSingleton< PythonMudule > PythonMuduleIn;

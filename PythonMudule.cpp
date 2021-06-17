@@ -1,8 +1,11 @@
 #include "PythonMudule.h"
 
-PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str(""),isValid(false)
+PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str(""),isValid(false),count(0)
 {
     qDebug() << this->name << "hello world";
+}
+
+void PythonMudule::run() {
     client->connectToHost(PARAM::HOST, PARAM::PORT);
     if(client->waitForConnected(10000)) {
         qDebug() << this->name << " Connected!";
@@ -10,18 +13,16 @@ PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str("
     else {
         qDebug() << this->name << " Connection Failed!!!";
     }
+    connect(client, SIGNAL(readyRead()), this, SLOT(client_read_data()));
+    connect(client, SIGNAL(disconnected()), this, SLOT(client_disconnect()));
     QString data = "connection test, hello pycharm!";
     if(client->write(data.toLatin1(), data.length()) == -1) {
         qDebug() << "PythonMudule.cpp line:15 PythonMudule() write failed!";
     }
-    connect(client, SIGNAL(readyRead()), this, SLOT(client_read_data()));
-    connect(client, SIGNAL(disconnected()), this, SLOT(client_disconnect()));
-}
-
-void PythonMudule::run() {
     while(true) {
-        GlobalEnvirIn::Instance()->__delayMsec(500);
-        QString request = "Chess Step Request";
+        count++;
+        GlobalEnvirIn::Instance()->__delayMsec(1000);
+        QString request = "Chess Step Request  ->  " + QString::number(count);
         if(client->write(request.toLatin1(), request.length()) == -1) {
             qDebug() << "PythonMudule.cpp line:26 run() write failed!";
         }
@@ -40,6 +41,7 @@ void PythonMudule::client_read_data() {
     QString msg_qstr = "";
     if(strlen(msg) > 0) {
         msg_qstr = msg;
+        qDebug() << count << " communications";
         qDebug() << "client reveive: " << msg_qstr;
     }
     else {
