@@ -17,6 +17,8 @@
 
 #include "singleGame.h"
 
+#include "PythonMudule.h"
+
 class TestChessMove
 {
 public:
@@ -60,6 +62,8 @@ public:
 
     virtual void testMouseMoveChess();
     virtual void testHumanMove();
+
+    virtual void testMultiProcess();
 };
 
 typedef NormalSingleton< TestChessMove > TestChessMoveIn;

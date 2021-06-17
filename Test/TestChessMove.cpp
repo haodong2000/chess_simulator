@@ -369,3 +369,7 @@ void TestChessMove::testHumanMove() {
     singleGameIn::Instance()->generateRedAllPossibleMoves();
     while(!singleGameIn::Instance()->humanMove());
 }
+
+void TestChessMove::testMultiProcess() {
+    PythonMuduleIn::Instance()->test();
+}

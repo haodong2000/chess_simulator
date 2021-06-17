@@ -11,6 +11,7 @@
 #include <QDesktopWidget>
 #include <QApplication>
 #include <unordered_map>
+#include <QString>
 
 //class Params : public QApplication {
 //public:
@@ -20,6 +21,9 @@
 namespace PARAM {
 
     const int NINE_NINE_NINE = 999;
+
+    const QString HOST = "127.0.0.1";
+    const int PORT = 6666;
 
     namespace globalEnvironment {
 

@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     GlobalEnvirIn::Instance()->__refreshBoard();
 
     if(TEST_MODE) {
-        TestChessMoveIn::Instance()->testHumanMove();
+        TestChessMoveIn::Instance()->testMultiProcess();
     }
     else {
         switch (CHESS_PLAY_MODE) {
