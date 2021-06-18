@@ -197,6 +197,11 @@ GlobalEnvironment::GlobalEnvironment() {
         __board[i] = new int[10];
     }
 
+    __visionBoard = new int*[10];
+    for(int i = 0; i < 10; i++) {
+        __visionBoard[i] = new int[10];
+    }
+
     __boardValueBlack = new int*[10];
     for(int i = 0; i < 10; i++) {
         __boardValueBlack[i] = new int[10];
@@ -273,6 +278,45 @@ void GlobalEnvironment::__refreshBoard() {
                     __board[__QStrOrInt2Chess(index, i)->getPosX()][__QStrOrInt2Chess(index, i)->getPosY()] = index;
             }
         }
+    }
+}
+
+void GlobalEnvironment::__QString2Board(QString origin_message) {
+    int size = origin_message.size();
+    int board_size = QString("").size();
+    int chess_size = QString("b_gen_04, ").size();
+    int count_chess = (size - board_size)/chess_size;
+    QVector<QString> vision_chess;
+    vision_chess.clear();
+    for(int index = 0; index < count_chess; index++) {
+        QString each_chess = origin_message.section(",", index, index).trimmed();
+        vision_chess.append(each_chess);
+        // std::cout << each_chess.toStdString() << std::endl;
+    }
+    int count = vision_chess.size();
+    std::cout << "chesses from vision, count = " << count << std::endl;
+    for (int index = 0; index < count; index++) {
+        QString chess_str = vision_chess.at(index).left(6);
+        int PosX = vision_chess.at(index).mid(6, 1).toInt();
+        int PosY = vision_chess.at(index).right(1).toInt();
+        __visionBoard[PosX][PosY] = __QStr2intName(chess_str);
+        // std::cout << chess_str.toStdString() << " " << PosX << " " << PosY << std::endl;
+    }
+    __printVisionBoard();
+}
+
+void GlobalEnvironment::__printVisionBoard() {
+    std::cout << "__printVisionBoard() called" << std::endl;
+    for(int i = 0; i < 9; i++) {
+        std::cout << "[";
+        for(int j = 0; j < 10; j++) {
+            std::cout << " ";
+            // QByteArray QStr2Char(Global::CHESS_TABLE.at(__board[i][j] - 1).toStdString().data());
+            std::cout << Global::CHESS_TABLE.at(__visionBoard[i][j]).toStdString();
+            if(j != 4) std::cout << " ";
+            else std::cout << " |";
+        }
+        std::cout << "]\t" << std::endl;
     }
 }
 

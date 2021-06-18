@@ -44,6 +44,7 @@ SOURCES += \
     all_chesses/red_chesses/red_general.cpp \
     all_chesses/red_chesses/red_horse.cpp \
     all_chesses/red_chesses/red_soldier.cpp \
+    chessstep.cpp \
     definitionChessSet.cpp \
     global.cpp \
     globalChesses.cpp \
@@ -100,6 +101,7 @@ HEADERS += \
     all_chesses/red_chesses/red_general.h \
     all_chesses/red_chesses/red_horse.h \
     all_chesses/red_chesses/red_soldier.h \
+    chessstep.h \
     coordinate.h \
     definitionChessSet.h \
     global.h \

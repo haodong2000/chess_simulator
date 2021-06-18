@@ -32,6 +32,8 @@ public:
     virtual void __refreshBoard();
     virtual void __printBoard();
     virtual void __printAlive();
+    virtual void __QString2Board(QString origin_message);
+    virtual void __printVisionBoard();
     virtual QString __int2QStrName(int name);
     virtual QString __QString2SimpleName(QString originName);
     virtual int __QStr2intName(QString name);
@@ -71,6 +73,7 @@ public:
                     // 0: empty
                     // 1-7:  black
                     // 8-14: red
+    int ** __visionBoard;
     int ** __boardValueBlack;
     int ** __boardValueRed;
     char * __chessArray; // 0-13

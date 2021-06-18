@@ -5,15 +5,19 @@
 #include <QThread>
 #include <QString>
 #include <QDebug>
+#include <iostream>
 
-#include "Chess.h"
-#include "global.h"
+#include "chessstep.h"
 
 #include <QTcpSocket>
 #include <QTcpServer>
 
-#include <Params.h>
+#include "Params.h"
 #include "singleton.h"
+
+#include <QDateTime>
+#include <QDate>
+#include <QTime>
 
 /*****************************************************************
 *   File:     PythonMudule.h
@@ -31,6 +35,11 @@ public:
     void vision_step();
     void test() {qDebug() << "test";}
     void step_msg_check(QString recv);
+    virtual void __delayMsec(int Msec);
+    virtual void __QString2Board(QString origin_message);
+    virtual int __QStr2intName(QString name);
+    virtual void __printVisionBoard();
+    void setReceived(bool recv);
 
 private slots:
     void client_read_data();
@@ -43,6 +52,8 @@ private:
     bool isValid;
     QTcpSocket* client = new QTcpSocket();
     int count;
+    bool received;
+    int ** __visionBoard;
 };
 
 typedef NormalSingleton< PythonMudule > PythonMuduleIn;
