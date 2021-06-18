@@ -178,7 +178,7 @@ namespace GlobalPython {
     const int randomRange = 250;
 }
 
-PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str(""),isValid(false),count(0),received(true)
+PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str(""),isValid(false),count(1),received(true)
 {
     qDebug() << this->name << "hello world";
 
@@ -189,6 +189,10 @@ PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str("
 }
 
 void PythonMudule::run() {
+//    while(true) {
+//        std::cout << "test" << std::endl;
+//        __delayMsec(1000);
+//    }
     client->connectToHost(PARAM::HOST, PARAM::PORT);
     if(client->waitForConnected(10000)) {
         qDebug() << this->name << " Connected!";
@@ -209,6 +213,7 @@ void PythonMudule::run() {
             if(client->write(request.toLatin1(), request.length()) == -1) {
                 qDebug() << "PythonMudule.cpp line:26 run() write failed!";
             }
+            std::cout << request.toStdString() << std::endl;
             received = false;
         }
         if(isValid) vision_step();
@@ -233,7 +238,7 @@ void PythonMudule::__QString2Board(QString origin_message) {
         // std::cout << each_chess.toStdString() << std::endl;
     }
     int count = vision_chess.size();
-    std::cout << "chesses from vision, count = " << count << std::endl;
+    // std::cout << "chesses from vision, count = " << count << std::endl;
     for(int i = 0; i < 9; i++) {
         for(int j = 0; j < 10; j++) {
             __visionBoard[i][j] = 0;
