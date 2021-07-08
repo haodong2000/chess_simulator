@@ -178,7 +178,7 @@ namespace GlobalPython {
     const int randomRange = 250;
 }
 
-PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str(""),isValid(false),count(1),received(true)
+PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str(""),isValid(false),count(0),received(true)
 {
     qDebug() << this->name << "hello world";
 
@@ -279,7 +279,7 @@ int PythonMudule::__QStr2intName(QString name) {
         if(name.compare(tempStr) == 0) break;
     }
     if(it == GlobalPython::Chess_Qstr2Int_simple.end()) {
-        qDebug() << "PythonMudule.cpp __QStr2intName(QString name) line: 272 -> error: name(QString) invalid!";
+        qDebug() << "PythonMudule.cpp __QStr2intName(QString name) line: 272 -> error: name(" << name << ") invalid!";
         return -1;
     }
     return GlobalPython::Chess_Qstr2Int_simple[name];
