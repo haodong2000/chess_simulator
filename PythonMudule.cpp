@@ -286,6 +286,9 @@ int PythonMudule::__generateHumanStep(const QVector<chessStep> &curStepList) {
     }
     // generate step
     int num = step_first.second.first;
+    int init_x = step_first.first.first;
+    int init_y = step_first.first.second;
+    int number = GlobalEnvirIn::Instance()->__whichChessOnThere(init_x, init_y)->chessNumber();
     bool kill = (step_second.second.first != 0);
     int k_num = kill ? (step_second.second.first) : -1;
     int posX = step_second.first.first;
@@ -297,6 +300,7 @@ int PythonMudule::__generateHumanStep(const QVector<chessStep> &curStepList) {
         if(curStepList.at(i)._chessNum == num &&
                 curStepList.at(i)._deltaX == posX &&
                 curStepList.at(i)._deltaY == posY &&
+                curStepList.at(i)._chessNumber == number &&
                 curStepList.at(i)._isKill == kill) {
             if(kill && curStepList[i]._chessKilledNum == k_num) {
                 index = i;
