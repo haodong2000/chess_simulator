@@ -15,6 +15,9 @@
 #include <QVector>
 #include <QtGlobal>
 
+#include <QTcpSocket>
+#include <QTcpServer>
+
 class singleGame
 {
 public:
@@ -91,6 +94,7 @@ public:
 
 private:
     int _level;
+    QTcpSocket* M1_client = new QTcpSocket();
 };
 
 typedef NormalSingleton< singleGame > singleGameIn;

@@ -20,6 +20,14 @@ singleGame::singleGame():
 //    allRedAndBlackStepList.clear();
 
     _level = 4; // initialization, actuall level is 4
+
+    M1_client->connectToHost(PARAM::M1_HOST, PARAM::M1_PORT);
+    if(M1_client->waitForConnected(10000)) {
+        qDebug() << "M1_ROBOT" << " Connected!";
+    }
+    else {
+        qDebug() << "M1_ROBOT" << " Connection Failed!!!";
+    }
 }
 
 void singleGame::setLevel(int level) {
