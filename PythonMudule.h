@@ -6,6 +6,7 @@
 #include <QString>
 #include <QDebug>
 #include <iostream>
+#include <QVector>
 
 #include "chessstep.h"
 
@@ -18,6 +19,8 @@
 #include <QDateTime>
 #include <QDate>
 #include <QTime>
+
+#include <global.h>
 
 /*****************************************************************
 *   File:     PythonMudule.h
@@ -40,6 +43,7 @@ public:
     virtual int __QStr2intName(QString name);
     virtual void __printVisionBoard();
     void setReceived(bool recv);
+    int __generateHumanStep(const QVector<chessStep> &curStepList);
 
 private slots:
     void client_read_data();
@@ -54,6 +58,9 @@ private:
     int count;
     bool received;
     int ** __visionBoard;
+    int ** __lastVisionBoard;
+//    bool __isStepGenerated;
+//    chessStep __humanStep;
 };
 
 typedef NormalSingleton< PythonMudule > PythonMuduleIn;

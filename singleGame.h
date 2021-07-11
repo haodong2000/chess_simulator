@@ -17,9 +17,10 @@
 
 #include <QTcpSocket>
 #include <QTcpServer>
-#include <QObject>
 
-class singleGame: public QObject
+#include <PythonMudule.h>
+
+class singleGame
 {
 public:
     singleGame();
@@ -93,8 +94,8 @@ public:
     chessStep blackCurStep;
     chessStep blackLastStep;
 
-private slots:
-    void M1_client_disconnect();
+//private slots:
+//    void M1_client_disconnect();
 
 private:
     int _level;

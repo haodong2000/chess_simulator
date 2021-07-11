@@ -28,7 +28,7 @@ singleGame::singleGame():
     else {
         qDebug() << "M1_ROBOT" << " Connection Failed!!!";
     }
-    connect(M1_client, SIGNAL(disconnected()), this, SLOT(M1_client_disconnect()));
+    //connect(M1_client, SIGNAL(disconnected()), this, SLOT(M1_client_disconnect()));
 }
 
 void singleGame::setLevel(int level) {
@@ -2036,6 +2036,11 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
             // just refersh the bosrd once the human has finished his turn
             // if the board unchanged(from vision), remain
             // once changed(from vision), break
+            int humanIndex = -1;
+            while(humanIndex != -1) {
+                humanIndex = PythonMuduleIn::Instance()->__generateHumanStep(curStepList);
+            }
+            realMove(curStepList.at(humanIndex));
         }
         else if(!redOrBlack && (!curStepList.empty())) {
             curStepList.append(originBlackChessStepList);
@@ -2115,9 +2120,9 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
     }
 }
 
-void singleGame::M1_client_disconnect() {
-    std::cout << "M1_ROBOT Connection Closed!" << std::endl;
-}
+//void singleGame::M1_client_disconnect() {
+//    std::cout << "M1_ROBOT Connection Closed!" << std::endl;
+//}
 
 void singleGame::normalPlay(int maxCount) {
     // alpha-beta

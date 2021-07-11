@@ -186,6 +186,11 @@ PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str("
     for(int i = 0; i < 10; i++) {
         __visionBoard[i] = new int[10];
     }
+    // __lastVisionBoard
+    __lastVisionBoard = new int*[10];
+    for(int i = 0; i < 10; i++) {
+        __lastVisionBoard[i] = new int[10];
+    }
 }
 
 void PythonMudule::run() {
@@ -241,6 +246,8 @@ void PythonMudule::__QString2Board(QString origin_message) {
     // std::cout << "chesses from vision, count = " << count << std::endl;
     for(int i = 0; i < 9; i++) {
         for(int j = 0; j < 10; j++) {
+            __lastVisionBoard[i][j] = GlobalEnvirIn::Instance()->__visionBoard[i][j];
+            // refresh the chess board of the last state
             __visionBoard[i][j] = 0;
         }
     }
@@ -252,6 +259,56 @@ void PythonMudule::__QString2Board(QString origin_message) {
         // std::cout << chess_str.toStdString() << " " << PosX << " " << PosY << std::endl;
     }
     __printVisionBoard();
+    // TODO: generate step
+}
+
+int PythonMudule::__generateHumanStep(const QVector<chessStep> &curStepList) {
+    // curStepList: all possible steps
+    bool isBoardChanged = false;
+    int count_different = 0;
+    QPair<QPair<int, int>, QPair<int, int>> step_first;
+    QPair<QPair<int, int>, QPair<int, int>> step_second;
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            if(__lastVisionBoard[i][j] != __visionBoard[i][j]) {
+                count_different++;
+                QPair<int, int> coordinate = qMakePair<int, int>(i, j);
+                QPair<int, int> chess_change = qMakePair<int, int>(__lastVisionBoard[i][j], __visionBoard[i][j]);
+                if(__visionBoard[i][j] == 0) step_first = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
+                else step_second = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
+            }
+        }
+    }
+    isBoardChanged = (count_different == 2);
+    if(isBoardChanged == false) {
+        std::cout << "PythonMudule.cpp line:276 function:__generateHumanStep() isBoardChanegd = False" << std::endl;
+        return -1;
+    }
+    // generate step
+    int num = step_first.second.first;
+    bool kill = (step_second.second.first != 0);
+    int k_num = kill ? (step_second.second.first) : -1;
+    int posX = step_second.first.first;
+    int posY = step_second.first.second;
+    // start to compare
+    int size = curStepList.length();
+    int index = -1;
+    for(int i = 0; i < size; i++) {
+        if(curStepList.at(i)._chessNum == num &&
+                curStepList.at(i)._deltaX == posX &&
+                curStepList.at(i)._deltaY == posY &&
+                curStepList.at(i)._isKill == kill) {
+            if(kill && curStepList[i]._chessKilledNum == k_num) {
+                index = i;
+                break;
+            }
+            else if(kill == false) {
+                index = i;
+                break;
+            }
+        }
+    }
+    return index;
 }
 
 void PythonMudule::__printVisionBoard() {
