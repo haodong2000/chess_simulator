@@ -28,6 +28,7 @@ singleGame::singleGame():
     else {
         qDebug() << "M1_ROBOT" << " Connection Failed!!!";
     }
+    connect(M1_client, SIGNAL(disconnected()), this, SLOT(M1_client_disconnect()));
 }
 
 void singleGame::setLevel(int level) {
@@ -2088,6 +2089,15 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
         else if(!redOrBlack && (!curStepList.empty())) {
             curStepList.append(originBlackChessStepList);
             int sizeIndex = alpha_beta_black(_level);
+            int dest_x = curStepList.at(sizeIndex)._deltaX;
+            int dest_y = curStepList.at(sizeIndex)._deltaY;
+            int init_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosX();
+            int init_y = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosY();
+            int kill_or_not = curStepList.at(sizeIndex)._isKill ? 1 : 0;
+            QString M1_request = QString::number(kill_or_not) + QString::number(init_x) + QString::number(init_y) + QString::number(dest_x) + QString::number(dest_y);
+            if(M1_client->write(M1_request.toLatin1(), M1_request.length()) == -1) {
+                qDebug() << "singleGame.cpp line:2099 normalPlay_HumanVSAI() write failed!";
+            }
             realMove(curStepList.at(sizeIndex));
         }
         else {
@@ -2102,6 +2112,10 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
         }
         redOrBlack = !redOrBlack;
     }
+}
+
+void singleGame::M1_client_disconnect() {
+    std::cout << "M1_ROBOT Connection Closed!" << std::endl;
 }
 
 void singleGame::normalPlay(int maxCount) {

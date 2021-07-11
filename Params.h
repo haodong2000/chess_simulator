@@ -27,6 +27,8 @@ namespace PARAM {
 
     const QString M1_HOST = "192.168.31.37";
     const int M1_PORT = 8888;
+    // const QString M1_HOST = HOST;
+    // const int M1_PORT = PORT;
 
     namespace globalEnvironment {
 
