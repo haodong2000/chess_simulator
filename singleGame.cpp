@@ -2098,6 +2098,7 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
             if(M1_client->write(M1_request.toLatin1(), M1_request.length()) == -1) {
                 qDebug() << "singleGame.cpp line:2099 normalPlay_HumanVSAI() write failed!";
             }
+            std::cout << "Message sent to M1 Robot -> " << M1_request.toStdString() << std::endl;
             realMove(curStepList.at(sizeIndex));
         }
         else {
