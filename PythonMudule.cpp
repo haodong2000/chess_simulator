@@ -267,19 +267,41 @@ int PythonMudule::__generateHumanStep(const QVector<chessStep> &curStepList) {
     bool isBoardChanged = false;
     int count_different = 0;
     QPair<QPair<int, int>, QPair<int, int>> step_first;
+    bool flagFirst = false;
+    bool flagSecond = false;
+    bool flagThird = false;
+    bool isSimpleMoveOrKill = false; // true -> move and false -> kill
     QPair<QPair<int, int>, QPair<int, int>> step_second;
+    QPair<QPair<int, int>, QPair<int, int>> step_third;
     for(int i = 0; i < 9; i++) {
         for(int j = 0; j < 10; j++) {
             if(__lastVisionBoard[i][j] != __visionBoard[i][j]) {
                 count_different++;
                 QPair<int, int> coordinate = qMakePair<int, int>(i, j);
                 QPair<int, int> chess_change = qMakePair<int, int>(__lastVisionBoard[i][j], __visionBoard[i][j]);
-                if(__visionBoard[i][j] == 0) step_first = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
-                else step_second = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
+                if(flagFirst == false && __visionBoard[i][j] == 0 && __lastVisionBoard[i][j] != 0) {
+                    step_first = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
+                    flagFirst = true;
+                }
+                else if(flagSecond == false && __visionBoard[i][j] != 0 && __lastVisionBoard[i][j] == 0) {
+                    step_second = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
+                    flagSecond = true;
+                    isSimpleMoveOrKill = true;
+                }
+                else if(flagThird == false && flagSecond == false && isSimpleMoveOrKill == false && chess_change.first <= 7) {
+                    // <=7 : no chess or black chess, we should not eat red chess
+                    step_third = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
+                    flagThird = true;
+                }
             }
         }
     }
-    isBoardChanged = (count_different == 2);
+    if(isSimpleMoveOrKill == false && flagThird == true) {
+        step_second = step_third;
+        flagSecond = true;
+    }
+    // isBoardChanged = (count_different == 2);
+    isBoardChanged = flagFirst && flagSecond;
     if(isBoardChanged == false) {
         std::cout << "PythonMudule.cpp line:276 function:__generateHumanStep() isBoardChanegd = False" << std::endl;
         return -1;
