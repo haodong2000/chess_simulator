@@ -2104,6 +2104,10 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
                 qDebug() << "singleGame.cpp line:2099 normalPlay_HumanVSAI() write failed!";
             }
             std::cout << "Message sent to M1 Robot -> " << M1_request.toStdString() << std::endl;
+//            char M1_Receive[1024] = {0};
+//            M1_client->read(M1_Receive, 1024);
+//            if(strlen(M1_Receive) > 0) std::cout << "Receive from M1 Robot   ->" << M1_Receive << std::endl;
+//            else std::cout << "Receive from M1 Robot ERROR" << std::endl;
             realMove(curStepList.at(sizeIndex));
         }
         else {
