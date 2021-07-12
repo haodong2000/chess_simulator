@@ -302,14 +302,8 @@ int PythonMudule::__generateHumanStep(const QVector<chessStep> &curStepList) {
                 curStepList.at(i)._deltaY == posY &&
                 curStepList.at(i)._chessNumber == number &&
                 curStepList.at(i)._isKill == kill) {
-            if(kill && curStepList[i]._chessKilledNum == k_num) {
-                index = i;
-                break;
-            }
-            else if(kill == false) {
-                index = i;
-                break;
-            }
+            index = i;
+            break;
         }
     }
     return index;
