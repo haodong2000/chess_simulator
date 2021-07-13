@@ -2099,15 +2099,15 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
             int init_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosX();
             int init_y = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosY();
             int kill_or_not = curStepList.at(sizeIndex)._isKill ? 1 : 0;
-            QString M1_request = QString::number(kill_or_not) + QString::number(init_x) + QString::number(init_y) + QString::number(dest_x) + QString::number(dest_y);
+            QString M1_request = QString::number(kill_or_not) + QString::number(init_y) + QString::number(init_x) + QString::number(dest_y) + QString::number(dest_x);
             if(M1_client->write(M1_request.toLatin1(), M1_request.length()) == -1) {
                 qDebug() << "singleGame.cpp line:2099 normalPlay_HumanVSAI() write failed!";
             }
             std::cout << "Message sent to M1 Robot -> " << M1_request.toStdString() << std::endl;
-//            char M1_Receive[1024] = {0};
-//            M1_client->read(M1_Receive, 1024);
-//            if(strlen(M1_Receive) > 0) std::cout << "Receive from M1 Robot   ->" << M1_Receive << std::endl;
-//            else std::cout << "Receive from M1 Robot ERROR" << std::endl;
+            char M1_Receive[1024] = {0};
+            M1_client->read(M1_Receive, 1024);
+            if(strlen(M1_Receive) > 0) std::cout << "Receive from M1 Robot   ->" << M1_Receive << std::endl;
+            else std::cout << "Receive from M1 Robot ERROR" << std::endl;
             realMove(curStepList.at(sizeIndex));
         }
         else {
