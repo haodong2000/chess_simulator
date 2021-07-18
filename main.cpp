@@ -24,7 +24,8 @@
 #include <PythonMudule.h>
 
 QObject* object;
-static const int CHESS_PLAY_MODE = 4; // one level, two level, three level, four level of stimulation
+static const int CHESS_PLAY_MODE = 5; // one level, two level, three level, four level of stimulation
+                                      // and 5 for CIMC show
 static const bool TEST_MODE = false;
 
 int main(int argc, char *argv[])
@@ -71,6 +72,9 @@ int main(int argc, char *argv[])
             break;
         case 4:
             singleGameIn::Instance()->normalPlay_HumanVSAI(PARAM::NINE_NINE_NINE);
+            break;
+        case 5:
+            singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC(PARAM::NINE_NINE_NINE);
             break;
         default:
             qDebug() << "main.cpp line:67 CHESS_PLAY_MODE inValid!!!";
