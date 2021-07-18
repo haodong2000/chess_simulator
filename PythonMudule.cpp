@@ -193,7 +193,7 @@ PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str("
     }
 }
 
-void PythonMudule::run() {
+void PythonMudule::run_TCP_vision() {
 //    while(true) {
 //        std::cout << "test" << std::endl;
 //        __delayMsec(1000);
@@ -277,7 +277,15 @@ void PythonMudule::__QString2Board(QString origin_message) {
 }
 
 int PythonMudule::__generateHumanStep(const QVector<chessStep> &curStepList) {
-    if(count <= 1) return -1;
+    std::cout << "Python.cpp line:280 inter function, count = " << count << std::endl;
+    if(count <= 1 || received == false) return -1;
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            __lastVisionBoard[i][j] = GlobalEnvirIn::Instance()->__visionBoard[i][j];
+            // refresh the chess board of the last state
+        }
+    }
+    std::cout << "Python.cpp line:287" << std::endl;
     // curStepList: all possible steps
     bool isBoardChanged = false;
     int count_different = 0;
@@ -356,6 +364,7 @@ int PythonMudule::__generateHumanStep(const QVector<chessStep> &curStepList) {
             }
         }
     }
+    std::cout << "Python.cpp line:366 index = " << index << std::endl;
     return index;
 }
 

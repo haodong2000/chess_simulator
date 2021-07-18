@@ -29,12 +29,12 @@
 *   Time:     2021-06-17 -> 22:16:25
 *****************************************************************/
 
-class PythonMudule: public QThread
+class PythonMudule: public QObject
 {
     Q_OBJECT
 public:
     PythonMudule(QString N = "default_name");
-    void run() override;
+    void run_TCP_vision();
     void vision_step();
     void test() {qDebug() << "test";}
     void step_msg_check(QString recv);

@@ -21,10 +21,10 @@
 #include "Step.h"
 #include "singleGame.h"
 
-#include <PythonMudule.h>
+#include <vision_thread.h>
 
 QObject* object;
-static const int CHESS_PLAY_MODE = 5; // one level, two level, three level, four level of stimulation
+static const int CHESS_PLAY_MODE = 4; // one level, two level, three level, four level of stimulation
                                       // and 5 for CIMC show
 static const bool TEST_MODE = false;
 
@@ -45,8 +45,11 @@ int main(int argc, char *argv[])
 
     QList<QObject*> objList = engine.rootObjects();
     std::cout << "objList.length() = " << objList.length() << std::endl; // 1: only main.qml
-    PythonMudule *python_vision = new PythonMudule("vision");
-    python_vision->start(); // python_vision->start(QThread::HighPriority);
+    vision_thread *vision = new vision_thread;
+    vision->name = "vision";
+    vision->start();
+    // PythonMudule *python_vision = new PythonMudule("vision");
+    // python_vision->start(QThread::HighPriority);
 
     QObject *objectTemp(0); // initialization
     if(!objList.empty()) objectTemp = *objList.begin();

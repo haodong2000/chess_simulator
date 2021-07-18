@@ -2037,8 +2037,9 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
             // if the board unchanged(from vision), remain
             // once changed(from vision), break
             int humanIndex = -1;
-            while(humanIndex != -1) {
+            while(humanIndex == -1) {
                 humanIndex = PythonMuduleIn::Instance()->__generateHumanStep(curStepList);
+                std::cout << "singleGame.cpp line:2042 humanIndex = " << humanIndex << std::endl;
             }
             realMove(curStepList.at(humanIndex));
         }

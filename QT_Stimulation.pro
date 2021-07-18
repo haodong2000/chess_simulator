@@ -53,6 +53,7 @@ SOURCES += \
     coordinate.cpp \
     singleGame.cpp \
     singleton.cpp  \
+    vision_thread.cpp \
 
 RESOURCES += \
     ChessRobot.qrc
@@ -108,6 +109,7 @@ HEADERS += \
     globalChesses.h \
     singleGame.h \
     singleton.h \
+    vision_thread.h \
 
 INCLUDEPATH += \
     all_chesses/
