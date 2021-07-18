@@ -16,8 +16,13 @@ class vision_thread: public QThread
 public:
     vision_thread();
     void run();
+    // int get_human_step_from_vision(const QVector<chessStep> &curStepList);
 public:
     QString name;
+    PythonMudule *python_vision;
+    bool __isHumanReady;
 };
+
+typedef NormalSingleton< vision_thread > VisionIn;
 
 #endif // VISION_THREAD_H

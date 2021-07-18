@@ -279,6 +279,8 @@ void GlobalEnvironment::__refreshBoard() {
             }
         }
     }
+    // @TODO
+    Main_chessBoard = __board;
 }
 
 void GlobalEnvironment::__QString2Board(QString origin_message) {
@@ -334,6 +336,8 @@ void GlobalEnvironment::__printBoard() {
         }
         std::cout << "]\t" << std::endl;
     }
+    // @TODO
+    Main_chessBoard = __board;
 }
 
 void GlobalEnvironment::__printAlive() {

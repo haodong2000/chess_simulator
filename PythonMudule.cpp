@@ -178,7 +178,7 @@ namespace GlobalPython {
     const int randomRange = 250;
 }
 
-PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str(""),isValid(false),count(0),received(true)
+PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str(""),isValid(false),MP_count(0),MP_received(true)
 {
     qDebug() << this->name << "hello world";
 
@@ -209,7 +209,7 @@ void PythonMudule::run_TCP_vision() {
     connect(client, SIGNAL(disconnected()), this, SLOT(client_disconnect()));
     QString data = "connection test, hello pycharm!";
     if(client->write(data.toLatin1(), data.length()) == -1) {
-        qDebug() << "PythonMudule.cpp line:15 PythonMudule() write failed!";
+        qDebug() << "PythonMudule.cpp line:212 run_TCP_vision() write failed!";
     }
     while(true) {
         __delayMsec(5000);
@@ -218,25 +218,93 @@ void PythonMudule::run_TCP_vision() {
         QString msg_qstr = "";
         if(strlen(msg) > 0) {
             msg_qstr = msg;
-            count++;
-            qDebug() << count << " communications";
+            MP_count++;
+            qDebug() << MP_count << " communications";
             qDebug() << "client reveive: " << msg_qstr;
-            if(count > 1) __QString2Board(msg_qstr);
-            received = true;
+            if(MP_count > 1) __QString2Board(msg_qstr);
+            MP_received = true;
+            analysis_human_setp();
         }
         else {
-            qDebug() << "PythonMudule.cpp line:58 client_read_data() receive message from server error!";
+            qDebug() << "PythonMudule.cpp line:228 run_TCP_vision() receive message from server error!";
         }
-        if(received) {
-            QString request = "Chess Step Request  ->  " + QString::number(count);
+        if(MP_received) {
+            QString request = "Chess Step Request  ->  " + QString::number(MP_count);
             if(client->write(request.toLatin1(), request.length()) == -1) {
                 qDebug() << "PythonMudule.cpp line:26 run() write failed!";
             }
             std::cout << request.toStdString() << std::endl;
-            received = false;
+            MP_received = false;
         }
         if(isValid) vision_step();
     }
+}
+
+void PythonMudule::analysis_human_setp() {
+    if(MP_count <= 1 || MP_received == false) return;
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            __lastVisionBoard[i][j] = Main_chessBoard[j][i];
+            // refresh the chess board of the last state
+        }
+    }
+    std::cout << "PythonMudule.cpp line:250 inter analysis_human_setp()" << std::endl;
+    // curStepList: all possible steps
+//    bool isBoardChanged = false;
+    int count_different = 0;
+//    QPair<QPair<int, int>, QPair<int, int>> step_first;
+//    bool flagFirst = false;
+//    bool flagSecond = false;
+//    bool flagThird = false;
+//    bool isSimpleMoveOrKill = false; // true -> move and false -> kill
+//    QPair<QPair<int, int>, QPair<int, int>> step_second;
+//    QPair<QPair<int, int>, QPair<int, int>> step_third;
+    __printVisionBoard();
+    __printLastVisionBoard();
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            if(__lastVisionBoard[i][j] != __visionBoard[i][j]) {
+                count_different++;
+                QPair<int, int> coordinate = qMakePair<int, int>(i, j);
+                QPair<int, int> chess_change = qMakePair<int, int>(__lastVisionBoard[i][j], __visionBoard[i][j]);
+                if(flagFirst == false && __visionBoard[i][j] == 0 && __lastVisionBoard[i][j] != 0) {
+                    step_first = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
+                    flagFirst = true;
+                }
+                else if(flagSecond == false && __visionBoard[i][j] != 0 && __lastVisionBoard[i][j] == 0) {
+                    step_second = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
+                    flagSecond = true;
+                    isSimpleMoveOrKill = true;
+                }
+                else if(flagThird == false && flagSecond == false && isSimpleMoveOrKill == false && chess_change.first <= 7) {
+                    // <=7 : no chess or black chess, we should not eat red chess
+                    step_third = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
+                    flagThird = true;
+                }
+            }
+        }
+    }
+    if(isSimpleMoveOrKill == false && flagThird == true) {
+        step_second = step_third;
+        flagSecond = true;
+    }
+    // isBoardChanged = (count_different == 2);
+    isBoardChanged = flagFirst && flagSecond;
+    if(isBoardChanged == false) {
+        std::cout << "PythonMudule.cpp line:291 function:analysis_human_setp() isBoardChanegd = False" << std::endl;
+    }
+    // generate step
+    // int num = step_first.second.first;
+    // int init_x = step_first.first.first;
+    // int init_y = step_first.first.second;
+    // int number = -1;
+    // if(isSimpleMoveOrKill == false) number = GlobalEnvirIn::Instance()->__whichChessOnThere(init_x, init_y)->chessNumber();
+    // bool kill = !isSimpleMoveOrKill;
+    // // bool kill = (step_second.second.first != 0);
+    // int k_num = kill ? (step_second.second.first) : -1;
+    // int posX = step_second.first.first;
+    // int posY = step_second.first.second;
+    // std::cout << num << " " << init_x << " " << init_y << " " << number << " " << k_num << " " << posX << " " << posY << std::endl;
 }
 
 void PythonMudule::vision_step() {
@@ -260,7 +328,14 @@ void PythonMudule::__QString2Board(QString origin_message) {
     // std::cout << "chesses from vision, count = " << count << std::endl;
     for(int i = 0; i < 9; i++) {
         for(int j = 0; j < 10; j++) {
-            __lastVisionBoard[i][j] = GlobalEnvirIn::Instance()->__visionBoard[i][j];
+            __lastVisionBoard[i][j] = GlobalEnvirIn::Instance()->__board[i][j];
+            // refresh the chess board of the last state
+            __visionBoard[i][j] = 0;
+        }
+    }
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            __lastVisionBoard[i][j] = Main_chessBoard[j][i];
             // refresh the chess board of the last state
             __visionBoard[i][j] = 0;
         }
@@ -277,8 +352,8 @@ void PythonMudule::__QString2Board(QString origin_message) {
 }
 
 int PythonMudule::__generateHumanStep(const QVector<chessStep> &curStepList) {
-    std::cout << "Python.cpp line:280 inter function, count = " << count << std::endl;
-    if(count <= 1 || received == false) return -1;
+    std::cout << "Python.cpp line:280 inter function, count = " << MP_count << std::endl;
+    if(MP_count <= 1 || MP_received == false) return -1;
     for(int i = 0; i < 9; i++) {
         for(int j = 0; j < 10; j++) {
             __lastVisionBoard[i][j] = GlobalEnvirIn::Instance()->__visionBoard[i][j];
@@ -383,6 +458,21 @@ void PythonMudule::__printVisionBoard() {
     }
 }
 
+void PythonMudule::__printLastVisionBoard() {
+    std::cout << "PythonMudule::__printLastVisionBoard() called" << std::endl;
+    for(int i = 0; i < 9; i++) {
+        std::cout << "[";
+        for(int j = 0; j < 10; j++) {
+            std::cout << " ";
+            // QByteArray QStr2Char(GlobalPython::CHESS_TABLE.at(__board[i][j] - 1).toStdString().data());
+            std::cout << GlobalPython::CHESS_TABLE.at(__lastVisionBoard[i][j]).toStdString();
+            if(j != 4) std::cout << " ";
+            else std::cout << " |";
+        }
+        std::cout << "]\t" << std::endl;
+    }
+}
+
 int PythonMudule::__QStr2intName(QString name) {
     // GlobalPython::Chess_Qstr2Int_simple.find(name);
     std::unordered_map<QString, int>::iterator it;
@@ -411,11 +501,11 @@ void PythonMudule::client_read_data() {
     QString msg_qstr = "";
     if(strlen(msg) > 0) {
         msg_qstr = msg;
-        count++;
-        qDebug() << count << " communications";
+        MP_count++;
+        qDebug() << MP_count << " communications";
         qDebug() << "client reveive: " << msg_qstr;
-        if(count > 1) __QString2Board(msg_qstr);
-        received = true;
+        if(MP_count > 1) __QString2Board(msg_qstr);
+        MP_received = true;
     }
     else {
         qDebug() << "PythonMudule.cpp line:58 client_read_data() receive message from server error!";
@@ -435,5 +525,5 @@ void PythonMudule::step_msg_check(QString recv) {
 }
 
 void PythonMudule::setReceived(bool recv) {
-    received = recv;
+    MP_received = recv;
 }

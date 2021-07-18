@@ -81,6 +81,8 @@ public:
 
 // extern Qml_Connection* QmlConnect;
 extern QObject* object; // control the whole graphic panel
+// extern int M_human_index;
+extern int ** Main_chessBoard;
 
 typedef NormalSingleton< GlobalEnvironment > GlobalEnvirIn;
 

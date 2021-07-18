@@ -42,8 +42,10 @@ public:
     virtual void __QString2Board(QString origin_message);
     virtual int __QStr2intName(QString name);
     virtual void __printVisionBoard();
+    virtual void __printLastVisionBoard();
     void setReceived(bool recv);
     int __generateHumanStep(const QVector<chessStep> &curStepList);
+    void analysis_human_setp();
 
 private slots:
     void client_read_data();
@@ -55,12 +57,22 @@ private:
     QString step_str;
     bool isValid;
     QTcpSocket* client = new QTcpSocket();
-    int count;
-    bool received;
+public:
+    int MP_count;
+    bool MP_received;
+public:
     int ** __visionBoard;
     int ** __lastVisionBoard;
 //    bool __isStepGenerated;
 //    chessStep __humanStep;
+    bool isBoardChanged = false;
+    QPair<QPair<int, int>, QPair<int, int>> step_first;
+    bool flagFirst = false;
+    bool flagSecond = false;
+    bool flagThird = false;
+    bool isSimpleMoveOrKill = false; // true -> move and false -> kill
+    QPair<QPair<int, int>, QPair<int, int>> step_second;
+    QPair<QPair<int, int>, QPair<int, int>> step_third;
 };
 
 typedef NormalSingleton< PythonMudule > PythonMuduleIn;

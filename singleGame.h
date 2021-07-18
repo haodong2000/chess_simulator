@@ -18,7 +18,9 @@
 #include <QTcpSocket>
 #include <QTcpServer>
 
-#include <PythonMudule.h>
+#include <vision_thread.h>
+
+extern vision_thread *vision;
 
 class singleGame
 {
@@ -80,6 +82,8 @@ public:
     virtual bool isHumanStepValid(chessStep step);
 
     virtual void deleteStepList(QVector<chessStep*>& stepList);
+
+    int VisionHumanStepIndex(const QVector<chessStep>& curStepList);
 
     Step* finalChessStep;
     QVector<Step*> chessBlackStepList;

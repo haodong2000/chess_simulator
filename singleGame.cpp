@@ -2038,9 +2038,34 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
             // once changed(from vision), break
             int humanIndex = -1;
             while(humanIndex == -1) {
-                humanIndex = PythonMuduleIn::Instance()->__generateHumanStep(curStepList);
-                std::cout << "singleGame.cpp line:2042 humanIndex = " << humanIndex << std::endl;
+//                humanIndex = VisionIn::Instance()->get_human_step_from_vision(curStepList);
+//                GlobalEnvirIn::Instance()->__delayMsec(1000);
+//                std::cout <<  (vision->python_vision->isBoardChanged ? "LLLLLLLLLLLLLLL" : "HHHHHHHHHHHHHHH") << std::endl;
+                humanIndex = VisionHumanStepIndex(curStepList);
+//                std::cout << "singleGame.cpp line:2042 humanIndex = " << humanIndex << std::endl;
             }
+            for(int i = 0; i < 9; i++) {
+                for(int j = 0; j < 10; j++) {
+                    vision->python_vision->__lastVisionBoard[i][j] = Main_chessBoard[i][j];
+                    // refresh the chess board of the last state
+                }
+            }
+            int dest_x = curStepList.at(humanIndex)._deltaX;
+            int dest_y = curStepList.at(humanIndex)._deltaY;
+            int init_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(humanIndex)._chessNum, curStepList.at(humanIndex)._chessNumber)->getPosX();
+            int init_y = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(humanIndex)._chessNum, curStepList.at(humanIndex)._chessNumber)->getPosY();
+            int kill_or_not = curStepList.at(humanIndex)._isKill ? 1 : 0;
+            GlobalEnvirIn::Instance()->__delayMsec(50);
+            QString M1_request = QString::number(kill_or_not) + QString::number(init_y) + QString::number(init_x) + QString::number(dest_y) + QString::number(dest_x);
+            if(M1_client->write(M1_request.toLatin1(), M1_request.length()) == -1) {
+                qDebug() << "singleGame.cpp line:2055 normalPlay_HumanVSAI_CIMC() write failed!";
+            }
+            std::cout << "Message sent to M1 Robot -> " << M1_request.toStdString() << std::endl;
+            char M1_Receive[1024] = {0};
+            M1_client->read(M1_Receive, 1024);
+            if(strlen(M1_Receive) > 0) std::cout << "Receive from M1 Robot   ->" << M1_Receive << std::endl;
+            else std::cout << "Receive from M1 Robot ERROR" << std::endl;
+            GlobalEnvirIn::Instance()->__delayMsec(50);
             realMove(curStepList.at(humanIndex));
         }
         else if(!redOrBlack && (!curStepList.empty())) {
@@ -2049,7 +2074,7 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
             realMove(curStepList.at(sizeIndex));
         }
         else {
-            qDebug() << "singleGame.cpp line:499 normalPlay() error: curStepList is EMPTY!!!!!";
+            qDebug() << "singleGame.cpp line:2071 normalPlay_HumanVSAI_CIMC() error: curStepList is EMPTY!!!!!";
             return;
         }
         gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
@@ -2060,6 +2085,65 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
         }
         redOrBlack = !redOrBlack;
     }
+}
+
+int singleGame::VisionHumanStepIndex(const QVector<chessStep>& curStepList) {
+    if(vision->python_vision->MP_count <= 1 || vision->python_vision->MP_received == false) return -1;
+    if(vision->python_vision->isBoardChanged == false) {
+        // std::cout << "singleGame.cpp line:2071 VisionHumanStepIndex() vision->python_vision->isBoardChanged == false" << std::endl;
+        return -1;
+    }
+    // generate step
+    int num = vision->python_vision->step_first.second.first;
+    int init_x = vision->python_vision->step_first.first.first;
+    int init_y = vision->python_vision->step_first.first.second;
+    int number = -1;
+//    int swap_init = init_x; // zjjjnb
+//    init_x = init_y;        // zjjjnb
+//    init_y = init_x;        // zjjjnb
+//    init_y = 8 - init_y;
+//    std::cout << "init_x = " << init_x << ",  init_y = " << init_y << std::endl;
+    number = GlobalEnvirIn::Instance()->__whichChessOnThere(init_x, init_y)->chessNumber();
+//    std::cout << init_x << " llll " << init_y << "   >>>>   " << num << "   " << number << std::endl;
+    bool kill = !(vision->python_vision->isSimpleMoveOrKill);
+    // bool kill = (step_second.second.first != 0);
+//    int k_num = kill ? (vision->python_vision->step_second.second.first) : -1;
+    int posX = vision->python_vision->step_second.first.first;
+    int posY = vision->python_vision->step_second.first.second;
+    int swap_pos = posX;    // zjjjnb
+    posX = posY;            // zjjjnb
+    posY = swap_pos;        // zjjjnb
+//    int swap_init = init_x; // zjjjnb
+//    init_x = init_y;        // zjjjnb
+//    init_y = init_x;        // zjjjnb
+    // std::cout << num << " " << init_x << " " << init_y << " " << number << " " << k_num << " " << posX << " " << posY << std::endl;
+    // start to compare
+    int size = curStepList.length();
+    int index = -1;
+    for(int i = 0; i < size; i++) {
+        if(curStepList.at(i)._chessNum == num &&
+                curStepList.at(i)._chessNumber == number &&
+                curStepList.at(i)._deltaX == posX &&
+                curStepList.at(i)._deltaY == posY) {
+            if(kill == true && curStepList.at(i)._isKill == kill) {
+                // kill
+                index = i;
+                break;
+            }
+            else if(kill == false) {
+                // simple move
+                index = i;
+                break;
+            }
+            else {
+                // kill = true and curStepList.at(i)._isKill != kill
+                continue;
+            }
+        }
+    }
+//    if(index >= 0) std::cout << "OHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH index = " << index << std::endl;
+//    else std::cout << "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW index = " << index << std::endl;
+    return index;
 }
 
 void singleGame::normalPlay_HumanVSAI(int maxCount) {
