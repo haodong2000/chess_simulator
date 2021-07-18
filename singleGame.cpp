@@ -2050,12 +2050,17 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
                     // refresh the chess board of the last state
                 }
             }
-            int dest_x = curStepList.at(humanIndex)._deltaX;
-            int dest_y = curStepList.at(humanIndex)._deltaY;
-            int init_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(humanIndex)._chessNum, curStepList.at(humanIndex)._chessNumber)->getPosX();
-            int init_y = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(humanIndex)._chessNum, curStepList.at(humanIndex)._chessNumber)->getPosY();
-            int kill_or_not = curStepList.at(humanIndex)._isKill ? 1 : 0;
-            GlobalEnvirIn::Instance()->__delayMsec(50);
+            realMove(curStepList.at(humanIndex));
+        }
+        else if(!redOrBlack && (!curStepList.empty())) {
+            curStepList.append(originBlackChessStepList);
+            int sizeIndex = alpha_beta_black(_level);
+            int dest_x = curStepList.at(sizeIndex)._deltaX;
+            int dest_y = curStepList.at(sizeIndex)._deltaY;
+            int init_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosX();
+            int init_y = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosY();
+            int kill_or_not = curStepList.at(sizeIndex)._isKill ? 1 : 0;
+            GlobalEnvirIn::Instance()->__delayMsec(25);
             QString M1_request = QString::number(kill_or_not) + QString::number(init_y) + QString::number(init_x) + QString::number(dest_y) + QString::number(dest_x);
             if(M1_client->write(M1_request.toLatin1(), M1_request.length()) == -1) {
                 qDebug() << "singleGame.cpp line:2055 normalPlay_HumanVSAI_CIMC() write failed!";
@@ -2065,12 +2070,7 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
             M1_client->read(M1_Receive, 1024);
             if(strlen(M1_Receive) > 0) std::cout << "Receive from M1 Robot   ->" << M1_Receive << std::endl;
             else std::cout << "Receive from M1 Robot ERROR" << std::endl;
-            GlobalEnvirIn::Instance()->__delayMsec(50);
-            realMove(curStepList.at(humanIndex));
-        }
-        else if(!redOrBlack && (!curStepList.empty())) {
-            curStepList.append(originBlackChessStepList);
-            int sizeIndex = alpha_beta_black(_level);
+            GlobalEnvirIn::Instance()->__delayMsec(25);
             realMove(curStepList.at(sizeIndex));
         }
         else {
