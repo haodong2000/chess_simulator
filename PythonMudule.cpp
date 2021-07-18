@@ -205,7 +205,7 @@ void PythonMudule::run() {
     else {
         qDebug() << this->name << " Connection Failed!!!";
     }
-    connect(client, SIGNAL(readyRead()), this, SLOT(client_read_data()));
+    // connect(client, SIGNAL(readyRead()), this, SLOT(client_read_data()));
     connect(client, SIGNAL(disconnected()), this, SLOT(client_disconnect()));
     QString data = "connection test, hello pycharm!";
     if(client->write(data.toLatin1(), data.length()) == -1) {
@@ -213,6 +213,20 @@ void PythonMudule::run() {
     }
     while(true) {
         __delayMsec(5000);
+        char msg[1024] = {0};
+        client->read(msg, 1024);
+        QString msg_qstr = "";
+        if(strlen(msg) > 0) {
+            msg_qstr = msg;
+            count++;
+            qDebug() << count << " communications";
+            qDebug() << "client reveive: " << msg_qstr;
+            if(count > 1) __QString2Board(msg_qstr);
+            received = true;
+        }
+        else {
+            qDebug() << "PythonMudule.cpp line:58 client_read_data() receive message from server error!";
+        }
         if(received) {
             QString request = "Chess Step Request  ->  " + QString::number(count);
             if(client->write(request.toLatin1(), request.length()) == -1) {
@@ -263,6 +277,7 @@ void PythonMudule::__QString2Board(QString origin_message) {
 }
 
 int PythonMudule::__generateHumanStep(const QVector<chessStep> &curStepList) {
+    if(count <= 1) return -1;
     // curStepList: all possible steps
     bool isBoardChanged = false;
     int count_different = 0;
