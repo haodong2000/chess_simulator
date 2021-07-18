@@ -24,7 +24,7 @@
 #include <PythonMudule.h>
 
 QObject* object;
-static const int CHESS_PLAY_MODE = 4; // one level, two level, three level, four level of stimulation
+static const int CHESS_PLAY_MODE = 5; // one level, two level, three level, four level of stimulation
                                       // and 5 for CIMC show
 static const bool TEST_MODE = false;
 
