@@ -235,9 +235,18 @@ void PythonMudule::run_TCP_vision() {
             }
             std::cout << request.toStdString() << std::endl;
             MP_received = false;
+            reset_human_step();
         }
         if(isValid) vision_step();
     }
+}
+
+void PythonMudule::reset_human_step() {
+    isBoardChanged = false;
+    flagFirst = false;
+    flagSecond = false;
+    flagThird = false;
+    isSimpleMoveOrKill = false; // true -> move and false -> kill
 }
 
 void PythonMudule::analysis_human_setp() {
@@ -267,16 +276,20 @@ void PythonMudule::analysis_human_setp() {
                 count_different++;
                 QPair<int, int> coordinate = qMakePair<int, int>(i, j);
                 QPair<int, int> chess_change = qMakePair<int, int>(__lastVisionBoard[i][j], __visionBoard[i][j]);
-                if(flagFirst == false && __visionBoard[i][j] == 0 && __lastVisionBoard[i][j] != 0) {
+                if(flagFirst == false && __visionBoard[i][j] == 0 && __lastVisionBoard[i][j] != 0 &&
+                        __lastVisionBoard[i][j] >= 8 && __lastVisionBoard[i][j] <= 14) {
                     step_first = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
                     flagFirst = true;
                 }
-                else if(flagSecond == false && __visionBoard[i][j] != 0 && __lastVisionBoard[i][j] == 0) {
+                else if(flagSecond == false && __visionBoard[i][j] != 0 && __lastVisionBoard[i][j] == 0 &&
+                        __visionBoard[i][j] >= 8 && __visionBoard[i][j] <= 14) {
                     step_second = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
                     flagSecond = true;
                     isSimpleMoveOrKill = true;
                 }
-                else if(flagThird == false && flagSecond == false && isSimpleMoveOrKill == false && chess_change.first <= 7) {
+                else if(flagThird == false && flagSecond == false && isSimpleMoveOrKill == false &&
+                        chess_change.first <= 7 && chess_change.first >=0 &&
+                        chess_change.second >= 8 && chess_change.second <= 14) {
                     // <=7 : no chess or black chess, we should not eat red chess
                     step_third = qMakePair<QPair<int, int>, QPair<int, int>>(coordinate, chess_change);
                     flagThird = true;

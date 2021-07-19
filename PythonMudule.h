@@ -46,6 +46,7 @@ public:
     void setReceived(bool recv);
     int __generateHumanStep(const QVector<chessStep> &curStepList);
     void analysis_human_setp();
+    void reset_human_step();
     void refershLastVisionBoard();
 
 private slots:
