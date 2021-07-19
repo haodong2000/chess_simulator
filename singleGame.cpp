@@ -2126,7 +2126,8 @@ int singleGame::VisionHumanStepIndex(const QVector<chessStep>& curStepList) {
                   << curStepList.at(i)._chessNumber << " "
                   << curStepList.at(i)._deltaX << " "
                   << curStepList.at(i)._deltaY;
-        std::cout << "Kill " << (kill ? "AAAAAAAAAAAAAAA" : "BBBBBBBBBBBBB") << (curStepList.at(i)._isKill ? "AAAAAAAAAAAAAAAAAA" : "BBBBBBBBBBBBB") << std::endl;
+        std::cout << " Kill " << (kill ? "AAAAAAAAAAAAA" : "BBBBBBBBBBBBB") << " "
+                  << (curStepList.at(i)._isKill ? "AAAAAAAAAAAAA" : "BBBBBBBBBBBBB") << std::endl;
         if(curStepList.at(i)._chessNum == num &&
                 curStepList.at(i)._chessNumber == number &&
                 curStepList.at(i)._deltaX == posX &&

@@ -268,7 +268,7 @@ void PythonMudule::analysis_human_setp() {
 //    bool isSimpleMoveOrKill = false; // true -> move and false -> kill
 //    QPair<QPair<int, int>, QPair<int, int>> step_second;
 //    QPair<QPair<int, int>, QPair<int, int>> step_third;
-    __printVisionBoard();
+//    __printVisionBoard();
     __printLastVisionBoard();
     for(int i = 0; i < 9; i++) {
         for(int j = 0; j < 10; j++) {
