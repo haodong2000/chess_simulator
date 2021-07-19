@@ -2102,7 +2102,7 @@ int singleGame::VisionHumanStepIndex(const QVector<chessStep>& curStepList) {
     init_x = init_y;        // zjjjnb
     init_y = swap_init;     // zjjjnb
 //    init_y = 8 - init_y;
-    std::cout << "init_x = " << init_x << ",  init_y = " << init_y << std::endl;
+//    std::cout << "init_x = " << init_x << ",  init_y = " << init_y << std::endl;
     number = GlobalEnvirIn::Instance()->__whichChessOnThere(init_x, init_y)->chessNumber();
 //    std::cout << init_x << " llll " << init_y << "   >>>>   " << num << "   " << number << std::endl;
 //    bool kill = !(vision->python_vision->isSimpleMoveOrKill);
@@ -2125,7 +2125,7 @@ int singleGame::VisionHumanStepIndex(const QVector<chessStep>& curStepList) {
                   << init_x << " " << init_y << " "
                   << curStepList.at(i)._chessNumber << " "
                   << curStepList.at(i)._deltaX << " "
-                  << curStepList.at(i)._deltaY << std::endl;
+                  << curStepList.at(i)._deltaY;
         std::cout << "Kill " << (kill ? "AAAAAAAAAAAAAAA" : "BBBBBBBBBBBBB") << (curStepList.at(i)._isKill ? "AAAAAAAAAAAAAAAAAA" : "BBBBBBBBBBBBB") << std::endl;
         if(curStepList.at(i)._chessNum == num &&
                 curStepList.at(i)._chessNumber == number &&
@@ -2147,8 +2147,8 @@ int singleGame::VisionHumanStepIndex(const QVector<chessStep>& curStepList) {
             }
         }
     }
-    if(index >= 0) std::cout << "OHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH index = " << index << std::endl;
-    else std::cout << "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW index = " << index << std::endl;
+//    if(index >= 0) std::cout << "OHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH index = " << index << std::endl;
+//    else std::cout << "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW index = " << index << std::endl;
     return index;
 }
 
