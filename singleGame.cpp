@@ -2083,6 +2083,12 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
             else std::cout << "Red Win!" << std::endl;
             GlobalEnvirIn::Instance()->__printBoard();
         }
+        if(GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()) {
+            gameIsOn = false;
+            if(redOrBlack) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
         redOrBlack = !redOrBlack;
     }
 }
@@ -2212,6 +2218,12 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
             else std::cout << "Red Win!" << std::endl;
             GlobalEnvirIn::Instance()->__printBoard();
         }
+        if(GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()) {
+            gameIsOn = false;
+            if(redOrBlack) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
         redOrBlack = !redOrBlack;
     }
 }
@@ -2257,6 +2269,12 @@ void singleGame::normalPlay(int maxCount) {
         gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
         if(gameIsOn == false) {
             if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        if(GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()) {
+            gameIsOn = false;
+            if(redOrBlack) std::cout << "Black Win!" << std::endl;
             else std::cout << "Red Win!" << std::endl;
             GlobalEnvirIn::Instance()->__printBoard();
         }

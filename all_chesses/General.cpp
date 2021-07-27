@@ -70,6 +70,20 @@ void General::generateMove() {
     // tranStarStepList();
 }
 
+bool General::isOnlyGeneralsInRow(SGeoPoint *end) {
+    const int row = end->getPosY();
+    for(int i = 0; i < PARAM::globalEnvironment::maxAxisOfX; i++) {
+        if(GlobalEnvirIn::Instance()->__isThereHasChess(i, row)) {
+            int temp_chess_num = GlobalEnvirIn::Instance()->__whichChessOnThere(i, row)->chessNumber();
+            if(temp_chess_num != PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL &&
+                    temp_chess_num != PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 bool General::canGeneralMoveOrKill(SGeoPoint *start, SGeoPoint *end) {
     if((!GlobalEnvirIn::Instance()->__isPosInBoard(start)) || (!GlobalEnvirIn::Instance()->__isPosInBoard(end))) {
         qDebug() << "General.cpp line:42 canGeneralMoveOrKill() error:General move out of boundary !!!";

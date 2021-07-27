@@ -24,6 +24,7 @@ public:
     virtual void generateMove();
     virtual bool canGeneralMoveOrKill(SGeoPoint* start, SGeoPoint* end);
     virtual bool generalInPavilion(SGeoPoint* Pos);
+    virtual bool isOnlyGeneralsInRow(SGeoPoint* end);
 };
 
 #endif // GENERAL_H

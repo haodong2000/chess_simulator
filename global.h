@@ -69,6 +69,7 @@ public:
     virtual double __countSpaceAround(int chessNum, int chessNumber);
     virtual int __countChessInPath(SGeoPoint* start, SGeoPoint* end);
     virtual int __generateRandomNumber(int maxNumber);
+    virtual bool __isOnlyTwoGeneralsInRow();
     int ** __board; // result of chess identify, 0-14
                     // 0: empty
                     // 1-7:  black

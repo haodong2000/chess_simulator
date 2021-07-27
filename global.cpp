@@ -1343,6 +1343,22 @@ int GlobalEnvironment::__countChessInPath(SGeoPoint *start, SGeoPoint *end) {
     return count;
 }
 
+bool GlobalEnvironment::__isOnlyTwoGeneralsInRow() {
+    int black_y = Ab_gen_1->getPosY();
+    int red_y = Ar_gen_1->getPosY();
+    if(black_y != red_y) return false; // two generals in different row
+    for(int i = 0; i < PARAM::globalEnvironment::maxAxisOfX; i++) {
+        if(__isThereHasChess(i, black_y)) {
+            int temp_chess = __whichChessOnThere(i, black_y)->chessNumber();
+            if(temp_chess != PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL &&
+                    temp_chess != PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 int GlobalEnvironment::__generateRandomNumber(int maxNumber) {
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
     int ret = qrand()%maxNumber;
