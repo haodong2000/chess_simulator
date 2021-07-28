@@ -40,6 +40,8 @@ public:
     virtual void fakeKillThisChess(SGeoPoint* Pos);
     virtual void fakeKillThisChess(int PosX, int PosY);
 
+    virtual void setWinnerWhenOnlyGeneralsInRow(bool redOrBlack);
+
 private:
     // static SGeoPoint* pTest;
 };

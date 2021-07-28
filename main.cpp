@@ -26,7 +26,7 @@
 QObject* object;
 vision_thread *vision = NULL;
 int ** Main_chessBoard = NULL;
-static const int CHESS_PLAY_MODE = 1; // one level, two level, three level, four level of stimulation
+static const int CHESS_PLAY_MODE = 2; // one level, two level, three level, four level of stimulation
                                       // and 5 for CIMC show
 static const bool TEST_MODE = false;
 
@@ -66,14 +66,20 @@ int main(int argc, char *argv[])
     }
     else {
         switch (CHESS_PLAY_MODE) {
+        case 0:
+            singleGameIn::Instance()->normalPlay(PARAM::NINE_NINE_NINE);
+            break;
         case 1:
             singleGameIn::Instance()->normalPlay_HumanVSAI(PARAM::NINE_NINE_NINE);
             break;
         case 2:
+            singleGameIn::Instance()->normalPlay_HumanVSHuman(PARAM::NINE_NINE_NINE);
+            break;
+        case 3:
             singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC(PARAM::NINE_NINE_NINE);
             break;
         default:
-            qDebug() << "main.cpp line:67 CHESS_PLAY_MODE inValid!!!";
+            qDebug() << "main.cpp line:79 CHESS_PLAY_MODE inValid!!! (only 0, 1, 2 wanted)";
             break;
         }
     }

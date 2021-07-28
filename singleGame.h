@@ -60,6 +60,7 @@ public:
     virtual int S_threeLevelStepIndex(bool redOrBlack);
     virtual void normalPlay(int maxCount);
     virtual void normalPlay_HumanVSAI(int maxCount);
+    virtual void normalPlay_HumanVSHuman(int maxCount);
     virtual void normalPlay_HumanVSAI_CIMC(int maxCount);
     virtual int alpha_beta_black(int depth);
     virtual int alpha_beta_red(int depth);
@@ -79,7 +80,9 @@ public:
     virtual void realBackMove(chessStep* step, int lastPosX, int lastPosY);
     virtual void fakeBackMove(chessStep* step, int lastPosX, int lastPosY);
     virtual bool humanMove();
+    virtual bool humanMove_black();
     virtual bool isHumanStepValid(chessStep step);
+    virtual bool isHumanStepValid_black(chessStep step);
 
     virtual void deleteStepList(QVector<chessStep*>& stepList);
 

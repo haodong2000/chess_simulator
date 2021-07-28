@@ -141,9 +141,12 @@ Window {
         property bool b_gen_1_alive: true
         property bool r_gen_1_alive: true
 
+        property bool onlyTwoGeneralsInRow_blackWin: false
+        property bool onlyTwoGeneralsInRow_redWin: false
+
         property bool isGameStop: !(b_gen_1_alive && r_gen_1_alive)
-        property bool isBlackWin: b_gen_1_alive && !(r_gen_1_alive)
-        property bool isRedWin:   r_gen_1_alive && !(b_gen_1_alive)
+        property bool isBlackWin: (b_gen_1_alive && !(r_gen_1_alive)) || onlyTwoGeneralsInRow_blackWin
+        property bool isRedWin:   (r_gen_1_alive && !(b_gen_1_alive)) || onlyTwoGeneralsInRow_redWin
 
         property bool b_adv_1_alive: true
         property bool r_adv_1_alive: true

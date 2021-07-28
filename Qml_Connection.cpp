@@ -195,3 +195,8 @@ void Qml_Connection::fakeBackChangeChessPos(QString chessName, int number, bool 
     fakeBackChangeChessPos(chessNameInt, number, camp, deltaX ,deltaY); // call other function
 }
 
+void Qml_Connection::setWinnerWhenOnlyGeneralsInRow(bool redOrBlack) {
+    if(redOrBlack) object->setProperty("onlyTwoGeneralsInRow_redWin", true);
+    else object->setProperty("onlyTwoGeneralsInRow_blackWin", true);
+}
+

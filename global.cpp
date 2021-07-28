@@ -760,6 +760,10 @@ Chess* GlobalEnvironment::__whichChessOnThere(SGeoPoint *Pos) {
             break;
         default:
             for(int index = 1; index <= numberNormal; index++) {
+//                if(chessIndex == 3) std::cout << "HH " << chessIndex << " " << index
+//                                              << " " << __QStrOrInt2Chess(chessIndex, index)->getPosX()
+//                                              << " " << __QStrOrInt2Chess(chessIndex, index)->getPosY()
+//                                              << " " << Pos->getPosX() << " " << Pos->getPosY() << std::endl;
                 if(__isChessOnThere(__QStrOrInt2Chess(chessIndex, index), Pos)) return GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessIndex, index);
             }
         }
@@ -1346,10 +1350,16 @@ int GlobalEnvironment::__countChessInPath(SGeoPoint *start, SGeoPoint *end) {
 bool GlobalEnvironment::__isOnlyTwoGeneralsInRow() {
     int black_y = Ab_gen_1->getPosY();
     int red_y = Ar_gen_1->getPosY();
+    const int maxAxisOfBlackGeneral = 2;
+    const int maxAxisOfRedGeneral = 7;
     if(black_y != red_y) return false; // two generals in different row
-    for(int i = 0; i < PARAM::globalEnvironment::maxAxisOfX; i++) {
+    for(int i = 0; i <= PARAM::globalEnvironment::maxAxisOfX; i++) {
         if(__isThereHasChess(i, black_y)) {
-            int temp_chess = __whichChessOnThere(i, black_y)->chessNumber();
+            if(i > maxAxisOfBlackGeneral && i < maxAxisOfRedGeneral) return false;
+//            std::cout << "b_ele_ " << Ab_ele_1->getPosX() << " " << Ab_ele_1->getPosY() << " " << Ab_ele_2->getPosX() << " " << Ab_ele_2->getPosY() << std::endl;
+            QString temp_chess_name = __QString2SimpleName(__whichChessOnThere(i, black_y)->chessName());
+            int temp_chess = __QStr2intName(temp_chess_name);
+//            std::cout << "__isOnlyTwoGeneralsInRow() " << temp_chess_name.toStdString() << " " << temp_chess << " " << i << black_y << " " << __int2QStrName(temp_chess).toStdString() << std::endl;
             if(temp_chess != PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL &&
                     temp_chess != PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL) {
                 return false;

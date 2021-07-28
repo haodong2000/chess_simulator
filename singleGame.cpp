@@ -2087,6 +2087,8 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
             gameIsOn = false;
             if(redOrBlack) std::cout << "Black Win!" << std::endl;
             else std::cout << "Red Win!" << std::endl;
+            if(redOrBlack) QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(false); // black win
+            else QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(true); // red win
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
@@ -2132,8 +2134,8 @@ int singleGame::VisionHumanStepIndex(const QVector<chessStep>& curStepList) {
                   << curStepList.at(i)._chessNumber << " "
                   << curStepList.at(i)._deltaX << " "
                   << curStepList.at(i)._deltaY;
-        std::cout << " Kill " << (kill ? "AAAAAAAAAAAAA" : "BBBBBBBBBBBBB") << " "
-                  << (curStepList.at(i)._isKill ? "AAAAAAAAAAAAA" : "BBBBBBBBBBBBB") << std::endl;
+        std::cout << " Kill " << (kill ? "AAAAAAAAAAAAA " : "BBBBBBBBBBBBB") << " "
+                  << (curStepList.at(i)._isKill ? "AAAAAAAAAAAAA " : "BBBBBBBBBBBBB") << std::endl;
         if(curStepList.at(i)._chessNum == num &&
                 curStepList.at(i)._chessNumber == number &&
                 curStepList.at(i)._deltaX == posX &&
@@ -2157,6 +2159,61 @@ int singleGame::VisionHumanStepIndex(const QVector<chessStep>& curStepList) {
 //    if(index >= 0) std::cout << "OHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH index = " << index << std::endl;
 //    else std::cout << "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW index = " << index << std::endl;
     return index;
+}
+
+void singleGame::normalPlay_HumanVSHuman(int maxCount) {
+    // alpha-beta
+    // human: red
+    // AI: black
+    bool gameIsOn = true;
+    bool redOrBlack = true;
+    int count = 0;
+    const int delayMs = 25;
+    while(gameIsOn && (count++) < maxCount) {
+        std::cout << "count chess moves -> " << count << std::endl;
+        GlobalEnvirIn::Instance()->__printBoard();
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
+
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+        generateRedAllPossibleMoves(); // no use
+        generateBlackAllPossibleMoves();
+        QVector<chessStep> curStepList; // memory
+        curStepList.clear();
+        if(redOrBlack) curStepList.append(originRedChessStepList); // no use
+        else curStepList.append(originBlackChessStepList);
+        if(redOrBlack && (!curStepList.empty())) {
+            // @TODO
+            // just refersh the bosrd once the human has finished his turn
+            // if the board unchanged(from mousearea), remain
+            // once changed(from mousearea), break
+            while(!humanMove());
+        }
+        else if(!redOrBlack && (!curStepList.empty())) {
+            while(!humanMove_black());
+        }
+        else {
+            qDebug() << "singleGame.cpp line:2198 normalPlay_HumanVSHuman() error: curStepList is EMPTY!!!!!";
+            return;
+        }
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        if(gameIsOn == false) {
+            if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        if(GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()) {
+            gameIsOn = false;
+            if(redOrBlack) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            if(redOrBlack) QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(false); // black win
+            else QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(true); // red win
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        redOrBlack = !redOrBlack;
+    }
 }
 
 void singleGame::normalPlay_HumanVSAI(int maxCount) {
@@ -2222,6 +2279,8 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
             gameIsOn = false;
             if(redOrBlack) std::cout << "Black Win!" << std::endl;
             else std::cout << "Red Win!" << std::endl;
+            if(redOrBlack) QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(false); // black win
+            else QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(true); // red win
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
@@ -2276,6 +2335,8 @@ void singleGame::normalPlay(int maxCount) {
             gameIsOn = false;
             if(redOrBlack) std::cout << "Black Win!" << std::endl;
             else std::cout << "Red Win!" << std::endl;
+            if(redOrBlack) QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(false); // black win
+            else QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(true); // red win
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
@@ -2904,6 +2965,99 @@ bool singleGame::humanMove() {
     return false;
 }
 
+bool singleGame::humanMove_black() {
+    // the first point
+    // if isThereHasOurChess()
+    // the second point
+    // if isThereNoOurChess() generate move
+    // else isThereHasOurChess() back to first point
+    int lastPosX = -999; // must -1
+    int lastPosY = -999;
+    int curPosX = -1;
+    int curPosY = -1;
+    bool isHumanMoving = true;
+    int Num = 0;
+    int Number = 0;
+    bool camp = false; // true for red and false for black
+    int movePosX = -1;
+    int movePosY = -1;
+    bool kill = false;
+    int kNum = 0;
+    int kNumber = 0;
+    while(isHumanMoving) {
+        GlobalEnvirIn::Instance()->__delayMsec(10);
+        QVariant x = object->property("lastMousePosX");
+        QVariant y = object->property("lastMousePosY");
+        curPosX = x.toInt();
+        curPosY = y.toInt();
+        if(!GlobalEnvirIn::Instance()->__isPosInBoard(coordinateIn::Instance()->transferPosX(curPosX),
+                                                      coordinateIn::Instance()->transferPosY(curPosY))) continue;
+        object->setProperty("selectChessX", coordinateIn::Instance()->tranRealPosX(coordinateIn::Instance()->transferPosX(curPosX)));
+        object->setProperty("selectChessY", coordinateIn::Instance()->tranRealPosY(coordinateIn::Instance()->transferPosY(curPosY)));
+//        std::cout << "X = " << curPosX << "    Y = " << curPosY << std::endl;
+        if(lastPosX == -999 && lastPosY == -999 && curPosX != lastPosX && curPosY != lastPosY &&
+                GlobalEnvirIn::Instance()->__isThereHasChess(coordinateIn::Instance()->transferPosX(curPosX),
+                                                             coordinateIn::Instance()->transferPosY(curPosY)) &&
+                GlobalEnvirIn::Instance()->__isThereHasOurChess(false,
+                                                                coordinateIn::Instance()->transferPosX(curPosX),
+                                                                coordinateIn::Instance()->transferPosY(curPosY))) {
+            lastPosX = curPosX;
+            lastPosY = curPosY;
+            // object->setProperty("selectChessX", coordinateIn::Instance()->tranRealPosX(coordinateIn::Instance()->transferPosX(lastPosX)));
+            // object->setProperty("selectChessY", coordinateIn::Instance()->tranRealPosY(coordinateIn::Instance()->transferPosY(lastPosY)));
+            continue;
+        }
+        if(lastPosX != -999 && lastPosY != -999 &&
+                (coordinateIn::Instance()->transferPosX(lastPosX) != coordinateIn::Instance()->transferPosX(curPosX) ||
+                 coordinateIn::Instance()->transferPosY(lastPosY) != coordinateIn::Instance()->transferPosY(curPosY))) {
+            // means there is a new point
+            if(GlobalEnvirIn::Instance()->__isThereHasOurChess(false,
+                                                               coordinateIn::Instance()->transferPosX(lastPosX),
+                                                               coordinateIn::Instance()->transferPosY(lastPosY)) &&
+                    !GlobalEnvirIn::Instance()->__isThereHasOurChess(false,
+                                                                     coordinateIn::Instance()->transferPosX(curPosX),
+                                                                     coordinateIn::Instance()->transferPosY(curPosY))) {
+//                std::cout << "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL " << coordinateIn::Instance()->transferPosX(curPosX) << " " << coordinateIn::Instance()->transferPosY(curPosY) << std::endl;
+                // object->setProperty("selectChessX", coordinateIn::Instance()->tranRealPosX(coordinateIn::Instance()->transferPosX(curPosX)));
+                // object->setProperty("selectChessY", coordinateIn::Instance()->tranRealPosY(coordinateIn::Instance()->transferPosY(curPosY)));
+                Num = GlobalEnvirIn::Instance()->__QStr2intName(
+                            GlobalEnvirIn::Instance()->__QString2SimpleName(
+                                GlobalEnvirIn::Instance()->__whichChessOnThere(coordinateIn::Instance()->transferPosX(lastPosX),
+                                                                               coordinateIn::Instance()->transferPosY(lastPosY))->chessName()));
+                Number = GlobalEnvirIn::Instance()->__whichChessOnThere(coordinateIn::Instance()->transferPosX(lastPosX),
+                                                                        coordinateIn::Instance()->transferPosY(lastPosY))->chessNumber();
+                movePosX = coordinateIn::Instance()->transferPosX(curPosX);
+                movePosY = coordinateIn::Instance()->transferPosY(curPosY);
+                kill = GlobalEnvirIn::Instance()->__isThereHasChess(movePosX, movePosY);
+                if(kill) {
+                    kNum = GlobalEnvirIn::Instance()->__QStr2intName(
+                                GlobalEnvirIn::Instance()->__QString2SimpleName(
+                                    GlobalEnvirIn::Instance()->__whichChessOnThere(movePosX, movePosY)->chessName()));
+                    kNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(movePosX, movePosY)->chessNumber();
+//                    std::cout  << " kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk " << Num << " " << Number << " " << kNum << " " << kNumber << std::endl;
+                }
+                break;
+            }
+            lastPosX = curPosX;
+            lastPosY = curPosY;
+            // std::cout << ";;;;;;;;;;;LLLLLLLLLLLLLLLLL;;;;;;;;;;;;;;;"  << " " << coordinateIn::Instance()->transferPosX(curPosX) << " " << coordinateIn::Instance()->transferPosX(curPosX) << std::endl;
+            // if(GlobalEnvirIn::Instance()->__isThereHasOurChess(true,
+            //                                                    coordinateIn::Instance()->transferPosX(curPosX),
+            //                                                    coordinateIn::Instance()->transferPosY(curPosY))) {
+            // object->setProperty("selectChessX", coordinateIn::Instance()->tranRealPosX(coordinateIn::Instance()->transferPosX(curPosX)));
+            // object->setProperty("selectChessY", coordinateIn::Instance()->tranRealPosY(coordinateIn::Instance()->transferPosY(curPosY)));
+            // }
+        }
+    }
+    chessStep humanStep(Num, Number, camp, movePosX, movePosY, kill, kNum, kNumber);
+//    std::cout << Num << " " << Number << " " << (kill?"RR":"BB") << " " << movePosX << " " << movePosY << " " << (kill?"KK":"PP") << " " << kNum << " " << kNumber << std::endl;
+    if(isHumanStepValid_black(humanStep)) {
+        realMove(humanStep);
+        return true;
+    }
+    return false;
+}
+
 bool singleGame::isHumanStepValid(chessStep step) {
     generateRedAllPossibleMoves();
     QVector<chessStep> allPossible;
@@ -2915,5 +3069,19 @@ bool singleGame::isHumanStepValid(chessStep step) {
         if(compareSteps(allPossible.at(index), step)) return true;
     }
     qDebug() << "singleGame.cpp isHumanStepValid() line:2604 human move invalid!!!";
+    return false;
+}
+
+bool singleGame::isHumanStepValid_black(chessStep step) {
+    generateBlackAllPossibleMoves();
+    QVector<chessStep> allPossible;
+    allPossible.clear();
+    allPossible.append(originBlackChessStepList);
+    int size = allPossible.size();
+//    displayBlackAllPossibleMoves();
+    for(int index = 0; index < size; index++) {
+        if(compareSteps(allPossible.at(index), step)) return true;
+    }
+    qDebug() << "singleGame.cpp isHumanStepValid_black() line:2937 human move invalid!!!";
     return false;
 }
