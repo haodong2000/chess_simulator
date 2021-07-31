@@ -40,8 +40,7 @@ int main(int argc, char *argv[])
     const QUrl url(QStringLiteral("qrc:/qml_files/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
+        if (!obj && url == objUrl) QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
 
@@ -61,18 +60,16 @@ int main(int argc, char *argv[])
     else qDebug() << "field_root loading failed!";
     GlobalEnvirIn::Instance()->__refreshBoard();
 
-    if(TEST_MODE) {
+    if(TEST_MODE)
         TestChessMoveIn::Instance()->testMultiProcess();
-    }
-    else {
+    else
         switch (CHESS_PLAY_MODE) {
-        case 0: singleGameIn::Instance()->normalPlay(PARAM::NINE_NINE_NINE); break;
-        case 1: singleGameIn::Instance()->normalPlay_HumanVSAI(PARAM::NINE_NINE_NINE); break;
-        case 2: singleGameIn::Instance()->normalPlay_HumanVSHuman(PARAM::NINE_NINE_NINE); break;
-        case 3: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC(PARAM::NINE_NINE_NINE); break;
-        default: qDebug() << "main.cpp line:79 CHESS_PLAY_MODE inValid!!! (only 0, 1, 2, 3 wanted)"; break;
+            case 0: singleGameIn::Instance()->normalPlay(PARAM::NINE_NINE_NINE); break;
+            case 1: singleGameIn::Instance()->normalPlay_HumanVSAI(PARAM::NINE_NINE_NINE); break;
+            case 2: singleGameIn::Instance()->normalPlay_HumanVSHuman(PARAM::NINE_NINE_NINE); break;
+            case 3: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC(PARAM::NINE_NINE_NINE); break;
+            default: qDebug() << "main.cpp line:79 CHESS_PLAY_MODE inValid!!! (only 0, 1, 2, 3 wanted)"; break;
         }
-    }
 
     return app.exec();
 }
