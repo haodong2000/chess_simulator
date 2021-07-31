@@ -3085,3 +3085,9 @@ bool singleGame::isHumanStepValid_black(chessStep step) {
     qDebug() << "singleGame.cpp isHumanStepValid_black() line:2937 human move invalid!!!";
     return false;
 }
+
+int singleGame::MonteCarloTree_black(int depth) {
+    // 2021-07-31
+    // depth = _level = 4
+    return 0;
+}
