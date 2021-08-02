@@ -19,7 +19,7 @@ singleGame::singleGame():
     SoriginBlackChessStepList.clear();
 //    allRedAndBlackStepList.clear();
 
-    _level = 4; // initialization, actuall level is 4
+    _level = SEARCH_DEPTH; // initialization, actuall level is 4
 
     M1_client->connectToHost(PARAM::M1_HOST, PARAM::M1_PORT);
     if(M1_client->waitForConnected(10000)) {
@@ -3089,5 +3089,14 @@ bool singleGame::isHumanStepValid_black(chessStep step) {
 int singleGame::MonteCarloTree_black(int depth) {
     // 2021-07-31
     // depth = _level = 4
+    // std::cout << "In MonteCarloTree_black() depth = " << depth << std::endl;
     return 0;
+}
+
+int singleGame::QuiescentSearch_black(int depth) {
+    // If someone eats your elephant with a horse, you'd better eat and return his horse.
+    // Alpha-Beta search is not specifically aimed at this situation.
+    // You pass the depth parameter to the function, and it's done when the depth reaches zero, even if one party is caught.
+    // When Alpha-Beta runs out of depth, call static search instead of calling "Evaluate()".
+    // This function also evaluates the situation, just to avoid misunderstanding the situation when there are obvious countermeasures.
 }

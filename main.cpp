@@ -26,8 +26,8 @@
 QObject* object;
 vision_thread *vision = NULL;
 int ** Main_chessBoard = NULL;
-static const int CHESS_PLAY_MODE = 1; // one level, two level, three level, four level of stimulation
-                                      // and 5 for CIMC show
+static const int CHESS_PLAY_MODE = 1;
+const int SEARCH_DEPTH = 4;
 static const bool TEST_MODE = false;
 
 int main(int argc, char *argv[])

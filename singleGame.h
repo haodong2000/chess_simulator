@@ -63,6 +63,7 @@ public:
     virtual void normalPlay_HumanVSHuman(int maxCount);
     virtual void normalPlay_HumanVSAI_CIMC(int maxCount);
     virtual int MonteCarloTree_black(int depth);
+    virtual int QuiescentSearch_black(int depth);
     virtual int alpha_beta_black(int depth);
     virtual int alpha_beta_red(int depth);
     virtual int alpha_beta_getMin(int depth, int curMin);
