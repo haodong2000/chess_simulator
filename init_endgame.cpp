@@ -34,6 +34,23 @@ namespace GlobalInit {
         "炮",
         "兵"
     };
+    QVector<int> CHESS_COUNT = {
+        0, // 0
+        0, // "将",
+        0, // "士",
+        0, // "象",
+        0, // "馬",
+        0, // "車",
+        0, // "砲",
+        0, // "卒",
+        0, // "帅",
+        0, // "仕",
+        0, // "相",
+        0, // "傌",
+        0, // "俥",
+        0, // "炮",
+        0, // "兵"
+    };
 }
 
 init_endgame::init_endgame()
@@ -52,7 +69,7 @@ init_endgame::init_endgame()
 }
 
 void init_endgame::printVisionBoard() {
-    std::cout << "init_endgame::printVisionBoard() called -*-*-*-*-*-" << std::endl;
+    std::cout << "-*-*-*-*-*- init_endgame::printVisionBoard() called -*-*-*-*-*-" << std::endl;
     for(int i = 0; i < 9; i++) {
         std::cout << "[";
         for(int j = 0; j < 10; j++) {
@@ -63,6 +80,41 @@ void init_endgame::printVisionBoard() {
         }
         std::cout << "]\t" << std::endl;
     }
+}
+
+void init_endgame::allChessesKilled() {
+    Ab_gen_1->setAlive(false);
+    Ab_adv_1->setAlive(false);
+    Ab_adv_2->setAlive(false);
+    Ab_can_1->setAlive(false);
+    Ab_can_2->setAlive(false);
+    Ab_cha_1->setAlive(false);
+    Ab_cha_2->setAlive(false);
+    Ab_ele_1->setAlive(false);
+    Ab_ele_2->setAlive(false);
+    Ab_hor_1->setAlive(false);
+    Ab_hor_2->setAlive(false);
+    Ab_sol_1->setAlive(false);
+    Ab_sol_2->setAlive(false);
+    Ab_sol_3->setAlive(false);
+    Ab_sol_4->setAlive(false);
+    Ab_sol_5->setAlive(false);
+    Ar_gen_1->setAlive(false);
+    Ar_adv_1->setAlive(false);
+    Ar_adv_2->setAlive(false);
+    Ar_can_1->setAlive(false);
+    Ar_can_2->setAlive(false);
+    Ar_cha_1->setAlive(false);
+    Ar_cha_2->setAlive(false);
+    Ar_ele_1->setAlive(false);
+    Ar_ele_2->setAlive(false);
+    Ar_hor_1->setAlive(false);
+    Ar_hor_2->setAlive(false);
+    Ar_sol_1->setAlive(false);
+    Ar_sol_2->setAlive(false);
+    Ar_sol_3->setAlive(false);
+    Ar_sol_4->setAlive(false);
+    Ar_sol_5->setAlive(false);
 }
 
 void init_endgame::setInitVisionBoard() {
@@ -80,9 +132,42 @@ void init_endgame::setInitVisionBoard() {
     }
     printVisionBoard();
     // change the properties of chesses
-
+    allChessesKilled();
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            if(initChessBoard[i][j] == 0) continue;
+            GlobalInit::CHESS_COUNT[initChessBoard[i][j]] += 1; // count the chess number
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], 1)->setAlive(true);
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], 1)->setPosX(i);
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], 1)->setPosY(j);
+        }
+    }
+    GlobalEnvirIn::Instance()->__printBoard();
+    // judge if gameIsOn
+    bool gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive() && GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow();
+    if(gameIsOn == false) qDebug() << "ERROR: init_endgame.cpp function:setInitVisionBoard() line:111 game already end!!!";
     // refresh the chess board (qml canvas)
-
+    for(int num = 1; num <= GlobalInit::CHESS_TABLE::RED_SOLDIER; num++) {
+        if(num == GlobalInit::CHESS_TABLE::BLACK_GENERAL || num == GlobalInit::CHESS_TABLE::RED_GENERAL) {
+            QmlConnectIn::Instance()->moveChessOnCanvas(num, 1);
+        }
+        else if(num == GlobalInit::CHESS_TABLE::BLACK_SOLDIER || num == GlobalInit::CHESS_TABLE::RED_SOLDIER) {
+            for(int number = 1; number <= 5; number++) {
+                if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(num, number)->isAlive() == false)
+                    QmlConnectIn::Instance()->eraseChessOnCanvas(num,  number);
+                else
+                    QmlConnectIn::Instance()->moveChessOnCanvas(num, number);
+            }
+        }
+        else {
+            for(int number = 1; number <= 2; number++) {
+                if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(num, number)->isAlive() == false)
+                    QmlConnectIn::Instance()->eraseChessOnCanvas(num,  number);
+                else
+                    QmlConnectIn::Instance()->moveChessOnCanvas(num, number);
+            }
+        }
+    }
     isVisionBoardDone = true;
     std::cout << "vision generate init chess board done!" << std::endl;
     QmlConnectIn::Instance()->setWhetherVisionDone(isVisionBoardDone);

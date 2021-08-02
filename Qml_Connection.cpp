@@ -211,3 +211,19 @@ void Qml_Connection::setWhetherVisionDone(bool isVisionDone) {
     }
     else object->setProperty("is_vision_board_done", isVisionDone);
 }
+
+void Qml_Connection::eraseChessOnCanvas(int num, int number) {
+    object->setProperty((GlobalEnvirIn::Instance()->__int2QStrName(num) +
+                         QString::number(number) + QString("_alive")).toLatin1(), false);
+}
+
+void Qml_Connection::moveChessOnCanvas(int num, int number) {
+    QString chessName = GlobalEnvirIn::Instance()->__int2QStrName(num) + QString::number(number);
+    int PosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(num, number)->getPosX();
+    int PosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(num, number)->getPosY();
+    object->setProperty((chessName + QString("_posX")).toLatin1(), coordinateIn::Instance()->tranRealPosX(PosX));
+    object->setProperty((chessName + QString("_posY")).toLatin1(), coordinateIn::Instance()->tranRealPosY(PosY));
+    if(num == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL || num == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL) {
+        GlobalEnvirIn::Instance()->__refershPosValueUnit();
+    }
+}

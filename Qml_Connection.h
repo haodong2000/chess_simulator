@@ -45,6 +45,9 @@ public:
     virtual void setEndGameMode(bool isInEndGameMode);
     virtual void setWhetherVisionDone(bool isVisionDone);
 
+    void eraseChessOnCanvas(int num, int number);
+    void moveChessOnCanvas(int num, int number);
+
 private:
     bool isEndGameMode;
     // static SGeoPoint* pTest;

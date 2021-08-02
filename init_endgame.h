@@ -12,6 +12,9 @@
 #include "singleton.h"
 #include "Qml_Connection.h"
 #include "vision_thread.h"
+#include "allBRChessesInclude.h"
+//#include "definitionChessSet.h"
+#include "globalChesses.h"
 
 extern vision_thread *vision;
 
@@ -21,6 +24,7 @@ public:
     init_endgame();
     void setInitVisionBoard();
     void printVisionBoard();
+    void allChessesKilled();
 private:
     bool isEndGameMode;
     bool isVisionBoardDone;
