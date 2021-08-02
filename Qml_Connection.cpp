@@ -9,7 +9,7 @@
 
 Qml_Connection::Qml_Connection()
 {
-
+    isEndGameMode = false;
 }
 
 void Qml_Connection::changeChessPos(int chessName, int number, bool camp, SGeoPoint *Pos) {
@@ -200,3 +200,14 @@ void Qml_Connection::setWinnerWhenOnlyGeneralsInRow(bool redOrBlack) {
     else object->setProperty("onlyTwoGeneralsInRow_blackWin", true);
 }
 
+void Qml_Connection::setEndGameMode(bool isInEndGameMode) {
+    isEndGameMode = isInEndGameMode;
+    object->setProperty("is_endgame_mode", isInEndGameMode);
+}
+
+void Qml_Connection::setWhetherVisionDone(bool isVisionDone) {
+    if(isEndGameMode == false) {
+        qDebug() << "Qml_Connection.cpp function:setWhetherVisionDone() line:210 EngGameMode = false!!!!!";
+    }
+    else object->setProperty("is_vision_board_done", isVisionDone);
+}

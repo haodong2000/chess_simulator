@@ -20,6 +20,8 @@
 
 #include <vision_thread.h>
 
+#include "init_endgame.h"
+
 extern vision_thread *vision;
 
 class singleGame

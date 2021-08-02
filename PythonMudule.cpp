@@ -191,6 +191,8 @@ PythonMudule::PythonMudule(QString N):name(N),step(0, 0, false, 0, 0),step_str("
     for(int i = 0; i < 10; i++) {
         __lastVisionBoard[i] = new int[10];
     }
+
+    isVisionBoardAtLeastOnce = false;
 }
 
 void PythonMudule::run_TCP_vision() {
@@ -469,6 +471,7 @@ void PythonMudule::__printVisionBoard() {
         }
         std::cout << "]\t" << std::endl;
     }
+    isVisionBoardAtLeastOnce = true;
 }
 
 void PythonMudule::__printLastVisionBoard() {
@@ -547,4 +550,12 @@ void PythonMudule::refershLastVisionBoard() {
             __lastVisionBoard[i][j] = Main_chessBoard[j][i];
         }
     }
+}
+
+bool PythonMudule::getIsVisionBoardAtLeastOnce() {
+    return isVisionBoardAtLeastOnce;
+}
+
+void PythonMudule::setIsVisionBoardAtLeastOnce(bool curIsVisionBoardAtLeastOnce) {
+    isVisionBoardAtLeastOnce = curIsVisionBoardAtLeastOnce;
 }

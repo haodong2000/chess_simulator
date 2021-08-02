@@ -48,6 +48,7 @@ SOURCES += \
     definitionChessSet.cpp \
     global.cpp \
     globalChesses.cpp \
+    init_endgame.cpp \
         main.cpp \
     SGeoPoint.cpp \
     coordinate.cpp \
@@ -107,6 +108,7 @@ HEADERS += \
     definitionChessSet.h \
     global.h \
     globalChesses.h \
+    init_endgame.h \
     singleGame.h \
     singleton.h \
     vision_thread.h \

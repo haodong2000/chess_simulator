@@ -48,6 +48,8 @@ public:
     void analysis_human_setp();
     void reset_human_step();
     void refershLastVisionBoard();
+    bool getIsVisionBoardAtLeastOnce();
+    void setIsVisionBoardAtLeastOnce(bool curIsVisionBoardAtLeastOnce);
 
 private slots:
     void client_read_data();
@@ -59,9 +61,12 @@ private:
     QString step_str;
     bool isValid;
     QTcpSocket* client = new QTcpSocket();
+
 public:
     int MP_count;
     bool MP_received;
+    bool isVisionBoardAtLeastOnce;
+
 public:
     int ** __visionBoard;
     int ** __lastVisionBoard;

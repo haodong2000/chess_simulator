@@ -309,7 +309,7 @@ Window {
         text: field.is_endgame_show ? "" : (field.is_vision_board_show ? "Vision Detecting ..." : " Vision Board Done! ")
         font.styleName: ""
         font.pixelSize: field.textSizeInPixel * 0.75
-        color: field.is_vision_board_show ? "#7a7374" : "#ad6598"
+        color: field.is_vision_board_show ? "#7a7374" : "#983680"
         x: field.vision_cube_x + field.vision_text_width
         y: field.vision_cube_y + field.vision_text_height
     }

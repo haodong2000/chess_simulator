@@ -42,7 +42,11 @@ public:
 
     virtual void setWinnerWhenOnlyGeneralsInRow(bool redOrBlack);
 
+    virtual void setEndGameMode(bool isInEndGameMode);
+    virtual void setWhetherVisionDone(bool isVisionDone);
+
 private:
+    bool isEndGameMode;
     // static SGeoPoint* pTest;
 };
 
