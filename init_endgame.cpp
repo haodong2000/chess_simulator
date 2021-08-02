@@ -137,9 +137,9 @@ void init_endgame::setInitVisionBoard() {
         for(int j = 0; j < 10; j++) {
             if(initChessBoard[i][j] == 0) continue;
             GlobalInit::CHESS_COUNT[initChessBoard[i][j]] += 1; // count the chess number
-            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], 1)->setAlive(true);
-            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], 1)->setPosX(i);
-            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], 1)->setPosY(j);
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setAlive(true);
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosX(i);
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosY(j);
         }
     }
     GlobalEnvirIn::Instance()->__printBoard();

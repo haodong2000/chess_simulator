@@ -31,7 +31,63 @@ namespace PARAM {
     // const int M1_PORT = PORT;
 
     namespace EndGame {
-        const int MaxStrategyModeNum = 5;
+        const std::unordered_map<QString, QPair<int, int>> MeiHuaPu {
+            {"b_gen_", qMakePair<int, int>(0, 4)},
+            {"b_ele_", qMakePair<int, int>(0, 2)},
+            {"b_adv_", qMakePair<int, int>(0, 3)},
+            {"b_adv_", qMakePair<int, int>(0, 5)},
+            {"b_ele_", qMakePair<int, int>(0, 6)},
+            {"b_hor_", qMakePair<int, int>(2, 2)},
+            {"b_can_", qMakePair<int, int>(2, 4)},
+            {"b_can_", qMakePair<int, int>(2, 7)},
+            {"b_cha_", qMakePair<int, int>(2, 8)},
+            {"b_sol_", qMakePair<int, int>(3, 0)},
+            {"b_sol_", qMakePair<int, int>(3, 2)},
+            {"b_hor_", qMakePair<int, int>(3, 4)},
+            {"r_cha_", qMakePair<int, int>(3, 6)},
+            {"b_sol_", qMakePair<int, int>(3, 8)},
+            {"b_sol_", qMakePair<int, int>(5, 4)},
+            {"r_sol_", qMakePair<int, int>(6, 0)},
+            {"r_sol_", qMakePair<int, int>(6, 2)},
+            {"r_sol_", qMakePair<int, int>(6, 4)},
+            {"r_sol_", qMakePair<int, int>(6, 6)},
+            {"r_sol_", qMakePair<int, int>(6, 8)},
+            {"r_hor_", qMakePair<int, int>(7, 2)},
+            {"r_can_", qMakePair<int, int>(7, 4)},
+            {"r_can_", qMakePair<int, int>(7, 6)},
+            {"r_hor_", qMakePair<int, int>(7, 8)},
+            {"r_adv_", qMakePair<int, int>(8, 4)},
+            {"b_cha_", qMakePair<int, int>(8, 5)},
+            {"r_ele_", qMakePair<int, int>(9, 2)},
+            {"r_adv_", qMakePair<int, int>(9, 3)},
+            {"r_gen_", qMakePair<int, int>(9, 4)},
+            {"r_ele_", qMakePair<int, int>(9, 6)},
+            {"r_cha_", qMakePair<int, int>(9, 8)}
+        };
+        const std::unordered_map<QString, QPair<int, int>> JuZhongMi {
+            {"test", qMakePair<int, int>(0, 0)},
+        };
+        const std::unordered_map<QString, QPair<int, int>> MengRuShenJi {
+            {"test", qMakePair<int, int>(0, 0)},
+        };
+        const std::unordered_map<QString, QPair<int, int>> HuYaJi {
+            {"test", qMakePair<int, int>(0, 0)},
+        };
+        const std::unordered_map<QString, QPair<int, int>> TaoLueYuanJi {
+            {"test", qMakePair<int, int>(0, 0)},
+        };
+        const std::unordered_map<QString, QPair<int, int>> YuanShenHaiKuo {
+            {"test", qMakePair<int, int>(0, 0)},
+        };
+        const QVector<std::unordered_map<QString, QPair<int, int>>> ChessStrategies = {
+            MeiHuaPu, // index = 0
+            JuZhongMi,
+            MengRuShenJi,
+            HuYaJi,
+            TaoLueYuanJi,
+            YuanShenHaiKuo
+        };
+        const int MaxStrategyModeNum = ChessStrategies.size() - 1;
     }
 
     namespace globalEnvironment {

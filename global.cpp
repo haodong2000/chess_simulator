@@ -389,7 +389,7 @@ int GlobalEnvironment::__QStr2intName(QString name) {
         if(name.compare(tempStr) == 0) break;
     }
     if(it == Global::Chess_Qstr2Int_simple.end()) {
-        qDebug() << "global.cpp __QStr2intName(QString name) line: 197 -> error: name(QString) invalid!";
+        qDebug() << "global.cpp __QStr2intName(QString name) line: 392 -> error: name(QString) invalid!";
         return -1;
     }
     return Global::Chess_Qstr2Int_simple[name];
