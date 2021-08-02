@@ -31,55 +31,194 @@ namespace PARAM {
     // const int M1_PORT = PORT;
 
     namespace EndGame {
-        const std::unordered_map<QString, QPair<int, int>> MeiHuaPu {
+        const QVector<QPair<QString, QPair<int, int>>> MeiHuaPu {
             {"b_gen_", qMakePair<int, int>(0, 4)},
             {"b_ele_", qMakePair<int, int>(0, 2)},
             {"b_adv_", qMakePair<int, int>(0, 3)},
             {"b_adv_", qMakePair<int, int>(0, 5)},
             {"b_ele_", qMakePair<int, int>(0, 6)},
+
             {"b_hor_", qMakePair<int, int>(2, 2)},
             {"b_can_", qMakePair<int, int>(2, 4)},
             {"b_can_", qMakePair<int, int>(2, 7)},
             {"b_cha_", qMakePair<int, int>(2, 8)},
+
             {"b_sol_", qMakePair<int, int>(3, 0)},
             {"b_sol_", qMakePair<int, int>(3, 2)},
             {"b_hor_", qMakePair<int, int>(3, 4)},
             {"r_cha_", qMakePair<int, int>(3, 6)},
             {"b_sol_", qMakePair<int, int>(3, 8)},
+
             {"b_sol_", qMakePair<int, int>(5, 4)},
+
             {"r_sol_", qMakePair<int, int>(6, 0)},
             {"r_sol_", qMakePair<int, int>(6, 2)},
             {"r_sol_", qMakePair<int, int>(6, 4)},
             {"r_sol_", qMakePair<int, int>(6, 6)},
             {"r_sol_", qMakePair<int, int>(6, 8)},
+
             {"r_hor_", qMakePair<int, int>(7, 2)},
             {"r_can_", qMakePair<int, int>(7, 4)},
             {"r_can_", qMakePair<int, int>(7, 6)},
             {"r_hor_", qMakePair<int, int>(7, 8)},
+
             {"r_adv_", qMakePair<int, int>(8, 4)},
             {"b_cha_", qMakePair<int, int>(8, 5)},
+
             {"r_ele_", qMakePair<int, int>(9, 2)},
             {"r_adv_", qMakePair<int, int>(9, 3)},
             {"r_gen_", qMakePair<int, int>(9, 4)},
             {"r_ele_", qMakePair<int, int>(9, 6)},
             {"r_cha_", qMakePair<int, int>(9, 8)}
         };
-        const std::unordered_map<QString, QPair<int, int>> JuZhongMi {
-            {"test", qMakePair<int, int>(0, 0)},
+        const QVector<QPair<QString, QPair<int, int>>> JuZhongMi {
+            {"b_gen_", qMakePair<int, int>(0, 4)},
+            {"b_ele_", qMakePair<int, int>(0, 2)},
+            {"b_adv_", qMakePair<int, int>(0, 3)},
+            {"b_adv_", qMakePair<int, int>(0, 5)},
+            {"b_ele_", qMakePair<int, int>(0, 6)},
+
+            {"b_cha_", qMakePair<int, int>(1, 3)},
+
+            {"b_hor_", qMakePair<int, int>(2, 2)},
+            {"b_can_", qMakePair<int, int>(2, 4)},
+            {"b_can_", qMakePair<int, int>(2, 7)},
+
+            {"b_sol_", qMakePair<int, int>(3, 0)},
+            {"r_cha_", qMakePair<int, int>(3, 2)},
+            {"b_sol_", qMakePair<int, int>(3, 4)},
+            {"b_sol_", qMakePair<int, int>(3, 6)},
+
+            {"r_sol_", qMakePair<int, int>(4, 2)},
+            {"b_hor_", qMakePair<int, int>(4, 7)},
+            {"b_sol_", qMakePair<int, int>(4, 8)},
+
+            {"r_sol_", qMakePair<int, int>(6, 0)},
+            {"r_sol_", qMakePair<int, int>(6, 4)},
+            {"r_sol_", qMakePair<int, int>(6, 6)},
+            {"r_sol_", qMakePair<int, int>(6, 8)},
+
+            {"r_hor_", qMakePair<int, int>(7, 2)},
+            {"r_can_", qMakePair<int, int>(7, 4)},
+            {"r_can_", qMakePair<int, int>(7, 5)},
+            {"r_hor_", qMakePair<int, int>(7, 8)},
+
+            {"r_adv_", qMakePair<int, int>(8, 4)},
+            {"b_cha_", qMakePair<int, int>(8, 5)},
+
+            {"r_ele_", qMakePair<int, int>(9, 2)},
+            {"r_gen_", qMakePair<int, int>(9, 4)},
+            {"r_adv_", qMakePair<int, int>(9, 5)},
+            {"r_ele_", qMakePair<int, int>(9, 6)},
+            {"r_cha_", qMakePair<int, int>(9, 8)},
         };
-        const std::unordered_map<QString, QPair<int, int>> MengRuShenJi {
-            {"test", qMakePair<int, int>(0, 0)},
+        const QVector<QPair<QString, QPair<int, int>>> MengRuShenJi {
+            {"b_ele_", qMakePair<int, int>(0, 2)},
+            {"b_adv_", qMakePair<int, int>(0, 5)},
+
+            {"b_adv_", qMakePair<int, int>(2, 3)},
+            {"b_gen_", qMakePair<int, int>(2, 5)},
+
+            {"r_cha_", qMakePair<int, int>(3, 1)},
+            {"r_hor_", qMakePair<int, int>(3, 2)},
+            {"r_hor_", qMakePair<int, int>(3, 6)},
+
+            {"r_can_", qMakePair<int, int>(4, 4)},
+            {"b_ele_", qMakePair<int, int>(4, 6)},
+
+            {"b_cha_", qMakePair<int, int>(5, 1)},
+
+            {"r_can_", qMakePair<int, int>(7, 1)},
+            {"b_hor_", qMakePair<int, int>(7, 6)},
+
+            {"b_cha_", qMakePair<int, int>(8, 3)},
+            {"r_adv_", qMakePair<int, int>(8, 4)},
+            {"b_cha_", qMakePair<int, int>(8, 5)},
+
+            {"r_gen_", qMakePair<int, int>(9, 4)},
+            {"r_can_", qMakePair<int, int>(9, 8)},
         };
-        const std::unordered_map<QString, QPair<int, int>> HuYaJi {
-            {"test", qMakePair<int, int>(0, 0)},
+        const QVector<QPair<QString, QPair<int, int>>> HuYaJi {
+            {"b_gen_", qMakePair<int, int>(0, 3)},
+            {"r_sol_", qMakePair<int, int>(0, 7)},
+
+            {"b_cha_", qMakePair<int, int>(1, 3)},
+            {"r_sol_", qMakePair<int, int>(1, 4)},
+
+            {"r_can_", qMakePair<int, int>(2, 1)},
+            {"r_sol_", qMakePair<int, int>(2, 2)},
+            {"b_cha_", qMakePair<int, int>(2, 3)},
+            {"r_sol_", qMakePair<int, int>(2, 6)},
+            {"r_sol_", qMakePair<int, int>(2, 7)},
+
+            {"b_can_", qMakePair<int, int>(3, 1)},
+
+            {"b_sol_", qMakePair<int, int>(7, 4)},
+
+            {"b_sol_", qMakePair<int, int>(8, 3)},
+            {"b_sol_", qMakePair<int, int>(8, 4)},
+            {"b_sol_", qMakePair<int, int>(8, 7)},
+
+            {"b_sol_", qMakePair<int, int>(9, 0)},
+            {"r_cha_", qMakePair<int, int>(9, 1)},
+            {"r_gen_", qMakePair<int, int>(9, 5)},
+            {"r_ele_", qMakePair<int, int>(9, 6)},
         };
-        const std::unordered_map<QString, QPair<int, int>> TaoLueYuanJi {
-            {"test", qMakePair<int, int>(0, 0)},
+        const QVector<QPair<QString, QPair<int, int>>> TaoLueYuanJi {
+            {"b_gen_", qMakePair<int, int>(0, 3)},
+            {"b_adv_", qMakePair<int, int>(0, 5)},
+            {"b_ele_", qMakePair<int, int>(0, 6)},
+
+            {"b_adv_", qMakePair<int, int>(1, 4)},
+            {"r_sol_", qMakePair<int, int>(1, 5)},
+
+            {"b_ele_", qMakePair<int, int>(2, 4)},
+
+            {"r_can_", qMakePair<int, int>(3, 1)},
+            {"r_sol_", qMakePair<int, int>(3, 3)},
+
+            {"b_hor_", qMakePair<int, int>(6, 0)},
+
+            {"r_ele_", qMakePair<int, int>(7, 4)},
+            {"b_cha_", qMakePair<int, int>(7, 5)},
+
+            {"r_can_", qMakePair<int, int>(8, 2)},
+            {"b_sol_", qMakePair<int, int>(8, 4)},
+            {"b_sol_", qMakePair<int, int>(8, 5)},
+
+            {"r_cha_", qMakePair<int, int>(9, 1)},
+            {"r_gen_", qMakePair<int, int>(9, 3)},
         };
-        const std::unordered_map<QString, QPair<int, int>> YuanShenHaiKuo {
-            {"test", qMakePair<int, int>(0, 0)},
+        const QVector<QPair<QString, QPair<int, int>>> YuanShenHaiKuo {
+            {"b_gen_", qMakePair<int, int>(0, 3)},
+            {"b_can_", qMakePair<int, int>(0, 5)},
+
+            {"r_sol_", qMakePair<int, int>(1, 4)},
+            {"r_sol_", qMakePair<int, int>(1, 5)},
+
+            {"b_cha_", qMakePair<int, int>(2, 3)},
+            {"b_ele_", qMakePair<int, int>(2, 8)},
+
+            {"b_ele_", qMakePair<int, int>(4, 2)},
+            {"b_hor_", qMakePair<int, int>(4, 6)},
+
+            {"r_can_", qMakePair<int, int>(5, 0)},
+            {"r_sol_", qMakePair<int, int>(5, 2)},
+            {"b_cha_", qMakePair<int, int>(5, 3)},
+            {"r_sol_", qMakePair<int, int>(5, 6)},
+
+            {"r_cha_", qMakePair<int, int>(6, 1)},
+
+            {"b_sol_", qMakePair<int, int>(7, 5)},
+
+            {"b_sol_", qMakePair<int, int>(8, 4)},
+
+            {"r_cha_", qMakePair<int, int>(9, 0)},
+            {"r_ele_", qMakePair<int, int>(9, 2)},
+            {"r_gen_", qMakePair<int, int>(9, 5)},
+            {"r_ele_", qMakePair<int, int>(9, 6)},
         };
-        const QVector<std::unordered_map<QString, QPair<int, int>>> ChessStrategies = {
+        const QVector<QVector<QPair<QString, QPair<int, int>>>> ChessStrategies = {
             MeiHuaPu, // index = 0
             JuZhongMi,
             MengRuShenJi,

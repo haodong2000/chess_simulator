@@ -69,7 +69,7 @@ init_endgame::init_endgame()
 }
 
 void init_endgame::printVisionBoard() {
-    std::cout << "-*-*-*-*-*- init_endgame::printVisionBoard() called -*-*-*-*-*-" << std::endl;
+    std::cout << "-*- init_endgame::printVisionBoard() called -*-" << std::endl;
     for(int i = 0; i < 9; i++) {
         std::cout << "[";
         for(int j = 0; j < 10; j++) {
@@ -144,7 +144,7 @@ void init_endgame::setInitVisionBoard() {
     }
     GlobalEnvirIn::Instance()->__printBoard();
     // judge if gameIsOn
-    bool gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive() && GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow();
+    bool gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive() && (!GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow());
     if(gameIsOn == false) qDebug() << "ERROR: init_endgame.cpp function:setInitVisionBoard() line:111 game already end!!!";
     // refresh the chess board (qml canvas)
     for(int num = 1; num <= GlobalInit::CHESS_TABLE::RED_SOLDIER; num++) {
@@ -169,7 +169,7 @@ void init_endgame::setInitVisionBoard() {
         }
     }
     isVisionBoardDone = true;
-    std::cout << "vision generate init chess board done!" << std::endl;
+    std::cout << "Vision generate init chess board done!" << std::endl;
     QmlConnectIn::Instance()->setWhetherVisionDone(isVisionBoardDone);
 }
 
@@ -179,4 +179,53 @@ void init_endgame::setInitStrategyBoard(int strategy_mode) {
         qDebug() << "ERROR: init_endgame.cpp function:setInitStrategyBoard() line:179 strategy_mode inValid!";
         return;
     }
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            initChessBoard[i][j] = 0;
+        }
+    }
+    int chessCount = PARAM::EndGame::ChessStrategies.at(strategy_mode).size();
+    for(int index = 0; index < chessCount; index++) {
+        int num = GlobalEnvirIn::Instance()->__QStr2intName(PARAM::EndGame::ChessStrategies.at(strategy_mode).at(index).first);
+        initChessBoard[PARAM::EndGame::ChessStrategies.at(strategy_mode).at(index).second.first][PARAM::EndGame::ChessStrategies.at(strategy_mode).at(index).second.second] = num;
+    }
+    printVisionBoard();
+    // change the properties of chesses
+    allChessesKilled();
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            if(initChessBoard[i][j] == 0) continue;
+            GlobalInit::CHESS_COUNT[initChessBoard[i][j]] += 1; // count the chess number
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setAlive(true);
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosX(i);
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosY(j);
+        }
+    }
+    GlobalEnvirIn::Instance()->__printBoard();
+    // judge if gameIsOn
+    bool gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive() && (!GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow());
+    if(gameIsOn == false) qDebug() << "ERROR: init_endgame.cpp function:setInitStrategyBoard() line:207 game already end!!!";
+    // refresh the chess board (qml canvas)
+    for(int num = 1; num <= GlobalInit::CHESS_TABLE::RED_SOLDIER; num++) {
+        if(num == GlobalInit::CHESS_TABLE::BLACK_GENERAL || num == GlobalInit::CHESS_TABLE::RED_GENERAL) {
+            QmlConnectIn::Instance()->moveChessOnCanvas(num, 1);
+        }
+        else if(num == GlobalInit::CHESS_TABLE::BLACK_SOLDIER || num == GlobalInit::CHESS_TABLE::RED_SOLDIER) {
+            for(int number = 1; number <= 5; number++) {
+                if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(num, number)->isAlive() == false)
+                    QmlConnectIn::Instance()->eraseChessOnCanvas(num,  number);
+                else
+                    QmlConnectIn::Instance()->moveChessOnCanvas(num, number);
+            }
+        }
+        else {
+            for(int number = 1; number <= 2; number++) {
+                if(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(num, number)->isAlive() == false)
+                    QmlConnectIn::Instance()->eraseChessOnCanvas(num,  number);
+                else
+                    QmlConnectIn::Instance()->moveChessOnCanvas(num, number);
+            }
+        }
+    }
+    std::cout << "Generate init strategy chess board done!" << std::endl;
 }

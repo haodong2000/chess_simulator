@@ -26,8 +26,8 @@
 QObject* object;
 vision_thread *vision = NULL;           // USB Camera
 int ** Main_chessBoard = NULL;          // Chess Board
-static const int CHESS_PLAY_MODE = 1;   // play mode: AIV.S.AI HumanV.S.AI HumanV.S.Human HumanV.S.AI(CIMC) HumanV.S.Human(EndGame) HumanV.S.AI(EndGame&CIMC)
-const int STRATEGY_MODE = 1;            // the mode of the init chessboard (endGame)
+static const int CHESS_PLAY_MODE = 5;   // play mode: AI-AI Human-AI Human-Human Human-AI(CIMC) Human-AI(EndGame&CIMC) Human-AI(EndGame) Human-Human(EndGame)
+const int STRATEGY_MODE = 3;            // endGame mode: MeiHuaPu, JuZhongMi, MengRuShenJi, HuYaJi, TaoLueYuanJi, YuanShenHaiKuo
 const int SEARCH_DEPTH = 4;             // search depth of alpha-beta purning
 static const bool TEST_MODE = false;    // is Test Mode or not
 
