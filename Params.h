@@ -31,7 +31,7 @@ namespace PARAM {
     // const int M1_PORT = PORT;
 
     namespace EndGame {
-        const int MaxStrategyModeNum = 3;
+        const int MaxStrategyModeNum = 5;
     }
 
     namespace globalEnvironment {
