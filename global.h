@@ -83,6 +83,7 @@ public:
 // extern Qml_Connection* QmlConnect;
 extern QObject* object; // control the whole graphic panel
 extern const int SEARCH_DEPTH;
+extern const int STRATEGY_MODE;
 // extern int M_human_index;
 extern int ** Main_chessBoard;
 

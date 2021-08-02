@@ -20,6 +20,7 @@ singleGame::singleGame():
 //    allRedAndBlackStepList.clear();
 
     _level = SEARCH_DEPTH; // initialization, actuall level is 4
+    _strategy_mode = STRATEGY_MODE;
     R_value = 1;
 
     M1_client->connectToHost(PARAM::M1_HOST, PARAM::M1_PORT);
@@ -2250,6 +2251,59 @@ void singleGame::normalPlay_HumanVSHuman(int maxCount) {
     bool redOrBlack = true;
     int count = 0;
     const int delayMs = 25;
+    while(gameIsOn && (count++) < maxCount) {
+        std::cout << "count chess moves -> " << count << std::endl;
+        GlobalEnvirIn::Instance()->__printBoard();
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
+
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+        generateRedAllPossibleMoves(); // no use
+        generateBlackAllPossibleMoves();
+        QVector<chessStep> curStepList; // memory
+        curStepList.clear();
+        if(redOrBlack) curStepList.append(originRedChessStepList); // no use
+        else curStepList.append(originBlackChessStepList);
+        if(redOrBlack && (!curStepList.empty())) {
+            // @TODO
+            // just refersh the bosrd once the human has finished his turn
+            // if the board unchanged(from mousearea), remain
+            // once changed(from mousearea), break
+            while(!humanMove());
+        }
+        else if(!redOrBlack && (!curStepList.empty())) {
+            while(!humanMove_black());
+        }
+        else {
+            qDebug() << "singleGame.cpp line:2198 normalPlay_HumanVSHuman() error: curStepList is EMPTY!!!!!";
+            return;
+        }
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        if(gameIsOn == false) {
+            if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        if(GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()) {
+            gameIsOn = false;
+            if(redOrBlack) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            if(redOrBlack) QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(false); // black win
+            else QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(true); // red win
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        redOrBlack = !redOrBlack;
+    }
+}
+
+void singleGame::normalPlay_HumanVSHuman_EndGame(int maxCount) {
+    bool gameIsOn = true;
+    bool redOrBlack = true;
+    int count = 0;
+    const int delayMs = 25;
+    initEndgameIn::Instance()->setInitStrategyBoard(_strategy_mode);
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();

@@ -25,6 +25,7 @@ public:
     void setInitVisionBoard();
     void printVisionBoard();
     void allChessesKilled();
+    void setInitStrategyBoard(int strategy_mode);
 private:
     bool isEndGameMode;
     bool isVisionBoardDone;

@@ -65,6 +65,8 @@ public:
     virtual void normalPlay_HumanVSHuman(int maxCount);
     virtual void normalPlay_HumanVSAI_CIMC(int maxCount);
     virtual void normalPlay_HumanVSAI_CIMC_EndGame(int maxCount);
+    virtual void normalPlay_HumanVSHuman_EndGame(int maxCount);
+
     virtual int MonteCarloTree_black(int depth);
     virtual int QuiescentSearch_black(int depth);
     virtual int Quiescent_alpha_beta_getMin(int depth, int curMin);
@@ -113,6 +115,7 @@ public:
 
 private:
     int _level;
+    int _strategy_mode;
     int R_value;
     QTcpSocket* M1_client = new QTcpSocket();
 };

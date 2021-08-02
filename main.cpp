@@ -27,6 +27,7 @@ QObject* object;
 vision_thread *vision = NULL;           // USB Camera
 int ** Main_chessBoard = NULL;          // Chess Board
 static const int CHESS_PLAY_MODE = 4;   // play mode: AIV.S.AI HumanV.S.AI HumanV.S.Human HumanV.S.AI(CIMC) HumanV.S.Human(EndGame) HumanV.S.AI(EndGame&CIMC)
+const int STRATEGY_MODE = 1;            // the mode of the init chessboard (endGame)
 const int SEARCH_DEPTH = 4;             // search depth of alpha-beta purning
 static const bool TEST_MODE = false;    // is Test Mode or not
 

@@ -30,6 +30,10 @@ namespace PARAM {
     // const QString M1_HOST = HOST;
     // const int M1_PORT = PORT;
 
+    namespace EndGame {
+        const int MaxStrategyModeNum = 3;
+    }
+
     namespace globalEnvironment {
 
         // get available desktop size
