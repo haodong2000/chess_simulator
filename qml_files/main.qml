@@ -207,6 +207,18 @@ Window {
         property int time_text_height: turn_cube_height/10.0
         property int time_width: turn_width/2.0
 
+        property bool is_endgame_mode: false
+        property bool is_endgame_show: !is_endgame_mode
+        property bool is_vision_board_done: false
+        property bool is_vision_board_show: !is_vision_board_done
+        property int vision_cube_x: turn_cube_x
+        property int vision_cube_y: turn_cube_y * 4.0
+        property int vision_cube_width: turn_cube_width
+        property int vision_cube_height: turn_cube_height * 0.75
+        property int vision_text_width: vision_cube_width/15.0
+        property int vision_text_height: vision_cube_height/4.5
+        property int vision_width: turn_width * 0.75
+
         property int rule_text_size: 20
         property int rule_text_x: turn_cube_x
         property int rule_text_y: turn_cube_y * 3
@@ -279,6 +291,27 @@ Window {
         color: "#fffef9"
         x: field.time_cube_x + field.time_text_width
         y: field.time_cube_y + field.time_text_height
+    }
+
+    Rectangle {
+        id: rect_vision_board
+        x: field.vision_cube_x
+        y: field.vision_cube_y
+        width: field.vision_cube_width
+        height: field.vision_cube_height
+        color: "transparent"
+        border.color: field.is_endgame_show ? "transparent" : (field.is_vision_board_show ? "#7a7374" : "#f9d770")
+        border.width: field.vision_width
+    }
+
+    Text{
+        id: text_vision_board
+        text: field.is_endgame_show ? "" : (field.is_vision_board_show ? "Vision Detecting ..." : " Vision Board Done! ")
+        font.styleName: ""
+        font.pixelSize: field.textSizeInPixel * 0.75
+        color: field.is_vision_board_show ? "#7a7374" : "#ad6598"
+        x: field.vision_cube_x + field.vision_text_width
+        y: field.vision_cube_y + field.vision_text_height
     }
 
     function currentDateTime(){
