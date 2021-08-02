@@ -214,7 +214,7 @@ void PythonMudule::run_TCP_vision() {
         qDebug() << "PythonMudule.cpp line:212 run_TCP_vision() write failed!";
     }
     while(true) {
-        __delayMsec(1000);
+        __delayMsec(2000);
         char msg[1024] = {0};
         client->read(msg, 1024);
         QString msg_qstr = "";

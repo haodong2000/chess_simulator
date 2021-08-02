@@ -26,7 +26,7 @@
 QObject* object;
 vision_thread *vision = NULL;           // USB Camera
 int ** Main_chessBoard = NULL;          // Chess Board
-static const int CHESS_PLAY_MODE = 4;   // play mode: AIV.S.AI HumanV.S.AI HumanV.S.Human HumanV.S.AI(CIMC) HumanV.S.Human(EndGame) HumanV.S.AI(EndGame&CIMC)
+static const int CHESS_PLAY_MODE = 1;   // play mode: AIV.S.AI HumanV.S.AI HumanV.S.Human HumanV.S.AI(CIMC) HumanV.S.Human(EndGame) HumanV.S.AI(EndGame&CIMC)
 const int STRATEGY_MODE = 1;            // the mode of the init chessboard (endGame)
 const int SEARCH_DEPTH = 4;             // search depth of alpha-beta purning
 static const bool TEST_MODE = false;    // is Test Mode or not
@@ -70,7 +70,9 @@ int main(int argc, char *argv[])
             case 2: singleGameIn::Instance()->normalPlay_HumanVSHuman(PARAM::NINE_NINE_NINE); break;
             case 3: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC(PARAM::NINE_NINE_NINE); break;
             case 4: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC_EndGame(PARAM::NINE_NINE_NINE); break;
-            default: qDebug() << "main.cpp line:79 CHESS_PLAY_MODE inValid!!! (only 0, 1, 2, 3, 4 wanted)"; break;
+            case 5: singleGameIn::Instance()->normalPlay_HumanVSAI_EndGame(PARAM::NINE_NINE_NINE); break;
+            case 6: singleGameIn::Instance()->normalPlay_HumanVSHuman_EndGame(PARAM::NINE_NINE_NINE); break;
+            default: qDebug() << "main.cpp line:79 CHESS_PLAY_MODE inValid!!! (only 0, 1, 2, 3, 4, 5, 6 wanted)"; break;
         }
 
     return app.exec();

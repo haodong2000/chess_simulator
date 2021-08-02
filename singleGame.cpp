@@ -2423,6 +2423,71 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
     }
 }
 
+void singleGame::normalPlay_HumanVSAI_EndGame(int maxCount) {
+    bool gameIsOn = true;
+    bool redOrBlack = true;
+    int count = 0;
+    const int delayMs = 25;
+    initEndgameIn::Instance()->setInitStrategyBoard(_strategy_mode);
+    while(gameIsOn && (count++) < maxCount) {
+        std::cout << "count chess moves -> " << count << std::endl;
+        GlobalEnvirIn::Instance()->__printBoard();
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
+
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+        generateRedAllPossibleMoves(); // no use
+        generateBlackAllPossibleMoves();
+        QVector<chessStep> curStepList; // memory
+        curStepList.clear();
+        if(redOrBlack) curStepList.append(originRedChessStepList); // no use
+        else curStepList.append(originBlackChessStepList);
+        if(redOrBlack && (!curStepList.empty())) {
+            while(!humanMove());
+        }
+        else if(!redOrBlack && (!curStepList.empty())) {
+            curStepList.append(originBlackChessStepList);
+            int sizeIndex = alpha_beta_black(_level);
+            int dest_x = curStepList.at(sizeIndex)._deltaX;
+            int dest_y = curStepList.at(sizeIndex)._deltaY;
+            int init_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosX();
+            int init_y = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosY();
+            int kill_or_not = curStepList.at(sizeIndex)._isKill ? 1 : 0;
+            QString M1_request = QString::number(kill_or_not) + QString::number(init_y) + QString::number(init_x) + QString::number(dest_y) + QString::number(dest_x);
+            if(M1_client->write(M1_request.toLatin1(), M1_request.length()) == -1) {
+                qDebug() << "singleGame.cpp line:2099 normalPlay_HumanVSAI() write failed!";
+            }
+            std::cout << "Message sent to M1 Robot -> " << M1_request.toStdString() << std::endl;
+            char M1_Receive[1024] = {0};
+            M1_client->read(M1_Receive, 1024);
+            if(strlen(M1_Receive) > 0) std::cout << "Receive from M1 Robot   ->" << M1_Receive << std::endl;
+            else std::cout << "Receive from M1 Robot ERROR" << std::endl;
+            realMove(curStepList.at(sizeIndex));
+        }
+        else {
+            qDebug() << "singleGame.cpp line:499 normalPlay() error: curStepList is EMPTY!!!!!";
+            return;
+        }
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        if(gameIsOn == false) {
+            if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        if(GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()) {
+            gameIsOn = false;
+            if(redOrBlack) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            if(redOrBlack) QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(false); // black win
+            else QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(true); // red win
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        redOrBlack = !redOrBlack;
+    }
+}
+
 //void singleGame::M1_client_disconnect() {
 //    std::cout << "M1_ROBOT Connection Closed!" << std::endl;
 //}
