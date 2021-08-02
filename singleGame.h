@@ -62,8 +62,11 @@ public:
     virtual void normalPlay_HumanVSAI(int maxCount);
     virtual void normalPlay_HumanVSHuman(int maxCount);
     virtual void normalPlay_HumanVSAI_CIMC(int maxCount);
+    virtual void normalPlay_HumanVSAI_CIMC_EndGame(int maxCount);
     virtual int MonteCarloTree_black(int depth);
     virtual int QuiescentSearch_black(int depth);
+    virtual int Quiescent_alpha_beta_getMin(int depth, int curMin);
+    virtual int Quiescent_alpha_beta_getMax(int depth, int curMax);
     virtual int alpha_beta_black(int depth);
     virtual int alpha_beta_red(int depth);
     virtual int alpha_beta_getMin(int depth, int curMin);
@@ -108,6 +111,7 @@ public:
 
 private:
     int _level;
+    int R_value;
     QTcpSocket* M1_client = new QTcpSocket();
 };
 

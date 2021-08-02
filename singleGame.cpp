@@ -20,6 +20,7 @@ singleGame::singleGame():
 //    allRedAndBlackStepList.clear();
 
     _level = SEARCH_DEPTH; // initialization, actuall level is 4
+    R_value = 1;
 
     M1_client->connectToHost(PARAM::M1_HOST, PARAM::M1_PORT);
     if(M1_client->waitForConnected(10000)) {
@@ -2095,6 +2096,85 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
     }
 }
 
+void singleGame::normalPlay_HumanVSAI_CIMC_EndGame(int maxCount) {
+    // human: red
+    // AI: black
+    bool gameIsOn = true;
+    bool redOrBlack = true;
+    int count = 0;
+    const int delayMs = 25;
+    // @TODO
+    // Get the initial chess board from the vision
+    while(gameIsOn && (count++) < maxCount) {
+        std::cout << "count chess moves -> " << count << std::endl;
+        GlobalEnvirIn::Instance()->__printBoard();
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
+
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+        generateRedAllPossibleMoves(); // no use
+        generateBlackAllPossibleMoves();
+        QVector<chessStep> curStepList; // memory
+        curStepList.clear();
+        if(redOrBlack) curStepList.append(originRedChessStepList); // no use
+        else curStepList.append(originBlackChessStepList);
+        if(redOrBlack && (!curStepList.empty())) {
+            int humanIndex = -1;
+            while(humanIndex == -1) {
+                humanIndex = VisionHumanStepIndex(curStepList);
+            }
+            for(int i = 0; i < 9; i++) {
+                for(int j = 0; j < 10; j++) {
+                    vision->python_vision->__lastVisionBoard[i][j] = Main_chessBoard[i][j];
+                }
+            }
+            realMove(curStepList.at(humanIndex));
+        }
+        else if(!redOrBlack && (!curStepList.empty())) {
+            curStepList.append(originBlackChessStepList);
+            int sizeIndex = alpha_beta_black(_level);
+            int dest_x = curStepList.at(sizeIndex)._deltaX;
+            int dest_y = curStepList.at(sizeIndex)._deltaY;
+            int init_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosX();
+            int init_y = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosY();
+            int kill_or_not = curStepList.at(sizeIndex)._isKill ? 1 : 0;
+            GlobalEnvirIn::Instance()->__delayMsec(25);
+            QString M1_request = QString::number(kill_or_not) + QString::number(init_y) + QString::number(init_x) + QString::number(dest_y) + QString::number(dest_x);
+            if(M1_client->write(M1_request.toLatin1(), M1_request.length()) == -1) {
+                qDebug() << "singleGame.cpp line:2055 normalPlay_HumanVSAI_CIMC() write failed!";
+            }
+            std::cout << "Message sent to M1 Robot -> " << M1_request.toStdString() << std::endl;
+            char M1_Receive[1024] = {0};
+            M1_client->read(M1_Receive, 1024);
+            if(strlen(M1_Receive) > 0) std::cout << "Receive from M1 Robot   ->" << M1_Receive << std::endl;
+            else std::cout << "Receive from M1 Robot ERROR" << std::endl;
+            GlobalEnvirIn::Instance()->__delayMsec(25);
+            realMove(curStepList.at(sizeIndex));
+        }
+        else {
+            qDebug() << "singleGame.cpp line:2071 normalPlay_HumanVSAI_CIMC() error: curStepList is EMPTY!!!!!";
+            return;
+        }
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        if(gameIsOn == false) {
+            if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        if(GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()) {
+            gameIsOn = false;
+            if(redOrBlack) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            if(redOrBlack) QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(false); // black win
+            else QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(true); // red win
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        redOrBlack = !redOrBlack;
+    }
+}
+
 int singleGame::VisionHumanStepIndex(const QVector<chessStep>& curStepList) {
     if(vision->python_vision->MP_count <= 1 || vision->python_vision->MP_received == false) return -1;
     if(vision->python_vision->isBoardChanged == false) {
@@ -2249,6 +2329,7 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
         else if(!redOrBlack && (!curStepList.empty())) {
             curStepList.append(originBlackChessStepList);
             int sizeIndex = alpha_beta_black(_level);
+//            int sizeIndex = QuiescentSearch_black(_level + 2); // 2021-08-02
             int dest_x = curStepList.at(sizeIndex)._deltaX;
             int dest_y = curStepList.at(sizeIndex)._deltaY;
             int init_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosX();
@@ -3089,7 +3170,8 @@ bool singleGame::isHumanStepValid_black(chessStep step) {
 int singleGame::MonteCarloTree_black(int depth) {
     // 2021-07-31
     // depth = _level = 4
-    // std::cout << "In MonteCarloTree_black() depth = " << depth << std::endl;
+    std::cout << "In MonteCarloTree_black() depth = " << depth << std::endl;
+
     return 0;
 }
 
@@ -3099,4 +3181,109 @@ int singleGame::QuiescentSearch_black(int depth) {
     // You pass the depth parameter to the function, and it's done when the depth reaches zero, even if one party is caught.
     // When Alpha-Beta runs out of depth, call static search instead of calling "Evaluate()".
     // This function also evaluates the situation, just to avoid misunderstanding the situation when there are obvious countermeasures.
+    int retIndex = 0;
+
+    // generateBlackAllPossibleMoves();
+    QVector<chessStep> allBlack;
+    allBlack.clear();
+    allBlack.append(originBlackChessStepList);
+    int sizeBlack = allBlack.size();
+
+    int maxInMin = -987654321;
+
+    for(int index = 0; index < sizeBlack; index++) {
+        int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlack.at(index)._chessNum, allBlack.at(index)._chessNumber)->getPosX();
+        int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlack.at(index)._chessNum, allBlack.at(index)._chessNumber)->getPosY();
+
+        fakeMove(allBlack.at(index));
+        int minScore = alpha_beta_getMin(depth - 1 - R_value, maxInMin);
+        fakeBackMove(allBlack.at(index), lastPosX, lastPosY);
+
+        if(minScore > maxInMin) {
+            retIndex = index;
+            maxInMin = minScore;
+        }
+    }
+
+    return retIndex;
+}
+
+int singleGame::Quiescent_alpha_beta_getMin(int depth, int curMin) {
+    if(depth <= 0) return GlobalEnvirIn::Instance()->__BoardEvaluate();
+
+    int minInMax = 987654321;
+
+//    MakeNullMove();
+//    val = -AlphaBeta(depth - 1 - R, -beta, -beta + 1);
+//    UnmakeNullMove();
+//    if (val >= beta) {
+//     return beta;
+//    }
+
+//    int R_tempMaxScore = Quiescent_alpha_beta_getMax(depth - 1 - R_value, minInMax);
+//    if(R_tempMaxScore <= curMin) {
+//        return R_tempMaxScore;
+//    }
+
+    generateRedAllPossibleMoves();
+    QVector<chessStep> allRedMin;
+    allRedMin.clear();
+    allRedMin.append(originRedChessStepList);
+    int sizeAllRed = allRedMin.size();
+
+    for(int index = 0; index < sizeAllRed; index++) {
+        int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRedMin.at(index)._chessNum, allRedMin.at(index)._chessNumber)->getPosX();
+        int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRedMin.at(index)._chessNum, allRedMin.at(index)._chessNumber)->getPosY();
+
+        fakeMove(allRedMin.at(index));
+        int maxScore = alpha_beta_getMax(depth - 1 - R_value, minInMax);
+        fakeBackMove(allRedMin.at(index), lastPosX, lastPosY);
+
+        if(maxScore <= curMin) {
+            return maxScore;
+        }
+
+        if(maxScore < minInMax) {
+            minInMax = maxScore;
+        }
+    }
+
+    return minInMax;
+
+}
+
+int singleGame::Quiescent_alpha_beta_getMax(int depth, int curMax) {
+    if(depth <= 0) return GlobalEnvirIn::Instance()->__BoardEvaluate();
+
+    int maxInMin = -987654321;
+
+//    int R_tempMinScore = Quiescent_alpha_beta_getMin(depth - 1 - R_value, maxInMin);
+//    if(R_tempMinScore >= curMax) {
+//        return R_tempMinScore;
+//    }
+
+    generateBlackAllPossibleMoves();
+    QVector<chessStep> allBlackMax;
+    allBlackMax.clear();
+    allBlackMax.append(originBlackChessStepList);
+    int sizeAllBlack = allBlackMax.size();
+
+    for(int index = 0; index < sizeAllBlack; index++) {
+        int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlackMax.at(index)._chessNum, allBlackMax.at(index)._chessNumber)->getPosX();
+        int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlackMax.at(index)._chessNum, allBlackMax.at(index)._chessNumber)->getPosY();
+
+        fakeMove(allBlackMax.at(index));
+        int minScore = alpha_beta_getMin(depth - 1 - R_value, maxInMin);
+        fakeBackMove(allBlackMax.at(index), lastPosX, lastPosY);
+
+        if(minScore >= curMax) {
+            return minScore;
+        }
+        if(minScore > maxInMin) {
+            maxInMin = minScore;
+        }
+    }
+
+    return maxInMin;
+
 }

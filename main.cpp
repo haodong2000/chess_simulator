@@ -24,11 +24,11 @@
 #include <vision_thread.h>
 
 QObject* object;
-vision_thread *vision = NULL;
-int ** Main_chessBoard = NULL;
-static const int CHESS_PLAY_MODE = 1;
-const int SEARCH_DEPTH = 4;
-static const bool TEST_MODE = false;
+vision_thread *vision = NULL;           // USB Camera
+int ** Main_chessBoard = NULL;          // Chess Board
+static const int CHESS_PLAY_MODE = 1;   // play mode: AIV.S.AI HumanV.S.AI HumanV.S.Human HumanV.S.AI(CIMC)
+const int SEARCH_DEPTH = 4;             // search depth of alpha-beta purning
+static const bool TEST_MODE = false;    // is Test Mode or not
 
 int main(int argc, char *argv[])
 {
@@ -68,7 +68,8 @@ int main(int argc, char *argv[])
             case 1: singleGameIn::Instance()->normalPlay_HumanVSAI(PARAM::NINE_NINE_NINE); break;
             case 2: singleGameIn::Instance()->normalPlay_HumanVSHuman(PARAM::NINE_NINE_NINE); break;
             case 3: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC(PARAM::NINE_NINE_NINE); break;
-            default: qDebug() << "main.cpp line:79 CHESS_PLAY_MODE inValid!!! (only 0, 1, 2, 3 wanted)"; break;
+            case 4: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC_EndGame(PARAM::NINE_NINE_NINE); break;
+            default: qDebug() << "main.cpp line:79 CHESS_PLAY_MODE inValid!!! (only 0, 1, 2, 3, 4 wanted)"; break;
         }
 
     return app.exec();
