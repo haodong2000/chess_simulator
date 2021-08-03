@@ -61,7 +61,7 @@ init_endgame::init_endgame()
     for(int i = 0; i < 10; i++) {
         initChessBoard[i] = new int[10];
     }
-    for(int i = 0; i < 9; i++) {
+    for(int i = 0; i < 10; i++) {
         for(int j = 0; j < 10; j++) {
             initChessBoard[i][j] = 0;
         }
@@ -138,8 +138,8 @@ void init_endgame::setInitVisionBoard() {
             if(initChessBoard[i][j] == 0) continue;
             GlobalInit::CHESS_COUNT[initChessBoard[i][j]] += 1; // count the chess number
             GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setAlive(true);
-            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosX(i);
-            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosY(j);
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosX(j);
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosY(i);
         }
     }
     GlobalEnvirIn::Instance()->__printBoard();
@@ -179,7 +179,7 @@ void init_endgame::setInitStrategyBoard(int strategy_mode) {
         qDebug() << "ERROR: init_endgame.cpp function:setInitStrategyBoard() line:179 strategy_mode inValid!";
         return;
     }
-    for(int i = 0; i < 9; i++) {
+    for(int i = 0; i < 10; i++) {
         for(int j = 0; j < 10; j++) {
             initChessBoard[i][j] = 0;
         }
@@ -187,7 +187,7 @@ void init_endgame::setInitStrategyBoard(int strategy_mode) {
     int chessCount = PARAM::EndGame::ChessStrategies.at(strategy_mode).size();
     for(int index = 0; index < chessCount; index++) {
         int num = GlobalEnvirIn::Instance()->__QStr2intName(PARAM::EndGame::ChessStrategies.at(strategy_mode).at(index).first);
-        initChessBoard[PARAM::EndGame::ChessStrategies.at(strategy_mode).at(index).second.first][PARAM::EndGame::ChessStrategies.at(strategy_mode).at(index).second.second] = num;
+        initChessBoard[PARAM::EndGame::ChessStrategies.at(strategy_mode).at(index).second.second][PARAM::EndGame::ChessStrategies.at(strategy_mode).at(index).second.first] = num;
     }
     printVisionBoard();
     // change the properties of chesses
@@ -197,8 +197,8 @@ void init_endgame::setInitStrategyBoard(int strategy_mode) {
             if(initChessBoard[i][j] == 0) continue;
             GlobalInit::CHESS_COUNT[initChessBoard[i][j]] += 1; // count the chess number
             GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setAlive(true);
-            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosX(i);
-            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosY(j);
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosX(j);
+            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosY(i);
         }
     }
     GlobalEnvirIn::Instance()->__printBoard();
