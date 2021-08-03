@@ -2556,7 +2556,7 @@ int singleGame::alpha_beta_red(int depth) {
     allRed.append(originRedChessStepList);
     int sizeRed = allRed.size();
 
-    int minInMax = 987654321;
+    int minInMax = 999999999;
 
     for(int index = 0; index < sizeRed; index++) {
         if(allRed.at(index)._isKill == true && allRed.at(index)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL)
@@ -2594,7 +2594,7 @@ int singleGame::alpha_beta_black(int depth) {
     allBlack.append(originBlackChessStepList);
     int sizeBlack = allBlack.size();
 
-    int maxInMin = -987654321;
+    int maxInMin = -999999999;
     for(int index = 0; index < sizeBlack; index++) {
         if(allBlack.at(index)._isKill == true && allBlack.at(index)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL)
             return index;

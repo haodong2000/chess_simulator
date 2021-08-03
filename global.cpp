@@ -86,14 +86,14 @@ namespace Global {
     };
 
     std::unordered_map<int, int> CHESS_VALUE = {
-        {CHESS_TABLE::BLACK_GENERAL , 2*99999999},
+        {CHESS_TABLE::BLACK_GENERAL , 999999},
         {CHESS_TABLE::BLACK_ADVISOR , 2*250},
         {CHESS_TABLE::BLACK_ELEPHANT, 2*300},
         {CHESS_TABLE::BLACK_HORSE   , 2*450},
         {CHESS_TABLE::BLACK_CHARIOT , 2*1000},
         {CHESS_TABLE::BLACK_CANNON  , 2*450},
         {CHESS_TABLE::BLACK_SOLDIER , 2*250},
-        {CHESS_TABLE::RED_GENERAL , 2*99999999},
+        {CHESS_TABLE::RED_GENERAL , 999999},
         {CHESS_TABLE::RED_ADVISOR , 2*250},
         {CHESS_TABLE::RED_ELEPHANT, 2*300},
         {CHESS_TABLE::RED_HORSE   , 2*450},
@@ -987,13 +987,13 @@ void GlobalEnvironment::__refershPosValueUnit() {
 }
 
 int GlobalEnvironment::__BoardEvaluate() {
-    if(Ab_gen_1->isAlive() == false) return -999999999;
-    if(Ar_gen_1->isAlive() == false) return 999999999;
+    if(Ab_gen_1->isAlive() == false) return -9999999;
+    if(Ar_gen_1->isAlive() == false) return 9999999;
     // @TODO
     // if(onlyTwoGeneralsInRow && curTurnIsBlack) return -999999999;
     // if(onlyTwoGeneralsInRow && curTurnIsRed) return 999999999;
-    if(__isOnlyTwoGeneralsInRow() && __curTurn == true) return 999999999;
-    if(__isOnlyTwoGeneralsInRow() && __curTurn == false) return -999999999;
+    if(__isOnlyTwoGeneralsInRow() && __curTurn == true) return 9999999;
+    if(__isOnlyTwoGeneralsInRow() && __curTurn == false) return -9999999;
     // One is the fixed piece strength value;
     // the other is the position value of the piece;
     // the third is the flexibility and cooperation value of the piece;
