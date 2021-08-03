@@ -205,7 +205,7 @@ Window {
         property int time_text_width: turn_cube_width * 0.125
         property int time_cube_height: turn_cube_height/2.0
         property int time_text_height: turn_cube_height/10.0
-        property int time_width: turn_width/2.0
+        property int time_width: boundaryWidth * 0.75
 
         property bool is_endgame_mode: false
         property bool is_endgame_show: !is_endgame_mode
@@ -244,7 +244,7 @@ Window {
 
         property var selectChessX: -9999
         property var selectChessY: -9999
-        property var selectChessSize: chessSize * 1.25
+        property var selectChessSize: chessSize * 1.20
         property var selectChessWidth: turn_width/2.0
 
         property bool selectChessShow: true
