@@ -26,7 +26,8 @@ namespace Menu {
         MengRuShenJi,
         HuYaJi,
         TaoLueYuanJi,
-        YuanShenHaiKuo
+        YuanShenHaiKuo,
+        Mijinbaolue
     };
 }
 

@@ -2094,7 +2094,6 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
-        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2175,7 +2174,6 @@ void singleGame::normalPlay_HumanVSAI_CIMC_EndGame(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
-        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2297,7 +2295,6 @@ void singleGame::normalPlay_HumanVSHuman(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
-        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2353,7 +2350,6 @@ void singleGame::normalPlay_HumanVSHuman_EndGame(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
-        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2426,7 +2422,6 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
-        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2494,7 +2489,6 @@ void singleGame::normalPlay_HumanVSAI_EndGame(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
-        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2551,7 +2545,6 @@ void singleGame::normalPlay(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
-        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2575,6 +2568,7 @@ int singleGame::alpha_beta_red(int depth) {
         int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRed.at(index)._chessNum, allRed.at(index)._chessNumber)->getPosY();
 
         fakeMove(allRed.at(index));
+        __curTurn = true;
 //        GlobalEnvirIn::Instance()->__printBoard();
 //        GlobalEnvirIn::Instance()->__delayMsec(500);
         int maxScore = alpha_beta_getMax(depth - 1, minInMax);
@@ -2612,6 +2606,7 @@ int singleGame::alpha_beta_black(int depth) {
         int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlack.at(index)._chessNum, allBlack.at(index)._chessNumber)->getPosY();
 
         fakeMove(allBlack.at(index));
+        __curTurn = false;
         int minScore = alpha_beta_getMin(depth - 1, maxInMin);
         fakeBackMove(allBlack.at(index), lastPosX, lastPosY);
 
@@ -2668,6 +2663,7 @@ int singleGame::alpha_beta_getMin(int depth, int curMin) {
         int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRedMin.at(index)._chessNum, allRedMin.at(index)._chessNumber)->getPosY();
 
         fakeMove(allRedMin.at(index));
+        __curTurn = true;
         int maxScore = alpha_beta_getMax(depth - 1, minInMax);
         fakeBackMove(allRedMin.at(index), lastPosX, lastPosY);
 
@@ -2700,6 +2696,7 @@ int singleGame::alpha_beta_getMax(int depth, int curMax) {
         int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlackMax.at(index)._chessNum, allBlackMax.at(index)._chessNumber)->getPosY();
 
         fakeMove(allBlackMax.at(index));
+        __curTurn = false;
         int minScore = alpha_beta_getMin(depth - 1, maxInMin);
         fakeBackMove(allBlackMax.at(index), lastPosX, lastPosY);
 

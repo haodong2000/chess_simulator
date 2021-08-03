@@ -240,8 +240,6 @@ GlobalEnvironment::GlobalEnvironment() {
     __chessArray[8 + 4] = 'C';
     __chessArray[8 + 5] = 'P'; // red cannon
     __chessArray[8 + 6] = 'S';
-
-    curTurn = true;
 }
 
 void GlobalEnvironment::__refreshBoard() {
@@ -994,8 +992,8 @@ int GlobalEnvironment::__BoardEvaluate() {
     // @TODO
     // if(onlyTwoGeneralsInRow && curTurnIsBlack) return -999999999;
     // if(onlyTwoGeneralsInRow && curTurnIsRed) return 999999999;
-    if(__isOnlyTwoGeneralsInRow() && curTurn == true) return 999999999;
-    if(__isOnlyTwoGeneralsInRow() && curTurn == false) return -999999999;
+    if(__isOnlyTwoGeneralsInRow() && __curTurn == true) return 999999999;
+    if(__isOnlyTwoGeneralsInRow() && __curTurn == false) return -999999999;
     // One is the fixed piece strength value;
     // the other is the position value of the piece;
     // the third is the flexibility and cooperation value of the piece;

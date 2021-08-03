@@ -290,7 +290,7 @@ Window {
         width: field.time_cube_width
         height: field.time_cube_height
         color: "transparent"
-        border.color: "#55bb8a"
+        border.color: "#fffef9"
         border.width: field.time_width
     }
 
@@ -354,6 +354,7 @@ Window {
             case 3: return "    湖    涯    集   ";
             case 4: return "  韬   略   元   机  ";
             case 5: return "  渊   深   海   阔  ";
+            case 6: return "  锦   秘   豹   略  ";
             default: return "invalid strategy";
         }
     }

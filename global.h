@@ -78,9 +78,9 @@ public:
     int ** __boardValueBlack;
     int ** __boardValueRed;
     char * __chessArray; // 0-13
-    bool curTurn; // true for red and false for black
 };
 
+extern bool __curTurn;
 // extern Qml_Connection* QmlConnect;
 extern QObject* object; // control the whole graphic panel
 extern const int SEARCH_DEPTH;
