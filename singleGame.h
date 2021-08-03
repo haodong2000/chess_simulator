@@ -60,6 +60,7 @@ public:
     virtual int threeLevelStepIndex(bool redOrBlack);
     virtual void S_threeLevelChessing(int maxCount);
     virtual int S_threeLevelStepIndex(bool redOrBlack);
+
     virtual void normalPlay(int maxCount);
     virtual void normalPlay_HumanVSAI(int maxCount);
     virtual void normalPlay_HumanVSHuman(int maxCount);

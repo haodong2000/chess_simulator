@@ -78,6 +78,7 @@ public:
     int ** __boardValueBlack;
     int ** __boardValueRed;
     char * __chessArray; // 0-13
+    bool curTurn; // true for red and false for black
 };
 
 // extern Qml_Connection* QmlConnect;

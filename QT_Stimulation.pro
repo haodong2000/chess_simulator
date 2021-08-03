@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     Chess.cpp \
+    Navigation.cpp \
     Params.cpp \
     PythonMudule.cpp \
     Qml_Connection.cpp \
@@ -75,6 +76,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     Chess.h \
+    Navigation.h \
     Params.h \
     PythonMudule.h \
     Qml_Connection.h \

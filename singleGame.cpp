@@ -19,7 +19,7 @@ singleGame::singleGame():
     SoriginBlackChessStepList.clear();
 //    allRedAndBlackStepList.clear();
 
-    _level = SEARCH_DEPTH; // initialization, actuall level is 4
+    _level = SEARCH_DEPTH - 1; // initialization, actuall level is 4
     _strategy_mode = STRATEGY_MODE;
     R_value = 1;
 
@@ -2094,6 +2094,7 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
+        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2174,6 +2175,7 @@ void singleGame::normalPlay_HumanVSAI_CIMC_EndGame(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
+        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2295,6 +2297,7 @@ void singleGame::normalPlay_HumanVSHuman(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
+        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2350,6 +2353,7 @@ void singleGame::normalPlay_HumanVSHuman_EndGame(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
+        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2422,6 +2426,7 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
+        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2489,6 +2494,7 @@ void singleGame::normalPlay_HumanVSAI_EndGame(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
+        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 
@@ -2545,6 +2551,7 @@ void singleGame::normalPlay(int maxCount) {
             GlobalEnvirIn::Instance()->__printBoard();
         }
         redOrBlack = !redOrBlack;
+        GlobalEnvirIn::Instance()->curTurn = redOrBlack;
     }
 }
 

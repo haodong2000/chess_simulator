@@ -20,15 +20,16 @@
 
 #include "Step.h"
 #include "singleGame.h"
+#include "Navigation.h"
 
 #include <vision_thread.h>
 
 QObject* object;
 vision_thread *vision = NULL;           // USB Camera
 int ** Main_chessBoard = NULL;          // Chess Board
-static const int CHESS_PLAY_MODE = 1;   // play mode: AI-AI Human-AI Human-Human Human-AI(CIMC) Human-AI(EndGame&CIMC) Human-AI(EndGame) Human-Human(EndGame)
-const int STRATEGY_MODE = 0;            // endGame mode: MeiHuaPu, JuZhongMi, MengRuShenJi, HuYaJi, TaoLueYuanJi, YuanShenHaiKuo
-const int SEARCH_DEPTH = 4;             // search depth of alpha-beta purning
+static const int CHESS_PLAY_MODE = Menu::Mode::Human_AI_EndGame;
+const int STRATEGY_MODE = Menu::Manual::MengRuShenJi;
+const int SEARCH_DEPTH = 3;             // search depth of alpha-beta purning
 static const bool TEST_MODE = false;    // is Test Mode or not
 
 int main(int argc, char *argv[])
