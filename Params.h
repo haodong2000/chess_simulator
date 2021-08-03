@@ -126,7 +126,7 @@ namespace PARAM {
             {"r_can_", qMakePair<int, int>(4, 4)},
             {"b_ele_", qMakePair<int, int>(4, 6)},
 
-            {"b_cha_", qMakePair<int, int>(5, 1)},
+            {"r_cha_", qMakePair<int, int>(5, 1)},
 
             {"r_can_", qMakePair<int, int>(7, 1)},
             {"b_hor_", qMakePair<int, int>(7, 6)},
@@ -136,7 +136,7 @@ namespace PARAM {
             {"b_cha_", qMakePair<int, int>(8, 5)},
 
             {"r_gen_", qMakePair<int, int>(9, 4)},
-            {"r_can_", qMakePair<int, int>(9, 8)},
+            {"b_can_", qMakePair<int, int>(9, 8)},
         };
         const QVector<QPair<QString, QPair<int, int>>> HuYaJi {
             {"b_gen_", qMakePair<int, int>(0, 3)},
@@ -151,7 +151,7 @@ namespace PARAM {
             {"r_sol_", qMakePair<int, int>(2, 6)},
             {"r_sol_", qMakePair<int, int>(2, 7)},
 
-            {"b_can_", qMakePair<int, int>(3, 1)},
+            {"r_can_", qMakePair<int, int>(3, 1)},
 
             {"b_sol_", qMakePair<int, int>(7, 4)},
 
@@ -318,7 +318,7 @@ namespace PARAM {
 
     namespace chessInitPos {
         // all the coordinate info of all chesses
-        const double chessSize  =  globalEnvironment::cubeSizeWidth * 0.5;
+        const double chessSize  =  globalEnvironment::cubeSizeWidth * 0.625;
         namespace black {
             namespace General {
                 const double x = globalEnvironment::cubeSizeWidth/2.0 - chessSize/2.0;

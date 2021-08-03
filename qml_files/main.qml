@@ -63,7 +63,7 @@ Window {
         property double copyrightX: cubeSizeWidth/10.0
         property double copyrightY: cubeSizeHeight/10.0
 
-        property double chessSize: cubeSizeWidth * 0.5
+        property double chessSize: cubeSizeWidth * 0.625
 
         property double b_gen_1_posX: cubeSizeWidth/2.0 - chessSize/2.0
         property double b_gen_1_posY: cubeSizeHeight * 4.5 - chessSize/2.0
@@ -212,7 +212,7 @@ Window {
         property bool is_vision_board_done: false
         property bool is_vision_board_show: !is_vision_board_done
         property int vision_cube_x: turn_cube_x
-        property int vision_cube_y: turn_cube_y * 4.0
+        property int vision_cube_y: turn_cube_y * 2.0
         property int vision_cube_width: turn_cube_width
         property int vision_cube_height: turn_cube_height * 0.75
         property int vision_text_width: vision_cube_width/15.0
@@ -223,7 +223,7 @@ Window {
         property bool is_strategy_show: !is_strategy_mode
         property int strategy_mode: 0
         property int strategy_cube_x: turn_cube_x
-        property int strategy_cube_y: turn_cube_y * 4.0
+        property int strategy_cube_y: turn_cube_y * 2.0
         property int strategy_cube_width: turn_cube_width
         property int strategy_cube_height: turn_cube_height * 0.75
         property int strategy_text_width: vision_cube_width/15.0
@@ -244,8 +244,8 @@ Window {
 
         property var selectChessX: -9999
         property var selectChessY: -9999
-        property var selectChessSize: chessSize * 1.5
-        property var selectChessWidth: turn_width/3.0
+        property var selectChessSize: chessSize * 1.25
+        property var selectChessWidth: turn_width/2.0
 
         property bool selectChessShow: true
     }
@@ -332,7 +332,7 @@ Window {
         width: field.strategy_cube_width
         height: field.strategy_cube_height
         color: "transparent"
-        border.color: field.is_strategy_show ? "transparent" : "#f9d770"
+        border.color: field.is_strategy_show ? "transparent" : "#d9b750"
         border.width: field.strategy_width
     }
 
@@ -341,7 +341,7 @@ Window {
         text: field.is_strategy_show ? "" : currentStrategyMode()
         font.styleName: ""
         font.pixelSize: field.textSizeInPixel
-        color: "#983680"
+        color: "#d9b750"
         x: field.strategy_cube_x + field.strategy_text_width
         y: field.strategy_cube_y + field.strategy_text_height
     }
@@ -349,12 +349,12 @@ Window {
     function currentStrategyMode() {
         switch (field.strategy_mode) {
             case 0: return "    梅    花    譜   ";
-            case 1: return "JuZhongMi";
-            case 2: return "MengRuShenJi";
+            case 1: return "    桔    中    秘   ";
+            case 2: return "  梦   入   神   机  ";
             case 3: return "    湖    涯    集   ";
-            case 4: return "TaoLueYuanJi";
-            case 5: return "YuanShenHaiKuo";
-            default: return "";
+            case 4: return "  韬   略   元   机  ";
+            case 5: return "  渊   深   海   阔  ";
+            default: return "invalid strategy";
         }
     }
 
@@ -953,7 +953,7 @@ Window {
             width: field.selectChessSize
             height: field.selectChessSize
             color: "transparent"
-            border.color: field.selectChessShow ? "#f8d86a" : "transparent"
+            border.color: field.selectChessShow ? "#81d8d0" : "transparent"
             border.width: field.selectChessWidth
         }
 
