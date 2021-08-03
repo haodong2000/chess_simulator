@@ -48,6 +48,9 @@ public:
     void eraseChessOnCanvas(int num, int number);
     void moveChessOnCanvas(int num, int number);
 
+    void whetherStrategyMode(bool curStrategyMode);
+    void setStrategyMode(int curStrategyMode);
+
 private:
     bool isEndGameMode;
     // static SGeoPoint* pTest;

@@ -227,3 +227,11 @@ void Qml_Connection::moveChessOnCanvas(int num, int number) {
         GlobalEnvirIn::Instance()->__refershPosValueUnit();
     }
 }
+
+void Qml_Connection::whetherStrategyMode(bool curStrategyMode) {
+    object->setProperty("is_strategy_mode", curStrategyMode);
+}
+
+void Qml_Connection::setStrategyMode(int curStrategyMode) {
+    object->setProperty("strategy_mode", curStrategyMode);
+}

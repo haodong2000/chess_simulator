@@ -219,6 +219,17 @@ Window {
         property int vision_text_height: vision_cube_height/4.5
         property int vision_width: turn_width * 0.75
 
+        property bool is_strategy_mode: false
+        property bool is_strategy_show: !is_strategy_mode
+        property int strategy_mode: 0
+        property int strategy_cube_x: turn_cube_x
+        property int strategy_cube_y: turn_cube_y * 4.0
+        property int strategy_cube_width: turn_cube_width
+        property int strategy_cube_height: turn_cube_height * 0.75
+        property int strategy_text_width: vision_cube_width/15.0
+        property int strategy_text_height: vision_cube_height/27.5
+        property int strategy_width: turn_width * 0.75
+
         property int rule_text_size: 20
         property int rule_text_x: turn_cube_x
         property int rule_text_y: turn_cube_y * 3
@@ -313,6 +324,46 @@ Window {
         x: field.vision_cube_x + field.vision_text_width
         y: field.vision_cube_y + field.vision_text_height
     }
+
+    Rectangle {
+        id: strategy_vision_board
+        x: field.strategy_cube_x
+        y: field.strategy_cube_y
+        width: field.strategy_cube_width
+        height: field.strategy_cube_height
+        color: "transparent"
+        border.color: field.is_strategy_show ? "transparent" : "#f9d770"
+        border.width: field.strategy_width
+    }
+
+    Text{
+        id: text_strategy_board
+        text: field.is_strategy_show ? "" : currentStrategyMode()
+        font.styleName: ""
+        font.pixelSize: field.textSizeInPixel
+        color: "#983680"
+        x: field.strategy_cube_x + field.strategy_text_width
+        y: field.strategy_cube_y + field.strategy_text_height
+    }
+
+    function currentStrategyMode() {
+        switch (field.strategy_mode) {
+            case 0: return "    梅    花    譜   ";
+            case 1: return "JuZhongMi";
+            case 2: return "MengRuShenJi";
+            case 3: return "    湖    涯    集   ";
+            case 4: return "TaoLueYuanJi";
+            case 5: return "YuanShenHaiKuo";
+            default: return "";
+        }
+    }
+
+//    MeiHuaPu, // index = 0
+//    JuZhongMi,
+//    MengRuShenJi,
+//    HuYaJi,
+//    TaoLueYuanJi,
+//    YuanShenHaiKuo
 
     function currentDateTime(){
         return Qt.formatDateTime(new Date(), " yyyy-MM-dd hh:mm:ss:zzz");

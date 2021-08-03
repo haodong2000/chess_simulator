@@ -19,7 +19,7 @@ singleGame::singleGame():
     SoriginBlackChessStepList.clear();
 //    allRedAndBlackStepList.clear();
 
-    _level = SEARCH_DEPTH; // initialization, actuall level is 4
+    _level = SEARCH_DEPTH - 1; // initialization, actuall level is 4
     _strategy_mode = STRATEGY_MODE;
     R_value = 1;
 
@@ -2303,6 +2303,8 @@ void singleGame::normalPlay_HumanVSHuman_EndGame(int maxCount) {
     bool redOrBlack = true;
     int count = 0;
     const int delayMs = 25;
+    QmlConnectIn::Instance()->whetherStrategyMode(true);
+    QmlConnectIn::Instance()->setStrategyMode(_strategy_mode);
     initEndgameIn::Instance()->setInitStrategyBoard(_strategy_mode);
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
@@ -2428,6 +2430,8 @@ void singleGame::normalPlay_HumanVSAI_EndGame(int maxCount) {
     bool redOrBlack = true;
     int count = 0;
     const int delayMs = 25;
+    QmlConnectIn::Instance()->whetherStrategyMode(true);
+    QmlConnectIn::Instance()->setStrategyMode(_strategy_mode);
     initEndgameIn::Instance()->setInitStrategyBoard(_strategy_mode);
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
@@ -2555,6 +2559,11 @@ int singleGame::alpha_beta_red(int depth) {
     int minInMax = 987654321;
 
     for(int index = 0; index < sizeRed; index++) {
+        if(allRed.at(index)._isKill == true && allRed.at(index)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL)
+            return index;
+    }
+
+    for(int index = 0; index < sizeRed; index++) {
         int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRed.at(index)._chessNum, allRed.at(index)._chessNumber)->getPosX();
         int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRed.at(index)._chessNum, allRed.at(index)._chessNumber)->getPosY();
 
@@ -2585,6 +2594,11 @@ int singleGame::alpha_beta_black(int depth) {
     int sizeBlack = allBlack.size();
 
     int maxInMin = -987654321;
+    for(int index = 0; index < sizeBlack; index++) {
+        if(allBlack.at(index)._isKill == true && allBlack.at(index)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL)
+            return index;
+    }
+
 
     for(int index = 0; index < sizeBlack; index++) {
         int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlack.at(index)._chessNum, allBlack.at(index)._chessNumber)->getPosX();
