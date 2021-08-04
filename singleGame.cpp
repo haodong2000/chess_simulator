@@ -2608,7 +2608,7 @@ int singleGame::alpha_beta_red(int depth) {
     int retIndex = 0;
     COUNT_RED++;
 
-    QVector<chessStep> allRed;
+    QVector<chessStep> allRed, allBlack;
     allRed.clear();
     allRed.append(originRedChessStepList);
     int sizeRed = allRed.size();
@@ -2616,6 +2616,8 @@ int singleGame::alpha_beta_red(int depth) {
     int minInMax = 999999999;
     int theHorseCannonIndex_1st = -1;
     int theHorseCannonIndex_2nd = -1;
+    QVector<int> toAvoidGeneralDied;
+    bool noHopeToLive = false;
 
     for(int index = 0; index < sizeRed; index++) {
         if(allRed.at(index)._isKill == true && allRed.at(index)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL)
@@ -2624,10 +2626,44 @@ int singleGame::alpha_beta_red(int depth) {
             if(theHorseCannonIndex_1st == -1) theHorseCannonIndex_1st = index;
             else theHorseCannonIndex_2nd = index;
         }
+
+        int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRed.at(index)._chessNum, allRed.at(index)._chessNumber)->getPosX();
+        int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRed.at(index)._chessNum, allRed.at(index)._chessNumber)->getPosY();
+        fakeMove(allRed.at(index));
+
+        allBlack.clear();
+        generateBlackAllPossibleMoves();
+        allBlack.append(originBlackChessStepList);
+        int sizeBlack = allBlack.size();
+        for(int i = 0; i < sizeBlack; i++) {
+            if((allBlack.at(i)._isKill == true && allBlack.at(i)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL) ||
+                    GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()){
+                toAvoidGeneralDied.append(i);
+//                std::cout << "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" << std::endl;
+//                GlobalEnvirIn::Instance()->__printBoard();
+            }
+        }
+
+        fakeBackMove(allRed.at(index), lastPosX, lastPosY);
     }
+
+    int avoidSize = toAvoidGeneralDied.size();
+    noHopeToLive = avoidSize >= sizeRed;
+    bool isNeedContinue = false;
+//    if(noHopeToLive == true) std::cout << "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" << std::endl;
 
     for(int index = 0; index < sizeRed; index++) {
         if(index == theHorseCannonIndex_1st || index == theHorseCannonIndex_2nd) continue;
+        for(int i = 0; i < avoidSize; i++) {
+            if(index == toAvoidGeneralDied.at(i)) {
+                isNeedContinue = true;
+                break;
+            }
+        }
+        if(isNeedContinue && noHopeToLive == false) {
+            isNeedContinue = false;
+            continue;
+        }
 
         int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRed.at(index)._chessNum, allRed.at(index)._chessNumber)->getPosX();
         int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRed.at(index)._chessNum, allRed.at(index)._chessNumber)->getPosY();
@@ -2655,7 +2691,7 @@ int singleGame::alpha_beta_black(int depth) {
     COUNT_BLACK++;
 
     // generateBlackAllPossibleMoves();
-    QVector<chessStep> allBlack;
+    QVector<chessStep> allBlack, allRed;
     allBlack.clear();
     allBlack.append(originBlackChessStepList);
     int sizeBlack = allBlack.size();
@@ -2663,6 +2699,8 @@ int singleGame::alpha_beta_black(int depth) {
     int maxInMin = -999999999;
     int theHorseCannonIndex_1st = -1;
     int theHorseCannonIndex_2nd = -1;
+    QVector<int> toAvoidGeneralDied;
+    bool noHopeToLive = false;
 
     for(int index = 0; index < sizeBlack; index++) {
         if(allBlack.at(index)._isKill == true && allBlack.at(index)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL)
@@ -2671,11 +2709,44 @@ int singleGame::alpha_beta_black(int depth) {
             if(theHorseCannonIndex_1st == -1) theHorseCannonIndex_1st = index;
             else theHorseCannonIndex_2nd = index;
         }
+
+        int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlack.at(index)._chessNum, allBlack.at(index)._chessNumber)->getPosX();
+        int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlack.at(index)._chessNum, allBlack.at(index)._chessNumber)->getPosY();
+        fakeMove(allBlack.at(index));
+
+        allRed.clear();
+        generateRedAllPossibleMoves();
+        allRed.append(originRedChessStepList);
+        int sizeRed = allRed.size();
+        for(int i = 0; i < sizeRed; i++) {
+            if((allRed.at(i)._isKill == true && allRed.at(i)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL) ||
+                    GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()) {
+                toAvoidGeneralDied.append(i);
+//                std::cout << "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" << std::endl;
+//                GlobalEnvirIn::Instance()->__printBoard();
+            }
+        }
+
+        fakeBackMove(allBlack.at(index), lastPosX, lastPosY);
     }
 
+    int avoidSize = toAvoidGeneralDied.size();
+    noHopeToLive = avoidSize >= sizeBlack;
+    bool isNeedContinue = false;
+//    if(noHopeToLive == true) std::cout << "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" << std::endl;
 
     for(int index = 0; index < sizeBlack; index++) {
         if(index == theHorseCannonIndex_1st || index == theHorseCannonIndex_2nd) continue;
+        for(int i = 0; i < avoidSize; i++) {
+            if(index == toAvoidGeneralDied.at(i)) {
+                isNeedContinue = true;
+                break;
+            }
+        }
+        if(isNeedContinue && noHopeToLive == false) {
+            isNeedContinue = false;
+            continue;
+        }
 
         int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlack.at(index)._chessNum, allBlack.at(index)._chessNumber)->getPosX();
         int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlack.at(index)._chessNum, allBlack.at(index)._chessNumber)->getPosY();

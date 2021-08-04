@@ -989,13 +989,14 @@ void GlobalEnvironment::__refershPosValueUnit() {
 int GlobalEnvironment::__BoardEvaluate() {
     int blackValue = 0;
     int redValue = 0;
-    if(Ab_gen_1->isAlive() == false) return -10000;
-    if(Ar_gen_1->isAlive() == false) return 10000;
+    const int liveOrDeath = 5000;
+    if(Ab_gen_1->isAlive() == false) return -liveOrDeath;
+    if(Ar_gen_1->isAlive() == false) return liveOrDeath;
     // @TODO
     // if(onlyTwoGeneralsInRow && curTurnIsBlack) return -999999999;
     // if(onlyTwoGeneralsInRow && curTurnIsRed) return 999999999;
-    if(__isOnlyTwoGeneralsInRow() && __curTurn == true) return 10000;
-    if(__isOnlyTwoGeneralsInRow() && __curTurn == false) return -10000;
+    if(__isOnlyTwoGeneralsInRow() && __curTurn == true) return liveOrDeath;
+    if(__isOnlyTwoGeneralsInRow() && __curTurn == false) return -liveOrDeath;
     // One is the fixed piece strength value;
     // the other is the position value of the piece;
     // the third is the flexibility and cooperation value of the piece;
