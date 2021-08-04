@@ -22,6 +22,8 @@ singleGame::singleGame():
     _level = SEARCH_DEPTH - 1; // initialization, actuall level is 4
     _strategy_mode = STRATEGY_MODE;
     R_value = 1;
+    COUNT_RED = 0;
+    COUNT_BLACK = 0;
 
     M1_client->connectToHost(PARAM::M1_HOST, PARAM::M1_PORT);
     if(M1_client->waitForConnected(10000)) {
@@ -2604,6 +2606,8 @@ void singleGame::normalPlay_EndGame(int maxCount) {
 
 int singleGame::alpha_beta_red(int depth) {
     int retIndex = 0;
+    COUNT_RED++;
+    std::cout << COUNT_RED <<std::endl;
 
     QVector<chessStep> allRed;
     allRed.clear();
@@ -2611,13 +2615,21 @@ int singleGame::alpha_beta_red(int depth) {
     int sizeRed = allRed.size();
 
     int minInMax = 999999999;
+    int theHorseCannonIndex_1st = -1;
+    int theHorseCannonIndex_2nd = -1;
 
     for(int index = 0; index < sizeRed; index++) {
         if(allRed.at(index)._isKill == true && allRed.at(index)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL)
             return index;
+        if(COUNT_RED <= 4 && isHorseCannonStep_red(allRed.at(index))) {
+            if(theHorseCannonIndex_1st == -1) theHorseCannonIndex_1st = index;
+            else theHorseCannonIndex_2nd = index;
+        }
     }
 
     for(int index = 0; index < sizeRed; index++) {
+        if(index == theHorseCannonIndex_1st || index == theHorseCannonIndex_2nd) continue;
+
         int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRed.at(index)._chessNum, allRed.at(index)._chessNumber)->getPosX();
         int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allRed.at(index)._chessNum, allRed.at(index)._chessNumber)->getPosY();
 
@@ -2641,6 +2653,7 @@ int singleGame::alpha_beta_red(int depth) {
 
 int singleGame::alpha_beta_black(int depth) {
     int retIndex = 0;
+    COUNT_BLACK++;
 
     // generateBlackAllPossibleMoves();
     QVector<chessStep> allBlack;
@@ -2649,13 +2662,22 @@ int singleGame::alpha_beta_black(int depth) {
     int sizeBlack = allBlack.size();
 
     int maxInMin = -999999999;
+    int theHorseCannonIndex_1st = -1;
+    int theHorseCannonIndex_2nd = -1;
+
     for(int index = 0; index < sizeBlack; index++) {
         if(allBlack.at(index)._isKill == true && allBlack.at(index)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL)
             return index;
+        if(COUNT_BLACK <= 4 && isHorseCannonStep_black(allBlack.at(index))) {
+            if(theHorseCannonIndex_1st == -1) theHorseCannonIndex_1st = index;
+            else theHorseCannonIndex_2nd = index;
+        }
     }
 
 
     for(int index = 0; index < sizeBlack; index++) {
+        if(index == theHorseCannonIndex_1st || index == theHorseCannonIndex_2nd) continue;
+
         int lastPosX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlack.at(index)._chessNum, allBlack.at(index)._chessNumber)->getPosX();
         int lastPosY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(allBlack.at(index)._chessNum, allBlack.at(index)._chessNumber)->getPosY();
 
@@ -2764,6 +2786,41 @@ int singleGame::alpha_beta_getMax(int depth, int curMax) {
 
     return maxInMin;
 
+}
+
+bool singleGame::isHorseCannonStep_red(const chessStep &curStep) {
+    int num = curStep._chessNum;
+    if(num != PARAM::globalEnvironment::CHESS_TABLE::RED_CANNON) return false;
+    int kill = curStep._isKill;
+    if(kill == false) return false;
+    int PosX = curStep._deltaX;
+    int PosY = curStep._deltaY;
+    if(((PosX == 0 && PosY == 1) || (PosX == 0 && PosY == 7)) == false) return false;
+    int killNum = curStep._chessKilledNum;
+    if(killNum != PARAM::globalEnvironment::CHESS_TABLE::BLACK_HORSE) return false;
+    if(false == (PosY == 1 && GlobalEnvirIn::Instance()->__isThereHasChess(PosX, PosY - 1) &&
+            GlobalEnvirIn::Instance()->__whichChessOnThere(PosX, PosY - 1)->chessName() == "BChariot") &&
+       false == (PosY == 7 && GlobalEnvirIn::Instance()->__isThereHasChess(PosX, PosY + 1) &&
+            GlobalEnvirIn::Instance()->__whichChessOnThere(PosX, PosY + 1)->chessName() == "BChariot")) return false;
+    std::cout << "KLLLLLLLLLLLLLLLLLLLLLLLLL" << std::endl;
+    return true;
+}
+
+bool singleGame::isHorseCannonStep_black(const chessStep &curStep) {
+    int num = curStep._chessNum;
+    if(num != PARAM::globalEnvironment::CHESS_TABLE::BLACK_CANNON) return false;
+    int kill = curStep._isKill;
+    if(kill == false) return false;
+    int PosX = curStep._deltaX;
+    int PosY = curStep._deltaY;
+    if(((PosX == 9 && PosY == 1) || (PosX == 9 && PosY == 7)) == false) return false;
+    int killNum = curStep._chessKilledNum;
+    if(killNum != PARAM::globalEnvironment::CHESS_TABLE::RED_HORSE) return false;
+    if(false == (PosY == 1 && GlobalEnvirIn::Instance()->__isThereHasChess(PosX, PosY - 1) &&
+            GlobalEnvirIn::Instance()->__whichChessOnThere(PosX, PosY - 1)->chessName() == "RChariot") &&
+       false == (PosY == 7 && GlobalEnvirIn::Instance()->__isThereHasChess(PosX, PosY + 1) &&
+            GlobalEnvirIn::Instance()->__whichChessOnThere(PosX, PosY + 1)->chessName() == "RChariot")) return false;
+    return true;
 }
 
 int singleGame::alpha_beta_try(int depth, int alpha, int beta, bool redOrBlack) {

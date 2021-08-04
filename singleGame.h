@@ -78,6 +78,8 @@ public:
     virtual int alpha_beta_red(int depth);
     virtual int alpha_beta_getMin(int depth, int curMin);
     virtual int alpha_beta_getMax(int depth, int curMax);
+    virtual bool isHorseCannonStep_red(const chessStep& curStep);
+    virtual bool isHorseCannonStep_black(const chessStep& curStep);
     virtual int alpha_beta_try(int depth, int alpha, int beta, bool redOrBlack);
     virtual int normalPlayIndex_old(bool redOrBlack);
     virtual int alpha_beta_old(int depth, int alpha, int beta, bool redOfBlack);
@@ -120,6 +122,8 @@ private:
     int _level;
     int _strategy_mode;
     int R_value;
+    int COUNT_RED;
+    int COUNT_BLACK;
     QTcpSocket* M1_client = new QTcpSocket();
 };
 
