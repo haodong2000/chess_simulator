@@ -1357,21 +1357,36 @@ bool GlobalEnvironment::__isOnlyTwoGeneralsInRow() {
     int red_y = Ar_gen_1->getPosY();
     const int maxAxisOfBlackGeneral = 2;
     const int maxAxisOfRedGeneral = 7;
+    bool oneGeneralDetected = false;
+    bool twoGeneralDetected = false;
     if(black_y != red_y) return false; // two generals in different row
+//    std::cout << "LLLLL  two generals in different row  LLLLLLLLLLLL" << std::endl;
     for(int i = 0; i <= PARAM::globalEnvironment::maxAxisOfX; i++) {
         if(__isThereHasChess(i, black_y)) {
             if(i > maxAxisOfBlackGeneral && i < maxAxisOfRedGeneral) return false;
-//            std::cout << "b_ele_ " << Ab_ele_1->getPosX() << " " << Ab_ele_1->getPosY() << " " << Ab_ele_2->getPosX() << " " << Ab_ele_2->getPosY() << std::endl;
             QString temp_chess_name = __QString2SimpleName(__whichChessOnThere(i, black_y)->chessName());
             int temp_chess = __QStr2intName(temp_chess_name);
-//            std::cout << "__isOnlyTwoGeneralsInRow() " << temp_chess_name.toStdString() << " " << temp_chess << " " << i << black_y << " " << __int2QStrName(temp_chess).toStdString() << std::endl;
-            if(temp_chess != PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL &&
+//            std::cout << "__isOnlyTwoGeneralsInRow() LLLLLLLLLLLL " << temp_chess_name.toStdString() << " " << temp_chess << " " << i << " " << black_y << " " << __int2QStrName(temp_chess).toStdString() << std::endl;
+            if(oneGeneralDetected == false &&
+                    (temp_chess == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL ||
+                     temp_chess == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL)) {
+                oneGeneralDetected = true;
+                continue;
+            } // if the first general detected
+            if(oneGeneralDetected && twoGeneralDetected == false &&
+                    temp_chess != PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL &&
                     temp_chess != PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL) {
                 return false;
-            }
+            } // if other chesses in two generals
+            if(twoGeneralDetected == false &&
+                    (temp_chess == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL ||
+                     temp_chess == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL)) {
+                twoGeneralDetected = true;
+                return true;
+            } // if the second general detected
         }
     }
-    return true;
+    return twoGeneralDetected;
 }
 
 int GlobalEnvironment::__generateRandomNumber(int maxNumber) {
