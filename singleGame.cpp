@@ -2607,7 +2607,6 @@ void singleGame::normalPlay_EndGame(int maxCount) {
 int singleGame::alpha_beta_red(int depth) {
     int retIndex = 0;
     COUNT_RED++;
-    std::cout << COUNT_RED <<std::endl;
 
     QVector<chessStep> allRed;
     allRed.clear();
