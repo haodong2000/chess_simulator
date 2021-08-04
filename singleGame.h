@@ -66,6 +66,7 @@ public:
     virtual void normalPlay_HumanVSHuman(int maxCount);
     virtual void normalPlay_HumanVSAI_CIMC(int maxCount);
     virtual void normalPlay_HumanVSAI_CIMC_EndGame(int maxCount);
+    virtual void normalPlay_EndGame(int maxCount);
     virtual void normalPlay_HumanVSHuman_EndGame(int maxCount);
     virtual void normalPlay_HumanVSAI_EndGame(int maxCount);
 

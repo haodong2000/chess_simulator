@@ -16,6 +16,7 @@ namespace Menu {
         Human_Human,
         Human_AI_CIMC,
         Human_AI_CIMC_EndGame,
+        AI_AI_EndGame,
         Human_AI_EndGame,
         Human_Human_EndGame
     };

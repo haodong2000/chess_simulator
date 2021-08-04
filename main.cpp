@@ -28,9 +28,9 @@ QObject* object;
 vision_thread *vision = NULL;           // USB Camera
 int ** Main_chessBoard = NULL;          // Chess Board
 bool __curTurn;                         // true for red and false for black
-static const int CHESS_PLAY_MODE = Menu::Mode::Human_AI_EndGame;
+static const int CHESS_PLAY_MODE = Menu::Mode::AI_AI_EndGame;
 const int STRATEGY_MODE = Menu::Manual::Mijinbaolue;
-const int SEARCH_DEPTH = 5;             // search depth of alpha-beta purning
+const int SEARCH_DEPTH = 4;             // search depth of alpha-beta purning
 static const bool TEST_MODE = false;    // is Test Mode or not
 
 int main(int argc, char *argv[])
@@ -67,14 +67,15 @@ int main(int argc, char *argv[])
         TestChessMoveIn::Instance()->testMultiProcess();
     else
         switch (CHESS_PLAY_MODE) {
-            case 0: singleGameIn::Instance()->normalPlay(PARAM::NINE_NINE_NINE); break;
-            case 1: singleGameIn::Instance()->normalPlay_HumanVSAI(PARAM::NINE_NINE_NINE); break;
-            case 2: singleGameIn::Instance()->normalPlay_HumanVSHuman(PARAM::NINE_NINE_NINE); break;
-            case 3: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC(PARAM::NINE_NINE_NINE); break;
-            case 4: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC_EndGame(PARAM::NINE_NINE_NINE); break;
-            case 5: singleGameIn::Instance()->normalPlay_HumanVSAI_EndGame(PARAM::NINE_NINE_NINE); break;
-            case 6: singleGameIn::Instance()->normalPlay_HumanVSHuman_EndGame(PARAM::NINE_NINE_NINE); break;
-            default: qDebug() << "main.cpp line:79 CHESS_PLAY_MODE inValid!!! (only 0, 1, 2, 3, 4, 5, 6 wanted)"; break;
+        case 0: singleGameIn::Instance()->normalPlay(PARAM::NINE_NINE_NINE); break;
+        case 1: singleGameIn::Instance()->normalPlay_HumanVSAI(PARAM::NINE_NINE_NINE); break;
+        case 2: singleGameIn::Instance()->normalPlay_HumanVSHuman(PARAM::NINE_NINE_NINE); break;
+        case 3: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC(PARAM::NINE_NINE_NINE); break;
+        case 4: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC_EndGame(PARAM::NINE_NINE_NINE); break;
+        case 5: singleGameIn::Instance()->normalPlay_EndGame(PARAM::NINE_NINE_NINE); break;
+        case 6: singleGameIn::Instance()->normalPlay_HumanVSAI_EndGame(PARAM::NINE_NINE_NINE); break;
+        case 7: singleGameIn::Instance()->normalPlay_HumanVSHuman_EndGame(PARAM::NINE_NINE_NINE); break;
+        default: qDebug() << "main.cpp line:79 CHESS_PLAY_MODE inValid!!! (only 0, 1, 2, 3, 4, 5, 6 wanted)"; break;
         }
 
     return app.exec();
