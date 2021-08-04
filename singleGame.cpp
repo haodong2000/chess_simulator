@@ -2801,7 +2801,6 @@ bool singleGame::isHorseCannonStep_red(const chessStep &curStep) {
             GlobalEnvirIn::Instance()->__whichChessOnThere(PosX, PosY - 1)->chessName() == "BChariot") &&
        false == (PosY == 7 && GlobalEnvirIn::Instance()->__isThereHasChess(PosX, PosY + 1) &&
             GlobalEnvirIn::Instance()->__whichChessOnThere(PosX, PosY + 1)->chessName() == "BChariot")) return false;
-    std::cout << "KLLLLLLLLLLLLLLLLLLLLLLLLL" << std::endl;
     return true;
 }
 
