@@ -2019,7 +2019,7 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
     bool gameIsOn = true;
     bool redOrBlack = true;
     int count = 0;
-    const int delayMs = 25;
+    const int delayMs = 5;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
@@ -2105,7 +2105,7 @@ void singleGame::normalPlay_HumanVSAI_CIMC_EndGame(int maxCount) {
     bool gameIsOn = true;
     bool redOrBlack = true;
     int count = 0;
-    const int delayMs = 25;
+    const int delayMs = 5;
     // @TODO
     // Get the initial chess board from the vision
     initEndgameIn::Instance()->setInitVisionBoard();
@@ -2252,7 +2252,7 @@ void singleGame::normalPlay_HumanVSHuman(int maxCount) {
     bool gameIsOn = true;
     bool redOrBlack = true;
     int count = 0;
-    const int delayMs = 25;
+    const int delayMs = 5;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
@@ -2304,7 +2304,7 @@ void singleGame::normalPlay_HumanVSHuman_EndGame(int maxCount) {
     bool gameIsOn = true;
     bool redOrBlack = true;
     int count = 0;
-    const int delayMs = 25;
+    const int delayMs = 5;
     QmlConnectIn::Instance()->whetherStrategyMode(true);
     QmlConnectIn::Instance()->setStrategyMode(_strategy_mode);
     initEndgameIn::Instance()->setInitStrategyBoard(_strategy_mode);
@@ -2362,7 +2362,7 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
     bool gameIsOn = true;
     bool redOrBlack = true;
     int count = 0;
-    const int delayMs = 25;
+    const int delayMs = 5;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
@@ -2431,7 +2431,7 @@ void singleGame::normalPlay_HumanVSAI_EndGame(int maxCount) {
     bool gameIsOn = true;
     bool redOrBlack = true;
     int count = 0;
-    const int delayMs = 25;
+    const int delayMs = 5;
     QmlConnectIn::Instance()->whetherStrategyMode(true);
     QmlConnectIn::Instance()->setStrategyMode(_strategy_mode);
     initEndgameIn::Instance()->setInitStrategyBoard(_strategy_mode);
@@ -2503,7 +2503,7 @@ void singleGame::normalPlay(int maxCount) {
     bool gameIsOn = true;
     bool redOrBlack = true;
     int count = 0;
-    const int delayMs = 25;
+    const int delayMs = 5;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
@@ -2557,7 +2557,7 @@ void singleGame::normalPlay_EndGame(int maxCount) {
     bool gameIsOn = true;
     bool redOrBlack = true;
     int count = 0;
-    const int delayMs = 25;
+    const int delayMs = 5;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
@@ -2638,7 +2638,7 @@ int singleGame::alpha_beta_red(int depth) {
         for(int i = 0; i < sizeBlack; i++) {
             if((allBlack.at(i)._isKill == true && allBlack.at(i)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL) ||
                     GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()){
-                toAvoidGeneralDied.append(i);
+                toAvoidGeneralDied.append(index);
 //                std::cout << "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" << std::endl;
 //                GlobalEnvirIn::Instance()->__printBoard();
             }
@@ -2650,7 +2650,7 @@ int singleGame::alpha_beta_red(int depth) {
     int avoidSize = toAvoidGeneralDied.size();
     noHopeToLive = avoidSize >= sizeRed;
     bool isNeedContinue = false;
-//    if(noHopeToLive == true) std::cout << "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" << std::endl;
+    if(noHopeToLive == true) std::cout << "-*- Red(Human) Lose -*-" << std::endl;
 
     for(int index = 0; index < sizeRed; index++) {
         if(index == theHorseCannonIndex_1st || index == theHorseCannonIndex_2nd) continue;
@@ -2721,7 +2721,7 @@ int singleGame::alpha_beta_black(int depth) {
         for(int i = 0; i < sizeRed; i++) {
             if((allRed.at(i)._isKill == true && allRed.at(i)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL) ||
                     GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()) {
-                toAvoidGeneralDied.append(i);
+                toAvoidGeneralDied.append(index);
 //                std::cout << "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" << std::endl;
 //                GlobalEnvirIn::Instance()->__printBoard();
             }
@@ -2733,7 +2733,7 @@ int singleGame::alpha_beta_black(int depth) {
     int avoidSize = toAvoidGeneralDied.size();
     noHopeToLive = avoidSize >= sizeBlack;
     bool isNeedContinue = false;
-//    if(noHopeToLive == true) std::cout << "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" << std::endl;
+    if(noHopeToLive == true) std::cout << "-*- Black(AI) Lose -*-" << std::endl;
 
     for(int index = 0; index < sizeBlack; index++) {
         if(index == theHorseCannonIndex_1st || index == theHorseCannonIndex_2nd) continue;
