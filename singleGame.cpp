@@ -2640,8 +2640,7 @@ int singleGame::alpha_beta_red(int depth) {
             if((allBlack.at(i)._isKill == true && allBlack.at(i)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL) ||
                     GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()){
                 toAvoidGeneralDied.append(index);
-//                std::cout << "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" << std::endl;
-//                GlobalEnvirIn::Instance()->__printBoard();
+                break;
             }
         }
 
@@ -2724,8 +2723,7 @@ int singleGame::alpha_beta_black(int depth) {
             if((allRed.at(i)._isKill == true && allRed.at(i)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL) ||
                     GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()) {
                 toAvoidGeneralDied.append(index);
-//                std::cout << "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" << std::endl;
-//                GlobalEnvirIn::Instance()->__printBoard();
+                break;
             }
         }
 
