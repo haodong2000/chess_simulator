@@ -109,5 +109,4 @@ int main(int argc, char *argv[])
 *   _canMovePos
 *   _canKill
 *   _canKillWho
-*
 */
