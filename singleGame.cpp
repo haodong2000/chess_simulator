@@ -2618,6 +2618,7 @@ int singleGame::alpha_beta_red(int depth) {
     int theHorseCannonIndex_2nd = -1;
     QVector<int> toAvoidGeneralDied;
     bool noHopeToLive = false;
+    toAvoidGeneralDied.clear();
 
     for(int index = 0; index < sizeRed; index++) {
         if(allRed.at(index)._isKill == true && allRed.at(index)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL)
@@ -2701,6 +2702,7 @@ int singleGame::alpha_beta_black(int depth) {
     int theHorseCannonIndex_2nd = -1;
     QVector<int> toAvoidGeneralDied;
     bool noHopeToLive = false;
+    toAvoidGeneralDied.clear();
 
     for(int index = 0; index < sizeBlack; index++) {
         if(allBlack.at(index)._isKill == true && allBlack.at(index)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL)
