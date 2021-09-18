@@ -98,6 +98,9 @@ public:
     virtual bool isHumanStepValid(chessStep step);
     virtual bool isHumanStepValid_black(chessStep step);
 
+    virtual int currentSearchDepthSin();
+    virtual void changeSearchDepth(int currentSearchDepth);
+
     virtual void deleteStepList(QVector<chessStep*>& stepList);
 
     int VisionHumanStepIndex(const QVector<chessStep>& curStepList);

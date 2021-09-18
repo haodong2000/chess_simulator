@@ -1,4 +1,4 @@
-#include "singleGame.h"
+﻿#include "singleGame.h"
 
 singleGame::singleGame():
     redCurStep (chessStep(-1, -1, false, 0, 0)),
@@ -3604,4 +3604,13 @@ int singleGame::Quiescent_alpha_beta_getMax(int depth, int curMax) {
 
     return maxInMin;
 
+}
+
+int singleGame::currentSearchDepthSin() {
+    return _level;
+}
+
+void singleGame::changeSearchDepth(int currentSearchDepth) {
+    _level = currentSearchDepth;
+    std::cout << "-*-  Search Depth Changed to -> " << currentSearchDepth << " -*-" << std::endl;
 }

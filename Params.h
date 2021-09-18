@@ -12,6 +12,7 @@
 #include <QApplication>
 #include <unordered_map>
 #include <QString>
+#include <math.h>
 
 //class Params : public QApplication {
 //public:
@@ -29,6 +30,9 @@ namespace PARAM {
     const int M1_PORT = 8082;
     // const QString M1_HOST = HOST;
     // const int M1_PORT = PORT;
+
+    const int MAX_SEARCH_NODES = int(pow(44, 8));
+    const int MAX_LEVEL = 10;
 
     namespace EndGame {
         const QVector<QPair<QString, QPair<int, int>>> MeiHuaPu {
