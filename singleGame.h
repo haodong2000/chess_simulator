@@ -21,6 +21,7 @@
 #include <vision_thread.h>
 
 #include "init_endgame.h"
+#include <algorithm>
 
 extern vision_thread *vision;
 
@@ -98,8 +99,14 @@ public:
     virtual bool isHumanStepValid(chessStep step);
     virtual bool isHumanStepValid_black(chessStep step);
 
-    virtual int currentSearchDepthSin();
-    virtual void changeSearchDepth(int currentSearchDepth);
+    virtual int currentSearchDepth_black();
+    virtual int currentSearchDepth_red();
+    virtual void changeSearchDepth_black(int currentSearchDepth);
+    virtual void changeSearchDepth_red(int currentSearchDepth);
+    virtual void updateSearchDepth_black();
+    virtual void updateSearchDepth_red();
+    virtual int currentSearchDepth();
+    virtual void changeSearchDepth(int currentSearchDepth, QString camp);
 
     virtual void deleteStepList(QVector<chessStep*>& stepList);
 
@@ -123,6 +130,8 @@ public:
 
 private:
     int _level;
+    int _redLevel;
+    int _blackLevel;
     int _strategy_mode;
     int R_value;
     int COUNT_RED;

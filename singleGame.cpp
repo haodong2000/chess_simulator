@@ -24,6 +24,8 @@ singleGame::singleGame():
     R_value = 1;
     COUNT_RED = 0;
     COUNT_BLACK = 0;
+    _redLevel = _level;
+    _blackLevel = _level;
 
     M1_client->connectToHost(PARAM::M1_HOST, PARAM::M1_PORT);
     if(M1_client->waitForConnected(10000)) {
@@ -2650,7 +2652,10 @@ int singleGame::alpha_beta_red(int depth) {
     int avoidSize = toAvoidGeneralDied.size();
     noHopeToLive = avoidSize >= sizeRed;
     bool isNeedContinue = false;
-    if(noHopeToLive == true) std::cout << "-*- Red(Human) Lose -*-" << std::endl;
+    if(noHopeToLive == true) {
+        std::cout << "-*- Red(Human) Lose -*-" << std::endl;
+        return 0;
+    }
 
     for(int index = 0; index < sizeRed; index++) {
         if(index == theHorseCannonIndex_1st || index == theHorseCannonIndex_2nd) continue;
@@ -2733,7 +2738,10 @@ int singleGame::alpha_beta_black(int depth) {
     int avoidSize = toAvoidGeneralDied.size();
     noHopeToLive = avoidSize >= sizeBlack;
     bool isNeedContinue = false;
-    if(noHopeToLive == true) std::cout << "-*- Black(AI) Lose -*-" << std::endl;
+    if(noHopeToLive == true) {
+        std::cout << "-*- Black(AI) Lose -*-" << std::endl;
+        return 0;
+    }
 
     for(int index = 0; index < sizeBlack; index++) {
         if(index == theHorseCannonIndex_1st || index == theHorseCannonIndex_2nd) continue;
@@ -3185,6 +3193,16 @@ void singleGame::realMove(chessStep step) {
         GlobalEnvirIn::Instance()->__killThisChess(killNum, killNumber);
     }
     QmlConnectIn::Instance()->changeChessPos(Num, Number, camp, PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(), PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
+    if(camp == true) {
+        // current camp is red
+        // next is black's turn
+        updateSearchDepth_black();
+    }
+    else {
+        // current camp is black
+        // next is red's turn
+        updateSearchDepth_red();
+    }
 }
 
 void singleGame::fakeMove(chessStep step) {
@@ -3606,11 +3624,64 @@ int singleGame::Quiescent_alpha_beta_getMax(int depth, int curMax) {
 
 }
 
-int singleGame::currentSearchDepthSin() {
+void singleGame::updateSearchDepth_black() {
+    generateBlackAllPossibleMoves();
+//    int numberOfSteps = qMin<int>(originRedChessStepList.size(), originBlackChessStepList.size());
+    int numberOfSteps = originBlackChessStepList.size();
+    int basicLevel = PARAM::BASIC_DEPTH;
+    int maxNodes = PARAM::MAX_SEARCH_NODES;
+    int exponent = PARAM::BEST_EXPONENT;
+    int delta = 0;
+    for(int i = 0; i < PARAM::MAX_LEVEL - basicLevel; i++) {
+        if(pow(numberOfSteps, exponent + delta * 2) < maxNodes) delta++;
+        else break;
+    }
+    delta--;
+    if(currentSearchDepth_black() < basicLevel + delta) {
+        changeSearchDepth_black(basicLevel + delta);
+    }
+    changeSearchDepth(currentSearchDepth_black(), "black");
+}
+
+void singleGame::updateSearchDepth_red() {
+    generateRedAllPossibleMoves();
+    int numberOfSteps = originRedChessStepList.size();
+    int basicLevel = PARAM::BASIC_DEPTH;
+    int maxNodes = PARAM::MAX_SEARCH_NODES;
+    int exponent = PARAM::BEST_EXPONENT;
+    int delta = 0;
+    for(int i = 0; i < PARAM::MAX_LEVEL - basicLevel; i++) {
+        if(pow(numberOfSteps, exponent + delta * 2) < maxNodes) delta++;
+        else break;
+    }
+    delta--;
+    if(currentSearchDepth_red() < basicLevel + delta) {
+        changeSearchDepth_red(basicLevel + delta);
+    }
+    changeSearchDepth(currentSearchDepth_red(), "Red");
+}
+
+int singleGame::currentSearchDepth_red() {
+    return _redLevel;
+}
+
+int singleGame::currentSearchDepth_black() {
+    return _blackLevel;
+}
+
+void singleGame::changeSearchDepth_red(int currentSearchDepth) {
+    _redLevel = currentSearchDepth;
+}
+
+void singleGame::changeSearchDepth_black(int currentSearchDepth) {
+    _blackLevel = currentSearchDepth;
+}
+
+int singleGame::currentSearchDepth() {
     return _level;
 }
 
-void singleGame::changeSearchDepth(int currentSearchDepth) {
+void singleGame::changeSearchDepth(int currentSearchDepth, QString camp) {
+    std::cout << "-*-  Search Depth of " << camp.toStdString() << " Changed from " << _level << " to " << currentSearchDepth << " -*-" << std::endl;
     _level = currentSearchDepth;
-    std::cout << "-*-  Search Depth Changed to -> " << currentSearchDepth << " -*-" << std::endl;
 }
