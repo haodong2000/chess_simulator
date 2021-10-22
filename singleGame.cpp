@@ -3203,6 +3203,14 @@ void singleGame::realMove(chessStep step) {
         std::cout << "k_Number\t = " << killNumber << std::endl;
         std::cout << "k_Name  \t = " << GlobalEnvirIn::Instance()->__int2QStrName(killNum).toStdString() << std::endl;
         GlobalEnvirIn::Instance()->__killThisChess(killNum, killNumber);
+        QString camp_killer = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->chessCamp() ? "red_" : "black_";
+        QString name_killer = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->chessName().remove(0, 1);
+        QString image_killer = QString("../chess/") + camp_killer + name_killer + QString(".svg");
+        std::cout << image_killer.toStdString() << std::endl;
+        object->setProperty(QString("killer").toLatin1(), image_killer.toLatin1());
+    }
+    else {
+        object->setProperty(QString("killedChessDisplay").toLatin1(), false);
     }
     QmlConnectIn::Instance()->changeChessPos(Num, Number, camp, PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(), PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
     if(camp == true) {

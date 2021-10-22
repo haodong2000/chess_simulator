@@ -957,6 +957,12 @@ void GlobalEnvironment::__killThisChess(int killNum, int killNumber) {
                 (GlobalEnvirIn::Instance()->__int2QStrName(killNum) +
                  QString::number(killNumber) +
                  QString("_alive")).toLatin1(), false);
+    QString camp_killed = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(killNum, killNumber)->chessCamp() ? "red_" : "black_";
+    QString name_killed = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(killNum, killNumber)->chessName().remove(0, 1);
+    QString image_killed = QString("../chess/") + camp_killed + name_killed + QString(".svg");
+    object->setProperty(QString("killedChessDisplay").toLatin1(), true);
+    object->setProperty(QString("killed").toLatin1(), image_killed.toLatin1());
+    std::cout << image_killed.toStdString() << std::endl;
 }
 
 void GlobalEnvironment::__fakeKillThisChess(int killNum, int killNumber) {

@@ -271,18 +271,20 @@ Window {
         property double animation_cos: animation_width/animation_xie
         property double animation_sin: animation_height/animation_xie
 
-        property bool killedChessDisplay: true
+        property bool killedChessDisplay: false
         property double killedChessDisplay_x_www: turn_cube_x
         property double killedChessDisplay_y_www: turn_cube_y * 4.75
         property double killedChessDisplay_x: turn_cube_x + cubeSizeWidth * 1.5
         property double killedChessDisplay_y: killedChessDisplay_y_www
         property double killedChessDisplay_x_text: turn_cube_x + cubeSizeWidth
         property double killedChessDisplay_y_text: killedChessDisplay_y_www
+        property string killer: "../chess/red_General.svg"
+        property string killed: "../chess/red_General.svg"
     }
 
     Image {
         id: kill
-        source: "../chess/red_General.svg"
+        source: (field.killedChessDisplay) ? field.killer : ""
         width: field.chessSize
         height: width
         x: field.killedChessDisplay_x_www + field.chessSize * 0.35
@@ -291,7 +293,7 @@ Window {
 
     Image {
         id: bekilled
-        source: "../chess/red_General.svg"
+        source: (field.killedChessDisplay) ? field.killed : ""
         width: field.chessSize
         height: width
         x: field.killedChessDisplay_x + field.chessSize * 0.35
