@@ -87,6 +87,7 @@ extern const int SEARCH_DEPTH;
 extern const int STRATEGY_MODE;
 // extern int M_human_index;
 extern int ** Main_chessBoard;
+extern bool Is_CIMC_EndGame;
 
 typedef NormalSingleton< GlobalEnvironment > GlobalEnvirIn;
 

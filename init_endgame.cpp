@@ -121,17 +121,38 @@ void init_endgame::setInitVisionBoard() {
     // 2021-08-01
     QmlConnectIn::Instance()->setEndGameMode(isEndGameMode);
     QmlConnectIn::Instance()->setWhetherVisionDone(isVisionBoardDone);
-    std::cout << "start vision detecting chess board..." << std::endl;
+    GlobalEnvirIn::Instance()->__delayMsec(500);
+    std::cout << "setInitVisionBoard(): start vision detecting chess board..." << std::endl;
     // wait until isVisionBoardAtLeastOnce = true
-    while (vision->python_vision->isVisionBoardAtLeastOnce == false);
+    while (vision->python_vision->isVisionBoardAtLeastOnce == false) {
+        std::cout << "o";
+        GlobalEnvirIn::Instance()->__delayMsec(200);
+    }
     GlobalEnvirIn::Instance()->__delayMsec(5);
     for(int i = 0; i < 9; i++) {
+        std::cout << "[";
         for(int j = 0; j < 10; j++) {
+            std::cout << " ";
             initChessBoard[i][j] = vision->python_vision->__visionBoard[i][j];
+            std::cout << initChessBoard[i][j];
+            if(j != 4) std::cout << " ";
+            else std::cout << " |";
         }
+        std::cout << "]\t" << std::endl;
     }
+//    for(int i = 0; i < 9; i++) {
+//        std::cout << "[";
+//        for(int j = 0; j < 10; j++) {
+//            std::cout << " ";
+//            std::cout << initChessBoard[i][j];
+//            if(j != 4) std::cout << " ";
+//            else std::cout << " |";
+//        }
+//        std::cout << "]\t" << std::endl;
+//    }
     printVisionBoard();
     // change the properties of chesses
+    std::cout << "setInitVisionBoard(): All chesses killed!" << std::endl;
     allChessesKilled();
     for(int i = 0; i < 9; i++) {
         for(int j = 0; j < 10; j++) {
@@ -142,10 +163,14 @@ void init_endgame::setInitVisionBoard() {
             GlobalEnvirIn::Instance()->__QStrOrInt2Chess(initChessBoard[i][j], GlobalInit::CHESS_COUNT[initChessBoard[i][j]])->setPosY(i);
         }
     }
+    std::cout << "setInitVisionBoard(): __printBoard" << std::endl;
     GlobalEnvirIn::Instance()->__printBoard();
     // judge if gameIsOn
     bool gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive() && (!GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow());
-    if(gameIsOn == false) qDebug() << "ERROR: init_endgame.cpp function:setInitVisionBoard() line:111 game already end!!!";
+    if(gameIsOn == false) {
+        qDebug() << "ERROR: init_endgame.cpp function:setInitVisionBoard() line:111 game already end!!!";
+        return;
+    }
     // refresh the chess board (qml canvas)
     for(int num = 1; num <= GlobalInit::CHESS_TABLE::RED_SOLDIER; num++) {
         if(num == GlobalInit::CHESS_TABLE::BLACK_GENERAL || num == GlobalInit::CHESS_TABLE::RED_GENERAL) {

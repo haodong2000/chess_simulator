@@ -16,5 +16,34 @@
         <file>chess/red_Horse.svg</file>
         <file>chess/red_Soldier.svg</file>
         <file>chess/test.png</file>
+        <file>background/Abstract.jpg</file>
+        <file>background/BlackBird.jpg</file>
+        <file>background/Castle.jpg</file>
+        <file>background/ChristmasTree.jpg</file>
+        <file>background/Forest.jpg</file>
+        <file>background/GoldenMonkey.jpg</file>
+        <file>background/GreenAurora.jpg</file>
+        <file>background/GreenAuroraNight.jpg</file>
+        <file>background/Hedgehog.jpg</file>
+        <file>background/Houses.jpg</file>
+        <file>background/Kitty.jpg</file>
+        <file>background/Lightning.jpg</file>
+        <file>background/Lion.jpg</file>
+        <file>background/Mountains.jpg</file>
+        <file>background/NaturalScenery.jpg</file>
+        <file>background/Ocean.jpg</file>
+        <file>background/Plant.jpg</file>
+        <file>background/PurpleAurora.jpg</file>
+        <file>background/Rabbit.jpg</file>
+        <file>background/Rome.jpg</file>
+        <file>background/Salzburg.jpg</file>
+        <file>background/Seaside.jpg</file>
+        <file>background/Sunset.jpg</file>
+        <file>background/Terraces.jpg</file>
+        <file>background/test.png</file>
+        <file>background/TibetanAntelope.jpg</file>
+        <file>background/Tofino.jpg</file>
+        <file>background/Waterlicht.jpg</file>
+        <file>background/Whale.jpg</file>
     </qresource>
 </RCC>

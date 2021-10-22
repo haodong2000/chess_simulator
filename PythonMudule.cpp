@@ -225,7 +225,16 @@ void PythonMudule::run_TCP_vision() {
             qDebug() << "client reveive: " << msg_qstr;
             if(MP_count > 1) __QString2Board(msg_qstr);
             MP_received = true;
-            analysis_human_setp();
+            if(Is_CIMC_EndGame == false) {
+                analysis_human_setp();
+            }
+            else {
+                std::cout << "vision init board in process, no human step detection." << std::endl;
+            }
+            while (Is_CIMC_EndGame && MP_count > 1) {
+                std::cout << ".";
+                __delayMsec(200);
+            }
         }
         else {
             qDebug() << "PythonMudule.cpp line:228 run_TCP_vision() receive message from server error!";

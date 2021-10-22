@@ -2114,6 +2114,7 @@ void singleGame::normalPlay_HumanVSAI_CIMC_EndGame(int maxCount) {
     // @TODO
     // Get the initial chess board from the vision
     initEndgameIn::Instance()->setInitVisionBoard();
+    Is_CIMC_EndGame = false;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
