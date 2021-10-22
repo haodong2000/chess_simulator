@@ -2015,6 +2015,9 @@ int singleGame::S_threeLevelStepIndex(bool redOrBlack) {
 }
 
 void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
+    QmlConnectIn::Instance()->whetherStrategyMode(true);
+    QmlConnectIn::Instance()->setStrategyMode(PARAM::WHOLE_GAME);
+    initEndgameIn::Instance()->setInitStrategyBoard(PARAM::WHOLE_GAME);
     // alpha-beta
     // human: red
     // AI: black
@@ -2248,6 +2251,9 @@ int singleGame::VisionHumanStepIndex(const QVector<chessStep>& curStepList) {
 }
 
 void singleGame::normalPlay_HumanVSHuman(int maxCount) {
+    QmlConnectIn::Instance()->whetherStrategyMode(true);
+    QmlConnectIn::Instance()->setStrategyMode(PARAM::WHOLE_GAME);
+    initEndgameIn::Instance()->setInitStrategyBoard(PARAM::WHOLE_GAME);
     // alpha-beta
     // human: red
     // AI: black
@@ -2358,6 +2364,9 @@ void singleGame::normalPlay_HumanVSHuman_EndGame(int maxCount) {
 }
 
 void singleGame::normalPlay_HumanVSAI(int maxCount) {
+    QmlConnectIn::Instance()->whetherStrategyMode(true);
+    QmlConnectIn::Instance()->setStrategyMode(PARAM::WHOLE_GAME);
+    initEndgameIn::Instance()->setInitStrategyBoard(PARAM::WHOLE_GAME);
     // alpha-beta
     // human: red
     // AI: black
@@ -2501,6 +2510,9 @@ void singleGame::normalPlay_HumanVSAI_EndGame(int maxCount) {
 //}
 
 void singleGame::normalPlay(int maxCount) {
+    QmlConnectIn::Instance()->whetherStrategyMode(true);
+    QmlConnectIn::Instance()->setStrategyMode(PARAM::WHOLE_GAME);
+    initEndgameIn::Instance()->setInitStrategyBoard(PARAM::WHOLE_GAME);
     // alpha-beta
     bool gameIsOn = true;
     bool redOrBlack = true;

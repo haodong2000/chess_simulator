@@ -36,6 +36,8 @@ namespace PARAM {
     const int MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);
     const int MAX_LEVEL = 10;
 
+    const int WHOLE_GAME = 666;
+
     namespace EndGame {
         const QVector<QPair<QString, QPair<int, int>>> MeiHuaPu {
             {"b_gen_", qMakePair<int, int>(0, 4)},

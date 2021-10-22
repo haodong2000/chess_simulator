@@ -450,7 +450,8 @@ Window {
             case 4: return "  韬   略   元   机  ";
             case 5: return "  渊   深   海   阔  ";
             case 6: return "  锦   秘   豹   略  ";
-            default: return "invalid strategy";
+            case 7: return "invalid strategy";
+            default: return "  象   棋   全   局  "
         }
     }
 
@@ -675,6 +676,7 @@ Window {
         text: field.isBlackWin ? " AI \nWin!" : ""
         font.family: "Consolas"
         font.styleName: ""
+        font.bold: true
         rotation: 0
         font.pixelSize: field.textSizeInPixel * 2
         color: "#0eb0c9"
@@ -686,6 +688,7 @@ Window {
         id: red_win
         text: field.isRedWin ? "Human\n Win!" : ""
         font.family: "Consolas"
+        font.bold: true
         font.styleName: ""
         rotation: 0
         font.pixelSize: field.textSizeInPixel * 2
