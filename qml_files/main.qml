@@ -61,7 +61,7 @@ Window {
         property int modelOneSingle:  (showInitCHessBoardRepeat == true) ? 1:0
         property int modelFiveSingle: (showInitCHessBoardRepeat == true) ? 5:0
         property double copyrightX: cubeSizeWidth/10.0
-        property double copyrightY: cubeSizeHeight/10.0
+        property double copyrightY: Screen.height - cubeSizeHeight/1.5
 
         property double chessSize: cubeSizeWidth * 0.625
 
@@ -206,6 +206,7 @@ Window {
         property int time_cube_height: turn_cube_height/2.0
         property int time_text_height: turn_cube_height/10.0
         property int time_width: boundaryWidth * 0.75
+        property int time_delte: 45
 
         property bool is_endgame_mode: false
         property bool is_endgame_show: !is_endgame_mode
@@ -248,7 +249,100 @@ Window {
         property var selectChessWidth: turn_width/2.0
 
         property bool selectChessShow: true
+
+        property bool isBackgroundSet: true
+        property bool isBackgroundText: true
+
+        property double background_text_posX: cubeSizeWidth * 1.0
+        property double background_text_posY: cubeSizeHeight * 1.5
+        property int background_text_size: 300
+
+        property bool isAnimation: false
+        property double animation_start_X: -100
+        property double animation_start_Y: -100
+        property double animation_end_X: -100
+        property double animation_end_Y: -100
+        property bool isLeftXie: (animation_start_X - animation_end_X) * (animation_start_Y - animation_end_Y) >= 0
+        property double animation_posX: cubeSizeWidth * (animation_start_X + animation_end_X)/2.0
+        property double animation_posY: cubeSizeHeight * (animation_start_Y + animation_end_Y)/2.0
+        property double animation_width: cubeSizeWidth * Math.abs(animation_start_X - animation_end_X)
+        property double animation_height: cubeSizeHeight * Math.abs(animation_start_Y - animation_end_Y)
+        property double animation_xie: Math.sqrt(animation_width * animation_width + animation_height * animation_height)
+        property double animation_cos: animation_width/animation_xie
+        property double animation_sin: animation_height/animation_xie
+
+        property bool killedChessDisplay: true
+        property double killedChessDisplay_x_www: turn_cube_x
+        property double killedChessDisplay_y_www: turn_cube_y * 4.75
+        property double killedChessDisplay_x: turn_cube_x + cubeSizeWidth * 1.5
+        property double killedChessDisplay_y: killedChessDisplay_y_www
+        property double killedChessDisplay_x_text: turn_cube_x + cubeSizeWidth
+        property double killedChessDisplay_y_text: killedChessDisplay_y_www
     }
+
+    Image {
+        id: kill
+        source: "../chess/red_General.svg"
+        width: field.chessSize
+        height: width
+        x: field.killedChessDisplay_x_www + field.chessSize * 0.35
+        y: field.killedChessDisplay_y_www - field.chessSize * 0.25
+    }
+
+    Image {
+        id: bekilled
+        source: "../chess/red_General.svg"
+        width: field.chessSize
+        height: width
+        x: field.killedChessDisplay_x + field.chessSize * 0.35
+        y: field.killedChessDisplay_y - field.chessSize * 0.25
+    }
+    Text {
+        id: chesskill
+        text: (field.killedChessDisplay) ? "KILLS" : ""
+        font.family: "Consolas"
+        opacity: 1.0
+        font.styleName: ""
+        font.pixelSize: field.rule_text_size * 1.25
+        font.bold: true
+        color: (field.killedChessDisplay) ? "#fffef9" : ""
+        x: field.killedChessDisplay_x_text
+        y: field.killedChessDisplay_y_text
+    }
+
+    Image {
+        id: background
+        source: (field.isBackgroundSet) ? "../background/Ocean.jpg" : ""
+    }
+
+    Text {
+        id: text_background
+        text: "Chess\n    Robot"
+        font.family: "Consolas"
+        opacity: 0.15
+        font.styleName: ""
+        font.pixelSize: field.background_text_size
+        font.bold: true
+        color: (field.isBackgroundText) ? "#2486b9" : ""
+        x: field.background_text_posX
+        y: field.background_text_posY
+    }
+
+    Rectangle {
+            id: xiu
+            x: field.animation_posX + field.cubeSizeWidth * 0.5 - field.animation_xie * 0.5 - field.chessSize * 0.5 - 10
+            y: field.animation_posY + field.cubeSizeHeight * 0.5 - field.chessSize * 0.5 - 10
+            width: field.animation_xie + field.chessSize + 20
+            height: field.chessSize + 20
+            color: (field.isAnimation) ? "#bc84a8" : "#ccccd6"
+            opacity: (field.isAnimation) ? 0.5 : 0.1
+            rotation: (field.isLeftXie) ? Math.asin(field.animation_sin) * 180/Math.PI : 180.0 - Math.asin(field.animation_sin) * 180/Math.PI
+            radius: 10
+            border.width: 10
+            border.color: (field.isAnimation) ? "#fffef9" : "#ccccd6"
+            z: 1
+    }
+
 
     Rectangle {
         // the entire boundaryu of the chess board
@@ -297,10 +391,11 @@ Window {
     Text{
         id: textDateTime
         text: currentDateTime();
+        font.family: "Consolas"
         font.styleName: ""
         font.pixelSize: field.textSizeInPixel/2.0
         color: "#fffef9"
-        x: field.time_cube_x + field.time_text_width
+        x: field.time_cube_x + field.time_text_width - field.time_delte
         y: field.time_cube_y + field.time_text_height
     }
 
@@ -565,7 +660,8 @@ Window {
 
     Text {
         id: text_rule
-        text: "Human \t< Red > \tPlay chess by clicking icon\n\nAI \t<Black> \tFully automatically"
+        text: "Human <Red> \nPlay chess by clicking icon\n\nA I <Black> \nFully automatically !"
+        font.family: "Consolas"
         font.styleName: ""
         rotation: 0
         font.pixelSize: field.rule_text_size
@@ -577,6 +673,7 @@ Window {
     Text {
         id: black_win
         text: field.isBlackWin ? " AI \nWin!" : ""
+        font.family: "Consolas"
         font.styleName: ""
         rotation: 0
         font.pixelSize: field.textSizeInPixel * 2
@@ -587,7 +684,8 @@ Window {
 
     Text {
         id: red_win
-        text: field.isRedWin ? "Human\n  Win!" : ""
+        text: field.isRedWin ? "Human\n Win!" : ""
+        font.family: "Consolas"
         font.styleName: ""
         rotation: 0
         font.pixelSize: field.textSizeInPixel * 2
@@ -928,7 +1026,7 @@ Window {
             //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
             // copyright
-            ctx.fillText("Stimulation platform of SRTP-SmartChessRobot by LI", field.copyrightX, field.copyrightY)
+            ctx.fillText("Copyright: LI Haodong, ZHOU Jin, XU Xiayan, 2021.     Description: Stimulation platform of SRTP-SmartChessRobot by LI     URL: https://github.com/LeBronLiHD/chessRobotSimulation_QT     Information: ---< CIMC Final >-----< 2021.11 >-----< HuZhou, Zhejiang province of China >-----< All Rights Reserved >--- ", field.copyrightX, field.copyrightY)
             ctx.strokeStyle = "#fffef9"
             ctx.stroke()
             // ctx.endPath()

@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     else qDebug() << "field_root loading failed!";
     GlobalEnvirIn::Instance()->__refreshBoard();
 
-//    LetUsPlayChess(); // real play API
+    LetUsPlayChess(); // real play API
 
     return app.exec();
 }
@@ -79,8 +79,7 @@ int main(int argc, char *argv[])
 *   Time:     2021-06-05
 * * * * * * * * * * * * * * * * * * * * * */
 
-void LetUsPlayChess()
-{
+void LetUsPlayChess() {
     if(TEST_MODE)
         TestChessMoveIn::Instance()->testMultiProcess();
     else

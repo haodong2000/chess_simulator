@@ -19,6 +19,9 @@ class Qml_Connection
 public:
     Qml_Connection();
 
+    virtual void moveChessAnimationBegin(int start_X, int start_Y, int end_X, int end_Y);
+    virtual void moveChessAnimationEnd();
+
     virtual void changeChessPos(int chessName,     int number, bool camp, SGeoPoint* Pos);
     virtual void changeChessPos(QString chessName, int number, bool camp, SGeoPoint* Pos);
     virtual void changeChessPos(int chessName,     int number, bool camp, int deltaX, int deltaY);

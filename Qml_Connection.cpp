@@ -12,6 +12,18 @@ Qml_Connection::Qml_Connection()
     isEndGameMode = false;
 }
 
+void Qml_Connection::moveChessAnimationBegin(int start_X, int start_Y, int end_X, int end_Y) {
+    object->setProperty(QString("isAnimation").toLatin1(), true);
+    object->setProperty(QString("animation_start_X").toLatin1(), start_X);
+    object->setProperty(QString("animation_start_Y").toLatin1(), start_Y);
+    object->setProperty(QString("animation_end_X").toLatin1(), end_X);
+    object->setProperty(QString("animation_end_Y").toLatin1(), end_Y);
+}
+
+void Qml_Connection::moveChessAnimationEnd() {
+    object->setProperty(QString("isAnimation").toLatin1(), false);
+}
+
 void Qml_Connection::changeChessPos(int chessName, int number, bool camp, SGeoPoint *Pos) {
     // number already contain the infomation of camp, chessName also contains
     QString name = GlobalEnvirIn::Instance()->__int2QStrName(chessName) + QString::number(number);
@@ -20,12 +32,41 @@ void Qml_Connection::changeChessPos(int chessName, int number, bool camp, SGeoPo
         return;
     }
 
-    if(GlobalEnvirIn::Instance()->__isThereHasChess(Pos)) {
-        killThisChess(Pos);
+    moveChessAnimationBegin(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosX(),
+                            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosY(),
+                            Pos->getPosX(),
+                            Pos->getPosY());
+
+    int cur_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosX();
+    int cur_y = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosY();
+    double current_x = coordinateIn::Instance()->tranRealPosX(cur_x);
+    double current_y = coordinateIn::Instance()->tranRealPosY(cur_y);
+    double target_x = coordinateIn::Instance()->tranRealPosX(Pos->getPosX());
+    double target_y = coordinateIn::Instance()->tranRealPosY(Pos->getPosY());
+    double length = sqrt((Pos->getPosX() - cur_x) * (Pos->getPosX() - cur_x) + (Pos->getPosY() - cur_y) * (Pos->getPosY() - cur_y));
+    int num_pieces = 10;
+    int num_pieces_d = 10.0;
+    if(length >= 4.0) {
+        num_pieces += int((length - 4.0)/2.0);
+        num_pieces_d = double(num_pieces);
+    }
+    double delta_x = (target_x - current_x)/num_pieces_d;
+    double delta_y = (target_y - current_y)/num_pieces_d;
+    for(int i = 0; i < num_pieces; i++) {
+        object->setProperty((name + QString("_posX")).toLatin1(), current_x + delta_x * (double)i);
+        object->setProperty((name + QString("_posY")).toLatin1(), current_y + delta_y * (double)i);
+        GlobalEnvirIn::Instance()->__delayMsec(20);
     }
 
     object->setProperty((name + QString("_posX")).toLatin1(), coordinateIn::Instance()->tranRealPosX(Pos->getPosX()));
     object->setProperty((name + QString("_posY")).toLatin1(), coordinateIn::Instance()->tranRealPosY(Pos->getPosY()));
+
+    if(GlobalEnvirIn::Instance()->__isThereHasChess(Pos)) {
+        killThisChess(Pos);
+    }
+
+    moveChessAnimationEnd();
+
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(Pos->getPosX());
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(Pos->getPosY());
 
@@ -53,12 +94,41 @@ void Qml_Connection::changeChessPos(int chessName, int number, bool camp, int de
     int posX = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosX() + deltaX; // first call
     int posY = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosY() + deltaY; // second call
 
-    if(GlobalEnvirIn::Instance()->__isThereHasChess(posX, posY)) {
-        killThisChess(posX, posY);
+    moveChessAnimationBegin(GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosX(),
+                            GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosY(),
+                            posX,
+                            posY);
+
+    int cur_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosX();
+    int cur_y = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->getPosY();
+    double current_x = coordinateIn::Instance()->tranRealPosX(cur_x);
+    double current_y = coordinateIn::Instance()->tranRealPosY(cur_y);
+    double target_x = coordinateIn::Instance()->tranRealPosX(posX);
+    double target_y = coordinateIn::Instance()->tranRealPosY(posY);
+    double length = sqrt((posX - cur_x) * (posX - cur_x) + (posY - cur_y) * (posY - cur_y));
+    int num_pieces = 10;
+    int num_pieces_d = 10.0;
+    if(length >= 4.0) {
+        num_pieces += int((length - 4.0)/2.0);
+        num_pieces_d = double(num_pieces);
+    }
+    double delta_x = (target_x - current_x)/num_pieces_d;
+    double delta_y = (target_y - current_y)/num_pieces_d;
+    for(int i = 0; i < num_pieces; i++) {
+        object->setProperty((name + QString("_posX")).toLatin1(), current_x + delta_x * (double)i);
+        object->setProperty((name + QString("_posY")).toLatin1(), current_y + delta_y * (double)i);
+        GlobalEnvirIn::Instance()->__delayMsec(20);
     }
 
     object->setProperty((name + QString("_posX")).toLatin1(), coordinateIn::Instance()->tranRealPosX(posX));
     object->setProperty((name + QString("_posY")).toLatin1(), coordinateIn::Instance()->tranRealPosY(posY));
+
+    if(GlobalEnvirIn::Instance()->__isThereHasChess(posX, posY)) {
+        killThisChess(posX, posY);
+    }
+
+    moveChessAnimationEnd();
+
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(posX);
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(posY);
 

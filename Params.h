@@ -26,7 +26,7 @@ namespace PARAM {
     const QString HOST = "127.0.0.1";
     const int PORT = 6666;
 
-    const QString M1_HOST = "192.168.1.33";
+    const QString M1_HOST = "192.168.1.49";
     const int M1_PORT = 8082;
     // const QString M1_HOST = HOST;
     // const int M1_PORT = PORT;
