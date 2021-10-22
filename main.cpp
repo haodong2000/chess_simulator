@@ -24,14 +24,18 @@
 
 #include <vision_thread.h>
 
+#include <QFontDatabase>
+#include <QFont>
+
 QObject* object;
 vision_thread *vision = NULL;           // USB Camera
 int ** Main_chessBoard = NULL;          // Chess Board
 bool __curTurn;                         // true for red and false for black
-static const int CHESS_PLAY_MODE = Menu::Mode::AI_AI_EndGame;
-const int STRATEGY_MODE = Menu::Manual::inValidHaHa;
+static const int CHESS_PLAY_MODE = Menu::Mode::Human_Human_EndGame;
+const int STRATEGY_MODE = Menu::Manual::MeiHuaPu;
 const int SEARCH_DEPTH = 4;             // init search depth of alpha-beta purning
 static const bool TEST_MODE = false;    // is Test Mode or not
+void LetUsPlayChess();
 
 int main(int argc, char *argv[])
 {
@@ -63,6 +67,20 @@ int main(int argc, char *argv[])
     else qDebug() << "field_root loading failed!";
     GlobalEnvirIn::Instance()->__refreshBoard();
 
+//    LetUsPlayChess(); // real play API
+
+    return app.exec();
+}
+
+/* * * * * * * * * * * * * * * * * * * * *
+*   File:     main.cpp
+*   Author:   Haodong LI
+*   Usage:    UsageOfFile
+*   Time:     2021-06-05
+* * * * * * * * * * * * * * * * * * * * * */
+
+void LetUsPlayChess()
+{
     if(TEST_MODE)
         TestChessMoveIn::Instance()->testMultiProcess();
     else
@@ -77,16 +95,7 @@ int main(int argc, char *argv[])
         case 7: singleGameIn::Instance()->normalPlay_HumanVSHuman_EndGame(PARAM::NINE_NINE_NINE); break;
         default: qDebug() << "main.cpp line:79 CHESS_PLAY_MODE inValid!!! (see Navigation.h)"; break;
         }
-
-    return app.exec();
 }
-
-/* * * * * * * * * * * * * * * * * * * * *
-*   File:     main.cpp
-*   Author:   Haodong LI
-*   Usage:    UsageOfFile
-*   Time:     2021-06-05
-* * * * * * * * * * * * * * * * * * * * * */
 
 /*
 *  1. global vision   ->
