@@ -83,8 +83,8 @@ public:
 extern bool __curTurn;
 // extern Qml_Connection* QmlConnect;
 extern QObject* object; // control the whole graphic panel
-extern const int SEARCH_DEPTH;
-extern const int STRATEGY_MODE;
+extern int SEARCH_DEPTH;
+extern int STRATEGY_MODE;
 // extern int M_human_index;
 extern int ** Main_chessBoard;
 extern bool Is_CIMC_EndGame;
