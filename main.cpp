@@ -31,7 +31,7 @@ QObject* object;
 vision_thread *vision = NULL;           // USB Camera
 int ** Main_chessBoard = NULL;          // Chess Board
 bool __curTurn;                         // true for red and false for black
-static const int CHESS_PLAY_MODE = Menu::Mode::Human_AI_CIMC;
+static const int CHESS_PLAY_MODE = Menu::Mode::Human_AI_CIMC_EndGame;
 const int STRATEGY_MODE = Menu::Manual::MeiHuaPu;
 const int SEARCH_DEPTH = 4;             // init search depth of alpha-beta purning
 static const bool TEST_MODE = false;    // is Test Mode or not
