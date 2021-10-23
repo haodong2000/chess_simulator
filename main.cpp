@@ -31,7 +31,8 @@ QObject* object;
 vision_thread *vision = NULL;           // USB Camera
 int ** Main_chessBoard = NULL;          // Chess Board
 bool __curTurn;                         // true for red and false for black
-static const int CHESS_PLAY_MODE = Menu::Mode::Human_AI_CIMC_EndGame;
+static const int CHESS_PLAY_MODE = Menu::Mode::Human_Human;
+static const int BACKGROUND_MODE = Menu::Background::NoBackGround;
 const int STRATEGY_MODE = Menu::Manual::MeiHuaPu;
 const int SEARCH_DEPTH = 4;             // init search depth of alpha-beta purning
 static const bool TEST_MODE = false;    // is Test Mode or not
@@ -69,7 +70,6 @@ int main(int argc, char *argv[])
     GlobalEnvirIn::Instance()->__refreshBoard();
 
     LetUsPlayChess(); // real play API
-
     return app.exec();
 }
 
@@ -81,6 +81,13 @@ int main(int argc, char *argv[])
 * * * * * * * * * * * * * * * * * * * * * */
 
 void LetUsPlayChess() {
+    if(BACKGROUND_MODE == 0) {
+        object->setProperty(QString("isBackgroundSet").toLatin1(), false);
+    }
+    else {
+        object->setProperty(QString("isBackgroundSet").toLatin1(), true);
+        object->setProperty(QString("background_source").toLatin1(), Menu::BackgroundUrl.at(BACKGROUND_MODE).toLatin1());
+    }
     if(TEST_MODE)
         TestChessMoveIn::Instance()->testMultiProcess();
     else

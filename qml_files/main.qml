@@ -250,7 +250,7 @@ Window {
 
         property bool selectChessShow: true
 
-        property bool isBackgroundSet: true
+        property bool isBackgroundSet: false
         property bool isBackgroundText: true
         property string background_source: "../background/ChristmasTree.jpg"
 
