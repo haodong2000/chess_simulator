@@ -26,6 +26,9 @@
 
 #include <QFontDatabase>
 #include <QFont>
+#include <QMessageBox>
+#include <QtGui>
+//#include <QtSingleApplication>
 
 QObject* object;
 vision_thread *vision = NULL;           // USB Camera
@@ -36,13 +39,13 @@ static const int BACKGROUND_MODE = Menu::Background::ChristmasTree;
 int STRATEGY_MODE = Menu::Manual::inValidHaHa;
 int SEARCH_DEPTH = PARAM::START_DEPTH;  // init search depth of alpha-beta purning
 static const bool TEST_MODE = false;    // is Test Mode or not
+static const bool START_GUI = true;     // show the init ui or not
 bool Is_CIMC_EndGame = CHESS_PLAY_MODE == Menu::Mode::Human_AI_CIMC_EndGame;
 void LetUsPlayChess();
 
-int main(int argc, char *argv[])
-{
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+int main(int argc, char *argv[]) {
 
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;

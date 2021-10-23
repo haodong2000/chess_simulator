@@ -281,7 +281,21 @@ Window {
         property double killedChessDisplay_y_text: killedChessDisplay_y_www
         property string killer: "../chess/red_General.svg"
         property string killed: "../chess/red_General.svg"
+
+//        property bool initEnvironmentDone: false
+//        property bool initWindowShow: ! initEnvironmentDone
     }
+
+//    Rectangle {
+//        id: init_rect
+//        x: 0
+//        y: 0
+//        width: Screen.width
+//        height: Screen.height
+//        color: (field.initWindowShow) ? "#fffef9" : "transparent"
+//        opacity: (field.initWindowShow) ? 0.75 : 1.0
+//        z: 2
+//    }
 
     Image {
         id: kill
