@@ -66,6 +66,7 @@ void Qml_Connection::changeChessPos(int chessName, int number, bool camp, SGeoPo
     }
 
     moveChessAnimationEnd();
+    GlobalEnvirIn::Instance()->__delayMsec(5);
 
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(Pos->getPosX());
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(Pos->getPosY());
@@ -128,6 +129,7 @@ void Qml_Connection::changeChessPos(int chessName, int number, bool camp, int de
     }
 
     moveChessAnimationEnd();
+    GlobalEnvirIn::Instance()->__delayMsec(5);
 
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosX(posX);
     GlobalEnvirIn::Instance()->__QStrOrInt2Chess(chessName, number)->setPosY(posY);
