@@ -213,22 +213,22 @@ Window {
         property bool is_vision_board_done: false
         property bool is_vision_board_show: !is_vision_board_done
         property int vision_cube_x: turn_cube_x
-        property int vision_cube_y: turn_cube_y * 2.0
+        property int vision_cube_y: turn_cube_y * 2.0 - 10
         property int vision_cube_width: turn_cube_width
-        property int vision_cube_height: turn_cube_height * 0.75
+        property int vision_cube_height: turn_cube_height * 0.75 + 10
         property int vision_text_width: vision_cube_width/15.0
-        property int vision_text_height: vision_cube_height/4.5
+        property int vision_text_height: vision_cube_height/4.5 + 10
         property int vision_width: turn_width * 0.75
 
         property bool is_strategy_mode: false
         property bool is_strategy_show: !is_strategy_mode
         property int strategy_mode: 0
         property int strategy_cube_x: turn_cube_x
-        property int strategy_cube_y: turn_cube_y * 2.0
+        property int strategy_cube_y: turn_cube_y * 2.0 - 15
         property int strategy_cube_width: turn_cube_width
-        property int strategy_cube_height: turn_cube_height * 0.75
+        property int strategy_cube_height: turn_cube_height * 0.75 + 10
         property int strategy_text_width: vision_cube_width/15.0
-        property int strategy_text_height: vision_cube_height/27.5
+        property int strategy_text_height: vision_cube_height/27.5 + 10
         property int strategy_width: turn_width * 0.75
 
         property int rule_text_size: 20
@@ -246,16 +246,17 @@ Window {
         property var selectChessX: -9999
         property var selectChessY: -9999
         property var selectChessSize: chessSize * 1.20
-        property var selectChessWidth: turn_width/2.0
+        property var selectChessWidth: turn_width/1.5
 
         property bool selectChessShow: true
 
         property bool isBackgroundSet: true
         property bool isBackgroundText: true
+        property string background_source: "../background/ChristmasTree.jpg"
 
-        property double background_text_posX: cubeSizeWidth * 1.0
-        property double background_text_posY: cubeSizeHeight * 1.5
-        property int background_text_size: 300
+        property double background_text_posX: cubeSizeWidth * 0.5
+        property double background_text_posY: cubeSizeHeight * 1.0
+        property int background_text_size: 350
 
         property bool isAnimation: false
         property double animation_start_X: -100
@@ -290,7 +291,6 @@ Window {
         x: field.killedChessDisplay_x_www + field.chessSize * 0.35
         y: field.killedChessDisplay_y_www - field.chessSize * 0.25
     }
-
     Image {
         id: bekilled
         source: (field.killedChessDisplay) ? field.killed : ""
@@ -305,29 +305,43 @@ Window {
         font.family: "Consolas"
         opacity: 1.0
         font.styleName: ""
-        font.pixelSize: field.rule_text_size * 1.25
+        font.pixelSize: field.rule_text_size * 1.5
         font.bold: true
         color: (field.killedChessDisplay) ? "#fffef9" : ""
-        x: field.killedChessDisplay_x_text
+        x: field.killedChessDisplay_x_text - 5
         y: field.killedChessDisplay_y_text
     }
 
     Image {
         id: background
-        source: (field.isBackgroundSet) ? "../background/Ocean.jpg" : ""
+        source: (field.isBackgroundSet) ? field.background_source : ""
+        anchors.horizontalCenter: parent.horizontalCenter
+        fillMode: Image.PreserveAspectFit
+        z: -1
+    }
+    Rectangle {
+        id: background_rect
+        x: 0
+        y: 0
+        width: Screen.width
+        height: Screen.height
+        color: (field.isBackgroundSet) ? "#fffef9" : "transparent"
+        opacity: (field.isBackgroundSet) ? 0.25 : 1.0
+        z: -1
     }
 
     Text {
         id: text_background
-        text: "Chess\n    Robot"
+        text: "Chess\n   Robot"
         font.family: "Consolas"
-        opacity: 0.15
+        opacity: 0.25
         font.styleName: ""
         font.pixelSize: field.background_text_size
         font.bold: true
-        color: (field.isBackgroundText) ? "#2486b9" : ""
+        color: (field.isBackgroundText) ? "#fffef9" : ""
         x: field.background_text_posX
         y: field.background_text_posY
+        z: -1
     }
 
     Rectangle {
@@ -336,13 +350,13 @@ Window {
             y: field.animation_posY + field.cubeSizeHeight * 0.5 - field.chessSize * 0.5 - 10
             width: field.animation_xie + field.chessSize + 20
             height: field.chessSize + 20
-            color: (field.isAnimation) ? "#bc84a8" : "#ccccd6"
-            opacity: (field.isAnimation) ? 0.5 : 0.1
+            color: (field.isAnimation) ? "#bc84a8" : "#c8adc4"
+            opacity: (field.isAnimation) ? 0.5 : 0.25
             rotation: (field.isLeftXie) ? Math.asin(field.animation_sin) * 180/Math.PI : 180.0 - Math.asin(field.animation_sin) * 180/Math.PI
             radius: 10
             border.width: 10
-            border.color: (field.isAnimation) ? "#fffef9" : "#ccccd6"
-            z: 1
+            border.color: (field.isAnimation) ? "#fffef9" : "#fffef9"
+            z: -1
     }
 
 
@@ -361,7 +375,7 @@ Window {
     Rectangle {
         id: rect_turn
         x: field.turn_cube_x
-        y: field.turn_cube_y
+        y: field.turn_cube_y - 35
         width: field.turn_cube_width
         height: field.turn_cube_height
         color: "transparent"
@@ -376,7 +390,7 @@ Window {
         font.pixelSize: field.textSizeInPixel
         color: field.ai_turn ? "#0eb0c9" : "#d2357d"
         x: field.turn_cube_x + field.turn_text_width
-        y: field.turn_cube_y + field.turn_text_height
+        y: field.turn_cube_y + field.turn_text_height - 35
     }
 
     Rectangle {
@@ -408,7 +422,7 @@ Window {
         width: field.vision_cube_width
         height: field.vision_cube_height
         color: "transparent"
-        border.color: field.is_endgame_show ? "transparent" : (field.is_vision_board_show ? "#7a7374" : "#f9d770")
+        border.color: field.is_endgame_show ? "transparent" : (field.is_vision_board_show ? "#20a162" : "#f9d770")
         border.width: field.vision_width
     }
 
@@ -417,7 +431,7 @@ Window {
         text: field.is_endgame_show ? "" : (field.is_vision_board_show ? "Vision Detecting ..." : " Vision Board Done! ")
         font.styleName: ""
         font.pixelSize: field.textSizeInPixel * 0.75
-        color: field.is_vision_board_show ? "#7a7374" : "#f9d770"
+        color: field.is_vision_board_show ? "#20a162" : "#f9d770"
         x: field.vision_cube_x + field.vision_text_width
         y: field.vision_cube_y + field.vision_text_height
     }
@@ -439,8 +453,8 @@ Window {
         font.styleName: ""
         font.pixelSize: field.textSizeInPixel
         color: "#d9b750"
-        x: field.strategy_cube_x + field.strategy_text_width
-        y: field.strategy_cube_y + field.strategy_text_height
+        x: field.strategy_cube_x + field.strategy_text_width - 8
+        y: field.strategy_cube_y + field.strategy_text_height - 8
     }
 
     function currentStrategyMode() {

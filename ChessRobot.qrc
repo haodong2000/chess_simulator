@@ -1,21 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>qml_files/main.qml</file>
-        <file>chess/black_Advisor.svg</file>
-        <file>chess/black_Cannon.svg</file>
-        <file>chess/black_Chariot.svg</file>
-        <file>chess/black_Elephant.svg</file>
-        <file>chess/black_General.svg</file>
-        <file>chess/black_Horse.svg</file>
-        <file>chess/black_Soldier.svg</file>
-        <file>chess/red_Advisor.svg</file>
-        <file>chess/red_Cannon.svg</file>
-        <file>chess/red_Chariot.svg</file>
-        <file>chess/red_Elephant.svg</file>
-        <file>chess/red_General.svg</file>
-        <file>chess/red_Horse.svg</file>
-        <file>chess/red_Soldier.svg</file>
-        <file>chess/test.png</file>
         <file>background/Abstract.jpg</file>
         <file>background/BlackBird.jpg</file>
         <file>background/Castle.jpg</file>
@@ -45,5 +30,19 @@
         <file>background/Tofino.jpg</file>
         <file>background/Waterlicht.jpg</file>
         <file>background/Whale.jpg</file>
+        <file>chess/black_Advisor.svg</file>
+        <file>chess/black_Cannon.svg</file>
+        <file>chess/black_Chariot.svg</file>
+        <file>chess/black_Elephant.svg</file>
+        <file>chess/black_General.svg</file>
+        <file>chess/black_Horse.svg</file>
+        <file>chess/black_Soldier.svg</file>
+        <file>chess/red_Advisor.svg</file>
+        <file>chess/red_Cannon.svg</file>
+        <file>chess/red_Chariot.svg</file>
+        <file>chess/red_Elephant.svg</file>
+        <file>chess/red_General.svg</file>
+        <file>chess/red_Horse.svg</file>
+        <file>chess/red_Soldier.svg</file>
     </qresource>
 </RCC>
