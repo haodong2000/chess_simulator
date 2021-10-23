@@ -689,28 +689,42 @@ Window {
 
     Text {
         id: black_win
-        text: field.isBlackWin ? " AI \nWin!" : ""
+        text: field.isBlackWin ? " AI  Win!" : ""
         font.family: "Consolas"
         font.styleName: ""
-        font.bold: true
+        font.bold: false
         rotation: 0
-        font.pixelSize: field.textSizeInPixel * 2
+        font.pixelSize: field.textSizeInPixel * 3
         color: "#0eb0c9"
-        x: field.win_text_x + field.cubeSizeWidth*0.5
-        y: field.win_text_y
+        x: field.cubeSizeWidth * 3.5
+        y: field.cubeSizeHeight * 3.5
+        z: 2
     }
 
     Text {
         id: red_win
-        text: field.isRedWin ? "Human\n Win!" : ""
+        text: field.isRedWin ? "Human Win!" : ""
         font.family: "Consolas"
-        font.bold: true
+        font.bold: false
         font.styleName: ""
         rotation: 0
-        font.pixelSize: field.textSizeInPixel * 2
+        font.pixelSize: field.textSizeInPixel * 3
         color: "#d2357d"
-        x: field.win_text_x
-        y: field.win_text_y
+        x: field.cubeSizeWidth * 3.5
+        y: field.cubeSizeHeight * 3.5
+        z: 2
+    }
+
+    Rectangle{
+        width: Screen.width
+        height: field.cubeSizeHeight * 4
+        x: 0
+        y: field.cubeSizeHeight * 2.5
+        color: field.isBlackWin ? "#22202e" : (field.isRedWin ? "#22202e" : "transparent")
+        opacity: field.isBlackWin ? 0.75 : (field.isRedWin ? 0.75 : 0.0)
+        z: 1
+        id: rect_win
+        border.width: 0
     }
 
     Canvas{
