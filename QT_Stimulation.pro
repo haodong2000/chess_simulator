@@ -22,6 +22,7 @@ SOURCES += \
     Params.cpp \
     PythonMudule.cpp \
     Qml_Connection.cpp \
+    StartGui.cpp \
     Step.cpp \
     Test/TestChessMove.cpp \
     allBRChessesInclude.cpp \
@@ -84,6 +85,7 @@ HEADERS += \
     PythonMudule.h \
     Qml_Connection.h \
     SGeoPoint.h \
+    StartGui.h \
     Step.h \
     Test/TestChessMove.h \
     allBRChessesInclude.h \

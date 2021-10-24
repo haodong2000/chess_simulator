@@ -23,6 +23,8 @@
 #include "Navigation.h"
 
 #include <vision_thread.h>
+#include "StartGui.h"
+#include <QtQuick>
 
 #include <QFontDatabase>
 #include <QFont>
@@ -34,13 +36,16 @@ QObject* object;
 vision_thread *vision = NULL;           // USB Camera
 int ** Main_chessBoard = NULL;          // Chess Board
 bool __curTurn;                         // true for red and false for black
-static const int CHESS_PLAY_MODE = Menu::Mode::Human_Human;
+static const int CHESS_PLAY_MODE = Menu::Mode::Human_Human_EndGame;
 static const int BACKGROUND_MODE = Menu::Background::ChristmasTree;
-int STRATEGY_MODE = Menu::Manual::inValidHaHa;
+int STRATEGY_MODE = Menu::Manual::MeiHuaPu;
 int SEARCH_DEPTH = PARAM::START_DEPTH;  // init search depth of alpha-beta purning
 static const bool TEST_MODE = false;    // is Test Mode or not
 static const bool START_GUI = true;     // show the init ui or not
+bool Is_Game_Start = false;             // is user finish set up program or not
+bool Is_Game_No_Play = false;           // is user don't execute or not
 bool Is_CIMC_EndGame = CHESS_PLAY_MODE == Menu::Mode::Human_AI_CIMC_EndGame;
+bool startGuiWindow();
 void LetUsPlayChess();
 
 int main(int argc, char *argv[]) {
@@ -49,6 +54,8 @@ int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+    StartGui initGuiSetUp;
+    engine.rootContext()->setContextProperty("InitSetUp", &initGuiSetUp);
     const QUrl url(QStringLiteral("qrc:/qml_files/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
@@ -72,6 +79,7 @@ int main(int argc, char *argv[]) {
     else qDebug() << "field_root loading failed!";
     GlobalEnvirIn::Instance()->__refreshBoard();
 
+    if(START_GUI && false == startGuiWindow()) return -1;
     LetUsPlayChess(); // real play API
     return app.exec();
 }
@@ -83,6 +91,22 @@ int main(int argc, char *argv[]) {
 *   Time:     2021-06-05
 * * * * * * * * * * * * * * * * * * * * * */
 
+bool startGuiWindow() {
+    while (Is_Game_Start == false && Is_Game_No_Play == false) {
+        GlobalEnvirIn::Instance()->__delayMsec(5);
+        if(Is_Game_Start) {
+            std::cout << "Chess Game Executed! Enjoy!" << std::endl;
+            object->setProperty(QString("isGameLoading").toLatin1(), true);
+            object->setProperty(QString("initEnvironmentDone").toLatin1(), true);
+            return true;
+        }
+        if(Is_Game_No_Play) {
+            std::cout << "Chess Game Exit! Welcome Back!" << std::endl;
+            return false;
+        }
+    }
+}
+
 void LetUsPlayChess() {
     if(BACKGROUND_MODE == 0) {
         object->setProperty(QString("isBackgroundSet").toLatin1(), false);
@@ -91,6 +115,7 @@ void LetUsPlayChess() {
         object->setProperty(QString("isBackgroundSet").toLatin1(), true);
         object->setProperty(QString("background_source").toLatin1(), Menu::BackgroundUrl.at(BACKGROUND_MODE).toLatin1());
     }
+    object->setProperty(QString("isGameLoading").toLatin1(), false);
     if(TEST_MODE)
         TestChessMoveIn::Instance()->testMultiProcess();
     else

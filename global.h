@@ -87,6 +87,8 @@ extern int SEARCH_DEPTH;
 extern int STRATEGY_MODE;
 // extern int M_human_index;
 extern int ** Main_chessBoard;
+extern bool Is_Game_Start;
+extern bool Is_Game_No_Play;
 extern bool Is_CIMC_EndGame;
 
 typedef NormalSingleton< GlobalEnvironment > GlobalEnvirIn;

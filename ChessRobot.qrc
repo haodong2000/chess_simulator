@@ -44,5 +44,7 @@
         <file>chess/red_General.svg</file>
         <file>chess/red_Horse.svg</file>
         <file>chess/red_Soldier.svg</file>
+        <file>qml_files/MyLabel.qml</file>
+        <file>qml_files/SetVariable.qml</file>
     </qresource>
 </RCC>

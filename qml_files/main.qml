@@ -9,6 +9,8 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.3
+import QtQuick.Controls 2.14
+import QtQuick.Window 2.14
 // import QtQuick 2.15
 
 Window {
@@ -282,20 +284,240 @@ Window {
         property string killer: "../chess/red_General.svg"
         property string killed: "../chess/red_General.svg"
 
-//        property bool initEnvironmentDone: false
-//        property bool initWindowShow: ! initEnvironmentDone
+        property bool initEnvironmentDone: false
+        property bool initWindowShow: ! initEnvironmentDone
+        property int initWindowDelta: cubeSizeWidth * 0.5
+        property int initWindowWidth: cubeSizeWidth * 3.7
+        property int initWindowHeight: cubeSizeHeight * 3.5
     }
 
-//    Rectangle {
-//        id: init_rect
-//        x: 0
-//        y: 0
-//        width: Screen.width
-//        height: Screen.height
-//        color: (field.initWindowShow) ? "#fffef9" : "transparent"
-//        opacity: (field.initWindowShow) ? 0.75 : 1.0
-//        z: 2
-//    }
+    Repeater {
+        model: 4
+        Rectangle{
+            width: field.initWindowWidth * 0.75
+            height: field.initWindowHeight
+            x: field.initWindowDelta * (index + 1.0) * 0.75 + index * width
+            y: field.cubeSizeHeight * 3.0
+            color: "#22202e"
+            opacity: 0.75
+            z: (field.initWindowShow) ? 4 : -4
+            id: rect_win_init
+            radius: 50
+            border.width: 50
+            border.color: "#22202e"
+        }
+    }
+
+    Repeater {
+        model: 4
+        Text{
+            x: (field.initWindowDelta * (index + 0.1) + index * field.initWindowWidth + field.initWindowWidth * 0.5 - 150) * 0.75
+            y: field.cubeSizeHeight * 3.0
+            color: "#fffef9"
+            z: (field.initWindowShow) ? 4 : -4
+            id: text_win_init
+            font.family: "Consolas"
+            font.bold: false
+            opacity: 0.95
+            rotation: 0
+            font.pixelSize: field.textSizeInPixel * 0.5
+            text: currentInitMode(index)
+        }
+    }
+
+    Repeater {
+        model: 4
+        Text{
+            x: (field.initWindowDelta * (index + 0.1) + index * field.initWindowWidth + field.initWindowWidth * 0.5 - 150) * 0.75
+            y: field.cubeSizeHeight * 6.0
+            color: "#fffef9"
+            z: (field.initWindowShow) ? 4 : -4
+            id: text_info_init
+            font.family: "Consolas"
+            font.bold: false
+            opacity: 0.95
+            rotation: 0
+            font.pixelSize: field.textSizeInPixel * 0.375
+            text: currentInitModeInfo(index)
+        }
+    }
+
+    function currentInitMode(idx) {
+        switch(idx) {
+        case 0: return "      模式(Mode)"
+        case 1: return "   难度(Difficulty)"
+        case 2: return "       残局&棋谱\n(Endgame&Chess Manual)"
+        case 3: return "   外观(Background)"
+        default: return console.log("Error: main.qml line:334 idx invalid!")
+        }
+    }
+
+    function currentInitModeInfo(idx) {
+        switch(idx) {
+        case 0: return "请输入(Please Enter): 1~8"
+        case 1: return "请输入(Please Enter): 1~3"
+        case 2: return "请输入(Please Enter): \n0~1(Endgame), 1~8(Manual)"
+        case 3: return "请输入(Please Enter): 0~12"
+        default: return console.log("Error: main.qml line:334 idx invalid!")
+        }
+    }
+
+    Row {
+        x: (root.width-width)/2
+        y: field.cubeSizeHeight * 4.0
+        z: (field.initWindowShow) ? 4 : -4
+        spacing: 5
+
+        MyLabel {
+            id: nameLabel
+        }
+
+        MyLabel {
+            id: ageLabel
+        }
+
+        MyLabel {
+            id: timeLabel
+        }
+    }
+
+    Row {
+        x: (field.initWindowDelta * (1.0 + 0.1) + 1.0 * field.initWindowWidth + field.initWindowWidth * 0.5 - 150) * 0.75 - 50 * 0.75
+        y: field.cubeSizeHeight * 3.0 + field.initWindowHeight + 50
+        z: (field.initWindowShow) ? 4 : -4
+        spacing: field.initWindowDelta * 0.75
+
+        Button {
+            id: btn01
+            width: field.initWindowWidth * 0.75
+            height: width * 0.618 * 0.5
+            highlighted: true
+            text: "退出游戏\n(Exit the Game)"
+            background: Rectangle {
+                color: parent.down ? "#bbbbbb" :
+                        (parent.hovered ? "#29b7cb" : "#c06f98")
+                opacity: 0.75
+                radius: 50
+                border.width: radius
+                border.color: color
+            }
+            font.family: "Consolas"
+            font.pixelSize: field.textSizeInPixel * 0.5
+            onClicked: InitSetUp.exitGameFunc()
+        }
+        Button {
+            id: btn02
+            width: field.initWindowWidth * 0.75
+            height: width * 0.618 * 0.5
+            highlighted: true
+            background: Rectangle {
+                color: parent.down ? "#bbbbbb" :
+                        (parent.hovered ? "#29b7cb" : "#c06f98")
+                opacity: 0.75
+                radius: 50
+                border.width: radius
+                border.color: color
+            }
+            text: "开始游戏\n(Start the Game)"
+            font.pixelSize: field.textSizeInPixel * 0.5
+            font.family: "Consolas"
+            onClicked: InitSetUp.startGameFunc()
+        }
+    }
+
+    function refreshCurrentTime(strTime){
+        timeLabel.text = strTime
+    }
+
+    function changeName(){
+        nameLabel.text = InitSetUp.name
+    }
+
+    function changeAge(){
+        ageLabel.text = InitSetUp.age
+    }
+
+    Component.onCompleted: {
+        InitSetUp.refreshTime.connect(refreshCurrentTime)
+        InitSetUp.onNameChanged.connect(changeName)
+        InitSetUp.onAgeChanged.connect(changeAge)
+
+        nameLabel.text = qsTr(InitSetUp.name)
+        ageLabel.text = qsTr(String(InitSetUp.age))
+        timer_qml.start();
+    }
+
+    /** 辅助测试控件 *********************************/
+    Text {
+        id: log
+        text: qsTr("这里显示错误信息")
+        x: testInfo.x
+        anchors.bottom: testInfo.top
+        anchors.bottomMargin: 5
+        z: (field.initWindowShow) ? 4 : -4
+    }
+
+    SetVariable{
+        id: testInfo
+        x: (root.width-width)/2
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
+        z: (field.initWindowShow) ? 4 : -4
+    }
+
+    Rectangle {
+        id: init_background
+        x: 0
+        y: 0
+        width: Screen.width
+        height: Screen.height
+        color: "#fffef9"
+        opacity: 0.25
+        z: (field.initWindowShow) ? 3 : -4
+    }
+    Image {
+        id: init_background_image
+        source: field.background_source
+        anchors.horizontalCenter: parent.horizontalCenter
+        fillMode: Image.PreserveAspectFit
+        z: (field.initWindowShow) ? 2 : -4
+    }
+    Text {
+        id: text_init_background_welcome
+        text: "Welcome to the Startup Settings of"
+        font.family: "Consolas"
+        opacity: 0.75
+        font.styleName: ""
+        font.pixelSize: field.background_text_size * 0.1
+        font.bold: true
+        color: "#fffef9"
+        x: field.background_text_posX * 7.7
+        y: field.background_text_posY * 0.4
+        z: (field.initWindowShow) ? 3 : -4
+    }
+    Text {
+        id: text_init_background
+        text: "Smart Chess Robot"
+        font.family: "Consolas"
+        opacity: 0.625
+        font.styleName: ""
+        font.pixelSize: field.background_text_size * 0.475
+        font.bold: true
+        SequentialAnimation on color {
+            loops: Animation.Infinite
+            ColorAnimation {
+                from: "#1781b5"
+                to: "#131124"
+                duration: 2000 }
+            ColorAnimation {
+                from: "#131124"
+                to: "#1781b5"
+                duration: 2000 }
+        }
+        x: field.background_text_posX
+        y: field.background_text_posY
+        z: (field.initWindowShow) ? 3 : -4
+    }
 
     Image {
         id: kill
@@ -359,18 +581,18 @@ Window {
     }
 
     Rectangle {
-            id: xiu
-            x: field.animation_posX + field.cubeSizeWidth * 0.5 - field.animation_xie * 0.5 - field.chessSize * 0.5 - 10
-            y: field.animation_posY + field.cubeSizeHeight * 0.5 - field.chessSize * 0.5 - 10
-            width: field.animation_xie + field.chessSize + 20
-            height: field.chessSize + 20
-            color: (field.isAnimation) ? "#bc84a8" : "#c8adc4"
-            opacity: (field.isAnimation) ? 0.5 : 0.25
-            rotation: (field.isLeftXie) ? Math.asin(field.animation_sin) * 180/Math.PI : 180.0 - Math.asin(field.animation_sin) * 180/Math.PI
-            radius: 10
-            border.width: 10
-            border.color: (field.isAnimation) ? "#fffef9" : "#fffef9"
-            z: -1
+        id: xiu
+        x: field.animation_posX + field.cubeSizeWidth * 0.5 - field.animation_xie * 0.5 - field.chessSize * 0.5 - 10
+        y: field.animation_posY + field.cubeSizeHeight * 0.5 - field.chessSize * 0.5 - 10
+        width: field.animation_xie + field.chessSize + 20
+        height: field.chessSize + 20
+        color: (field.isAnimation) ? "#bc84a8" : "#c8adc4"
+        opacity: (field.isAnimation) ? 0.5 : 0.25
+        rotation: (field.isLeftXie) ? Math.asin(field.animation_sin) * 180/Math.PI : 180.0 - Math.asin(field.animation_sin) * 180/Math.PI
+        radius: 10
+        border.width: 10
+        border.color: (field.isAnimation) ? "#fffef9" : "#fffef9"
+        z: -1
     }
 
 
@@ -497,7 +719,7 @@ Window {
     }
 
     Timer{
-        id: timer
+        id: timer_qml
         interval: 1
         repeat: true
         onTriggered:{
@@ -505,9 +727,9 @@ Window {
         }
     }
 
-    Component.onCompleted: {
-        timer.start();
-    }
+//    Component.onCompleted: {
+//        timer_qml.start();
+//    }
 
 /*  Rectangle {
         // use for test
