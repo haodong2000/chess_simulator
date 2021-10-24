@@ -15,7 +15,7 @@ Rectangle {
         // 修改InitSetUp 的 m_strName 属性
         Text {
             width: 100; height: 25
-            text: qsTr("修改 m_strName：")
+            text: qsTr("修改 m_strDifficulty：")
             verticalAlignment: Text.AlignVCenter
         }
 
@@ -23,12 +23,87 @@ Rectangle {
         TextField {
             width: 120; height: 25
 
-            text: "悟空"
+            text: "TestDifficulty"
             background: Rectangle{
                 color: "#FFE0E0"
                 border.color: "black"
             }
-            onTextChanged: { InitSetUp.name = text }
+            onTextChanged: { InitSetUp.difficulty = text }
+        }
+
+        // 修改InitSetUp 的 m_strName 属性
+        Text {
+            width: 100; height: 25
+            text: qsTr("修改 m_strMode：")
+            verticalAlignment: Text.AlignVCenter
+        }
+
+
+        TextField {
+            width: 120; height: 25
+
+            text: "TestMode"
+            background: Rectangle{
+                color: "#FFE0E0"
+                border.color: "black"
+            }
+            onTextChanged: { InitSetUp.mode = text }
+        }
+
+        // 修改InitSetUp 的 m_strName 属性
+        Text {
+            width: 100; height: 25
+            text: qsTr("修改 m_strEnd：")
+            verticalAlignment: Text.AlignVCenter
+        }
+
+
+        TextField {
+            width: 120; height: 25
+
+            text: "TestEnd"
+            background: Rectangle{
+                color: "#FFE0E0"
+                border.color: "black"
+            }
+            onTextChanged: { InitSetUp.end = text }
+        }
+
+        // 修改InitSetUp 的 m_strName 属性
+        Text {
+            width: 100; height: 25
+            text: qsTr("修改 m_strManual：")
+            verticalAlignment: Text.AlignVCenter
+        }
+
+
+        TextField {
+            width: 120; height: 25
+
+            text: "TestManual"
+            background: Rectangle{
+                color: "#FFE0E0"
+                border.color: "black"
+            }
+            onTextChanged: { InitSetUp.manual = text }
+        }
+
+        Text {
+            width: 100; height: 25
+            text: qsTr("修改 m_strBack：")
+            verticalAlignment: Text.AlignVCenter
+        }
+
+
+        TextField {
+            width: 120; height: 25
+
+            text: "TestBack"
+            background: Rectangle{
+                color: "#FFE0E0"
+                border.color: "black"
+            }
+            onTextChanged: { InitSetUp.back = text }
         }
 
 

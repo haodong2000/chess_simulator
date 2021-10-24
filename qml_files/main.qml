@@ -342,6 +342,40 @@ Window {
         }
     }
 
+    Repeater {
+        model: 4
+        Text{
+            x: (field.initWindowDelta * (index + 0.1) + index * field.initWindowWidth + field.initWindowWidth * 0.5 - 150) * 0.75
+            y: field.cubeSizeHeight * 4.0
+            color: "#fffef9"
+            z: (field.initWindowShow) ? 4 : -4
+            id: text_input_init
+            font.family: "Consolas"
+            font.bold: false
+            opacity: 0.95
+            rotation: 0
+            font.pixelSize: field.textSizeInPixel * 0.375
+            text: currentInitModeInput(index)
+        }
+    }
+
+    Repeater {
+        model: 4
+        Text{
+            x: (field.initWindowDelta * (index + 0.1) + index * field.initWindowWidth + field.initWindowWidth * 0.5 - 150) * 0.75
+            y: field.cubeSizeHeight * 5.0
+            color: "#fffef9"
+            z: (field.initWindowShow) ? 4 : -4
+            id: text_enter_init
+            font.family: "Consolas"
+            font.bold: false
+            opacity: 0.95
+            rotation: 0
+            font.pixelSize: field.textSizeInPixel * 0.375
+            text: currentInitModeEnter(index)
+        }
+    }
+
     function currentInitMode(idx) {
         switch(idx) {
         case 0: return "      模式(Mode)"
@@ -362,14 +396,34 @@ Window {
         }
     }
 
+    function currentInitModeInput(idx) {
+        switch(idx) {
+        case 0: return "Mode: "
+        case 1: return "Difficulty: "
+        case 2: return "Endgame: \n\nChess Manual: "
+        case 3: return "Background: "
+        default: return console.log("Error: main.qml line:334 idx invalid!")
+        }
+    }
+
+    function currentInitModeEnter(idx) {
+        switch(idx) {
+        case 0: return "Input: "
+        case 1: return "Input: "
+        case 2: return "Input(E): \n\nInput(M): "
+        case 3: return "Input: "
+        default: return console.log("Error: main.qml line:334 idx invalid!")
+        }
+    }
+
     Row {
         x: (root.width-width)/2
-        y: field.cubeSizeHeight * 4.0
+        y: field.cubeSizeHeight * 0
         z: (field.initWindowShow) ? 4 : -4
         spacing: 5
 
         MyLabel {
-            id: nameLabel
+            id: difficultyLabel
         }
 
         MyLabel {
@@ -378,6 +432,22 @@ Window {
 
         MyLabel {
             id: timeLabel
+        }
+
+        MyLabel {
+            id: modeLabel
+        }
+
+        MyLabel {
+            id: endLabel
+        }
+
+        MyLabel {
+            id: manualLabel
+        }
+
+        MyLabel {
+            id: backLabel
         }
     }
 
@@ -429,21 +499,45 @@ Window {
         timeLabel.text = strTime
     }
 
-    function changeName(){
-        nameLabel.text = InitSetUp.name
+    function changeDifficulty(){
+        difficultyLabel.text = InitSetUp.difficulty
     }
 
     function changeAge(){
         ageLabel.text = InitSetUp.age
     }
 
+    function changeMode(){
+        modeLabel.text = InitSetUp.mode
+    }
+
+    function changeEnd(){
+        endLabel.text = InitSetUp.end
+    }
+
+    function changeManual(){
+        manualLabel.text = InitSetUp.manual
+    }
+
+    function changeBack(){
+        backLabel.text = InitSetUp.back
+    }
+
     Component.onCompleted: {
         InitSetUp.refreshTime.connect(refreshCurrentTime)
-        InitSetUp.onNameChanged.connect(changeName)
+        InitSetUp.onDifficultyChanged.connect(changeDifficulty)
         InitSetUp.onAgeChanged.connect(changeAge)
+        InitSetUp.onModeChanged.connect(changeMode)
+        InitSetUp.onEndChanged.connect(changeEnd)
+        InitSetUp.onManualChanged.connect(changeManual)
+        InitSetUp.onBackChanged.connect(changeBack)
 
-        nameLabel.text = qsTr(InitSetUp.name)
+        difficultyLabel.text = qsTr(InitSetUp.difficulty)
         ageLabel.text = qsTr(String(InitSetUp.age))
+        modeLabel.text = qsTr(InitSetUp.mode)
+        endLabel.text = qsTr(InitSetUp.end)
+        manualLabel.text = qsTr(InitSetUp.manual)
+        backLabel.text = qsTr(InitSetUp.back)
         timer_qml.start();
     }
 
@@ -460,7 +554,8 @@ Window {
     SetVariable{
         id: testInfo
         x: (root.width-width)/2
-        anchors.bottom: parent.bottom
+        y: field.cubeSizeHeight * 8.0
+//        anchors.bottom: parent.bottom
         anchors.bottomMargin: 10
         z: (field.initWindowShow) ? 4 : -4
     }

@@ -4,8 +4,12 @@
 #include <QDebug>
 
 StartGui::StartGui(QObject *parent) : QObject(parent){
-    this->m_strName = "悟空";
+    this->m_strMode = "TestMode";
+    this->m_strDifficulty = "TestDifficulty";
     this->m_nAge = 18;
+    this->m_strEnd = "TestEnd";
+    this->m_strManual = "TestManual";
+    this->m_strBack = "TestBack";
     connect(&m_timer, &QTimer::timeout, this, &StartGui::getCurrentTime);
     this->m_timer.start(1000);  //启动定时器
 }
