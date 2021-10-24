@@ -90,6 +90,10 @@ extern int ** Main_chessBoard;
 extern bool Is_Game_Start;
 extern bool Is_Game_No_Play;
 extern bool Is_CIMC_EndGame;
+extern int BASIC_DEPTH;
+extern int BEST_EXPONENT;
+extern int MAX_SEARCH_NODES;
+extern int CHESS_PLAY_MODE;
 
 typedef NormalSingleton< GlobalEnvironment > GlobalEnvirIn;
 

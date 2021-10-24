@@ -12,6 +12,7 @@
 #include <QString>
 
 namespace Menu {
+    const bool IsInitTestMode = false;
     // play mode: AI-AI Human-AI Human-Human Human-AI(CIMC) Human-AI(EndGame&CIMC) Human-AI(EndGame) Human-Human(EndGame)
     enum Mode {
         AI_AI = 0,

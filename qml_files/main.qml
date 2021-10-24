@@ -337,7 +337,7 @@ Window {
             font.bold: false
             opacity: 0.95
             rotation: 0
-            font.pixelSize: field.textSizeInPixel * 0.375
+            font.pixelSize: 19
             text: currentInitModeInfo(index)
         }
     }
@@ -354,7 +354,7 @@ Window {
             font.bold: false
             opacity: 0.95
             rotation: 0
-            font.pixelSize: field.textSizeInPixel * 0.375
+            font.pixelSize: 19
             text: currentInitModeInput(index)
         }
     }
@@ -371,7 +371,7 @@ Window {
             font.bold: false
             opacity: 0.95
             rotation: 0
-            font.pixelSize: field.textSizeInPixel * 0.375
+            font.pixelSize: 19
             text: currentInitModeEnter(index)
         }
     }
@@ -400,7 +400,7 @@ Window {
         switch(idx) {
         case 0: return "Mode: "
         case 1: return "Difficulty: "
-        case 2: return "Endgame: \n\nChess Manual: "
+        case 2: return "Endgame: \n\nManual: "
         case 3: return "Background: "
         default: return console.log("Error: main.qml line:334 idx invalid!")
         }
@@ -417,37 +417,76 @@ Window {
     }
 
     Row {
-        x: (root.width-width)/2
-        y: field.cubeSizeHeight * 0
+        x: field.initWindowDelta + 100
+        y: field.cubeSizeHeight * 4.0 - 25
         z: (field.initWindowShow) ? 4 : -4
-        spacing: 5
+        spacing: field.initWindowDelta * 3.70
 
+        MyLabel {
+            width: field.cubeSizeWidth * 1.75
+            id: modeLabel
+        }
         MyLabel {
             id: difficultyLabel
         }
+    }
 
+    Column {
+        x: field.cubeSizeWidth * 7.75
+        y: field.cubeSizeHeight * 4.0 - 10
+        z: (field.initWindowShow) ? 4 : -4
+        spacing: field.initWindowDelta * 0.2
         MyLabel {
-            id: ageLabel
+            height: Screen.height/30.0
+            id: endLabel
         }
+        MyLabel {
+            height: Screen.height/30.0
+            id: manualLabel
+        }
+    }
 
+    Row {
+        x: field.cubeSizeWidth * 7.75 + field.initWindowDelta * 4.0 + Screen.width/10.0
+        y: field.cubeSizeHeight * 4.0 - 25
+        z: (field.initWindowShow) ? 4 : -4
+        spacing: field.initWindowDelta * 4.0
+        MyLabel {
+            id: backLabel
+        }
         MyLabel {
             id: timeLabel
         }
+    }
 
-        MyLabel {
-            id: modeLabel
+//    Row {
+//        x: (field.initWindowDelta * 0.1 + field.initWindowWidth * 0.5 - 150) * 0.75 + field.initWindowDelta * 1.5 * 2
+//        y: field.cubeSizeHeight * 4.5
+//        z: (field.initWindowShow) ? 4 : -4
+//        spacing: field.initWindowDelta * 1.5
+//        MyLabel {
+//            id: manualLabel
+//        }
+//    }
+
+    Row {
+        x: Screen.width/2.0 - 300
+        y: field.cubeSizeHeight * 8.75
+        z: (field.initWindowShow) ? 4 : -4
+        spacing: field.initWindowDelta * 0.75
+        Text {
+            id: init_copyright
+            text: qsTr("Copyright: Smart Chess Robot 2021.")
+            font.pixelSize: 12
+            font.family: "Consolas"
+            color: "#fffef9"
         }
-
-        MyLabel {
-            id: endLabel
-        }
-
-        MyLabel {
-            id: manualLabel
-        }
-
-        MyLabel {
-            id: backLabel
+        Text {
+            id: init_copyright_time
+            text: timeLabel.text
+            font.pixelSize: 12
+            font.family: "Consolas"
+            color: "#fffef9"
         }
     }
 
@@ -500,15 +539,71 @@ Window {
     }
 
     function changeDifficulty(){
-        difficultyLabel.text = InitSetUp.difficulty
+        difficultyLabel.text = currentDifficulty()
     }
 
-    function changeAge(){
-        ageLabel.text = InitSetUp.age
+    function currentDifficulty() {
+        switch(InitSetUp.difficulty) {
+        case "1":
+            InitSetUp.int_difficulty = Number(InitSetUp.difficulty)
+            return "Simple-Level"
+        case "2":
+            InitSetUp.int_difficulty = Number(InitSetUp.difficulty)
+            return "Middle-Level"
+        case "3":
+            InitSetUp.int_difficulty = Number(InitSetUp.difficulty)
+            return "Hard-Level"
+        default: return "InValid! 1~3!"
+        }
     }
+
+//    enum Mode {
+//        AI_AI = 0,
+//        Human_AI,
+//        Human_Human,
+//        Human_AI_CIMC,
+//        Human_AI_CIMC_EndGame,
+//        AI_AI_EndGame,
+//        Human_AI_EndGame,
+//        Human_Human_EndGame
+//    };
+
+//    function changeAge(){
+//        ageLabel.text = InitSetUp.age
+//    }
 
     function changeMode(){
-        modeLabel.text = InitSetUp.mode
+        modeLabel.text = currentMode()
+    }
+
+    function currentMode() {
+        switch(InitSetUp.mode) {
+        case "1":
+            InitSetUp.int_mode = Number(InitSetUp.mode)
+            return "AI_AI"
+        case "2":
+            InitSetUp.int_mode = Number(InitSetUp.mode)
+            return "Human_AI"
+        case "3":
+            InitSetUp.int_mode = Number(InitSetUp.mode)
+            return "Human_Human"
+        case "4":
+            InitSetUp.int_mode = Number(InitSetUp.mode)
+            return "Human_AI_CIMC"
+        case "5":
+            InitSetUp.int_mode = Number(InitSetUp.mode)
+            return "Human_AI_CIMC_EndGame"
+        case "6":
+            InitSetUp.int_mode = Number(InitSetUp.mode)
+            return "AI_AI_EndGame"
+        case "7":
+            InitSetUp.int_mode = Number(InitSetUp.mode)
+            return "Human_AI_EndGame"
+        case "8":
+            InitSetUp.int_mode = Number(InitSetUp.mode)
+            return "Human_Human_EndGame"
+        default: return "InValid! 1~8!"
+        }
     }
 
     function changeEnd(){
@@ -526,37 +621,23 @@ Window {
     Component.onCompleted: {
         InitSetUp.refreshTime.connect(refreshCurrentTime)
         InitSetUp.onDifficultyChanged.connect(changeDifficulty)
-        InitSetUp.onAgeChanged.connect(changeAge)
+//        InitSetUp.onAgeChanged.connect(changeAge)
         InitSetUp.onModeChanged.connect(changeMode)
         InitSetUp.onEndChanged.connect(changeEnd)
         InitSetUp.onManualChanged.connect(changeManual)
         InitSetUp.onBackChanged.connect(changeBack)
 
         difficultyLabel.text = qsTr(InitSetUp.difficulty)
-        ageLabel.text = qsTr(String(InitSetUp.age))
         modeLabel.text = qsTr(InitSetUp.mode)
         endLabel.text = qsTr(InitSetUp.end)
-        manualLabel.text = qsTr(InitSetUp.manual)
         backLabel.text = qsTr(InitSetUp.back)
-        timer_qml.start();
-    }
-
-    /** 辅助测试控件 *********************************/
-    Text {
-        id: log
-        text: qsTr("这里显示错误信息")
-        x: testInfo.x
-        anchors.bottom: testInfo.top
-        anchors.bottomMargin: 5
-        z: (field.initWindowShow) ? 4 : -4
+        manualLabel.text = qsTr(InitSetUp.manual)
+//        ageLabel.text = qsTr(String(InitSetUp.age))
+        timer_qml.start()
     }
 
     SetVariable{
         id: testInfo
-        x: (root.width-width)/2
-        y: field.cubeSizeHeight * 8.0
-//        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
         z: (field.initWindowShow) ? 4 : -4
     }
 
@@ -601,12 +682,12 @@ Window {
         SequentialAnimation on color {
             loops: Animation.Infinite
             ColorAnimation {
-                from: "#1781b5"
-                to: "#131124"
+                from: "#29b7cb"
+                to: "#c06f98"
                 duration: 2000 }
             ColorAnimation {
-                from: "#131124"
-                to: "#1781b5"
+                from: "#c06f98"
+                to: "#29b7cb"
                 duration: 2000 }
         }
         x: field.background_text_posX

@@ -1,136 +1,135 @@
 import QtQuick 2.14
 import QtQuick.Controls 2.14
+import QtQuick.Window 2.1
 
 Rectangle {
     id: root
-    width: 260; height: 100
-    border.color: "gray"
+    x: 0
+    y: 0
+    border.width: 0
+    color: "transparent"
 
-    Grid {
-        id: layout
-        columns: 2
-        spacing: 5
-        anchors.centerIn: root
+    Item {
+        id: setField
+        property int textWidth: Screen.width/10.0
+        property int textHeight: Screen.height/15.0
+        property double cubeSizeHeight: Screen.height/10.0 // Screen.width
+        property double cubeSizeWidth: (Screen.height * 2.0)/15.0 // Screen.height
 
-        // 修改InitSetUp 的 m_strName 属性
-        Text {
-            width: 100; height: 25
-            text: qsTr("修改 m_strDifficulty：")
-            verticalAlignment: Text.AlignVCenter
-        }
+        property int initWindowDelta: cubeSizeWidth * 0.5
+        property int initWindowWidth: cubeSizeWidth * 3.7
+        property int initWindowHeight: cubeSizeHeight * 3.5
+    }
 
-
+    Row {
+        x: setField.initWindowDelta + 100
+        y: setField.cubeSizeHeight * 4.75 + 5
+        z: (setField.initWindowShow) ? 4 : -4
+        spacing: setField.initWindowDelta * 3.70
         TextField {
-            width: 120; height: 25
+            width: setField.cubeSizeWidth * 1.75
+            height: setField.textHeight
 
-            text: "TestDifficulty"
+            text: "5"
             background: Rectangle{
-                color: "#FFE0E0"
-                border.color: "black"
+                color: "#c06f98"
+                opacity: 0.75
+                radius: 20
+                border.width: 20
+                border.color: "#c06f98"
             }
-            onTextChanged: { InitSetUp.difficulty = text }
-        }
-
-        // 修改InitSetUp 的 m_strName 属性
-        Text {
-            width: 100; height: 25
-            text: qsTr("修改 m_strMode：")
-            verticalAlignment: Text.AlignVCenter
-        }
-
-
-        TextField {
-            width: 120; height: 25
-
-            text: "TestMode"
-            background: Rectangle{
-                color: "#FFE0E0"
-                border.color: "black"
-            }
+            font.pixelSize: 19
+            font.family: "Consolas"
+            color: "#fffef9"
+            horizontalAlignment: TextInput.AlignHCenter
             onTextChanged: { InitSetUp.mode = text }
         }
 
-        // 修改InitSetUp 的 m_strName 属性
-        Text {
-            width: 100; height: 25
-            text: qsTr("修改 m_strEnd：")
-            verticalAlignment: Text.AlignVCenter
-        }
-
-
         TextField {
-            width: 120; height: 25
+            width: setField.textWidth
+            height: setField.textHeight
+
+            text: "3"
+            background: Rectangle{
+                color: "#c06f98"
+                opacity: 0.75
+                radius: 20
+                border.width: 20
+                border.color: "#c06f98"
+            }
+            font.pixelSize: 19
+            font.family: "Consolas"
+            color: "#fffef9"
+            horizontalAlignment: TextInput.AlignHCenter
+            onTextChanged: { InitSetUp.difficulty = text }
+        }
+    }
+
+    Column {
+        x: setField.cubeSizeWidth * 7.75
+        y: setField.cubeSizeHeight * 4.75 + 19
+        z: (setField.initWindowShow) ? 4 : -4
+        spacing: setField.initWindowDelta * 0.2
+        TextField {
+            width: setField.textWidth
+            height: Screen.height/30.0
 
             text: "TestEnd"
             background: Rectangle{
-                color: "#FFE0E0"
-                border.color: "black"
+                color: "#c06f98"
+                opacity: 0.75
+                radius: 20
+                border.width: 20
+                border.color: "#c06f98"
             }
+            font.pixelSize: 19
+            font.family: "Consolas"
+            color: "#fffef9"
+            horizontalAlignment: TextInput.AlignHCenter
             onTextChanged: { InitSetUp.end = text }
         }
-
-        // 修改InitSetUp 的 m_strName 属性
-        Text {
-            width: 100; height: 25
-            text: qsTr("修改 m_strManual：")
-            verticalAlignment: Text.AlignVCenter
-        }
-
-
         TextField {
-            width: 120; height: 25
+            width: setField.textWidth
+            height: Screen.height/30.0
 
             text: "TestManual"
             background: Rectangle{
-                color: "#FFE0E0"
-                border.color: "black"
+                color: "#c06f98"
+                opacity: 0.75
+                radius: 20
+                border.width: 20
+                border.color: "#c06f98"
             }
+            font.pixelSize: 19
+            font.family: "Consolas"
+            color: "#fffef9"
+            horizontalAlignment: TextInput.AlignHCenter
             onTextChanged: { InitSetUp.manual = text }
         }
+    }
 
-        Text {
-            width: 100; height: 25
-            text: qsTr("修改 m_strBack：")
-            verticalAlignment: Text.AlignVCenter
-        }
-
-
+    Row {
+        x: setField.cubeSizeWidth * 7.75 + setField.initWindowDelta * 4.0 + Screen.width/10.0
+        y: setField.cubeSizeHeight * 4.75 + 5
+        z: (setField.initWindowShow) ? 4 : -4
+        spacing: setField.initWindowDelta * 4.0
         TextField {
-            width: 120; height: 25
+            width: setField.textWidth
+            height: setField.textHeight
 
             text: "TestBack"
             background: Rectangle{
-                color: "#FFE0E0"
-                border.color: "black"
+                color: "#c06f98"
+                opacity: 0.75
+                radius: 20
+                border.width: 20
+                border.color: "#c06f98"
             }
+            font.pixelSize: 19
+            font.family: "Consolas"
+            color: "#fffef9"
+            horizontalAlignment: TextInput.AlignHCenter
             onTextChanged: { InitSetUp.back = text }
-        }
-
-
-        // 修改InitSetUp 的 m_nAge 属性
-        Text {
-            width: 100; height: 25
-            text: qsTr("修改 m_nAge：")
-            verticalAlignment: Text.AlignVCenter
-        }
-
-        TextField {
-            width: 120; height: 25
-            text: "18"
-            background: Rectangle{
-                color: "#FFE0E0"
-                border.color: "black"
-            }
-
-            onTextChanged: {
-                var age = Number(text)
-                if(isNaN(age))
-                    log.text = "m_aAge 数值无效 ..."
-                else{
-                    InitSetUp.age = age
-                    log.text = "这里显示错误信息"
-                }
-            }
         }
     }
 }

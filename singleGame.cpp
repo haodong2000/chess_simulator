@@ -3649,9 +3649,9 @@ void singleGame::updateSearchDepth_black() {
     generateBlackAllPossibleMoves();
 //    int numberOfSteps = qMin<int>(originRedChessStepList.size(), originBlackChessStepList.size());
     int numberOfSteps = originBlackChessStepList.size();
-    int basicLevel = PARAM::BASIC_DEPTH;
-    int maxNodes = PARAM::MAX_SEARCH_NODES;
-    int exponent = PARAM::BEST_EXPONENT;
+    int basicLevel = BASIC_DEPTH;
+    int maxNodes = MAX_SEARCH_NODES;
+    int exponent = BEST_EXPONENT;
     int delta = 0;
     for(int i = 0; i < PARAM::MAX_LEVEL - basicLevel; i++) {
         if(pow(numberOfSteps, exponent + delta * 2) < maxNodes) delta++;
@@ -3667,9 +3667,9 @@ void singleGame::updateSearchDepth_black() {
 void singleGame::updateSearchDepth_red() {
     generateRedAllPossibleMoves();
     int numberOfSteps = originRedChessStepList.size();
-    int basicLevel = PARAM::BASIC_DEPTH;
-    int maxNodes = PARAM::MAX_SEARCH_NODES;
-    int exponent = PARAM::BEST_EXPONENT;
+    int basicLevel = BASIC_DEPTH;
+    int maxNodes = MAX_SEARCH_NODES;
+    int exponent = BEST_EXPONENT;
     int delta = 0;
     for(int i = 0; i < PARAM::MAX_LEVEL - basicLevel; i++) {
         if(pow(numberOfSteps, exponent + delta * 2) < maxNodes) delta++;

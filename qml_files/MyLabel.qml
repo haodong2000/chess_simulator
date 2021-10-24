@@ -5,17 +5,21 @@ import QtQuick.Window 2.1
 
 Rectangle {
     width: Screen.width/10.0
-    height: Screen.height/10.0
-    color: "#606060"
-    border.color: "#303030"
+    height: Screen.height/15.0
+    color: "#c06f98"
+    opacity: 0.75
+    radius: 20
+    border.width: 20
+    border.color: "#c06f98"
 
     property alias text: info.text
 
     Text {
         id: info
         text: qsTr("MyLabel")
-        font.pixelSize: 24
-        color: "#00FFFF"
+        font.pixelSize: 19
+        font.family: "Consolas"
+        color: "#fffef9"
 
         anchors.centerIn: parent
     }
