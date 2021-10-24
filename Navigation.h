@@ -32,7 +32,7 @@ namespace Menu {
         HuYaJi,
         TaoLueYuanJi,
         YuanShenHaiKuo,
-        Mijinbaolue,
+        MiJinBaoLue,
         inValidHaHa
     };
 

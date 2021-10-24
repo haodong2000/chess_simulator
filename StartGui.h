@@ -24,8 +24,11 @@ class StartGui : public QObject
     Q_PROPERTY(QString mode MEMBER m_strMode NOTIFY modeChanged)
     Q_PROPERTY(int int_mode MEMBER m_intMode NOTIFY int_modeChanged)
     Q_PROPERTY(QString end MEMBER m_strEnd NOTIFY endChanged)
+    Q_PROPERTY(int int_end MEMBER m_intEnd NOTIFY int_endChanged)
     Q_PROPERTY(QString manual MEMBER m_strManual NOTIFY manualChanged)
+    Q_PROPERTY(int int_manual MEMBER m_intManual NOTIFY int_manualChanged)
     Q_PROPERTY(QString back MEMBER m_strBack NOTIFY backChanged)
+    Q_PROPERTY(int int_back MEMBER m_intBack NOTIFY int_backChanged)
 
 public:
     explicit StartGui(QObject *parent = nullptr);
@@ -46,8 +49,11 @@ signals:
     void modeChanged(const QString &newMode);
     void int_modeChanged(const int &newIntMode);
     void endChanged(const QString &newEnd);
+    void int_endChanged(const int &newIntEnd);
     void manualChanged(const QString &newManual);
+    void int_manualChanged(const int &newIntManual);
     void backChanged(const QString &newBack);
+    void int_backChanged(const int &newIntBack);
 
     void refreshTime(const QString time);
 private:
@@ -59,6 +65,9 @@ private:
     int m_nAge;
     int m_intDifficulty;
     int m_intMode;
+    int m_intEnd;
+    int m_intManual;
+    int m_intBack;
 
     QTimer m_timer;
 };

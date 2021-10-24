@@ -74,7 +74,7 @@ Rectangle {
             width: setField.textWidth
             height: Screen.height/30.0
 
-            text: "TestEnd"
+            text: "1"
             background: Rectangle{
                 color: "#c06f98"
                 opacity: 0.75
@@ -92,7 +92,7 @@ Rectangle {
             width: setField.textWidth
             height: Screen.height/30.0
 
-            text: "TestManual"
+            text: "1"
             background: Rectangle{
                 color: "#c06f98"
                 opacity: 0.75
@@ -117,7 +117,7 @@ Rectangle {
             width: setField.textWidth
             height: setField.textHeight
 
-            text: "TestBack"
+            text: "1"
             background: Rectangle{
                 color: "#c06f98"
                 opacity: 0.75

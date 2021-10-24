@@ -391,7 +391,7 @@ Window {
         case 0: return "请输入(Please Enter): 1~8"
         case 1: return "请输入(Please Enter): 1~3"
         case 2: return "请输入(Please Enter): \n0~1(Endgame), 1~8(Manual)"
-        case 3: return "请输入(Please Enter): 0~12"
+        case 3: return "请输入(Please Enter): 0~1"
         default: return console.log("Error: main.qml line:334 idx invalid!")
         }
     }
@@ -607,15 +607,80 @@ Window {
     }
 
     function changeEnd(){
-        endLabel.text = InitSetUp.end
+        endLabel.text = currentEnd()
+    }
+
+    function currentEnd() {
+        switch(InitSetUp.end) {
+        case "1":
+            InitSetUp.int_end = Number(InitSetUp.end)
+            return "EndGame_Mode"
+        case "0":
+            InitSetUp.int_end = Number(InitSetUp.end)
+            return "FullGame_Mode"
+        default: return "InValid! 0~1!"
+        }
     }
 
     function changeManual(){
-        manualLabel.text = InitSetUp.manual
+        manualLabel.text = currentManual()
+    }
+
+//    enum Manual {
+//        MeiHuaPu = 0,
+//        JuZhongMi,
+//        MengRuShenJi,
+//        HuYaJi,
+//        TaoLueYuanJi,
+//        YuanShenHaiKuo,
+//        MiJinBaoLue,
+//        inValidHaHa
+//    };
+
+    function currentManual() {
+        switch(InitSetUp.manual) {
+        case "1":
+            InitSetUp.int_manual = Number(InitSetUp.manual)
+            return "Mei Hua Pu"
+        case "2":
+            InitSetUp.int_manual = Number(InitSetUp.manual)
+            return "Ju Zhong Mi"
+        case "3":
+            InitSetUp.int_manual = Number(InitSetUp.manual)
+            return "Meng Ru Shen Ji"
+        case "4":
+            InitSetUp.int_manual = Number(InitSetUp.manual)
+            return "Hu Ya Ji"
+        case "5":
+            InitSetUp.int_manual = Number(InitSetUp.manual)
+            return "Tao Lue Yuan Ji"
+        case "6":
+            InitSetUp.int_manual = Number(InitSetUp.manual)
+            return "Yuan Shen Hai Kuo"
+        case "7":
+            InitSetUp.int_manual = Number(InitSetUp.manual)
+            return "Mi Jin Bao Lue"
+        case "8":
+            InitSetUp.int_manual = Number(InitSetUp.manual)
+            return "Empty Manual"
+        default: return "InValid! 1~8!"
+        }
     }
 
     function changeBack(){
-        backLabel.text = InitSetUp.back
+        backLabel.text = currentBack()
+    }
+
+    function currentBack() {
+        switch(InitSetUp.back) {
+        case "1":
+            InitSetUp.int_back = Number(InitSetUp.back)
+            return "Picture_Mode"
+        case "0":
+            InitSetUp.int_back = Number(InitSetUp.back)
+            return "Light_Gray_Mode"
+        default: return "InValid! 0~1!"
+        }
     }
 
     Component.onCompleted: {
@@ -653,7 +718,7 @@ Window {
     }
     Image {
         id: init_background_image
-        source: field.background_source
+        source: (field.initWindowShow) ? field.background_source : ""
         anchors.horizontalCenter: parent.horizontalCenter
         fillMode: Image.PreserveAspectFit
         z: (field.initWindowShow) ? 2 : -4
@@ -665,7 +730,7 @@ Window {
         opacity: 0.75
         font.styleName: ""
         font.pixelSize: field.background_text_size * 0.1
-        font.bold: true
+        font.bold: false
         color: "#fffef9"
         x: field.background_text_posX * 7.7
         y: field.background_text_posY * 0.4
@@ -675,7 +740,7 @@ Window {
         id: text_init_background
         text: "Smart Chess Robot"
         font.family: "Consolas"
-        opacity: 0.625
+        opacity: 0.75
         font.styleName: ""
         font.pixelSize: field.background_text_size * 0.475
         font.bold: true
@@ -737,7 +802,7 @@ Window {
         y: 0
         width: Screen.width
         height: Screen.height
-        color: (field.isBackgroundSet) ? "#fffef9" : "transparent"
+        color: (field.isBackgroundSet) ? "#fffef9" : "#2f2f35"
         opacity: (field.isBackgroundSet) ? 0.25 : 1.0
         z: -1
     }

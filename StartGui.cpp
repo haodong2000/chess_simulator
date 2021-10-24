@@ -17,9 +17,12 @@ StartGui::StartGui(QObject *parent) : QObject(parent){
     this->m_strDifficulty = "Hard-Level";
     this->m_intDifficulty = 3;
     this->m_nAge = 18;
-    this->m_strEnd = "TestEnd";
-    this->m_strManual = "TestManual";
-    this->m_strBack = "TestBack";
+    this->m_strEnd = "EndGame_Mode";
+    this->m_intEnd = 1;
+    this->m_strManual = "Mei Hua Pu";
+    this->m_intManual = 1;
+    this->m_strBack = "Picture_Mode";
+    this->m_intBack = 1;
     connect(&m_timer, &QTimer::timeout, this, &StartGui::getCurrentTime);
     this->m_timer.start(1000);
 }
@@ -53,13 +56,13 @@ void StartGui::getCurrentTime(){
         if(Menu::IsInitTestMode) std::cout << "Difficulty Changed! Current Difficulty -> " << this->m_intDifficulty << std::endl;
         break;
     case 2:
-        BASIC_DEPTH = 1;
+        BASIC_DEPTH = 2;
         BEST_EXPONENT = BASIC_DEPTH * 2;
         MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);
         if(Menu::IsInitTestMode) std::cout << "Difficulty Changed! Current Difficulty -> " << this->m_intDifficulty << std::endl;
         break;
     case 3:
-        BASIC_DEPTH = 1;
+        BASIC_DEPTH = 3;
         BEST_EXPONENT = BASIC_DEPTH * 2;
         MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);
         if(Menu::IsInitTestMode) std::cout << "Difficulty Changed! Current Difficulty -> " << this->m_intDifficulty << std::endl;
@@ -102,5 +105,53 @@ void StartGui::getCurrentTime(){
         break;
     default:
         qDebug() << "InValid Mode! 1~8 Wanted!";
+    }
+    switch (this->m_intManual - 1) {
+    case Menu::Manual::MeiHuaPu:
+        STRATEGY_MODE = Menu::Manual::MeiHuaPu;
+        if(Menu::IsInitTestMode) std::cout << "Manual Changed! Current Manual -> " << this->m_intManual << std::endl;
+        break;
+    case Menu::Manual::JuZhongMi:
+        STRATEGY_MODE = Menu::Manual::JuZhongMi;
+        if(Menu::IsInitTestMode) std::cout << "Manual Changed! Current Manual -> " << this->m_intManual << std::endl;
+        break;
+    case Menu::Manual::MengRuShenJi:
+        STRATEGY_MODE = Menu::Manual::MengRuShenJi;
+        if(Menu::IsInitTestMode) std::cout << "Manual Changed! Current Manual -> " << this->m_intManual << std::endl;
+        break;
+    case Menu::Manual::HuYaJi:
+        STRATEGY_MODE = Menu::Manual::HuYaJi;
+        if(Menu::IsInitTestMode) std::cout << "Manual Changed! Current Manual -> " << this->m_intManual << std::endl;
+        break;
+    case Menu::Manual::TaoLueYuanJi:
+        STRATEGY_MODE = Menu::Manual::TaoLueYuanJi;
+        if(Menu::IsInitTestMode) std::cout << "Manual Changed! Current Manual -> " << this->m_intManual << std::endl;
+        break;
+    case Menu::Manual::YuanShenHaiKuo:
+        STRATEGY_MODE = Menu::Manual::YuanShenHaiKuo;
+        if(Menu::IsInitTestMode) std::cout << "Manual Changed! Current Manual -> " << this->m_intManual << std::endl;
+        break;
+    case Menu::Manual::MiJinBaoLue:
+        STRATEGY_MODE = Menu::Manual::MiJinBaoLue;
+        if(Menu::IsInitTestMode) std::cout << "Manual Changed! Current Manual -> " << this->m_intManual << std::endl;
+        break;
+    case Menu::Manual::inValidHaHa:
+        STRATEGY_MODE = Menu::Manual::inValidHaHa;
+        if(Menu::IsInitTestMode) std::cout << "Manual Changed! Current Manual -> " << this->m_intManual << std::endl;
+        break;
+    default:
+        qDebug() << "InValid Mode! 1~8 Wanted!";
+    }
+    switch (this->m_intBack) {
+    case 1:
+        BACKGROUND_MODE = Menu::Background::ChristmasTree;
+        if(Menu::IsInitTestMode) std::cout << "Background Changed! Current Background -> " << this->m_intBack << std::endl;
+        break;
+    case 0:
+        BACKGROUND_MODE = Menu::Background::NoBackGround;
+        if(Menu::IsInitTestMode) std::cout << "Background Changed! Current Background -> " << this->m_intBack << std::endl;
+        break;
+    default:
+        qDebug() << "InValid Mode! 0~1 Wanted!";
     }
 }

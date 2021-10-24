@@ -227,7 +227,7 @@ namespace PARAM {
             {"r_gen_", qMakePair<int, int>(9, 5)},
             {"r_ele_", qMakePair<int, int>(9, 6)},
         };
-        const QVector<QPair<QString, QPair<int, int>>> Mijinbaolue {
+        const QVector<QPair<QString, QPair<int, int>>> MiJinBaoLue {
             {"r_can_", qMakePair<int, int>(0, 2)},
             {"b_gen_", qMakePair<int, int>(0, 4)},
             {"b_can_", qMakePair<int, int>(0, 6)},
@@ -255,7 +255,7 @@ namespace PARAM {
             HuYaJi,
             TaoLueYuanJi,
             YuanShenHaiKuo,
-            Mijinbaolue
+            MiJinBaoLue
         };
         const int MaxStrategyModeNum = ChessStrategies.size() - 1;
     }

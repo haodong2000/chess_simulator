@@ -94,6 +94,7 @@ extern int BASIC_DEPTH;
 extern int BEST_EXPONENT;
 extern int MAX_SEARCH_NODES;
 extern int CHESS_PLAY_MODE;
+extern int BACKGROUND_MODE;
 
 typedef NormalSingleton< GlobalEnvironment > GlobalEnvirIn;
 

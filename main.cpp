@@ -37,9 +37,9 @@ vision_thread *vision = NULL;           // USB Camera
 int ** Main_chessBoard = NULL;          // Chess Board
 bool __curTurn;                         // true for red and false for black
 int CHESS_PLAY_MODE = Menu::Mode::Human_AI_EndGame;
-static int BACKGROUND_MODE = Menu::Background::ChristmasTree;
+int BACKGROUND_MODE = Menu::Background::ChristmasTree;
 int STRATEGY_MODE = Menu::Manual::MeiHuaPu;
-int BASIC_DEPTH = 3;
+int BASIC_DEPTH = PARAM::START_DEPTH;
 int BEST_EXPONENT = BASIC_DEPTH * 2;
 int MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);
 int SEARCH_DEPTH = PARAM::START_DEPTH;  // init search depth of alpha-beta purning
@@ -111,6 +111,11 @@ bool startGuiWindow() {
 }
 
 void LetUsPlayChess() {
+    SEARCH_DEPTH = BASIC_DEPTH + 1;
+    std::cout << "BACKGROUND_MODE = " << BACKGROUND_MODE << std::endl;
+    std::cout << "CHESS_PLAY_MODE = " << CHESS_PLAY_MODE << std::endl;
+    std::cout << "SEARCH_DEPTH    = " << SEARCH_DEPTH << std::endl;
+    std::cout << "BASIC_DEPTH     = " << BASIC_DEPTH << std::endl;
     if(BACKGROUND_MODE == 0) {
         object->setProperty(QString("isBackgroundSet").toLatin1(), false);
     }
