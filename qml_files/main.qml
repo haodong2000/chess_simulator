@@ -937,7 +937,7 @@ Window {
     function currentStrategyMode() {
         switch (field.strategy_mode) {
             case 0: return "    梅    花    譜   ";
-            case 1: return "    桔    中    秘   ";
+            case 1: return "    橘    中    秘   ";
             case 2: return "  梦   入   神   机  ";
             case 3: return "    湖    涯    集   ";
             case 4: return "  韬   略   元   机  ";
