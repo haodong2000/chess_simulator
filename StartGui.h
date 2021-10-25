@@ -38,6 +38,7 @@ public:
 
 public slots:
     void startGameFunc();
+    void exitInfoFunc();
 
 private:
     void getCurrentTime();

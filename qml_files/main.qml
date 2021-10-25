@@ -289,6 +289,151 @@ Window {
         property int initWindowDelta: cubeSizeWidth * 0.5
         property int initWindowWidth: cubeSizeWidth * 3.7
         property int initWindowHeight: cubeSizeHeight * 3.5
+
+        property bool infomationDone: false
+        property bool infomationShow: ! infomationDone
+
+        property bool isEnglishOrChinese: true
+    }
+
+    Repeater {
+        model: 2
+        Rectangle{
+            width: field.initWindowWidth * 0.75 * 2 + field.initWindowDelta * 0.75
+            height: field.initWindowHeight + field.cubeSizeHeight * 0.5
+            x: field.initWindowDelta * (index + 1.0) * 0.75 + index * width
+            y: field.cubeSizeHeight * 2.5
+            color: "#22202e"
+            opacity: 0.75
+            z: (field.infomationShow) ? 7 : -4
+            id: rect_win_info
+            radius: 50
+            border.width: 50
+            border.color: "#22202e"
+        }
+    }
+
+    Repeater {
+        model: 2
+        Text{
+            x: (field.initWindowDelta * index * 0.75 + index * field.initWindowWidth + field.initWindowWidth * 0.5 - 200) * 0.75 * 2
+            y: field.cubeSizeHeight * 2.6
+            color: "#fffef9"
+            z: (field.infomationShow) ? 8 : -4
+            id: text_win_info
+            font.family: "Consolas"
+            font.bold: false
+            opacity: 0.95
+            rotation: 0
+            font.pixelSize: field.textSizeInPixel * 0.4
+            text: currentInformation(index)
+        }
+    }
+
+    function currentInformation(idx) {
+        switch(idx) {
+        case 0:
+            return "模式 (Mode)
+1 -> AI_AI -----------------> AI与AI对弈(软件仿真)
+2 -> Human_AI --------------> 人类与AI对弈(软件仿真)
+3 -> Human_Human -----------> 人类与人类对弈(软件仿真)
+4 -> Human_AI_CIMC ---------> 人类与AI对弈(机械臂+视觉实机下棋)
+5 -> Human_AI_CIMC_EndGame -> 人类与AI残局对弈(机械臂+视觉实机下棋)
+6 -> AI_AI_EndGame ---------> AI与AI残局对弈(软件仿真)
+7 -> Human_AI --------------> 人类与AI残局对弈(软件仿真)
+8 -> Human_Human -----------> 人类与人类残局对弈(软件仿真)
+
+难度 (Difficulty)
+1 -> Simple-Level ----------> 初级水平
+2 -> Middle-Level ----------> 中级水平
+3 -> Hard-Level ------------> 进阶水平
+"
+        case 1:
+            return "残局 (Endgame)                   \t棋谱 (Chess Manual)
+0 -> EndGame_Mode ----> 残局模式\t1 -> Mei Hua Pu --------> 梅花譜
+1 -> FullGame_Mode ---> 全局模式\t2 -> Ju Zhong Mi -------> 橘中秘
+                              \t3 -> Meng Ru Shen Ji ---> 梦入神机
+外观(Background)               \t4 -> Hu Ya Ji ----------> 湖涯集
+0 -> Picture_Mode ----> 自然风光\t5 -> Tao Lue Yuan Ji ---> 韬略元机
+1 -> Light_Gray_Mode -> 淡雅灰色\t6 -> Yuan Shen Hai Kuo -> 渊深海阔
+                               \t7 -> Mi Jin Bao Lue ----> 锦秘豹略
+                               \t8 -> Empty Manual ------> 空(全局模式)
+"
+        default:
+            console.log("Error: main.qml line:338 currentInformation() idx invalid!")
+        }
+    }
+
+    Repeater {
+        model: 2
+        Text {
+            id: text_info_head
+            text: currentInfoHeadText(index)
+            font.family: "Consolas"
+            opacity: 0.75
+            font.styleName: ""
+            font.pixelSize: field.background_text_size * 0.15
+            font.bold: false
+            color: "#fffef9"
+            x: field.background_text_posX * 4.5
+            y: field.background_text_posY * 0.3 * (index * 3.0 + 1.0)
+            z: (field.infomationShow) ? 7 : -4
+        }
+    }
+
+    function currentInfoHeadText(idx) {
+        switch(idx) {
+        case 0:
+            return "        智能象棋机器人用户使用说明"
+        case 1:
+            return "User Instructions for Smart Chess Robot"
+        default:
+            console.log("Error: main.qml line:368 currentInfoHeadText() idx invalid!")
+        }
+    }
+
+    Row {
+        x: (field.initWindowDelta * (1.0 + 0.1) + 1.0 * field.initWindowWidth + field.initWindowWidth * 0.5 - 150) * 0.75 - 50 * 0.75
+        y: field.cubeSizeHeight * 3.0 + field.initWindowHeight + 50
+        z: (field.infomationShow) ? 6 : -4
+        spacing: field.initWindowDelta * 0.75
+
+        Button {
+            id: btn01_info
+            width: (field.infomationShow) ? (field.initWindowWidth * 0.75) : 0
+            height: (field.infomationShow) ? (width * 0.618 * 0.5) : 0
+            highlighted: true
+            text: "退出游戏\n(Exit the Game)"
+            background: Rectangle {
+                color: parent.down ? "#bbbbbb" :
+                        (parent.hovered ? "#29b7cb" : "#c06f98")
+                opacity: 0.75
+                radius: 50
+                border.width: radius
+                border.color: color
+            }
+            font.family: "Consolas"
+            font.pixelSize: field.textSizeInPixel * 0.5
+            onClicked: InitSetUp.exitGameFunc()
+        }
+        Button {
+            id: btn02_info
+            width: (field.infomationShow) ? (field.initWindowWidth * 0.75) : 0
+            height: (field.infomationShow) ? (width * 0.618 * 0.5) : 0
+            highlighted: true
+            background: Rectangle {
+                color: parent.down ? "#bbbbbb" :
+                        (parent.hovered ? "#29b7cb" : "#c06f98")
+                opacity: 0.75
+                radius: 50
+                border.width: radius
+                border.color: color
+            }
+            text: "我已知晓\n(I Understand)"
+            font.pixelSize: field.textSizeInPixel * 0.5
+            font.family: "Consolas"
+            onClicked: InitSetUp.exitInfoFunc()
+        }
     }
 
     Repeater {
@@ -459,20 +604,10 @@ Window {
         }
     }
 
-//    Row {
-//        x: (field.initWindowDelta * 0.1 + field.initWindowWidth * 0.5 - 150) * 0.75 + field.initWindowDelta * 1.5 * 2
-//        y: field.cubeSizeHeight * 4.5
-//        z: (field.initWindowShow) ? 4 : -4
-//        spacing: field.initWindowDelta * 1.5
-//        MyLabel {
-//            id: manualLabel
-//        }
-//    }
-
     Row {
         x: Screen.width/2.0 - 300
         y: field.cubeSizeHeight * 8.75
-        z: (field.initWindowShow) ? 4 : -4
+        z: (field.initWindowShow) ? 8 : -4
         spacing: field.initWindowDelta * 0.75
         Text {
             id: init_copyright
@@ -497,9 +632,9 @@ Window {
         spacing: field.initWindowDelta * 0.75
 
         Button {
-            id: btn01
-            width: field.initWindowWidth * 0.75
-            height: width * 0.618 * 0.5
+            id: btn01_init
+            width: (field.initWindowShow) ? (field.initWindowWidth * 0.75) : 0
+            height: (field.initWindowShow) ? (width * 0.618 * 0.5) : 0
             highlighted: true
             text: "退出游戏\n(Exit the Game)"
             background: Rectangle {
@@ -515,9 +650,9 @@ Window {
             onClicked: InitSetUp.exitGameFunc()
         }
         Button {
-            id: btn02
-            width: field.initWindowWidth * 0.75
-            height: width * 0.618 * 0.5
+            id: btn02_init
+            width: (field.initWindowShow) ? (field.initWindowWidth * 0.75) : 0
+            height: (field.initWindowShow) ? (width * 0.618 * 0.5) : 0
             highlighted: true
             background: Rectangle {
                 color: parent.down ? "#bbbbbb" :
@@ -556,21 +691,6 @@ Window {
         default: return "InValid! 1~3!"
         }
     }
-
-//    enum Mode {
-//        AI_AI = 0,
-//        Human_AI,
-//        Human_Human,
-//        Human_AI_CIMC,
-//        Human_AI_CIMC_EndGame,
-//        AI_AI_EndGame,
-//        Human_AI_EndGame,
-//        Human_Human_EndGame
-//    };
-
-//    function changeAge(){
-//        ageLabel.text = InitSetUp.age
-//    }
 
     function changeMode(){
         modeLabel.text = currentMode()
@@ -714,14 +834,14 @@ Window {
         height: Screen.height
         color: "#fffef9"
         opacity: 0.25
-        z: (field.initWindowShow) ? 3 : -4
+        z: field.infomationShow ? 6 : ((field.initWindowShow) ? 3 : -4)
     }
     Image {
         id: init_background_image
         source: (field.initWindowShow) ? field.background_source : ""
         anchors.horizontalCenter: parent.horizontalCenter
         fillMode: Image.PreserveAspectFit
-        z: (field.initWindowShow) ? 2 : -4
+        z: field.infomationShow ? 5 : ((field.initWindowShow) ? 2 : -4)
     }
     Text {
         id: text_init_background_welcome
@@ -740,7 +860,7 @@ Window {
         id: text_init_background
         text: "Smart Chess Robot"
         font.family: "Consolas"
-        opacity: 0.75
+        opacity: 0.875
         font.styleName: ""
         font.pixelSize: field.background_text_size * 0.475
         font.bold: true

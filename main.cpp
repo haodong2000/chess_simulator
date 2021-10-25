@@ -39,6 +39,7 @@ bool __curTurn;                         // true for red and false for black
 int CHESS_PLAY_MODE = Menu::Mode::Human_AI_EndGame;
 int BACKGROUND_MODE = Menu::Background::ChristmasTree;
 int STRATEGY_MODE = Menu::Manual::MeiHuaPu;
+static const bool SHOW_INFOMATION = false;
 int BASIC_DEPTH = PARAM::START_DEPTH;
 int BEST_EXPONENT = BASIC_DEPTH * 2;
 int MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);
@@ -95,6 +96,9 @@ int main(int argc, char *argv[]) {
 * * * * * * * * * * * * * * * * * * * * * */
 
 bool startGuiWindow() {
+    // object->setProperty(QString("infomationDone").toLatin1(), true);
+    if(SHOW_INFOMATION) object->setProperty(QString("infomationDone").toLatin1(), false);
+    else object->setProperty(QString("infomationDone").toLatin1(), true);
     while (Is_Game_Start == false && Is_Game_No_Play == false) {
         GlobalEnvirIn::Instance()->__delayMsec(5);
         if(Is_Game_Start) {
