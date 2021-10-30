@@ -2102,6 +2102,8 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
         }
         redOrBlack = !redOrBlack;
     }
+    bool isHumanWin = (Ab_gen_1->isAlive() && Ar_gen_1->isAlive()) ? redOrBlack : (!redOrBlack);
+    GlobalEnvirIn::Instance()->__evaluatePlayerLevel(count, isHumanWin);
 }
 
 void singleGame::normalPlay_HumanVSAI_CIMC_EndGame(int maxCount) {
@@ -2183,6 +2185,8 @@ void singleGame::normalPlay_HumanVSAI_CIMC_EndGame(int maxCount) {
         }
         redOrBlack = !redOrBlack;
     }
+    bool isHumanWin = (Ab_gen_1->isAlive() && Ar_gen_1->isAlive()) ? redOrBlack : (!redOrBlack);
+    GlobalEnvirIn::Instance()->__evaluatePlayerLevel(count, isHumanWin);
 }
 
 int singleGame::VisionHumanStepIndex(const QVector<chessStep>& curStepList) {
@@ -2307,6 +2311,8 @@ void singleGame::normalPlay_HumanVSHuman(int maxCount) {
         }
         redOrBlack = !redOrBlack;
     }
+    bool isHumanWin = (Ab_gen_1->isAlive() && Ar_gen_1->isAlive()) ? redOrBlack : (!redOrBlack);
+    GlobalEnvirIn::Instance()->__evaluatePlayerLevel(count, isHumanWin);
 }
 
 void singleGame::normalPlay_HumanVSHuman_EndGame(int maxCount) {
@@ -2362,6 +2368,8 @@ void singleGame::normalPlay_HumanVSHuman_EndGame(int maxCount) {
         }
         redOrBlack = !redOrBlack;
     }
+    bool isHumanWin = (Ab_gen_1->isAlive() && Ar_gen_1->isAlive()) ? redOrBlack : (!redOrBlack);
+    GlobalEnvirIn::Instance()->__evaluatePlayerLevel(count, isHumanWin);
 }
 
 void singleGame::normalPlay_HumanVSAI(int maxCount) {
@@ -2437,6 +2445,8 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
         }
         redOrBlack = !redOrBlack;
     }
+    bool isHumanWin = (Ab_gen_1->isAlive() && Ar_gen_1->isAlive()) ? redOrBlack : (!redOrBlack);
+    GlobalEnvirIn::Instance()->__evaluatePlayerLevel(count, isHumanWin);
 }
 
 void singleGame::normalPlay_HumanVSAI_EndGame(int maxCount) {
@@ -2504,6 +2514,8 @@ void singleGame::normalPlay_HumanVSAI_EndGame(int maxCount) {
         }
         redOrBlack = !redOrBlack;
     }
+    bool isHumanWin = (Ab_gen_1->isAlive() && Ar_gen_1->isAlive()) ? redOrBlack : (!redOrBlack);
+    GlobalEnvirIn::Instance()->__evaluatePlayerLevel(count, isHumanWin);
 }
 
 //void singleGame::M1_client_disconnect() {
@@ -2563,6 +2575,8 @@ void singleGame::normalPlay(int maxCount) {
         }
         redOrBlack = !redOrBlack;
     }
+    bool isHumanWin = (Ab_gen_1->isAlive() && Ar_gen_1->isAlive()) ? redOrBlack : (!redOrBlack);
+    GlobalEnvirIn::Instance()->__evaluatePlayerLevel(count, isHumanWin);
 }
 
 void singleGame::normalPlay_EndGame(int maxCount) {
@@ -2617,6 +2631,8 @@ void singleGame::normalPlay_EndGame(int maxCount) {
         }
         redOrBlack = !redOrBlack;
     }
+    bool isHumanWin = (Ab_gen_1->isAlive() && Ar_gen_1->isAlive()) ? redOrBlack : (!redOrBlack);
+    GlobalEnvirIn::Instance()->__evaluatePlayerLevel(count, isHumanWin);
 }
 
 int singleGame::alpha_beta_red(int depth) {

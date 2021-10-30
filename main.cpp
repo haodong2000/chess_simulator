@@ -39,7 +39,7 @@ bool __curTurn;                         // true for red and false for black
 int CHESS_PLAY_MODE = Menu::Mode::Human_AI_EndGame;
 int BACKGROUND_MODE = Menu::Background::ChristmasTree;
 int STRATEGY_MODE = Menu::Manual::MeiHuaPu;
-static const bool SHOW_INFOMATION = false;
+static const bool SHOW_INFOMATION = true;
 int BASIC_DEPTH = PARAM::START_DEPTH;
 int BEST_EXPONENT = BASIC_DEPTH * 2;
 int MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);
@@ -50,7 +50,7 @@ bool Is_Game_Start = false;             // is user finish set up program or not
 bool Is_Game_No_Play = false;           // is user don't execute or not
 bool Is_CIMC_EndGame = CHESS_PLAY_MODE == Menu::Mode::Human_AI_CIMC_EndGame;
 bool startGuiWindow();
-void LetUsPlayChess();
+bool LetUsPlayChess();
 
 int main(int argc, char *argv[]) {
 
@@ -84,7 +84,8 @@ int main(int argc, char *argv[]) {
     GlobalEnvirIn::Instance()->__refreshBoard();
 
     if(START_GUI && false == startGuiWindow()) return -1;
-    LetUsPlayChess(); // real play API
+    bool exitGame = LetUsPlayChess(); // real play API
+    if(exitGame == true) return -1;
     return app.exec();
 }
 
@@ -114,7 +115,7 @@ bool startGuiWindow() {
     }
 }
 
-void LetUsPlayChess() {
+bool LetUsPlayChess() {
     SEARCH_DEPTH = BASIC_DEPTH + 1;
     std::cout << "BACKGROUND_MODE = " << BACKGROUND_MODE << std::endl;
     std::cout << "CHESS_PLAY_MODE = " << CHESS_PLAY_MODE << std::endl;
@@ -142,6 +143,14 @@ void LetUsPlayChess() {
         case 7: singleGameIn::Instance()->normalPlay_HumanVSHuman_EndGame(PARAM::NINE_NINE_NINE); break;
         default: qDebug() << "main.cpp line:79 CHESS_PLAY_MODE inValid!!! (see Navigation.h)"; break;
         }
+    while (Is_Game_No_Play == false) {
+        GlobalEnvirIn::Instance()->__delayMsec(5);
+        if(Is_Game_No_Play) {
+            std::cout << "Chess Game Exit! Welcome Back!" << std::endl;
+            break;
+        }
+    }
+    return true;
 }
 
 /*

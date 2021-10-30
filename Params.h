@@ -39,6 +39,13 @@ namespace PARAM {
 
     const int WHOLE_GAME = 666;
 
+    const int ROUND_NUM_SIMPLE = 30;
+    const int ROUND_NUM_MIDDLE = 40;
+    const int ROUND_NUM_HARD_1 = 60;
+    const int ROUND_NUM_HARD_2 = 30;
+
+    const int ROUND_RANDOM = 10;
+
     namespace EndGame {
         const QVector<QPair<QString, QPair<int, int>>> MeiHuaPu {
             {"b_gen_", qMakePair<int, int>(0, 4)},

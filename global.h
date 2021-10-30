@@ -70,6 +70,7 @@ public:
     virtual int __countChessInPath(SGeoPoint* start, SGeoPoint* end);
     virtual int __generateRandomNumber(int maxNumber);
     virtual bool __isOnlyTwoGeneralsInRow();
+    virtual void __evaluatePlayerLevel(int roundNum, bool isHumanWin);
     int ** __board; // result of chess identify, 0-14
                     // 0: empty
                     // 1-7:  black

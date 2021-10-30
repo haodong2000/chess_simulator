@@ -1396,6 +1396,114 @@ bool GlobalEnvironment::__isOnlyTwoGeneralsInRow() {
     return twoGeneralDetected;
 }
 
+void GlobalEnvironment::__evaluatePlayerLevel(int roundNum, bool isHumanWin) {
+    QPair<double, int> Evaluate;
+//    Evaluate.first = 50.0;
+//    Evaluate.second = 2;
+    switch (BASIC_DEPTH) {
+    case 1:
+        // Simple Currently
+        if(isHumanWin && roundNum <= PARAM::ROUND_NUM_SIMPLE)
+        {
+            // 75 + random
+            Evaluate.first = 75.0 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Hard
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 3);
+        }
+        else if(isHumanWin)
+        {
+            // 50 + random
+            Evaluate.first = 50.0 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Middle
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 2);
+        }
+        else
+        {
+            // 25 + random
+            Evaluate.first = 25.0 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Simple
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 1);
+        }
+        break;
+    case 2:
+        // Middle Currently
+        if(isHumanWin && roundNum <= PARAM::ROUND_NUM_MIDDLE)
+        {
+            // 75 + random
+            Evaluate.first = 75.0 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Hard
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 3);
+        }
+        else if(isHumanWin)
+        {
+            // 62.5 + random
+            Evaluate.first = 62.5 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Hard
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 3);
+        }
+        else if(roundNum > PARAM::ROUND_NUM_MIDDLE)
+        {
+            // 43.75 + random
+            Evaluate.first = 43.75 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Middle
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 2);
+        }
+        else
+        {
+            // 25 + random
+            Evaluate.first = 25.0 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Simple
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 1);
+        }
+        break;
+    case 3:
+        // Hard Currently
+        if(isHumanWin && roundNum <= PARAM::ROUND_NUM_HARD_1)
+        {
+            // 87.5 + random
+            Evaluate.first = 87.5 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Hard
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 3);
+        }
+        else if(isHumanWin)
+        {
+            // 75 + random
+            Evaluate.first = 75.0 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Hard
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 3);
+        }
+        else if(roundNum > PARAM::ROUND_NUM_HARD_1)
+        {
+            // 62.5 + random
+            Evaluate.first = 62.5 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Hard
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 3);
+        }
+        else if(roundNum > PARAM::ROUND_NUM_HARD_2)
+        {
+            // 50 + random
+            Evaluate.first = 50.0 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Middle
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 2);
+        }
+        else
+        {
+            // 33.75 + random
+            Evaluate.first = 33.75 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Simple
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 1);
+        }
+        break;
+    default:
+        break;
+    }
+    std::cout << "double -> " << Evaluate.first << "  to_string -> " << std::to_string(Evaluate.first) << std::endl;
+    QString Score = "(Capability Assessment)\n=====> " + QString::number(Evaluate.first);
+    object->setProperty(QString("playerEvaluateScore").toLatin1(), Score.toLatin1());
+    object->setProperty(QString("isPlayEvaluateShow").toLatin1(), true);
+    return;
+}
+
 int GlobalEnvironment::__generateRandomNumber(int maxNumber) {
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
     int ret = qrand()%maxNumber;

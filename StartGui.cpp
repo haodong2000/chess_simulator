@@ -38,7 +38,7 @@ void StartGui::startGameFunc(){
 }
 
 void StartGui::exitInfoFunc() {
-    qDebug()<<"我已知晓 (I Understand)";
+    qDebug()<<"我已知晓 (I Understand) ...";
     object->setProperty(QString("infomationDone").toLatin1(), true);
 }
 

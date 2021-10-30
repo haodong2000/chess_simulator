@@ -294,6 +294,77 @@ Window {
         property bool infomationShow: ! infomationDone
 
         property bool isEnglishOrChinese: true
+
+        property bool isPlayEvaluateShow: false
+        property int playerEvaluateLevel: 1
+        property string playerEvaluateScore: "playerEvaluateScore"
+    }
+
+    Text {
+        id: player_evaluate
+        text: field.isPlayEvaluateShow ? playerEvaluateText(field.playerEvaluateLevel) : ""
+        font.family: "Consolas"
+        font.bold: true
+        font.styleName: ""
+        rotation: 0
+        font.pixelSize: field.textSizeInPixel * 0.65
+        color: field.isBlackWin ? "#d2357d" : "#0eb0c9"
+        x: field.cubeSizeWidth * 2.5
+        y: field.cubeSizeHeight * 5.75
+        z: 2
+    }
+
+    function playerEvaluateText(level) {
+        switch(level) {
+        case 1:
+            return "建议难度(Recommended Difficulty)\n=====> Simple-Level"
+        case 2:
+            return "建议难度(Recommended Difficulty)\n=====> Middle-Level"
+        case 3:
+            return "建议难度(Recommended Difficulty)\n=====> Hard-Level"
+        default:
+            console.log("Error: main.qml line:325 playerEvaluateText() level invalid!")
+        }
+    }
+
+    Text {
+        id: player_evaluate_score
+        text: field.isPlayEvaluateShow ? "能力评估" + field.playerEvaluateScore : ""
+        font.family: "Consolas"
+        font.bold: true
+        font.styleName: ""
+        rotation: 0
+        font.pixelSize: field.textSizeInPixel * 0.65
+        color: field.isBlackWin ? "#d2357d" : "#0eb0c9"
+        x: field.cubeSizeWidth * 2.5
+        y: field.cubeSizeHeight * 4.75
+        z: 2
+    }
+
+    Row {
+        x: field.cubeSizeWidth * 8.0
+        y: field.cubeSizeHeight * 5.0
+        z: (field.isPlayEvaluateShow) ? 3 : -4
+        spacing: field.initWindowDelta * 0.75
+
+        Button {
+            id: end_game
+            width: (field.isPlayEvaluateShow) ? (field.initWindowWidth * 0.75) : 0
+            height: (field.isPlayEvaluateShow) ? (width * 0.618 * 0.5) : 0
+            highlighted: true
+            text: "退出游戏\n(Exit the Game)"
+            background: Rectangle {
+                color: parent.down ? "#bbbbbb" :
+                        (parent.hovered ? "#29b7cb" : "#c06f98")
+                opacity: 0.75
+                radius: 50
+                border.width: radius
+                border.color: color
+            }
+            font.family: "Consolas"
+            font.pixelSize: field.textSizeInPixel * 0.5
+            onClicked: InitSetUp.exitGameFunc()
+        }
     }
 
     Repeater {
@@ -745,17 +816,6 @@ Window {
     function changeManual(){
         manualLabel.text = currentManual()
     }
-
-//    enum Manual {
-//        MeiHuaPu = 0,
-//        JuZhongMi,
-//        MengRuShenJi,
-//        HuYaJi,
-//        TaoLueYuanJi,
-//        YuanShenHaiKuo,
-//        MiJinBaoLue,
-//        inValidHaHa
-//    };
 
     function currentManual() {
         switch(InitSetUp.manual) {
@@ -1294,7 +1354,7 @@ Window {
         font.pixelSize: field.textSizeInPixel * 3
         color: "#0eb0c9"
         x: field.cubeSizeWidth * 3.5
-        y: field.cubeSizeHeight * 3.5
+        y: field.cubeSizeHeight * 3.0
         z: 2
     }
 
@@ -1308,15 +1368,15 @@ Window {
         font.pixelSize: field.textSizeInPixel * 3
         color: "#d2357d"
         x: field.cubeSizeWidth * 3.5
-        y: field.cubeSizeHeight * 3.5
+        y: field.cubeSizeHeight * 3.0
         z: 2
     }
 
     Rectangle{
         width: Screen.width
-        height: field.cubeSizeHeight * 4
+        height: field.cubeSizeHeight * 6
         x: 0
-        y: field.cubeSizeHeight * 2.5
+        y: field.cubeSizeHeight * 1.5
         color: field.isBlackWin ? "#22202e" : (field.isRedWin ? "#22202e" : "transparent")
         opacity: field.isBlackWin ? 0.75 : (field.isRedWin ? 0.75 : 0.0)
         z: 1
