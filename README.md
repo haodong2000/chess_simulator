@@ -22,8 +22,6 @@
 
 ![Screenshot from 2021-08-04 01-04-46](https://github.com/LeBronLiHD/chessRobotSimulation_QT/blob/master/chess/Screenshot%20from%202021-10-25%2010-03-18.png)
 
-![Screenshot from 2021-08-04 01-04-47](https://github.com/LeBronLiHD/chessRobotSimulation_QT/blob/master/chess/Screenshot%20from%202021-10-25%2010-02-16.png)
-
 ![Screenshot from 2021-08-04 01-04-48](https://github.com/LeBronLiHD/chessRobotSimulation_QT/blob/master/chess/Screenshot%20from%202021-10-25%2010-01-51.png)
 
 ![Screenshot from 2021-08-04 01-04-49](https://github.com/LeBronLiHD/chessRobotSimulation_QT/blob/master/chess/Screenshot%20from%202021-10-25%2010-01-01.png)
