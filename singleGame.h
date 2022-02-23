@@ -45,7 +45,7 @@ public:
     virtual int generateRandomNumber(int maxInt);
     virtual bool compareSteps(chessStep last, chessStep current);
 
-    // real play
+    // fake play
     virtual void oneLevelChessing(int maxCount);
     virtual void oneLevelChessing_HumanVSAI(int maxCount);
     virtual void S_oneLevelChessing(int maxCount);
@@ -62,6 +62,7 @@ public:
     virtual void S_threeLevelChessing(int maxCount);
     virtual int S_threeLevelStepIndex(bool redOrBlack);
 
+    // real play
     virtual void normalPlay(int maxCount);
     virtual void normalPlay_HumanVSAI(int maxCount);
     virtual void normalPlay_HumanVSHuman(int maxCount);

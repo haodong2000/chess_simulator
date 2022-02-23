@@ -2027,6 +2027,8 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
     const int delayMs = 5;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
+        TURN_COUNT = count - 1;
+        CURRENT_TURN = (count % 2) == 0;
         GlobalEnvirIn::Instance()->__printBoard();
         GlobalEnvirIn::Instance()->__delayMsec(delayMs);
 
@@ -2119,6 +2121,8 @@ void singleGame::normalPlay_HumanVSAI_CIMC_EndGame(int maxCount) {
     Is_CIMC_EndGame = false;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
+        TURN_COUNT = count - 1;
+        CURRENT_TURN = (count % 2) == 0;
         GlobalEnvirIn::Instance()->__printBoard();
         GlobalEnvirIn::Instance()->__delayMsec(delayMs);
 
@@ -2268,6 +2272,9 @@ void singleGame::normalPlay_HumanVSHuman(int maxCount) {
     const int delayMs = 5;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
+        // std::cout << "CURRENT_TURN -> " << CURRENT_TURN << std::endl;
+        TURN_COUNT = count - 1;
+        CURRENT_TURN = (count % 2) == 0;
         GlobalEnvirIn::Instance()->__printBoard();
         GlobalEnvirIn::Instance()->__delayMsec(delayMs);
 
@@ -2325,6 +2332,8 @@ void singleGame::normalPlay_HumanVSHuman_EndGame(int maxCount) {
     initEndgameIn::Instance()->setInitStrategyBoard(_strategy_mode);
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
+        TURN_COUNT = count - 1;
+        CURRENT_TURN = (count % 2) == 0;
         GlobalEnvirIn::Instance()->__printBoard();
         GlobalEnvirIn::Instance()->__delayMsec(delayMs);
 
@@ -2385,6 +2394,10 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
     const int delayMs = 5;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
+        // debug
+        TURN_COUNT = count - 1;
+        CURRENT_TURN = (count % 2) == 0;
+        std::cout << "current turn: CurTurn = " << CURRENT_TURN << std::endl;
         GlobalEnvirIn::Instance()->__printBoard();
         GlobalEnvirIn::Instance()->__delayMsec(delayMs);
 
@@ -2459,6 +2472,8 @@ void singleGame::normalPlay_HumanVSAI_EndGame(int maxCount) {
     initEndgameIn::Instance()->setInitStrategyBoard(_strategy_mode);
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
+        TURN_COUNT = count - 1;
+        CURRENT_TURN = (count % 2) == 0;
         GlobalEnvirIn::Instance()->__printBoard();
         GlobalEnvirIn::Instance()->__delayMsec(delayMs);
 
@@ -2533,6 +2548,9 @@ void singleGame::normalPlay(int maxCount) {
     const int delayMs = 5;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
+        // debug
+        TURN_COUNT = count - 1;
+        CURRENT_TURN = (count % 2) == 0;
         GlobalEnvirIn::Instance()->__printBoard();
         GlobalEnvirIn::Instance()->__delayMsec(delayMs);
 
@@ -2589,6 +2607,8 @@ void singleGame::normalPlay_EndGame(int maxCount) {
     const int delayMs = 5;
     while(gameIsOn && (count++) < maxCount) {
         std::cout << "count chess moves -> " << count << std::endl;
+        TURN_COUNT = count - 1;
+        CURRENT_TURN = (count % 2) == 0;
         GlobalEnvirIn::Instance()->__printBoard();
         GlobalEnvirIn::Instance()->__delayMsec(delayMs);
 

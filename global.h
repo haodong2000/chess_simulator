@@ -82,6 +82,8 @@ public:
 };
 
 extern bool __curTurn;
+extern bool CURRENT_TURN;
+extern int TURN_COUNT;
 // extern Qml_Connection* QmlConnect;
 extern QObject* object; // control the whole graphic panel
 extern int SEARCH_DEPTH;

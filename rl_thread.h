@@ -30,11 +30,16 @@ public:
     rl_thread();
     void run();
     virtual void __delayMsec(int Msec);
+    virtual void __displayCurrentChessBoard();
+    virtual QString generateRequest();
 public:
     QString name;
+    int **currentChessBoard;
 public:
     int MP_count;
     bool MP_received;
+    int RL_sent;
+    int last_TURN_COUNT;
 private:
     QTcpSocket* client = new QTcpSocket();
 };

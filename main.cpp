@@ -38,6 +38,8 @@ vision_thread *vision  = NULL;          // USB Camera
 rl_thread *rl_brain    = NULL;          // RL AI in python
 int ** Main_chessBoard = NULL;          // Chess Board
 bool __curTurn;                         // true for red and false for black
+bool CURRENT_TURN      = true;          // true means red finishes his turn
+int TURN_COUNT         = 0;             // the number of turns
 int CHESS_PLAY_MODE = Menu::Mode::Human_AI_EndGame;
 int BACKGROUND_MODE = Menu::Background::ChristmasTree;
 int STRATEGY_MODE = Menu::Manual::MeiHuaPu;
