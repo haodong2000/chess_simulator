@@ -58,6 +58,7 @@ SOURCES += \
     rl_thread.cpp \
     singleGame.cpp \
     singleton.cpp  \
+    tran_step.cpp \
     vision_thread.cpp \
 
 RESOURCES += \
@@ -120,6 +121,7 @@ HEADERS += \
     rl_thread.h \
     singleGame.h \
     singleton.h \
+    tran_step.h \
     vision_thread.h \
 
 INCLUDEPATH += \

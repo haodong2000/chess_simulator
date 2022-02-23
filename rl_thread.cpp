@@ -1,5 +1,12 @@
 #include "rl_thread.h"
 
+/*****************************************************************
+*   File:     rl_thread.cpp
+*   Author:   Haodong LI
+*   Usage:    TheUsageOfFile
+*   Time:     2022-02-23 -> 20:05:31
+*****************************************************************/
+
 namespace Global_RL {
     enum CHESS_ALL_TABLE { // all chesses
         BLACK_1_GENERAL = 1,
@@ -176,22 +183,25 @@ namespace Global_RL {
     };
 
     const bool rl_debug = false;
+    const int length = 6;
 }
 
-rl_thread::rl_thread():MP_count(0), MP_received(true), RL_sent(0), last_TURN_COUNT(-1) {
+rl_thread::rl_thread():chessStep_RL(chessStep(-1, -1, false, 0, 0)), tranChessStep_RL(tranChessStep(-1, -1, -1, -1, -1)), MP_count(0), MP_received(true), RL_sent(0), last_TURN_COUNT(-1) {
     qDebug() << "rl_thread hello world (RL)";
     currentChessBoard = new int*[10];
     for(int i = 0; i < 10; i++) {
         currentChessBoard[i] = new int[10];
     }
+    isTranStepReady = false;
 }
 
-rl_thread::rl_thread(QString name):name(name), MP_count(0), MP_received(true), RL_sent(0), last_TURN_COUNT(-1) {
+rl_thread::rl_thread(QString name):name(name), chessStep_RL(chessStep(-1, -1, false, 0, 0)), tranChessStep_RL(tranChessStep(-1, -1, -1, -1, -1)), MP_count(0), MP_received(true), RL_sent(0), last_TURN_COUNT(-1) {
     qDebug() << name << " hello world (RL)";
     currentChessBoard = new int*[10];
     for(int i = 0; i < 10; i++) {
         currentChessBoard[i] = new int[10];
     }
+    isTranStepReady = false;
 }
 
 void rl_thread::__delayMsec(int Msec) {
@@ -233,6 +243,8 @@ void rl_thread::run() {
             qDebug() << "client reveive: " << msg_qstr;
 //            if(MP_count > 1) __QString2Board(msg_qstr);
             MP_received = true;
+            // @TODO msg_qstr -> step
+            generateStep(msg_qstr);
             // DEBUG, to pretend the robot finishes its turn
 //            if(MP_count > 1){
 //                CURRENT_TURN = true;
@@ -245,7 +257,7 @@ void rl_thread::run() {
             // @TODO
             // 1. generate request from current chessboard once the board has been changed (human-turn finished)
             // 2. time delay comes from the time needed for human-turn to finish
-            while(!(last_TURN_COUNT != TURN_COUNT && TURN_COUNT - last_TURN_COUNT > 1)) {
+            while(last_TURN_COUNT == TURN_COUNT) {
                 __delayMsec(10);
             }
             // TURN_COUNT = last_TURN_COUNT + 2
@@ -279,6 +291,37 @@ void rl_thread::run() {
     }
 }
 
+void rl_thread::generateStep(QString msg) {
+//    from
+//    int chessNum;
+//    int pos_x;
+//    int pos_y;
+//    int tar_x;
+//    int tar_y;
+    int offest = msg.size() - Global_RL::length;
+    int chessNum = msg.left(1 + offest).toInt();
+    int pos_x = msg.mid(offest + 2, 1).toInt();
+    int pos_y = msg.mid(offest + 3, 1).toInt();
+    int tar_x = msg.mid(offest + 4, 1).toInt();
+    int tar_y = msg.right(1).toInt();
+//    std::cout << "tran_step -> " << chessNum << " " << pos_x << " " << pos_y << " " << tar_x << " " << tar_y << " " << std::endl;
+//    to
+//    int _chessNum;
+//    int _chessNumber;
+//    bool _chessCamp;
+//    int _deltaX;
+//    int _deltaY;
+//    bool _isKill = false;
+//    int _chessKilledNum = -1;
+//    int _chessKilledNumber = -1;
+    tranChessStep_RL.chessNum = chessNum;
+    tranChessStep_RL.pos_x = pos_x;
+    tranChessStep_RL.pos_y = pos_y;
+    tranChessStep_RL.tar_x = tar_x;
+    tranChessStep_RL.tar_y = tar_y;
+    isTranStepReady = true;
+}
+
 void rl_thread::__displayCurrentChessBoard() {
     std::cout << "rl_thread::__displayCurrentChessBoard() called" << std::endl;
     for(int i = 0; i < 9; i++) {
@@ -300,7 +343,7 @@ QString rl_thread::generateRequest(int count) {
         }
     }
     __displayCurrentChessBoard();
-    QString request = "connection<" + QString::number(count) + ">";
+    QString request = QString(CURRENT_TURN ? "blk" : "red") + "-conn<" + QString::number(count) + ">";
     for(int i = 0; i < 9; i++) {
         for(int j = 0; j < 10; j++) {
             request += QString::number(currentChessBoard[i][j]) + "," + QString::number(i) + QString::number(j);
@@ -308,4 +351,12 @@ QString rl_thread::generateRequest(int count) {
         }
     }
     return request;
+}
+
+bool rl_thread::retuanIsTranStepReady() {
+    return isTranStepReady;
+}
+
+void rl_thread::setIsTranStepReady(bool curIsTranStepReady) {
+    isTranStepReady = curIsTranStepReady;
 }

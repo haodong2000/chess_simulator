@@ -38,7 +38,7 @@ vision_thread *vision  = NULL;          // USB Camera
 rl_thread *rl_brain    = NULL;          // RL AI in python
 int ** Main_chessBoard = NULL;          // Chess Board
 bool __curTurn;                         // true for red and false for black
-bool CURRENT_TURN      = true;          // true means red finishes his turn
+bool CURRENT_TURN      = false;         // false means black just finished his turn
 int TURN_COUNT         = 0;             // the number of turns
 int CHESS_PLAY_MODE = Menu::Mode::Human_AI_EndGame;
 int BACKGROUND_MODE = Menu::Background::ChristmasTree;
@@ -141,7 +141,7 @@ bool LetUsPlayChess() {
     else
         switch (CHESS_PLAY_MODE) {
         case 0: singleGameIn::Instance()->normalPlay(PARAM::NINE_NINE_NINE); break;
-        case 1: singleGameIn::Instance()->normalPlay_HumanVSAI(PARAM::NINE_NINE_NINE); break;
+        case 1: singleGameIn::Instance()->normalPlay_HumanVSAI_RL_Test(PARAM::NINE_NINE_NINE); break;
         case 2: singleGameIn::Instance()->normalPlay_HumanVSHuman(PARAM::NINE_NINE_NINE); break;
         case 3: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC(PARAM::NINE_NINE_NINE); break;
         case 4: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC_EndGame(PARAM::NINE_NINE_NINE); break;

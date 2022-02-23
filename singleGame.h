@@ -21,6 +21,7 @@
 #include <vision_thread.h>
 
 #include "init_endgame.h"
+#include "tran_step.h"
 #include <algorithm>
 
 extern vision_thread *vision;
@@ -46,21 +47,21 @@ public:
     virtual bool compareSteps(chessStep last, chessStep current);
 
     // fake play
-    virtual void oneLevelChessing(int maxCount);
-    virtual void oneLevelChessing_HumanVSAI(int maxCount);
-    virtual void S_oneLevelChessing(int maxCount);
-    virtual int oneLevelStepIndex(bool redOrBlack);
-    virtual int S_oneLevelStepIndex(bool redOrBlack);
-    virtual void twoLevelChessing(int maxCount);
-    virtual void twoLevelChessing_HumanVSAI(int maxCount);
-    virtual void S_twoLevelChessing(int maxCount);
-    virtual int twoLevelStepIndex(bool redOrBlack);
-    virtual int S_twoLevelStepIndex(bool redOrBlack);
-    virtual void threeLevelChessing(int maxCount);
-    virtual void threeLevelChessing_HumanVSAI(int maxCount);
-    virtual int threeLevelStepIndex(bool redOrBlack);
-    virtual void S_threeLevelChessing(int maxCount);
-    virtual int S_threeLevelStepIndex(bool redOrBlack);
+//    virtual void oneLevelChessing(int maxCount);
+//    virtual void oneLevelChessing_HumanVSAI(int maxCount);
+//    virtual void S_oneLevelChessing(int maxCount);
+//    virtual int oneLevelStepIndex(bool redOrBlack);
+//    virtual int S_oneLevelStepIndex(bool redOrBlack);
+//    virtual void twoLevelChessing(int maxCount);
+//    virtual void twoLevelChessing_HumanVSAI(int maxCount);
+//    virtual void S_twoLevelChessing(int maxCount);
+//    virtual int twoLevelStepIndex(bool redOrBlack);
+//    virtual int S_twoLevelStepIndex(bool redOrBlack);
+//    virtual void threeLevelChessing(int maxCount);
+//    virtual void threeLevelChessing_HumanVSAI(int maxCount);
+//    virtual int threeLevelStepIndex(bool redOrBlack);
+//    virtual void S_threeLevelChessing(int maxCount);
+//    virtual int S_threeLevelStepIndex(bool redOrBlack);
 
     // real play
     virtual void normalPlay(int maxCount);
@@ -72,6 +73,9 @@ public:
     virtual void normalPlay_HumanVSHuman_EndGame(int maxCount);
     virtual void normalPlay_HumanVSAI_EndGame(int maxCount);
 
+    // advanced play
+    virtual void normalPlay_HumanVSAI_RL_Test(int maxCount);
+
     virtual int MonteCarloTree_black(int depth);
     virtual int QuiescentSearch_black(int depth);
     virtual int Quiescent_alpha_beta_getMin(int depth, int curMin);
@@ -82,9 +86,9 @@ public:
     virtual int alpha_beta_getMax(int depth, int curMax);
     virtual bool isHorseCannonStep_red(const chessStep& curStep);
     virtual bool isHorseCannonStep_black(const chessStep& curStep);
-    virtual int alpha_beta_try(int depth, int alpha, int beta, bool redOrBlack);
-    virtual int normalPlayIndex_old(bool redOrBlack);
-    virtual int alpha_beta_old(int depth, int alpha, int beta, bool redOfBlack);
+//    virtual int alpha_beta_try(int depth, int alpha, int beta, bool redOrBlack);
+//    virtual int normalPlayIndex_old(bool redOrBlack);
+//    virtual int alpha_beta_old(int depth, int alpha, int beta, bool redOfBlack);
 
     // interface
     virtual void realMove(chessStep step);
@@ -112,6 +116,10 @@ public:
     virtual void deleteStepList(QVector<chessStep*>& stepList);
 
     int VisionHumanStepIndex(const QVector<chessStep>& curStepList);
+
+    void getChessStep_RL();
+    virtual int getStepIndex_RL(QVector<chessStep> stepList);
+    chessStep Step_RL;
 
     Step* finalChessStep;
     QVector<Step*> chessBlackStepList;
