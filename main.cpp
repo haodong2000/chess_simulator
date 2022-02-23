@@ -78,8 +78,8 @@ int main(int argc, char *argv[]) {
     vision->start();
     // PythonMudule *python_vision = new PythonMudule("vision");
     // python_vision->start(QThread::HighPriority);
-    rl_brain = new rl_thread("rl_thread");
-    vision->name = "rl_thread";
+    rl_brain = new rl_thread();
+    rl_brain->name = "rl_thread";
     rl_brain->start();
 
     QObject *objectTemp(0); // initialization

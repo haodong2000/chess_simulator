@@ -179,14 +179,14 @@ namespace Global_RL {
 }
 
 rl_thread::rl_thread():MP_count(0), MP_received(true), RL_sent(0), last_TURN_COUNT(-1) {
-    qDebug() << " hello world (RL)";
+    qDebug() << "rl_thread hello world (RL)";
     currentChessBoard = new int*[10];
     for(int i = 0; i < 10; i++) {
         currentChessBoard[i] = new int[10];
     }
 }
 
-rl_thread::rl_thread(QString name):MP_count(0), MP_received(true), RL_sent(0), last_TURN_COUNT(-1) {
+rl_thread::rl_thread(QString name):name(name), MP_count(0), MP_received(true), RL_sent(0), last_TURN_COUNT(-1) {
     qDebug() << name << " hello world (RL)";
     currentChessBoard = new int*[10];
     for(int i = 0; i < 10; i++) {
@@ -266,7 +266,7 @@ void rl_thread::run() {
                     " -> CURRENT_TURN " + QString::number((CURRENT_TURN == true ? 1 : 0)) +
                     " -> TURN_COUNT " + QString::number(TURN_COUNT) +
                     " -> last_TURN_COUNT " + QString::number(last_TURN_COUNT);
-            request = generateRequest();
+            request = generateRequest(MP_count);
             if(client->write(request.toLatin1(), request.length()) == -1) {
                 qDebug() << "rl_thread.cpp line:55 run() write failed!";
             }
@@ -293,12 +293,19 @@ void rl_thread::__displayCurrentChessBoard() {
     }
 }
 
-QString rl_thread::generateRequest() {
+QString rl_thread::generateRequest(int count) {
     for(int i = 0; i < 9; i++) {
         for(int j = 0; j < 10; j++) {
             currentChessBoard[i][j] = Main_chessBoard[j][i];
         }
     }
     __displayCurrentChessBoard();
-    return "testtesttest";
+    QString request = "connection<" + QString::number(count) + ">";
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 10; j++) {
+            request += QString::number(currentChessBoard[i][j]) + "," + QString::number(i) + QString::number(j);
+            request += ";";
+        }
+    }
+    return request;
 }

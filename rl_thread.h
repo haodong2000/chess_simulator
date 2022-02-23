@@ -31,7 +31,7 @@ public:
     void run();
     virtual void __delayMsec(int Msec);
     virtual void __displayCurrentChessBoard();
-    virtual QString generateRequest();
+    virtual QString generateRequest(int count);
 public:
     QString name;
     int **currentChessBoard;
