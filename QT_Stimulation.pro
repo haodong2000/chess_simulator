@@ -55,6 +55,7 @@ SOURCES += \
         main.cpp \
     SGeoPoint.cpp \
     coordinate.cpp \
+    rl_thread.cpp \
     singleGame.cpp \
     singleton.cpp  \
     vision_thread.cpp \
@@ -116,6 +117,7 @@ HEADERS += \
     global.h \
     globalChesses.h \
     init_endgame.h \
+    rl_thread.h \
     singleGame.h \
     singleton.h \
     vision_thread.h \

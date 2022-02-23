@@ -22,7 +22,8 @@
 #include "singleGame.h"
 #include "Navigation.h"
 
-#include <vision_thread.h>
+#include "vision_thread.h"
+#include "rl_thread.h"
 #include "StartGui.h"
 #include <QtQuick>
 
@@ -33,7 +34,8 @@
 //#include <QtSingleApplication>
 
 QObject* object;
-vision_thread *vision = NULL;           // USB Camera
+vision_thread *vision  = NULL;          // USB Camera
+rl_thread *rl_brain    = NULL;          // RL AI in python
 int ** Main_chessBoard = NULL;          // Chess Board
 bool __curTurn;                         // true for red and false for black
 int CHESS_PLAY_MODE = Menu::Mode::Human_AI_EndGame;
@@ -74,6 +76,9 @@ int main(int argc, char *argv[]) {
     vision->start();
     // PythonMudule *python_vision = new PythonMudule("vision");
     // python_vision->start(QThread::HighPriority);
+    rl_brain = new rl_thread("rl_thread");
+    vision->name = "rl_thread";
+    rl_brain->start();
 
     QObject *objectTemp(0); // initialization
     if(!objList.empty()) objectTemp = *objList.begin();
