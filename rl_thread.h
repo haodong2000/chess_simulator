@@ -30,12 +30,16 @@ struct tranChessStep {
     int pos_y;
     int tar_x;
     int tar_y;
-    tranChessStep(int _chessNum, int _pos_x, int _pos_y, int _tar_x, int _tar_y) {
+    bool kill;
+    int kill_num;
+    tranChessStep(int _chessNum, int _pos_x, int _pos_y, int _tar_x, int _tar_y, bool _kill = false, int _kill_num = 0) {
         this->chessNum = _chessNum;
-        this->pos_x = _pos_x;
-        this->pos_y = _pos_y;
-        this->tar_x = _tar_x;
-        this->tar_y = _tar_y;
+        this->pos_x    = _pos_x;
+        this->pos_y    = _pos_y;
+        this->tar_x    = _tar_x;
+        this->tar_y    = _tar_y;
+        this->kill     = _kill;
+        this->kill_num = _kill_num;
     }
 };
 

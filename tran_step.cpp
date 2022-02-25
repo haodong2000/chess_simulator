@@ -18,16 +18,16 @@ void tran_step::tranStep2ChessStep() {
     int pos_x = rl_brain->tranChessStep_RL.pos_y;
     int tar_y = rl_brain->tranChessStep_RL.tar_x;
     int tar_x = rl_brain->tranChessStep_RL.tar_y;
+    bool kill = rl_brain->tranChessStep_RL.kill;
+    int k_num = rl_brain->tranChessStep_RL.kill_num;
     Step._chessNum = chessNum;
+//    std::cout << Ab_gen_1->getPosX() << " " << Ab_gen_1->getPosY() << "  ==  " << pos_x << " " << pos_y << std::endl;
     Step._chessNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(pos_x, pos_y)->chessNumber();
     Step._deltaX = tar_x; // no delta bur target!
     Step._deltaY = tar_y;
-    Step._isKill = GlobalEnvirIn::Instance()->__isThereHasChess(tar_x, tar_y);
-//    std::cout << Step._chessNum << " " << Step._chessNumber << " " << Step._deltaX << " " << Step._deltaY << std::endl;
-    if(Step._isKill) {
-        Step._chessKilledNum = GlobalEnvirIn::Instance()->__QStr2intName(
-                    GlobalEnvirIn::Instance()->__QString2SimpleName(
-                        GlobalEnvirIn::Instance()->__whichChessOnThere(tar_x, tar_y)->chessName()));
+    Step._isKill = kill;
+    if(kill) {
+        Step._chessKilledNum = k_num;
         Step._chessKilledNumber = GlobalEnvirIn::Instance()->__whichChessOnThere(tar_x, tar_y)->chessNumber();
     }
     rl_brain->setIsTranStepReady(false);

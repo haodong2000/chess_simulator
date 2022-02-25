@@ -183,7 +183,6 @@ namespace Global_RL {
     };
 
     const bool rl_debug = false;
-    const int length = 6;
 }
 
 rl_thread::rl_thread():chessStep_RL(chessStep(-1, -1, false, 0, 0)), tranChessStep_RL(tranChessStep(-1, -1, -1, -1, -1)), MP_count(0), MP_received(true), RL_sent(0), last_TURN_COUNT(-1) {
@@ -298,13 +297,23 @@ void rl_thread::generateStep(QString msg) {
 //    int pos_y;
 //    int tar_x;
 //    int tar_y;
-    int offest = msg.size() - Global_RL::length;
-    int chessNum = msg.left(1 + offest).toInt();
-    int pos_x = msg.mid(offest + 2, 1).toInt();
-    int pos_y = msg.mid(offest + 3, 1).toInt();
-    int tar_x = msg.mid(offest + 4, 1).toInt();
-    int tar_y = msg.right(1).toInt();
-//    std::cout << "tran_step -> " << chessNum << " " << pos_x << " " << pos_y << " " << tar_x << " " << tar_y << " " << std::endl;
+    int index_one = 0;
+    for(int i = 0; i < msg.size(); i++) {
+        if (index_one == 0 && msg.at(i) == ',') {
+            index_one = i;
+            break;
+        }
+    }
+    int chessNum = msg.left(index_one).toInt();
+    int pos_x    = msg.mid(index_one + 1, 1).toInt();
+    int pos_y    = msg.mid(index_one + 2, 1).toInt();
+    int tar_x    = msg.mid(index_one + 3, 1).toInt();
+    int tar_y    = msg.mid(index_one + 4, 1).toInt();
+    int kill     = msg.mid(index_one + 5, 1).toInt();
+    int kill_num = msg.mid(index_one + 6, msg.size() - (index_one + 6)).toInt();
+//    std::cout << "tran_step -> " << chessNum << " "
+//              << pos_x << " " << pos_y << " " << tar_x << " " << tar_y << " "
+//              << kill << " " << kill_num << std::endl;
 //    to
 //    int _chessNum;
 //    int _chessNumber;
@@ -315,10 +324,12 @@ void rl_thread::generateStep(QString msg) {
 //    int _chessKilledNum = -1;
 //    int _chessKilledNumber = -1;
     tranChessStep_RL.chessNum = chessNum;
-    tranChessStep_RL.pos_x = pos_x;
-    tranChessStep_RL.pos_y = pos_y;
-    tranChessStep_RL.tar_x = tar_x;
-    tranChessStep_RL.tar_y = tar_y;
+    tranChessStep_RL.pos_x    = pos_x;
+    tranChessStep_RL.pos_y    = pos_y;
+    tranChessStep_RL.tar_x    = tar_x;
+    tranChessStep_RL.tar_y    = tar_y;
+    tranChessStep_RL.kill     = (kill == 1) ? true : false;
+    tranChessStep_RL.kill_num = kill_num;
     isTranStepReady = true;
 }
 
