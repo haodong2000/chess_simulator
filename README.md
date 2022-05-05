@@ -1,6 +1,6 @@
 # chessRobotSimulation_QT
 
-> chessRobotSimulation_QT_platform
+> based on [Qt5.14.2](https://download.qt.io/archive/qt/5.14/5.14.2/)
 
 2021/05/27 learn qml, design the canvas
 
