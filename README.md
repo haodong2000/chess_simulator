@@ -1,6 +1,6 @@
 # chessRobotSimulation_QT
 
-> based on [Qt5.14.2](https://download.qt.io/archive/qt/5.14/5.14.2/)
+> based on [Qt5.14.2](https://download.qt.io/archive/qt/5.14/5.14.2/), best performance with 1920\*1080 and 60 Hz
 
 2021/05/27 learn qml, design the canvas
 
