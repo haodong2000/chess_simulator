@@ -4,8 +4,8 @@ import QtQuick.Window 2.1
 
 
 Rectangle {
-    width: Screen.width/10.0
-    height: Screen.height/15.0
+    width: 1920/10.0
+    height: 1080/15.0
     color: "#c06f98"
     opacity: 0.75
     radius: 20

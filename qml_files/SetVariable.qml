@@ -11,10 +11,10 @@ Rectangle {
 
     Item {
         id: setField
-        property int textWidth: Screen.width/10.0
-        property int textHeight: Screen.height/15.0
-        property double cubeSizeHeight: Screen.height/10.0 // Screen.width
-        property double cubeSizeWidth: (Screen.height * 2.0)/15.0 // Screen.height
+        property int textWidth: 1920/10.0
+        property int textHeight: 1080/15.0
+        property double cubeSizeHeight: 1080/10.0 // 1920
+        property double cubeSizeWidth: (1080 * 2.0)/15.0 // 1080
 
         property int initWindowDelta: cubeSizeWidth * 0.5
         property int initWindowWidth: cubeSizeWidth * 3.7
@@ -72,7 +72,7 @@ Rectangle {
         spacing: setField.initWindowDelta * 0.2
         TextField {
             width: setField.textWidth
-            height: Screen.height/30.0
+            height: 1080/30.0
 
             text: "1"
             background: Rectangle{
@@ -90,7 +90,7 @@ Rectangle {
         }
         TextField {
             width: setField.textWidth
-            height: Screen.height/30.0
+            height: 1080/30.0
 
             text: "1"
             background: Rectangle{
@@ -109,7 +109,7 @@ Rectangle {
     }
 
     Row {
-        x: setField.cubeSizeWidth * 7.75 + setField.initWindowDelta * 4.0 + Screen.width/10.0
+        x: setField.cubeSizeWidth * 7.75 + setField.initWindowDelta * 4.0 + 1920/10.0
         y: setField.cubeSizeHeight * 4.75 + 5
         z: (setField.initWindowShow) ? 4 : -4
         spacing: setField.initWindowDelta * 4.0

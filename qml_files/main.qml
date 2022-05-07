@@ -21,20 +21,20 @@ Window {
 
     title: qsTr("Chess Robot Stimulation")
     visible: true
-//    width: Screen.desktopAvailableWidth // Screen.width
-//    height: Screen.desktopAvailableHeight // Screen.height
-    width: Screen.width // 1920
-    height: Screen.height // 1080
+//    width: Screen.desktopAvailableWidth // 1920
+//    height: Screen.desktopAvailableHeight // 1080
+    width: 1920 // 1920
+    height: 1080 // 1080
     color: "#2f2f35"
 
     Item {
         id: field
         anchors.fill: parent
         objectName: "field_root"
-//        property double cubeSizeHeight: Screen.desktopAvailableHeight/10.0 // Screen.width
-//        property double cubeSizeWidth: (Screen.desktopAvailableHeight * 2.0)/15.0 // Screen.height
-        property double cubeSizeHeight: Screen.height/10.0 // Screen.width
-        property double cubeSizeWidth: (Screen.height * 2.0)/15.0 // Screen.height
+//        property double cubeSizeHeight: Screen.desktopAvailableHeight/10.0 // 1920
+//        property double cubeSizeWidth: (Screen.desktopAvailableHeight * 2.0)/15.0 // 1080
+        property double cubeSizeHeight: 1080/10.0 // 1920
+        property double cubeSizeWidth: (1080 * 2.0)/15.0 // 1080
         property double distBetweenBoardAndBoundaryHeight: cubeSizeHeight * 0.1
         property double distBetweenBoardAndBoundaryWidth: cubeSizeWidth * 0.1
         property double distOfSpecialChessPositionHeight: cubeSizeHeight * 0.075
@@ -63,7 +63,7 @@ Window {
         property int modelOneSingle:  (showInitCHessBoardRepeat == true) ? 1:0
         property int modelFiveSingle: (showInitCHessBoardRepeat == true) ? 5:0
         property double copyrightX: cubeSizeWidth/10.0
-        property double copyrightY: Screen.height - cubeSizeHeight/1.5
+        property double copyrightY: 1080 - cubeSizeHeight/1.5
 
         property double chessSize: cubeSizeWidth * 0.625
 
@@ -191,10 +191,10 @@ Window {
 //        property double boundaryWidthWidth: cubeSizeWidth * 0.075
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        property int turn_cube_x: Screen.width - Screen.width/4.0
-        property int turn_cube_y: Screen.height/7.5
-        property int turn_cube_width: Screen.width/5.0
-        property int turn_cube_height: Screen.height/10.0
+        property int turn_cube_x: 1920 - 1920/4.0
+        property int turn_cube_y: 1080/7.5
+        property int turn_cube_width: 1920/5.0
+        property int turn_cube_height: 1080/10.0
         property int turn_width: boundaryWidth * 2.5
         property bool ai_turn: false
         property bool humen_turn: !ai_turn
@@ -653,17 +653,17 @@ Window {
         z: (field.initWindowShow) ? 4 : -4
         spacing: field.initWindowDelta * 0.2
         MyLabel {
-            height: Screen.height/30.0
+            height: 1080/30.0
             id: endLabel
         }
         MyLabel {
-            height: Screen.height/30.0
+            height: 1080/30.0
             id: manualLabel
         }
     }
 
     Row {
-        x: field.cubeSizeWidth * 7.75 + field.initWindowDelta * 4.0 + Screen.width/10.0
+        x: field.cubeSizeWidth * 7.75 + field.initWindowDelta * 4.0 + 1920/10.0
         y: field.cubeSizeHeight * 4.0 - 25
         z: (field.initWindowShow) ? 4 : -4
         spacing: field.initWindowDelta * 4.0
@@ -676,7 +676,7 @@ Window {
     }
 
     Row {
-        x: Screen.width/2.0 - 300
+        x: 1920/2.0 - 300
         y: field.cubeSizeHeight * 8.75
         z: (field.initWindowShow) ? 8 : -4
         spacing: field.initWindowDelta * 0.75
@@ -890,8 +890,8 @@ Window {
         id: init_background
         x: 0
         y: 0
-        width: Screen.width
-        height: Screen.height
+        width: 1920
+        height: 1080
         color: "#fffef9"
         opacity: 0.25
         z: field.infomationShow ? 6 : ((field.initWindowShow) ? 3 : -4)
@@ -980,8 +980,8 @@ Window {
         id: background_rect
         x: 0
         y: 0
-        width: Screen.width
-        height: Screen.height
+        width: 1920
+        height: 1080
         color: (field.isBackgroundSet) ? "#fffef9" : "#2f2f35"
         opacity: (field.isBackgroundSet) ? 0.25 : 1.0
         z: -1
@@ -1373,7 +1373,7 @@ Window {
     }
 
     Rectangle{
-        width: Screen.width
+        width: 1920
         height: field.cubeSizeHeight * 6
         x: 0
         y: field.cubeSizeHeight * 1.5
