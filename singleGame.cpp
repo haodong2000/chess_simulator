@@ -613,7 +613,14 @@ void singleGame::normalPlay_HumanVSAI_CIMC(int maxCount) {
         }
         else if(!redOrBlack && (!curStepList.empty())) {
             curStepList.append(originBlackChessStepList);
-            int sizeIndex = alpha_beta_black(_level);
+            int sizeIndex = 0;
+            if(_level >= 4) {
+                std::cout << "Using RL Step Generator ..." << std::endl;
+                sizeIndex = getStepIndex_RL(curStepList);
+            }
+            else {
+                sizeIndex = alpha_beta_black(_level);
+            }
             int dest_x = curStepList.at(sizeIndex)._deltaX;
             int dest_y = curStepList.at(sizeIndex)._deltaY;
             int init_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosX();
@@ -698,7 +705,14 @@ void singleGame::normalPlay_HumanVSAI_CIMC_EndGame(int maxCount) {
         }
         else if(!redOrBlack && (!curStepList.empty())) {
             curStepList.append(originBlackChessStepList);
-            int sizeIndex = alpha_beta_black(_level);
+            int sizeIndex = 0;
+            if(_level >= 4) {
+                std::cout << "Using RL Step Generator ..." << std::endl;
+                sizeIndex = getStepIndex_RL(curStepList);
+            }
+            else {
+                sizeIndex = alpha_beta_black(_level);
+            }
             int dest_x = curStepList.at(sizeIndex)._deltaX;
             int dest_y = curStepList.at(sizeIndex)._deltaY;
             int init_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosX();
@@ -968,7 +982,14 @@ void singleGame::normalPlay_HumanVSAI(int maxCount) {
         }
         else if(!redOrBlack && (!curStepList.empty())) {
             curStepList.append(originBlackChessStepList);
-            int sizeIndex = alpha_beta_black(_level);
+            int sizeIndex = 0;
+            if(_level >= 4) {
+                std::cout << "Using RL Step Generator ..." << std::endl;
+                sizeIndex = getStepIndex_RL(curStepList);
+            }
+            else {
+                sizeIndex = alpha_beta_black(_level);
+            }
 //            int sizeIndex = QuiescentSearch_black(_level + 2); // 2021-08-02
             int dest_x = curStepList.at(sizeIndex)._deltaX;
             int dest_y = curStepList.at(sizeIndex)._deltaY;
@@ -1121,7 +1142,14 @@ void singleGame::normalPlay_HumanVSAI_EndGame(int maxCount) {
         }
         else if(!redOrBlack && (!curStepList.empty())) {
             curStepList.append(originBlackChessStepList);
-            int sizeIndex = alpha_beta_black(_level);
+            int sizeIndex = 0;
+            if(_level >= 4) {
+                std::cout << "Using RL Step Generator ..." << std::endl;
+                sizeIndex = getStepIndex_RL(curStepList);
+            }
+            else {
+                sizeIndex = alpha_beta_black(_level);
+            }
             int dest_x = curStepList.at(sizeIndex)._deltaX;
             int dest_y = curStepList.at(sizeIndex)._deltaY;
             int init_x = GlobalEnvirIn::Instance()->__QStrOrInt2Chess(curStepList.at(sizeIndex)._chessNum, curStepList.at(sizeIndex)._chessNumber)->getPosX();
@@ -1194,12 +1222,26 @@ void singleGame::normalPlay(int maxCount) {
         if(redOrBlack) curStepList.append(originRedChessStepList);
         else curStepList.append(originBlackChessStepList);
         if(redOrBlack && (!curStepList.empty())) {
-            int sizeIndex = alpha_beta_red(_level);
+            int sizeIndex = 0;
+            if(_level >= 4) {
+                std::cout << "Using RL Step Generator ..." << std::endl;
+                sizeIndex = getStepIndex_RL(curStepList);
+            }
+            else {
+                sizeIndex = alpha_beta_red(_level);
+            }
             realMove(curStepList.at(sizeIndex));
         }
         else if(!redOrBlack && (!curStepList.empty())) {
             curStepList.append(originBlackChessStepList);
-            int sizeIndex = alpha_beta_black(_level);
+            int sizeIndex = 0;
+            if(_level >= 4) {
+                std::cout << "Using RL Step Generator ..." << std::endl;
+                sizeIndex = getStepIndex_RL(curStepList);
+            }
+            else {
+                sizeIndex = alpha_beta_black(_level);
+            }
             realMove(curStepList.at(sizeIndex));
         }
         else {
@@ -1252,12 +1294,26 @@ void singleGame::normalPlay_EndGame(int maxCount) {
         if(redOrBlack) curStepList.append(originRedChessStepList);
         else curStepList.append(originBlackChessStepList);
         if(redOrBlack && (!curStepList.empty())) {
-            int sizeIndex = alpha_beta_red(_level);
+            int sizeIndex = 0;
+            if(_level >= 4) {
+                std::cout << "Using RL Step Generator ..." << std::endl;
+                sizeIndex = getStepIndex_RL(curStepList);
+            }
+            else {
+                sizeIndex = alpha_beta_red(_level);
+            }
             realMove(curStepList.at(sizeIndex));
         }
         else if(!redOrBlack && (!curStepList.empty())) {
             curStepList.append(originBlackChessStepList);
-            int sizeIndex = alpha_beta_black(_level);
+            int sizeIndex = 0;
+            if(_level >= 4) {
+                std::cout << "Using RL Step Generator ..." << std::endl;
+                sizeIndex = getStepIndex_RL(curStepList);
+            }
+            else {
+                sizeIndex = alpha_beta_black(_level);
+            }
             realMove(curStepList.at(sizeIndex));
         }
         else {
