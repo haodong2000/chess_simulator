@@ -75,6 +75,8 @@ public:
 
     // advanced play
     virtual void normalPlay_HumanVSAI_RL_Test(int maxCount);
+    // Test pruning V.S. RL
+    virtual void normalPlay_AIVSAI_AB_RL_Test(int maxCount);
 
     virtual int MonteCarloTree_black(int depth);
     virtual int QuiescentSearch_black(int depth);

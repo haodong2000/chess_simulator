@@ -1233,7 +1233,7 @@ void singleGame::normalPlay(int maxCount) {
             realMove(curStepList.at(sizeIndex));
         }
         else if(!redOrBlack && (!curStepList.empty())) {
-            curStepList.append(originBlackChessStepList);
+//            curStepList.append(originBlackChessStepList);
             int sizeIndex = 0;
             if(_level >= 4) {
                 std::cout << "Using RL Step Generator ..." << std::endl;
@@ -1242,6 +1242,65 @@ void singleGame::normalPlay(int maxCount) {
             else {
                 sizeIndex = alpha_beta_black(_level);
             }
+            realMove(curStepList.at(sizeIndex));
+        }
+        else {
+            qDebug() << "singleGame.cpp line:499 normalPlay() error: curStepList is EMPTY!!!!!";
+            return;
+        }
+        gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
+        if(gameIsOn == false) {
+            if(Ab_gen_1->isAlive()) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        if(GlobalEnvirIn::Instance()->__isOnlyTwoGeneralsInRow()) {
+            gameIsOn = false;
+            if(redOrBlack) std::cout << "Black Win!" << std::endl;
+            else std::cout << "Red Win!" << std::endl;
+            if(redOrBlack) QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(false); // black win
+            else QmlConnectIn::Instance()->setWinnerWhenOnlyGeneralsInRow(true); // red win
+            GlobalEnvirIn::Instance()->__printBoard();
+        }
+        redOrBlack = !redOrBlack;
+    }
+    bool isHumanWin = (Ab_gen_1->isAlive() && Ar_gen_1->isAlive()) ? redOrBlack : (!redOrBlack);
+    GlobalEnvirIn::Instance()->__evaluatePlayerLevel(count, isHumanWin);
+}
+
+void singleGame::normalPlay_AIVSAI_AB_RL_Test(int maxCount) {
+    QmlConnectIn::Instance()->whetherStrategyMode(true);
+    QmlConnectIn::Instance()->setStrategyMode(PARAM::WHOLE_GAME);
+    initEndgameIn::Instance()->setInitStrategyBoard(PARAM::WHOLE_GAME);
+    // alpha-beta
+    bool gameIsOn = true;
+    bool redOrBlack = true;
+    int count = 0;
+    const int delayMs = 5;
+    while(gameIsOn && (count++) < maxCount) {
+        std::cout << "count chess moves -> " << count << std::endl;
+        // debug
+        TURN_COUNT = count - 1;
+        CURRENT_TURN = (count % 2) == 0;
+        GlobalEnvirIn::Instance()->__printBoard();
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+
+        if(redOrBlack) GlobalEnvirIn::Instance()->__setGameTurn(false);
+        else GlobalEnvirIn::Instance()->__setGameTurn(true);
+
+        GlobalEnvirIn::Instance()->__delayMsec(delayMs);
+        generateRedAllPossibleMoves();
+        generateBlackAllPossibleMoves();
+        QVector<chessStep> curStepList; // memory
+        curStepList.clear();
+        if(redOrBlack) curStepList.append(originRedChessStepList);
+        else curStepList.append(originBlackChessStepList);
+        if(redOrBlack && (!curStepList.empty())) {
+            int sizeIndex = getStepIndex_RL(curStepList);
+            realMove(curStepList.at(sizeIndex));
+        }
+        else if(!redOrBlack && (!curStepList.empty())) {
+            int sizeIndex = alpha_beta_black(_level);
             realMove(curStepList.at(sizeIndex));
         }
         else {
@@ -1305,7 +1364,7 @@ void singleGame::normalPlay_EndGame(int maxCount) {
             realMove(curStepList.at(sizeIndex));
         }
         else if(!redOrBlack && (!curStepList.empty())) {
-            curStepList.append(originBlackChessStepList);
+//            curStepList.append(originBlackChessStepList);
             int sizeIndex = 0;
             if(_level >= 4) {
                 std::cout << "Using RL Step Generator ..." << std::endl;
