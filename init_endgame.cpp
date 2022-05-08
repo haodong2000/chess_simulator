@@ -201,7 +201,7 @@ void init_endgame::setInitVisionBoard() {
 void init_endgame::setInitStrategyBoard(int strategy_mode) {
     // 2021-08-01
     if(strategy_mode < 0 || strategy_mode > PARAM::EndGame::MaxStrategyModeNum) {
-        qDebug() << "ERROR: init_endgame.cpp function:setInitStrategyBoard() line:179 strategy_mode inValid!";
+        qDebug() << "ERROR: init_endgame.cpp function:setInitStrategyBoard() line:179 strategy_mode inValid! strategy_mode -> " << strategy_mode;
         return;
     }
     for(int i = 0; i < 10; i++) {

@@ -22,7 +22,8 @@ namespace Menu {
         Human_AI_CIMC_EndGame,
         AI_AI_EndGame,
         Human_AI_EndGame,
-        Human_Human_EndGame
+        Human_Human_EndGame,
+        Test_Mode
     };
     // endGame mode: MeiHuaPu, JuZhongMi, MengRuShenJi, HuYaJi, TaoLueYuanJi, YuanShenHaiKuo
     enum Manual {

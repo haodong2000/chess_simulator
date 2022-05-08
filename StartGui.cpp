@@ -120,6 +120,10 @@ void StartGui::getCurrentTime(){
         CHESS_PLAY_MODE = Menu::Mode::Human_Human_EndGame;
         if(Menu::IsInitTestMode) std::cout << "CHESS_PLAY_MODE Changed! Current CHESS_PLAY_MODE -> " << this->m_intMode << std::endl;
         break;
+    case Menu::Mode::Test_Mode:
+        CHESS_PLAY_MODE = Menu::Mode::Test_Mode;
+        if(Menu::IsInitTestMode) std::cout << "CHESS_PLAY_MODE Changed! Current CHESS_PLAY_MODE -> " << this->m_intMode << std::endl;
+        break;
     default:
         qDebug() << "InValid Mode! 1~8 Wanted!";
     }

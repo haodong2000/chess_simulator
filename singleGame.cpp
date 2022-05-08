@@ -1269,6 +1269,7 @@ void singleGame::normalPlay(int maxCount) {
 }
 
 void singleGame::normalPlay_AIVSAI_AB_RL_Test(int maxCount) {
+    std::cout << "normalPlay_AIVSAI_AB_RL_Test -> " << "Red is AB -> " << "Black is RL" << std::endl;
     QmlConnectIn::Instance()->whetherStrategyMode(true);
     QmlConnectIn::Instance()->setStrategyMode(PARAM::WHOLE_GAME);
     initEndgameIn::Instance()->setInitStrategyBoard(PARAM::WHOLE_GAME);
@@ -1278,7 +1279,7 @@ void singleGame::normalPlay_AIVSAI_AB_RL_Test(int maxCount) {
     int count = 0;
     const int delayMs = 5;
     while(gameIsOn && (count++) < maxCount) {
-        std::cout << "count chess moves -> " << count << std::endl;
+        std::cout << "normalPlay_AIVSAI_AB_RL_Test -> count chess moves -> " << count << std::endl;
         // debug
         TURN_COUNT = count - 1;
         CURRENT_TURN = (count % 2) == 0;
@@ -1296,15 +1297,15 @@ void singleGame::normalPlay_AIVSAI_AB_RL_Test(int maxCount) {
         if(redOrBlack) curStepList.append(originRedChessStepList);
         else curStepList.append(originBlackChessStepList);
         if(redOrBlack && (!curStepList.empty())) {
-            int sizeIndex = getStepIndex_RL(curStepList);
+            int sizeIndex = alpha_beta_red(_level);
             realMove(curStepList.at(sizeIndex));
         }
         else if(!redOrBlack && (!curStepList.empty())) {
-            int sizeIndex = alpha_beta_black(_level);
+            int sizeIndex = getStepIndex_RL(curStepList);
             realMove(curStepList.at(sizeIndex));
         }
         else {
-            qDebug() << "singleGame.cpp line:499 normalPlay() error: curStepList is EMPTY!!!!!";
+            qDebug() << "singleGame.cpp line:1307 normalPlay_AIVSAI_AB_RL_Test() error: curStepList is EMPTY!!!!!";
             return;
         }
         gameIsOn = Ab_gen_1->isAlive() && Ar_gen_1->isAlive();
@@ -1424,7 +1425,7 @@ int singleGame::getStepIndex_RL(QVector<chessStep> stepList) {
             return i;
         }
     }
-    qDebug() << "error! singleGame.cpp line:1229 No step_rl match!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+    qDebug() << "error! singleGame.cpp line:1428 No step_rl match!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
     return 0;
 }
 

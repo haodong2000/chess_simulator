@@ -148,6 +148,7 @@ bool LetUsPlayChess() {
         case 5: singleGameIn::Instance()->normalPlay_EndGame(PARAM::NINE_NINE_NINE); break;
         case 6: singleGameIn::Instance()->normalPlay_HumanVSAI_EndGame(PARAM::NINE_NINE_NINE); break;
         case 7: singleGameIn::Instance()->normalPlay_HumanVSHuman_EndGame(PARAM::NINE_NINE_NINE); break;
+        case 8: singleGameIn::Instance()->normalPlay_AIVSAI_AB_RL_Test(PARAM::NINE_NINE_NINE); break;
         default: qDebug() << "main.cpp line:79 CHESS_PLAY_MODE inValid!!! (see Navigation.h)"; break;
         }
     while (Is_Game_No_Play == false) {

@@ -415,9 +415,9 @@ Window {
 8 -> Human_Human -----------> 人类与人类残局对弈(软件仿真)
 
 难度 (Difficulty)
-1 -> Simple-Level ----------> 初级水平
-2 -> Middle-Level ----------> 中级水平
-3 -> Hard-Level ------------> 进阶水平
+1 -> Zero-Level -------------------> 随机模式
+2/3/4 -> Simple/Middle/Hard-Level -> 初/中/高级水平
+5 -> RL-Level ---------------------> 强化学习
 "
         case 1:
             return "残局 (Endgame)                   \t棋谱 (Chess Manual)
@@ -604,7 +604,7 @@ Window {
 
     function currentInitModeInfo(idx) {
         switch(idx) {
-        case 0: return "请输入(Please Enter): 1~8"
+        case 0: return "请输入(Please Enter): 1~9"
         case 1: return "请输入(Please Enter): 1~5"
         case 2: return "请输入(Please Enter): \n0~1(Endgame), 1~8(Manual)"
         case 3: return "请输入(Please Enter): 0~1"
@@ -799,7 +799,10 @@ Window {
         case "8":
             InitSetUp.int_mode = Number(InitSetUp.mode)
             return "Human_Human_EndGame"
-        default: return "InValid! 1~8!"
+        case "9":
+            InitSetUp.int_mode = Number(InitSetUp.mode)
+            return "Test_Mode"
+        default: return "InValid! 1~9!"
         }
     }
 
