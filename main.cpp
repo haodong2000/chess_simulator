@@ -141,7 +141,7 @@ bool LetUsPlayChess() {
     else
         switch (CHESS_PLAY_MODE) {
         case 0: singleGameIn::Instance()->normalPlay(PARAM::NINE_NINE_NINE); break;
-        case 1: singleGameIn::Instance()->normalPlay_HumanVSAI_RL_Test(PARAM::NINE_NINE_NINE); break;
+        case 1: singleGameIn::Instance()->normalPlay_HumanVSAI(PARAM::NINE_NINE_NINE); break;
         case 2: singleGameIn::Instance()->normalPlay_HumanVSHuman(PARAM::NINE_NINE_NINE); break;
         case 3: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC(PARAM::NINE_NINE_NINE); break;
         case 4: singleGameIn::Instance()->normalPlay_HumanVSAI_CIMC_EndGame(PARAM::NINE_NINE_NINE); break;

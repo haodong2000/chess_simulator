@@ -1322,6 +1322,11 @@ int singleGame::alpha_beta_red(int depth) {
     allRed.append(originRedChessStepList);
     int sizeRed = allRed.size();
 
+    if(depth <= 0) {
+        std::cout << "alpha_beta_red() Depth -> " << depth << std::endl;
+        return GlobalEnvirIn::Instance()->__generateRandomNumber(sizeRed);
+    }
+
     int minInMax = 999999999;
     int theHorseCannonIndex_1st = -1;
     int theHorseCannonIndex_2nd = -1;
@@ -1407,6 +1412,11 @@ int singleGame::alpha_beta_black(int depth) {
     allBlack.clear();
     allBlack.append(originBlackChessStepList);
     int sizeBlack = allBlack.size();
+
+    if(depth <= 0) {
+        std::cout << "alpha_beta_black() Depth -> " << depth << std::endl;
+        return GlobalEnvirIn::Instance()->__generateRandomNumber(sizeBlack);
+    }
 
     int maxInMin = -999999999;
     int theHorseCannonIndex_1st = -1;

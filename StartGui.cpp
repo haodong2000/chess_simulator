@@ -14,7 +14,7 @@
 StartGui::StartGui(QObject *parent) : QObject(parent){
     this->m_strMode = "Human_AI_CIMC_EndGame";
     this->m_intMode = 5;
-    this->m_strDifficulty = "Hard-Level";
+    this->m_strDifficulty = "Middle-Level";
     this->m_intDifficulty = 3;
     this->m_nAge = 18;
     this->m_strEnd = "EndGame_Mode";
@@ -55,25 +55,37 @@ void StartGui::getCurrentTime(){
 //    int MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);
     switch (this->m_intDifficulty) {
     case 1:
-        BASIC_DEPTH = 1;
+        BASIC_DEPTH = 0;
         BEST_EXPONENT = BASIC_DEPTH * 2;
         MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);
         if(Menu::IsInitTestMode) std::cout << "Difficulty Changed! Current Difficulty -> " << this->m_intDifficulty << std::endl;
         break;
     case 2:
-        BASIC_DEPTH = 2;
+        BASIC_DEPTH = 1;
         BEST_EXPONENT = BASIC_DEPTH * 2;
         MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);
         if(Menu::IsInitTestMode) std::cout << "Difficulty Changed! Current Difficulty -> " << this->m_intDifficulty << std::endl;
         break;
     case 3:
+        BASIC_DEPTH = 2;
+        BEST_EXPONENT = BASIC_DEPTH * 2;
+        MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);
+        if(Menu::IsInitTestMode) std::cout << "Difficulty Changed! Current Difficulty -> " << this->m_intDifficulty << std::endl;
+        break;
+    case 4:
         BASIC_DEPTH = 3;
         BEST_EXPONENT = BASIC_DEPTH * 2;
         MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);
         if(Menu::IsInitTestMode) std::cout << "Difficulty Changed! Current Difficulty -> " << this->m_intDifficulty << std::endl;
         break;
+    case 5:
+        BASIC_DEPTH = 4;
+        BEST_EXPONENT = BASIC_DEPTH * 2;
+        MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);
+        if(Menu::IsInitTestMode) std::cout << "Difficulty Changed! Current Difficulty -> " << this->m_intDifficulty << std::endl;
+        break;
     default:
-        qDebug() << "InValid Difficulty! 1~3 Wanted!";
+        qDebug() << "InValid Difficulty! 1~5 Wanted!";
     }
     switch (this->m_intMode - 1) {
     case Menu::Mode::AI_AI:

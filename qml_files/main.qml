@@ -605,7 +605,7 @@ Window {
     function currentInitModeInfo(idx) {
         switch(idx) {
         case 0: return "请输入(Please Enter): 1~8"
-        case 1: return "请输入(Please Enter): 1~3"
+        case 1: return "请输入(Please Enter): 1~5"
         case 2: return "请输入(Please Enter): \n0~1(Endgame), 1~8(Manual)"
         case 3: return "请输入(Please Enter): 0~1"
         default: return console.log("Error: main.qml line:334 idx invalid!")
@@ -752,14 +752,20 @@ Window {
         switch(InitSetUp.difficulty) {
         case "1":
             InitSetUp.int_difficulty = Number(InitSetUp.difficulty)
-            return "Simple-Level"
+            return "Zero-Level"
         case "2":
             InitSetUp.int_difficulty = Number(InitSetUp.difficulty)
-            return "Middle-Level"
+            return "Simple-Level"
         case "3":
             InitSetUp.int_difficulty = Number(InitSetUp.difficulty)
+            return "Middle-Level"
+        case "4":
+            InitSetUp.int_difficulty = Number(InitSetUp.difficulty)
             return "Hard-Level"
-        default: return "InValid! 1~3!"
+        case "5":
+            InitSetUp.int_difficulty = Number(InitSetUp.difficulty)
+            return "RL-Level"
+        default: return "InValid! 1~5!"
         }
     }
 
