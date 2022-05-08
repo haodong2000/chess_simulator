@@ -36,6 +36,7 @@ namespace PARAM {
     // const int M1_PORT = PORT;
 
     const int START_DEPTH = 3;
+    const int RL_DEPTH = 4;
 //    const int BASIC_DEPTH = 3;
 //    const int BEST_EXPONENT = BASIC_DEPTH * 2;
 //    const int MAX_SEARCH_NODES = pow(44, BEST_EXPONENT);

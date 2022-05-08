@@ -1781,16 +1781,17 @@ void singleGame::realMove(chessStep step) {
         object->setProperty(QString("killedChessDisplay").toLatin1(), false);
     }
     QmlConnectIn::Instance()->changeChessPos(Num, Number, camp, PosX - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosX(), PosY - GlobalEnvirIn::Instance()->__QStrOrInt2Chess(Num, Number)->getPosY());
-    if(camp == true) {
-        // current camp is red
-        // next is black's turn
-        updateSearchDepth_black();
-    }
-    else {
-        // current camp is black
-        // next is red's turn
-        updateSearchDepth_red();
-    }
+// 2022-05-09 disable depth change
+//    if(camp == true) {
+//        // current camp is red
+//        // next is black's turn
+//        updateSearchDepth_black();
+//    }
+//    else {
+//        // current camp is black
+//        // next is red's turn
+//        updateSearchDepth_red();
+//    }
 }
 
 void singleGame::fakeMove(chessStep step) {
@@ -2225,7 +2226,7 @@ void singleGame::updateSearchDepth_black() {
         else break;
     }
     delta--;
-    if(currentSearchDepth_black() < basicLevel + delta) {
+    if(currentSearchDepth_black() < basicLevel + delta && basicLevel + delta < PARAM::RL_DEPTH) {
         changeSearchDepth_black(basicLevel + delta);
     }
     changeSearchDepth(currentSearchDepth_black(), "black");
@@ -2243,7 +2244,7 @@ void singleGame::updateSearchDepth_red() {
         else break;
     }
     delta--;
-    if(currentSearchDepth_red() < basicLevel + delta) {
+    if(currentSearchDepth_red() < basicLevel + delta && basicLevel + delta < PARAM::RL_DEPTH) {
         changeSearchDepth_red(basicLevel + delta);
     }
     changeSearchDepth(currentSearchDepth_red(), "Red");
