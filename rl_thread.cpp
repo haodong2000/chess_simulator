@@ -11,6 +11,7 @@ namespace Global_RL {
     const QString RL_HOST = "192.168.43.121";
     const int RL_PORT = 9999;
     const QString RL_INIT = "SHENYIPENG NB";
+    const int MIN_LEN = 5;
 
     enum CHESS_ALL_TABLE { // all chesses
         BLACK_1_GENERAL = 1,
@@ -240,7 +241,13 @@ void rl_thread::run() {
         char msg[1024] = {0};
         client->read(msg, 1024);
         QString msg_qstr = "";
-        if(strlen(msg) > 0) {
+        while (strlen(msg) <= Global_RL::MIN_LEN)
+        {
+            client->read(msg, 1024);
+            qDebug() << "======== rl_thread.cpp line:247 run() receive message from server error!" << " Smaller than MIN_LEN! ============";
+            __delayMsec(2000);
+        }
+        if(strlen(msg) > Global_RL::MIN_LEN) {
             msg_qstr = msg;
             MP_count++;
             qDebug() << MP_count << " communications";
@@ -297,7 +304,7 @@ void rl_thread::run() {
             else {
                 RL_sent++;
             }
-            std::cout << request.toStdString() << std::endl;
+            std::cout << "Request -> " << request.toStdString() << std::endl;
             MP_received = false;
         }
     }
@@ -305,7 +312,7 @@ void rl_thread::run() {
 
 void rl_thread::generateStep(QString msg) {
     if(msg == Global_RL::RL_INIT) {
-        qDebug() << "RRRRLLLL generateStep -> " << Global_RL::RL_INIT << Global_RL::RL_INIT << Global_RL::RL_INIT;
+        qDebug() << "RRRRLLLL generateStep -> " << msg;
         setIsTranStepReady(false);
         return;
     }
@@ -329,9 +336,9 @@ void rl_thread::generateStep(QString msg) {
     int tar_y    = msg.mid(index_one + 4, 1).toInt();
     int kill     = msg.mid(index_one + 5, 1).toInt();
     int kill_num = msg.mid(index_one + 6, msg.size() - (index_one + 6)).toInt();
-//    std::cout << "tran_step -> " << chessNum << " "
-//              << pos_x << " " << pos_y << " " << tar_x << " " << tar_y << " "
-//              << kill << " " << kill_num << std::endl;
+    std::cout << "tran_step -> " << chessNum << " "
+              << pos_x << " " << pos_y << " " << tar_x << " " << tar_y << " "
+              << kill << " " << kill_num << "\n==========FUCK=========" << std::endl;
 //    to
 //    int _chessNum;
 //    int _chessNumber;
