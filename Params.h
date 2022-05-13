@@ -26,9 +26,10 @@ namespace PARAM {
     const QString HOST = "127.0.0.1";
     const int PORT = 6666;
 
-//    const QString RL_HOST = "10.162.26.114";
     const QString RL_HOST = "127.0.0.1";
+//    NO USE, SEE rl_thread.cpp
     const int RL_PORT = 9999;
+    const QString RL_INIT = "SHENYIPENG NB";
 
     const QString M1_HOST = "192.168.1.49";
     const int M1_PORT = 8082;

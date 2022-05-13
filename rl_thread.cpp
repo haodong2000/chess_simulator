@@ -8,6 +8,10 @@
 *****************************************************************/
 
 namespace Global_RL {
+    const QString RL_HOST = "192.168.43.121";
+    const int RL_PORT = 9999;
+    const QString RL_INIT = "SHENYIPENG NB";
+
     enum CHESS_ALL_TABLE { // all chesses
         BLACK_1_GENERAL = 1,
 
@@ -210,7 +214,7 @@ void rl_thread::__delayMsec(int Msec) {
 }
 
 void rl_thread::run() {
-    client->connectToHost(PARAM::RL_HOST, PARAM::RL_PORT);
+    client->connectToHost(Global_RL::RL_HOST, Global_RL::RL_PORT);
     if(client->waitForConnected(10000)) {
         qDebug() << this->name << " Connected! (RL)";
     }
@@ -223,6 +227,7 @@ void rl_thread::run() {
     if(client->write(data.toLatin1(), data.length()) == -1) {
         qDebug() << "rl_thread.cpp line:23 run() write failed!";
     }
+    qDebug() << "RL_INIT -> " << data;
     // exit
 //    QString exit_data = "exit";
 //    if(client->write(exit_data.toLatin1(), exit_data.length()) == -1) {
@@ -239,11 +244,15 @@ void rl_thread::run() {
             msg_qstr = msg;
             MP_count++;
             qDebug() << MP_count << " communications";
-            qDebug() << "client reveive: " << msg_qstr;
+            qDebug() << "client reveive: " << msg_qstr << Global_RL::RL_INIT << "DDDDD";
 //            if(MP_count > 1) __QString2Board(msg_qstr);
             MP_received = true;
             // @TODO msg_qstr -> step
-            generateStep(msg_qstr);
+            if(msg_qstr != Global_RL::RL_INIT) generateStep(msg_qstr);
+            else {
+                qDebug() << "RRLL client reveive: " << Global_RL::RL_INIT << Global_RL::RL_INIT << Global_RL::RL_INIT;
+                setIsTranStepReady(false);
+            }
             // DEBUG, to pretend the robot finishes its turn
 //            if(MP_count > 1){
 //                CURRENT_TURN = true;
@@ -277,7 +286,11 @@ void rl_thread::run() {
                     " -> CURRENT_TURN " + QString::number((CURRENT_TURN == true ? 1 : 0)) +
                     " -> TURN_COUNT " + QString::number(TURN_COUNT) +
                     " -> last_TURN_COUNT " + QString::number(last_TURN_COUNT);
-            request = generateRequest(MP_count);
+            if(msg_qstr != Global_RL::RL_INIT) request = generateRequest(MP_count);
+            else {
+                qDebug() << "RRRLLL client request: " << Global_RL::RL_INIT << Global_RL::RL_INIT << Global_RL::RL_INIT;
+                request = generateRequest(MP_count);
+            }
             if(client->write(request.toLatin1(), request.length()) == -1) {
                 qDebug() << "rl_thread.cpp line:55 run() write failed!";
             }
@@ -291,6 +304,11 @@ void rl_thread::run() {
 }
 
 void rl_thread::generateStep(QString msg) {
+    if(msg == Global_RL::RL_INIT) {
+        qDebug() << "RRRRLLLL generateStep -> " << Global_RL::RL_INIT << Global_RL::RL_INIT << Global_RL::RL_INIT;
+        setIsTranStepReady(false);
+        return;
+    }
 //    from
 //    int chessNum;
 //    int pos_x;
