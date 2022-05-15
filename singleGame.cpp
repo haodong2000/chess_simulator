@@ -1410,9 +1410,16 @@ void singleGame::getChessStep_RL() {
     Step_RL._isKill = tranStepIn::Instance()->Step._isKill;
     Step_RL._deltaX = tranStepIn::Instance()->Step._deltaX;
     Step_RL._deltaY = tranStepIn::Instance()->Step._deltaY;
+    if(Step_RL._chessNum >= PARAM::globalEnvironment::RED_GENERAL) {
+        Step_RL._chessCamp = true;
+    }
+    else {
+        Step_RL._chessCamp = false;
+    }
     std::cout << "-!-!-!- getChessStep_RL -> " << Step_RL._chessNum << " "
               << Step_RL._chessNumber << " " << Step_RL._deltaX << " " << Step_RL._deltaY << " "
-              << Step_RL._isKill << "\n==========NUM, NUMBER, X, Y, K=========" << std::endl;
+              << Step_RL._isKill << " " << Step_RL._chessCamp
+              << "\n==========NUM, NUMBER, X, Y, K, C=========" << std::endl;
     if(Step_RL._isKill) {
         Step_RL._chessKilledNum = tranStepIn::Instance()->Step._chessKilledNum;
         Step_RL._chessKilledNumber = tranStepIn::Instance()->Step._chessKilledNumber;
@@ -1425,15 +1432,19 @@ int singleGame::getStepIndex_RL(QVector<chessStep> stepList) {
     for(int i = 0; i < size; i++) {
         if(stepList.at(i)._isKill == true && (stepList.at(i)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::BLACK_GENERAL ||
                 stepList.at(i)._chessKilledNum == PARAM::globalEnvironment::CHESS_TABLE::RED_GENERAL)) {
+//            std::cout << "-@-@-@- getStepIndex_RL -> " << stepList.at(i)._chessNum << " "
+//                      << stepList.at(i)._chessNumber << " " << stepList.at(i)._deltaX << " " << stepList.at(i)._deltaY << " "
+//                      << stepList.at(i)._isKill << " " << i << "\n==========NUM, NUMBER, X, Y, K=========" << std::endl;
             return i;
         }
     }
     getChessStep_RL();
     for(int i = 0; i < size; i++) {
+//        std::cout << "-%-%-%- getStepIndex_RL -> " << stepList.at(i)._chessNum << " "
+//                  << stepList.at(i)._chessNumber << " " << stepList.at(i)._deltaX << " " << stepList.at(i)._deltaY << " "
+//                  << stepList.at(i)._isKill << " " << stepList.at(i)._chessCamp
+//                  << "\n==========NUM, NUMBER, X, Y, K, C=========" << std::endl;
         if (compareSteps(stepList.at(i), Step_RL)) {
-//            std::cout << "-@-@-@- getStepIndex_RL -> " << stepList.at(i)._chessNum << " "
-//                      << stepList.at(i)._chessNumber << " " << stepList.at(i)._deltaX << " " << stepList.at(i)._deltaY << " "
-//                      << stepList.at(i)._isKill << "\n==========NUM, NUMBER, X, Y, K=========" << std::endl;
             return i;
         }
     }

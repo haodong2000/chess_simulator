@@ -8,7 +8,7 @@
 *****************************************************************/
 
 namespace Global_RL {
-    const QString RL_HOST = "192.168.43.121";
+    const QString RL_HOST = "172.20.10.5";
     const int RL_PORT = 9999;
     const QString RL_INIT = "SHENYIPENG NB";
     const int MIN_LEN = 5;
