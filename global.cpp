@@ -1494,6 +1494,44 @@ void GlobalEnvironment::__evaluatePlayerLevel(int roundNum, bool isHumanWin) {
             object->setProperty(QString("playerEvaluateLevel").toLatin1(), 1);
         }
         break;
+    case 4:
+        // RL Currently
+        if(isHumanWin && roundNum <= PARAM::ROUND_NUM_HARD_1)
+        {
+            // 92.5 + random
+            Evaluate.first = 92.5 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 7.5))/10.0;
+            // Hard
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 3);
+        }
+        else if(isHumanWin)
+        {
+            // 87.5 + random
+            Evaluate.first = 87.5 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Hard
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 3);
+        }
+        else if(roundNum > PARAM::ROUND_NUM_HARD_1)
+        {
+            // 75 + random
+            Evaluate.first = 75.0 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Hard
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 3);
+        }
+        else if(roundNum > PARAM::ROUND_NUM_HARD_2)
+        {
+            // 62.5 + random
+            Evaluate.first = 62.5 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Middle
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 2);
+        }
+        else
+        {
+            // 50 + random
+            Evaluate.first = 50.0 + double(__generateRandomNumber(PARAM::ROUND_RANDOM * 10))/10.0;
+            // Simple
+            object->setProperty(QString("playerEvaluateLevel").toLatin1(), 1);
+        }
+        break;
     default:
         break;
     }

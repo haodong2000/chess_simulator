@@ -315,6 +315,7 @@ void PythonMudule::analysis_human_setp() {
     // isBoardChanged = (count_different == 2);
     isBoardChanged = flagFirst && flagSecond;
     if(isBoardChanged == false) {
+        std::cout << "flagFirst -> " << flagFirst << "\t\t flagSecond -> " << flagSecond << std::endl;
         std::cout << "PythonMudule.cpp line:291 function:analysis_human_setp() isBoardChanegd = False" << std::endl;
     }
     // generate step
@@ -368,6 +369,8 @@ void PythonMudule::__QString2Board(QString origin_message) {
         QString chess_str = vision_chess.at(index).left(6);
         int PosX = vision_chess.at(index).mid(6, 1).toInt();
         int PosY = vision_chess.at(index).right(1).toInt();
+        if(PosY >= 5) PosY = 9 - PosY;
+        else PosY = 9 - PosY;
         __visionBoard[PosX][PosY] = __QStr2intName(chess_str);
         // std::cout << chess_str.toStdString() << " " << PosX << " " << PosY << std::endl;
     }
@@ -425,20 +428,24 @@ int PythonMudule::__generateHumanStep(const QVector<chessStep> &curStepList) {
     // isBoardChanged = (count_different == 2);
     isBoardChanged = flagFirst && flagSecond;
     if(isBoardChanged == false) {
+        std::cout << "flagFirst -> " << flagFirst << "\t\t flagSecond -> " << flagSecond << std::endl;
         std::cout << "PythonMudule.cpp line:276 function:__generateHumanStep() isBoardChanegd = False" << std::endl;
         return -1;
     }
     // generate step
-    int num = step_first.second.first;
+    // 2022-05-17
+//    int num = step_first.second.first;
     int init_x = step_first.first.first;
     int init_y = step_first.first.second;
+    int num = GlobalEnvirIn::Instance()->__QStr2intName(GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(init_x, init_y)->chessName()));
     int number = -1;
     if(isSimpleMoveOrKill == false) number = GlobalEnvirIn::Instance()->__whichChessOnThere(init_x, init_y)->chessNumber();
     bool kill = !isSimpleMoveOrKill;
     // bool kill = (step_second.second.first != 0);
-    int k_num = kill ? (step_second.second.first) : -1;
+//    int k_num = kill ? (step_second.second.first) : -1;
     int posX = step_second.first.first;
     int posY = step_second.first.second;
+//    int k_num = kill ? (GlobalEnvirIn::Instance()->__QStr2intName(GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(posX, posY)->chessName()))) : -1;
     // start to compare
     int size = curStepList.length();
     int index = -1;

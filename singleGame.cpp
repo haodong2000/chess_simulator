@@ -762,22 +762,35 @@ int singleGame::VisionHumanStepIndex(const QVector<chessStep>& curStepList) {
         return -1;
     }
     // generate step
-    int num = vision->python_vision->step_first.second.first;
+    // 2022-05-17
+//    int num = step_first.second.first;
     int init_x = vision->python_vision->step_first.first.first;
     int init_y = vision->python_vision->step_first.first.second;
+    int num = GlobalEnvirIn::Instance()->__QStr2intName(GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(init_x, init_y)->chessName()));
     int number = -1;
+//    if(vision->python_vision->isSimpleMoveOrKill == false) number = GlobalEnvirIn::Instance()->__whichChessOnThere(init_x, init_y)->chessNumber();
+//    bool kill = !vision->python_vision->isSimpleMoveOrKill;
+    // bool kill = (step_second.second.first != 0);
+//    int k_num = kill ? (step_second.second.first) : -1;
+    int posX = vision->python_vision->step_second.first.first;
+    int posY = vision->python_vision->step_second.first.second;
+//    int k_num = kill ? (GlobalEnvirIn::Instanc
+//    int num = vision->python_vision->step_first.second.first;
+//    int init_x = vision->python_vision->step_first.first.first;
+//    int init_y = vision->python_vision->step_first.first.second;
+//    int number = -1;
     int swap_init = init_x; // zjjjnb
     init_x = init_y;        // zjjjnb
     init_y = swap_init;     // zjjjnb
 //    init_y = 8 - init_y;
 //    std::cout << "init_x = " << init_x << ",  init_y = " << init_y << std::endl;
     number = GlobalEnvirIn::Instance()->__whichChessOnThere(init_x, init_y)->chessNumber();
-//    std::cout << init_x << " llll " << init_y << "   >>>>   " << num << "   " << number << std::endl;
-//    bool kill = !(vision->python_vision->isSimpleMoveOrKill);
-    bool kill = (vision->python_vision->step_second.second.first != 0);
-//    int k_num = kill ? (vision->python_vision->step_second.second.first) : -1;
-    int posX = vision->python_vision->step_second.first.first;
-    int posY = vision->python_vision->step_second.first.second;
+////    std::cout << init_x << " llll " << init_y << "   >>>>   " << num << "   " << number << std::endl;
+////    bool kill = !(vision->python_vision->isSimpleMoveOrKill);
+    bool kill = GlobalEnvirIn::Instance()->__isThereHasChess(posX, posY);
+////    int k_num = kill ? (vision->python_vision->step_second.second.first) : -1;
+//    int posX = vision->python_vision->step_second.first.first;
+//    int posY = vision->python_vision->step_second.first.second;
     int swap_pos = posX;    // zjjjnb
     posX = posY;            // zjjjnb
     posY = swap_pos;        // zjjjnb
