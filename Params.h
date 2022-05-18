@@ -31,7 +31,7 @@ namespace PARAM {
     const int RL_PORT = 9999;
     const QString RL_INIT = "SHENYIPENG NB";
 
-    const QString M1_HOST = "10.192.185.58";
+    const QString M1_HOST = "172.20.10.4";
     const int M1_PORT = 3333;
     // const QString M1_HOST = HOST;
     // const int M1_PORT = PORT;

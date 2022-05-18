@@ -369,8 +369,8 @@ void PythonMudule::__QString2Board(QString origin_message) {
         QString chess_str = vision_chess.at(index).left(6);
         int PosX = vision_chess.at(index).mid(6, 1).toInt();
         int PosY = vision_chess.at(index).right(1).toInt();
-        if(PosY >= 5) PosY = 9 - PosY;
-        else PosY = 9 - PosY;
+        PosY = 9 - PosY;
+        PosX = 8 - PosX;
         __visionBoard[PosX][PosY] = __QStr2intName(chess_str);
         // std::cout << chess_str.toStdString() << " " << PosX << " " << PosY << std::endl;
     }
@@ -437,7 +437,18 @@ int PythonMudule::__generateHumanStep(const QVector<chessStep> &curStepList) {
 //    int num = step_first.second.first;
     int init_x = step_first.first.first;
     int init_y = step_first.first.second;
-    int num = GlobalEnvirIn::Instance()->__QStr2intName(GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(init_x, init_y)->chessName()));
+//    init_y = PARAM::globalEnvironment::maxAxisOfX - init_y;
+//    int pos_tmp = init_x;
+//    init_x = init_y;
+//    init_y = pos_tmp;
+    int num = 0;
+    std::cout << "init_x -> " << init_x << "\t\tinit_y -> " << init_y << " PYTHONMODULE ------------" << std::endl;
+    if (GlobalEnvirIn::Instance()->__isThereHasChess(init_x, init_y))
+        num = GlobalEnvirIn::Instance()->__QStr2intName(
+                    GlobalEnvirIn::Instance()->__QString2SimpleName(
+                        GlobalEnvirIn::Instance()->__whichChessOnThere(init_x, init_y)->chessName()));
+    else
+        return -1;
     int number = -1;
     if(isSimpleMoveOrKill == false) number = GlobalEnvirIn::Instance()->__whichChessOnThere(init_x, init_y)->chessNumber();
     bool kill = !isSimpleMoveOrKill;
@@ -445,6 +456,7 @@ int PythonMudule::__generateHumanStep(const QVector<chessStep> &curStepList) {
 //    int k_num = kill ? (step_second.second.first) : -1;
     int posX = step_second.first.first;
     int posY = step_second.first.second;
+    std::cout << "posX -> " << posX << "\t\tposY -> " << posY << " PYTHONMODULE ------------" << std::endl;
 //    int k_num = kill ? (GlobalEnvirIn::Instance()->__QStr2intName(GlobalEnvirIn::Instance()->__QString2SimpleName(GlobalEnvirIn::Instance()->__whichChessOnThere(posX, posY)->chessName()))) : -1;
     // start to compare
     int size = curStepList.length();

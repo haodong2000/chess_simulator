@@ -726,13 +726,13 @@ bool GlobalEnvironment::__isThereHasChess(SGeoPoint *Pos) {
 
 Chess* GlobalEnvironment::__whichChessOnThere(SGeoPoint *Pos) {
     if(!__isThereHasChess(Pos)) {
-        qDebug() << "global.cpp __whichChessOnThere() line:666 error:no chess on Pos!!!";
+        qDebug() << "global.cpp __whichChessOnThere() line:666 error:no chess on Pos!!!" << " " << Pos->getPosX() << " " << Pos->getPosY();
         return 0;
     }
 
     if((Pos->getPosX() < 0 || Pos->getPosX() > PARAM::globalEnvironment::maxAxisOfX) ||
             (Pos->getPosY() < 0 || Pos->getPosY() > PARAM::globalEnvironment::maxAxisOfY)) {
-        qDebug() << "global.cpp line:666 __whichChessOnThere()  error:Pos out of boundary!";
+        qDebug() << "global.cpp line:666 __whichChessOnThere()  error:Pos out of boundary!" << " " << Pos->getPosX() << " " << Pos->getPosY();
         return 0;
     }
 
