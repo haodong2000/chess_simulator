@@ -10,7 +10,12 @@
 
 2021/06/13 human vs AI done!
 
-2021/10/24 UI update and startup settings added
+2021/10/24 UI update and startup settings added.
+
+![Screenshot 2022-05-27 180042](https://user-images.githubusercontent.com/67775090/170678365-57dc71dc-5f7e-426c-beca-f07d19907fbf.png)
+![Screenshot 2022-05-27 180056](https://user-images.githubusercontent.com/67775090/170678376-8fc51a71-0952-438c-bcef-0af112324cd4.png)
+![function](https://user-images.githubusercontent.com/67775090/170678383-e7291598-85d9-442c-8d47-fe7f1b09081c.png)
+
 
 ![Screenshot from 2021-08-03 17-48-22](https://github.com/LeBronLiHD/chessRobotSimulation_QT/blob/master/chess/Screenshot%20from%202021-10-25%2010-06-16.png)
 
