@@ -12,7 +12,9 @@
 
 2021/10/24 UI update and startup settings added.
 
-[BiliBili Video Link](https://www.bilibili.com/video/BV1bb4y1t7FR)
+[BiliBili Video Link](https://www.bilibili.com/video/BV1zK411f7zJ)
+
+[YouTube Viedo Link](https://youtu.be/V6IXxbrqHmE)
 
 ![image](https://user-images.githubusercontent.com/67775090/188526271-1db3713b-270d-4e3a-ba34-4fef4b50e9da.png)
 
