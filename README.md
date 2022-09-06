@@ -14,7 +14,7 @@
 
 [BiliBili Video Link](https://www.bilibili.com/video/BV1bb4y1t7FR)
 
-![SRTP_Overview](https://user-images.githubusercontent.com/67775090/187151690-5e3aa3ce-964e-4a8d-95fa-17090e5d3206.png)
+![image](https://user-images.githubusercontent.com/67775090/188526271-1db3713b-270d-4e3a-ba34-4fef4b50e9da.png)
 
 ![Screenshot from 2021-08-03 17-48-22](https://github.com/LeBronLiHD/chessRobotSimulation_QT/blob/master/chess/Screenshot%20from%202021-10-25%2010-06-16.png)
 
