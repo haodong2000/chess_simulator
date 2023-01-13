@@ -1,6 +1,10 @@
-# chessRobotSimulation_QT
+# A Digital Twin System of Chess Playing (SRTP)	Apr. 2021 – Nov. 2021
 
 > based on [Qt5.14.2](https://download.qt.io/archive/qt/5.14/5.14.2/), best performance with 1920\*1080 and 60 Hz
+
+• Developed a chess-playing stimulator supported by four logical layers, including Canvas, Basic Operation, Evaluation and Chess Rules, Turn-based System and Decision-Making, through Qt Creator
+• Integrated several user interfaces for visualization, as well as the software framework of the entire SRTP
+• Adopted C++, QML, and structures like Qt Quick, Qt Widgets, Qt Core, and Qt Core Gui
 
 2021/05/27 learn qml, design the canvas
 
