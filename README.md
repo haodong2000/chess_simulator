@@ -1,4 +1,4 @@
-# A Digital Twin System of Chess Playing (SRTP)	Apr. 2021 – Nov. 2021
+# A Digital Twin System of Chess Playing (SRTP)
 
 > based on [Qt5.14.2](https://download.qt.io/archive/qt/5.14/5.14.2/), best performance with 1920\*1080 and 60 Hz
 
