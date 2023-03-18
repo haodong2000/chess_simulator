@@ -6,9 +6,9 @@
 - Integrated several user interfaces for visualization, as well as the software framework of the entire SRTP
 - Adopted C++, QML, and structures like Qt Quick, Qt Widgets, Qt Core, and Qt Core Gui
 
-[BiliBili Video Link](https://www.bilibili.com/video/BV1zK411f7zJ)
+**[BiliBili Video Link](https://www.bilibili.com/video/BV1zK411f7zJ)**
 
-[YouTube Viedo Link](https://youtu.be/V6IXxbrqHmE)
+**[YouTube Viedo Link](https://youtu.be/V6IXxbrqHmE)**
 
 ![image](https://user-images.githubusercontent.com/67775090/188526271-1db3713b-270d-4e3a-ba34-4fef4b50e9da.png)
 
