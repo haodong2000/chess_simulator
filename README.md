@@ -6,16 +6,6 @@
 - Integrated several user interfaces for visualization, as well as the software framework of the entire SRTP
 - Adopted C++, QML, and structures like Qt Quick, Qt Widgets, Qt Core, and Qt Core Gui
 
-2021/05/27 learn qml, design the canvas
-
-2021/05/30 start to build the whole structure of the stimulaition platform
-
-2021/06/08 version 1.0 done!
-
-2021/06/13 human vs AI done!
-
-2021/10/24 UI update and startup settings added.
-
 [BiliBili Video Link](https://www.bilibili.com/video/BV1zK411f7zJ)
 
 [YouTube Viedo Link](https://youtu.be/V6IXxbrqHmE)
