@@ -8,6 +8,7 @@
 - Demos for the entire SRTP, which included 3 studies, with the [alphacc_zero](https://github.com/lebronlihd/alphacc_zero), and [chess_vision](https://github.com/lebronlihd/chess_vision).
   - **[BiliBili Video Link](https://www.bilibili.com/video/BV1zK411f7zJ)**
   - **[YouTube Viedo Link](https://youtu.be/V6IXxbrqHmE)**
+  - **[Project Website](https://lebronlihd.github.io/projects/alphacc_zero/)**
 
 ![image](https://user-images.githubusercontent.com/67775090/188526271-1db3713b-270d-4e3a-ba34-4fef4b50e9da.png)
 
